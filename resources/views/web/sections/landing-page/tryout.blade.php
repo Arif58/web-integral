@@ -152,7 +152,7 @@
                             </ul>
                             <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
                             <div class="read-more-btn">
-                                <a class="rbt-btn btn-border hover-icon-reverse btn-sm radius-round" href="event-details.html">
+                                <a class="rbt-btn btn-border hover-icon-reverse btn-sm radius-round" href="/produk/try-out-utbk/detail">
                                     <span class="icon-reverse-wrapper">
                                         <span class="btn-text">Daftar Sekarang</span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
@@ -185,7 +185,7 @@
                             </ul>
                             <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
                             <div class="read-more-btn">
-                                <a class="rbt-btn btn-border hover-icon-reverse btn-sm radius-round" href="event-details.html">
+                                <a class="rbt-btn btn-border hover-icon-reverse btn-sm radius-round" href="/produk/try-out-utbk/detail">
                                     <span class="icon-reverse-wrapper">
                                         <span class="btn-text">Daftar Sekarang</span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>

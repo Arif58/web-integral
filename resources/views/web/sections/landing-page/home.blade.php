@@ -1,5 +1,5 @@
 @extends('web.layout')
-@section('title', 'Home')
+@section('title', 'Beranda')
 @section('content')
     <main class="rbt-main-wrapper">
         <!-- Start Banner Area -->
@@ -680,7 +680,7 @@
         <!-- End Tutor Area  -->
 
         <!-- Start Flow Pendaftaran Area  -->
-        <div class="rbt-advance-tab-area rbt-section-gapTop bg-color-white">
+        <div class="rbt-advance-tab-area rbt-section-gap bg-color-white">
             <div class="container">
                 <div class="row mb--60">
                     <div class="col-lg-12">
@@ -690,10 +690,10 @@
                     </div>
                 </div>
                 <div class="row g-5">
-                    <div class="col-lg-4 col-md-12 col-sm-12 col-12 mt_md--30 mt_sm--30 order-2 order-lg-1">
+                    <div class="col-lg-3 col-md-12 col-sm-12 col-12 mt_md--30 mt_sm--30 order-2 order-lg-1">
                         <div class="advance-tab-button advance-tab-button-1">
                             <ul class="nav nav-tabs tab-button-list" id="aboutmyTab" role="tablist">
-                                <li class="nav-item" role="presentation">
+                                <li class="nav-item w-100" role="presentation">
                                     <a href="#" class="nav-link tab-button active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" role="tab" aria-controls="home" aria-selected="true">
                                         <div class="tab">
                                             <h4 class="title">Alur Pendaftaran Bimbel Offline & Online</h4>
@@ -701,7 +701,7 @@
                                     </a>
                                 </li>
 
-                                <li class="nav-item" role="presentation">
+                                <li class="nav-item w-100" role="presentation">
                                     <a href="#" class="nav-link tab-button" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" role="tab" aria-controls="profile" aria-selected="false">
                                         <div class="tab">
                                             <h4 class="title">Alur Pendaftaran Try Out UTBK</h4>
@@ -712,7 +712,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-8 col-md-12 col-sm-12 col-12 order-1 order-lg-2">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-12 order-1 order-lg-2" style="padding-right: 0px">
                         <div class="tab-content">
                             <div class="tab-pane fade advance-tab-content-1 active show" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="thumbnail">
@@ -731,6 +731,89 @@
             </div>
         </div>
         <!-- End Flow Pendaftaran Tab  -->
+
+         <!-- Start Course Content  -->
+         <div class="container rbt-section-gapBottom">
+            <div class="row mb--60">
+                <div class="col-lg-12">
+                    <div class="section-title text-center">
+                        <h2 class="title">Frequently Asked Question</h2>
+                    </div>
+                </div>
+            </div> 
+            <div class="course-content rbt-shadow-box mt--60">
+                <div class="rbt-accordion-style rbt-accordion-02 accordion mt--45">
+                    <div class="accordion" id="accordionExampleb2">
+                        <div class="accordion-item card">
+                            <h2 class="accordion-header card-header" id="headingTwo1">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo1" aria-expanded="true" aria-controls="collapseTwo1">
+                                    Intro to Course and Histudy?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo1" class="accordion-collapse collapse show" aria-labelledby="headingTwo1" data-bs-parent="#accordionExampleb2">
+                                <div class="accordion-body card-body">
+                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="accordion-item card">
+                            <h2 class="accordion-header card-header" id="headingTwo2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2">
+                                    Course Fundamentals?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo2" class="accordion-collapse collapse" aria-labelledby="headingTwo2" data-bs-parent="#accordionExampleb2">
+                                <div class="accordion-body card-body">
+                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="accordion-item card">
+                            <h2 class="accordion-header card-header" id="headingTwo3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo3" aria-expanded="false" aria-controls="collapseTwo3">
+                                    You can develop skill and setup?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo3" class="accordion-collapse collapse" aria-labelledby="headingTwo3" data-bs-parent="#accordionExampleb2">
+                                <div class="accordion-body card-body">
+                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="accordion-item card">
+                            <h2 class="accordion-header card-header" id="headingTwo4">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo4" aria-expanded="false" aria-controls="collapseTwo4">
+                                    15 Things To Know About Education?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo4" class="accordion-collapse collapse" aria-labelledby="headingTwo4" data-bs-parent="#accordionExampleb2">
+                                <div class="accordion-body card-body">
+                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="accordion-item card">
+                            <h2 class="accordion-header card-header" id="headingTwo5">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5">
+                                    Course Description?
+                                </button>
+                            </h2>
+                            <div id="collapseTwo5" class="accordion-collapse collapse" aria-labelledby="headingTwo5" data-bs-parent="#accordionExampleb2">
+                                <div class="accordion-body card-body">
+                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </div>
+      
+        <!-- End Course Content  -->
 
         
     </main>

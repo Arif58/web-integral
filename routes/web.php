@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TryoutDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,3 +33,9 @@ Route::get('/register', function () {
 Route::get('/produk/try-out-utbk', function () {
     return view('web.sections.landing-page.tryout');
 });
+
+Route::get('/produk/try-out-utbk/detail', [TryoutDetailController::class, 'index'])->name('tryout-detail');
+
+Route::get('/payment', function() {
+    return view('web.sections.landing-page.payment');
+})->name('payment'); 

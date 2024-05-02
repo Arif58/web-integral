@@ -1,3 +1,4 @@
+<div class="rbt-sticky-placeholder"></div>
 <div class="rbt-header-wrapper header-space-betwween header-sticky" style="background-color: #1D3B64">
     <div class="container-fluid">
         <div class="mainbar-row rbt-navigation-center align-items-center">
@@ -15,9 +16,8 @@
                 <nav class="mainmenu-nav">
                     <ul class="mainmenu">
                         <li class="with-megamenu has-menu-child-item position-static">
-                            <a href="/" style="color: white">Home</a>
+                            <a href="/" style="color: white">Beranda</a>
                         </li>
-
                         <li class="has-dropdown has-menu-child-item">
                             <a href="#" style="color: white">Produk
                                 <i class="feather-chevron-down"></i>
@@ -25,10 +25,17 @@
                             <ul class="submenu">
                                 <li class="has-dropdown"><a href="/produk/try-out-utbk">Try Out UTBK</a>
                                 </li>
-                                <li class="has-dropdown"><a href="#">Integral Education Math Competition</a>
+                                <li class="has-dropdown"><a href="#">Bimbel</a>
                                 </li>
                             </ul>
                         </li>
+                        <li class="with-megamenu has-menu-child-item position-static">
+                            <a href="/" style="color: white">Bimbel Saya</a>
+                        </li>
+                        <li class="with-megamenu has-menu-child-item position-static">
+                            <a href="/" style="color: white">Try Out Saya</a>
+                        </li>
+                       
                     </ul>
                 </nav>
             </div>
