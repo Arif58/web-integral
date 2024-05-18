@@ -9,11 +9,8 @@
                             </a>
                         </div>
 
-                        <p class="description mt--20">We’re always in search for talented
-                            and motivated people. Don’t be shy introduce yourself!
-                        </p>
 
-                        <ul class="social-icon social-default justify-content-start">
+                        {{-- <ul class="social-icon social-default justify-content-start">
                             <li><a href="https://www.facebook.com/">
                                     <i class="feather-facebook"></i>
                                 </a>
@@ -30,7 +27,7 @@
                                     <i class="feather-linkedin"></i>
                                 </a>
                             </li>
-                        </ul>
+                        </ul> --}}
 
                         <div class="contact-btn mt--30">
                             <a class="rbt-btn hover-icon-reverse btn-border-gradient radius-round" href="#">
@@ -44,87 +41,49 @@
                     </div>
                 </div>
 
-                <div class="col-lg-2 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="footer-widget">
-                        <h5 class="ft-title">Useful Links</h5>
-                        <ul class="ft-link">
-                            <li>
-                                <a href="12-marketplace.html">Marketplace</a>
-                            </li>
-                            <li>
-                                <a href="04-kindergarten.html">kindergarten</a>
-                            </li>
-                            <li>
-                                <a href="13-university-classic.html">University</a>
-                            </li>
-                            <li>
-                                <a href="09-gym-coaching.html">GYM Coaching</a>
-                            </li>
-                            <li>
-                                <a href="faqs.html">FAQ</a>
-                            </li>
-                            <li>
-                                <a href="about-us-01.html">About Us</a>
-                            </li>
-                            <li>
-                                <a href="privacy-policy.html">Privacy policy</a>
-                            </li>
-                        </ul>
+                        <h5 class="ft-title">Kantor Administrasi</h5>
+                        <p>Lorem ipsum dolor sit amet consectetur. Justo scelerisque magna nibh diam elit tristique duis nisi. Et eget cursus commodo arcu.</p>
                     </div>
                 </div>
 
                 <div class="col-lg-2 col-md-6 col-sm-6 col-12">
                     <div class="footer-widget">
-                        <h5 class="ft-title">Our Company</h5>
+                        <h5 class="ft-title">Perusahaan</h5>
                         <ul class="ft-link">
                             <li>
-                                <a href="contact.html">Contact Us</a>
+                                <a href="contact.html">Tentang Kami</a>
                             </li>
                             <li>
-                                <a href="become-a-teacher.html">Become Teacher</a>
+                                <a href="become-a-teacher.html">Testimoni</a>
                             </li>
                             <li>
-                                <a href="blog.html">Blog</a>
+                                <a href="blog.html">Prestasi Siswa</a>
                             </li>
                             <li>
-                                <a href="instructor.html">Instructor</a>
+                                <a href="instructor.html">Tutor</a>
                             </li>
                             <li>
-                                <a href="event-list.html">Events</a>
-                            </li>
-                            <li>
-                                <a href="course-filter-one-toggle.html">Course</a>
-                            </li>
-                            <li>
-                                <a href="contact.html">Contact</a>
+                                <a href="event-list.html">Lowongan Tutor</a>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="footer-widget">
-                        <h5 class="ft-title">Get Contact</h5>
+                        <h5 class="ft-title">Kontak Kami</h5>
                         <ul class="ft-link">
-                            <li><span>Phone:</span> <a href="#">(406) 555-0120</a></li>
-                            <li><span>E-mail:</span> <a href="mailto:hr@example.com">admin@example.com</a></li>
+                            <li><span><i class="feather-phone"></i></span> <a href="https://wa.me/6289626575729" target="_blank">089626575729</a></li>
+                            <li><span><i class="feather-mail"></i></span> <a href="https://gmail.com" target="_blank">integraleducation03@gmail.com</a></li>
+                            <li><span><i class="feather-instagram"></i></span> <a href="https://www.instagram.com/integral.education" target="_blank">@integral.education</a></li>
+                            <li><span><i class="fa-brands fa-tiktok"></i></span> <a href="">@integral.education</a></li>
+                            <li><span><i class="feather-youtube"></i></span> <a href="">Integral Education</a></li>
+
+
                         </ul>
 
-                        <form class="newsletter-form mt--20" action="#">
-                            <h6 class="w-600">Newsletter</h6>
-                            <p class="description">2000+ Our students are subscribe Around the World.<br> Don’t be shy introduce yourself!</p>
-
-                            <div class="form-group right-icon icon-email mb--20">
-                                <label for="email">Enter Your Email Here</label>
-                                <input id="email" type="email">
-                            </div>
-
-                            <div class="form-group mb--0">
-                                <button class="rbt-btn rbt-switch-btn btn-gradient radius-round btn-sm" type="submit">
-                                    <span data-text="Submit Now">Submit Now</span>
-                                </button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -138,10 +97,8 @@
     <!-- Start Copyright Area  -->
     <div class="copyright-area copyright-style-1 ptb--20">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-12">
-                    <p class="rbt-link-hover text-center text-lg-start">Copyright © 2023 <a href="https://themeforest.net/user/rbt-themes">Rainbow-Themes.</a> All Rights Reserved</p>
-                </div>
+            <div class="align-items-center">
+                <p class="rbt-link-hover text-center">Copyright © 2024 Integral Education. All Rights Reserved</p>
             </div>
         </div>
     </div>

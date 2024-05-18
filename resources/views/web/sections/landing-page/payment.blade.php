@@ -63,13 +63,12 @@
                                     <div class="rbt-accordion-style rbt-accordion-04 accordion">
                                         <div class="accordion" id="accordionExampleb2">
                                             <div class="accordion-item card">
-                                                <h2 class="row accordion-header card-header">
-                                                        <p class="col">IE Gems</p>
-                                                        <label class="switch">
-                                                            <input type="checkbox" name="payment_method" required>
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                    
+                                                <h2 class="row accordion-header card-header pr--15">
+                                                        <p class="col mb--0">IE Gems</p>
+                                                        <div class="col form-check form-switch justify-content-end">
+                                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                                            
+                                                        </div>
                                                 </h2>
                                             </div>
 

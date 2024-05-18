@@ -18,7 +18,7 @@
                         <li class="with-megamenu has-menu-child-item position-static">
                             <a href="/" style="color: white">Beranda</a>
                         </li>
-                        <li class="has-dropdown has-menu-child-item">
+                        {{-- <li class="has-dropdown has-menu-child-item">
                             <a href="#" style="color: white">Produk
                                 <i class="feather-chevron-down"></i>
                             </a>
@@ -28,12 +28,9 @@
                                 <li class="has-dropdown"><a href="#">Bimbel</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
                         <li class="with-megamenu has-menu-child-item position-static">
-                            <a href="/" style="color: white">Bimbel Saya</a>
-                        </li>
-                        <li class="with-megamenu has-menu-child-item position-static">
-                            <a href="/" style="color: white">Try Out Saya</a>
+                            <a href="/produk/try-out-utbk" style="color: white">Try Out UTBK</a>
                         </li>
                        
                     </ul>

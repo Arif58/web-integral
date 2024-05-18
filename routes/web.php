@@ -39,3 +39,27 @@ Route::get('/produk/try-out-utbk/detail', [TryoutDetailController::class, 'index
 Route::get('/payment', function() {
     return view('web.sections.landing-page.payment');
 })->name('payment'); 
+
+Route::get('/dashboard', function() {
+    return view('web.sections.dashboard.dashboard');
+})->name('dashboard');
+
+Route::get('/tryout-saya', function() {
+    return view('web.sections.dashboard.my-tryout');
+})->name('my-tryout');
+
+Route::get('/pencapaian', function() {
+    return view('web.sections.dashboard.achievement');
+})->name('achievement');
+
+Route::get('/profil', function() {
+    return view('web.sections.dashboard.profile');
+})->name('profile');
+
+Route::get('/ubah-profil', function() {
+    return view('web.sections.dashboard.edit-profile');
+})->name('profile-edit');
+
+Route::get('/ubah-jurusan', function() {
+    return view('web.sections.dashboard.edit-major');
+})->name('major-edit');

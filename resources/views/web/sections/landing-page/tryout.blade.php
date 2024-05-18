@@ -147,7 +147,7 @@
                             <h4 class="rbt-card-title">Try Out UTBK #1</h4>
                             <ul class="rbt-meta mb-0">
                                 <li><p class="description">Rp.10.000</p></li>
-                                <li>|</li>
+                                <span>|</span>
                                 <li><p class="description">100 Poin</p></li>
                             </ul>
                             <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
@@ -180,7 +180,7 @@
                             <h4 class="rbt-card-title">Try Out UTBK #1</h4>
                             <ul class="rbt-meta mb-0">
                                 <li><p class="description">Rp.10.000</p></li>
-                                <li>|</li>
+                                <span>|</span>
                                 <li><p class="description">100 Poin</p></li>
                             </ul>
                             <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
@@ -213,7 +213,7 @@
                             <h4 class="rbt-card-title">Try Out UTBK #1</h4>
                             <ul class="rbt-meta mb-0">
                                 <li><p class="description">Rp.10.000</p></li>
-                                <li>|</li>
+                                <span>|</span>
                                 <li><p class="description">100 Poin</p></li>
                             </ul>
                             <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
@@ -246,7 +246,7 @@
                             <h4 class="rbt-card-title">Try Out UTBK #1</h4>
                             <ul class="rbt-meta mb-0">
                                 <li><p class="description">Rp.10.000</p></li>
-                                <li>|</li>
+                                <span>|</span>
                                 <li><p class="description">100 Poin</p></li>
                             </ul>
                             <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
@@ -279,7 +279,7 @@
                             <h4 class="rbt-card-title">Try Out UTBK #1</h4>
                             <ul class="rbt-meta mb-0">
                                 <li><p class="description">Rp.10.000</p></li>
-                                <li>|</li>
+                                <span>|</span>
                                 <li><p class="description">100 Poin</p></li>
                             </ul>
                             <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
@@ -312,7 +312,7 @@
                             <h4 class="rbt-card-title">Try Out UTBK #1</h4>
                             <ul class="rbt-meta mb-0">
                                 <li><p class="description">Rp.10.000</p></li>
-                                <li>|</li>
+                                <span>|</span>
                                 <li><p class="description">100 Poin</p></li>
                             </ul>
                             <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>

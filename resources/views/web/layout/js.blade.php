@@ -27,21 +27,6 @@
     <script src="{{ asset("js/vendor/countdown.js")}}"></script>
     <script src="{{ asset("js/vendor/plyr.js")}}"></script>
     <!-- Main JS -->
-    <script src="{{ asset("js/main.js")}}"></script>
-
-    <script>
-        function handleCheckboxChange() {
-          const checkedCheckbox = document.querySelector('input[name="payment_method"]:checked');
-          if (checkedCheckbox) {
-            const otherCheckboxes = document.querySelectorAll('input[name="payment_method"]');
-            otherCheckboxes.forEach(checkbox => {
-              if (checkbox !== checkedCheckbox) {
-                checkbox.disabled = true;
-              }
-            });
-          } else {
-            document.querySelectorAll('input[name="payment_method"]').forEach(checkbox => checkbox.disabled = false);
-          }
-        }
-      </script>
-    
+    <script src="{{ asset("js/main.js")}}"></script>  
+    @stack('scripts')
+  

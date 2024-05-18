@@ -1070,7 +1070,7 @@ ol ul {
 .rbt-header .mainmenu-nav .mainmenu li.with-megamenu .rbt-megamenu, .rbt-header .mainmenu-nav .mainmenu li.has-dropdown .submenu, .rbt-user-wrapper .rbt-user-menu-list-wrapper, .rbt-category-menu-wrapper .category-dropdown-menu, ul.rbt-dropdown-menu li .sub-menu {
   position: absolute;
   top: 100%;
-  left: 0;
+  right: 0;
   visibility: hidden;
   clip: rect(0px, 200vw, 0, 0px);
   opacity: 0;
@@ -8929,10 +8929,10 @@ textarea {
   box-shadow: none;
   padding: 0 15px;
   outline: none;
-  border: var(--border-width) solid var(--color-border);
+  border: 0px;
   border-radius: var(--radius);
   color: var(--color-body);
-  box-shadow: var(--shadow-10);
+  box-shadow: none;
   /* -- Placeholder -- */
 }
 input[type=text]::placeholder,
@@ -18426,7 +18426,7 @@ input:checked + .slider:before {
 .team .content .designation {
   color: #ffffff;
   font-size: 14px;
-  line-height: 34px;
+  line-height: normal;
   opacity: 0;
   visibility: hidden;
   transition: all 0.45s cubic-bezier(0.23, 0.88, 0.34, 0.99);
@@ -21875,13 +21875,14 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 ----------------------*/
 .rbt-modern-select .bootstrap-select button.btn-light {
   border: 0 none;
-  box-shadow: var(--shadow-1);
+  box-shadow: none;
+  border-bottom: 1px solid var(--color-badge-1);
   height: 50px;
   padding: 10px 20px;
   outline: none;
   color: var(--color-body);
-  border-radius: var(--radius);
-  font-size: 16px;
+  border-radius: 0px;
+  font-size: 14px;
   line-height: 28px;
   font-weight: 400;
   padding-right: 30px;
@@ -24346,14 +24347,15 @@ blockquote.has-text-align-right cite,
 .rbt-default-form textarea {
   width: 100%;
   background-color: transparent;
-  border: 2px solid var(--color-border);
-  border-radius: 6px;
+  border-bottom: 1px solid var(--color-badge-1);
+  border-radius: 0px;
   line-height: 23px;
   padding: 10px 20px;
   font-size: 14px;
   color: var(--color-body);
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
+
 .checkout-form input[type=checkbox],
 .checkout-form textarea[type=checkbox],
 .rbt-default-form input[type=checkbox],
@@ -26567,8 +26569,8 @@ blockquote.has-text-align-right cite,
   transition: 0.4s;
 }
 .rbt-sorting-list .course-switch-layout li button.active {
-  background: var(--color-white);
-  color: var(--color-primary);
+  background: #757575;
+  color: #fff;
 }
 .rbt-sorting-list .course-switch-layout li button.active i {
   color: var(--color-primary);
@@ -26637,6 +26639,11 @@ blockquote.has-text-align-right cite,
 .rbt-course-grid-column .course-grid-2 {
   flex: 0 0 auto;
   width: 50%;
+}
+@media only screen and (max-width: 767px) {
+  .rbt-course-grid-column .course-grid-2 {
+    width: 100%;
+  }
 }
 .rbt-course-grid-column.active-list-view .course-grid-3,
 .rbt-course-grid-column.active-list-view .course-grid-2 {

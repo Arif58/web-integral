@@ -480,80 +480,113 @@
                     <div class="col-lg-12">
                         <div class="section-title text-center">
                             <h2 class="title">Prestasi Siswa</h2>
-                            {{-- <p class="description has-medium-font-size mt--20">There are many variations of passages of the
-                                Ipsum available, but the majority have suffered alteration in some form, by injected humour.
-                            </p> --}}
                         </div>
                     </div>
                 </div>
-                <div class="row row--15 mt_dec--30">
-                    <!-- Start Single Team  -->
-                    <div class="col-lg-4 col-md-6 col-12 mt--30">
-                        <div class="rbt-team team-style-default style-three rbt-hover">
-                            <div class="inner">
-                                <div class="thumbnail"><img src="{{asset("images/team/team-07.jpg")}}" alt="Corporate Template"></div>
-                                <div class="content">
-                                    <h2 class="title">Alejandro</h2>
-                                    <h6 class="subtitle theme-gradient">Math Teacher</h6>
-                                    <span class="team-form">
-                            <i class="feather-map-pin"></i>
-                            <span class="location">CO Miego, AD,USA</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Team  -->
-    
-                    <!-- Start Single Team  -->
-                    <div class="col-lg-4 col-md-6 col-12 mt--30">
-                        <div class="rbt-team team-style-default style-three rbt-hover">
-                            <div class="inner">
-                                <div class="thumbnail"><img src="{{ asset("images/team/team-08.jpg") }}" alt="Corporate Template"></div>
-                                <div class="content">
-                                    <h2 class="title">John Due</h2>
-                                    <h6 class="subtitle theme-gradient">Depertment Head</h6>
-                                    <span class="team-form">
-                            <i class="feather-map-pin"></i>
-                            <span class="location">CO Miego, AD,USA</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Team  -->
-    
-                    <!-- Start Single Team  -->
-                    <div class="col-lg-4 col-md-6 col-12 mt--30">
-                        <div class="rbt-team team-style-default style-three rbt-hover">
-                            <div class="inner">
-                                <div class="thumbnail"><img src="{{ asset("images/team/team-09.jpg") }}" alt="Corporate Template"></div>
-                                <div class="content">
-                                    <h2 class="title">Joo Bieden</h2>
-                                    <h6 class="subtitle theme-gradient">Math Teacher</h6>
-                                    <span class="team-form">
-                            <i class="feather-map-pin"></i>
-                            <span class="location">CO Miego, AD,USA</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Team  -->
-                </div>
-    
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="load-more-btn mt--60 text-center">
-                            <a class="rbt-btn rbt-marquee-btn" href="#">
-                                <span data-text="View All Teacher">
-                                    View All Teacher
-                                </span>
-                            </a>
+                        <div class="swiper event-activation-1 rbt-arrow-between rbt-dot-bottom-center pb--60 icon-bg-primary">
+
+                            <div class="swiper-wrapper">
+                                <!-- Start Single Slide  -->
+                                <div class="swiper-slide">
+                                    <div class="single-slide">
+                                         <!-- Start Single Team  -->
+                                        <div class="">
+                                            <div class="rbt-team team-style-default style-three rbt-hover">
+                                                <div class="inner">
+                                                    <div class="thumbnail"><img src="{{ asset("images/team/team-08.jpg") }}" alt="Corporate Template"></div>
+                                                    <div class="content">
+                                                        <h2 class="title">John Due</h2>
+                                                        <h6 class="subtitle theme-gradient">Depertment Head</h6>
+                                                        <span class="team-form">
+                                                        <i class="feather-map-pin"></i>
+                                                        <span class="location">CO Miego, AD,USA</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Single Team  -->
+                                    </div>
+                                </div>
+                                <!-- End Single Slide  -->
+                                <!-- Start Single Slide  -->
+                                <div class="swiper-slide">
+                                    <div class="single-slide">
+                                         <!-- Start Single Team  -->
+                                        <div class="">
+                                            <div class="rbt-team team-style-default style-three rbt-hover">
+                                                <div class="inner">
+                                                    <div class="thumbnail"><img src="{{ asset("images/team/team-08.jpg") }}" alt="Corporate Template"></div>
+                                                    <div class="content">
+                                                        <h2 class="title">Annisa</h2>
+                                                        <h6 class="subtitle theme-gradient">Depertment Head</h6>
+                                                        <span class="team-form">
+                                                        <i class="feather-map-pin"></i>
+                                                        <span class="location">CO Miego, AD,USA</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Single Team  -->
+                                    </div>
+                                </div>
+                                <!-- End Single Slide  -->
+
+                                <!-- Start Single Slide  -->
+                                <div class="swiper-slide">
+                                    <div class="single-slide">
+                                        <!-- Start Single Team  -->
+                                        <div class="">
+                                            <div class="rbt-team team-style-default style-three rbt-hover">
+                                                <div class="inner">
+                                                    <div class="thumbnail"><img src="{{ asset("images/team/team-08.jpg") }}" alt="Corporate Template"></div>
+                                                    <div class="content">
+                                                        <h2 class="title">Zahra</h2>
+                                                        <h6 class="subtitle theme-gradient">Depertment Head</h6>
+                                                        <span class="team-form">
+                                                        <i class="feather-map-pin"></i>
+                                                        <span class="location">CO Miego, AD,USA</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Single Team  -->
+                                    </div>
+                                </div>
+                                <!-- End Single Slide  -->
+
+                                <!-- Start Single Slide  -->
+                                <div class="swiper-slide">
+                                    <div class="single-slide">
+                                        <!-- Start Single Team  -->
+                                        <div class="">
+                                            <div class="rbt-team team-style-default style-three rbt-hover">
+                                                <div class="inner">
+                                                    <div class="thumbnail"><img src="{{ asset("images/team/team-08.jpg") }}" alt="Corporate Template"></div>
+                                                    <div class="content">
+                                                        <h2 class="title">Finns</h2>
+                                                        <h6 class="subtitle theme-gradient">Depertment Head</h6>
+                                                        <span class="team-form">
+                                                        <i class="feather-map-pin"></i>
+                                                        <span class="location">CO Miego, AD,USA</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Single Team  -->
+                                    </div>
+                                </div>
+                                <!-- End Single Slide  -->
+                            </div>
+                            <div class="rbt-swiper-pagination"></div>
                         </div>
                     </div>
                 </div>
-    
             </div>
         </div>
         <!-- End Prestasi Area  -->
@@ -608,8 +641,9 @@
                             <div class="thumbnail"><img src="{{ asset("images/team/team-05.jpg") }}"  alt="Blog Images">
                             </div>
                             <div class="content">
-                                <h4 class="title">Aaron Griffin</h4>
-                                <p class="designation">Depertment Head</p>
+                                <h4 class="title">Hafidz Agraprana</h4>
+                                <p class="designation mb--0 mt-2">Depertment Head</p>
+                                <p class="designation" style="font-size: 11px;">S1 Matematika - Universitas Indonesia</p>
                             </div>
                             <ul class="social-icon">
                                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
@@ -627,7 +661,8 @@
                             </div>
                             <div class="content">
                                 <h4 class="title">Rafiq Bali</h4>
-                                <p class="designation">Depertment Head</p>
+                                <p class="designation mb-1 mt-2">Tutor Alpro</p>
+                                <p class="designation" style="font-size: 11px;">D4 Teknologi Rekayasa Perangkat Lunak - Universitas Gadjah Mada</p>
                             </div>
                             <ul class="social-icon">
                                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
