@@ -3,38 +3,42 @@
 @section('content')
 <main class="rbt-main-wrapper">
     <!-- Start breadcrumb Area -->
-    <div class="rbt-breadcrumb-default rbt-breadcrumb-style-3">
-        <div class="breadcrumb-inner">
-            <img src="{{asset('/images/bg/bg-image-10.jpg')}}" alt="Education Images">
-        </div>
+    <div class="rbt-breadcrumb-default rbt-breadcrumb-style-3  bg-gradient-18">
+        {{-- <div class="breadcrumb-inner"> --}}
+            {{-- <img src="{{asset('/images/bg/bg-image-10.jpg')}}" alt="Education Images"> --}}
+        {{-- </div> --}}
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
                     <div class="content text-start">
                         <ul class="page-list">
-                            <li class="rbt-breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="rbt-breadcrumb-item"><a class="text-white" href="/">Beranda</a></li>
                             <li>
-                                <div class="icon-right"><i class="feather-chevron-right"></i></div>
+                                <div class="icon-right"><i class="feather-chevron-right color-white"></i></div>
                             </li>
-                            <li class="rbt-breadcrumb-item active">Web Development</li>
+                            <li class="rbt-breadcrumb-item"><a class="text-white" href="/try-out-utbk">Try Out UTBK</a></li>
+                            <li>
+                                <div class="icon-right"><i class="feather-chevron-right color-white"></i></div>
+                            </li>
+                            <li class="rbt-breadcrumb-item active" style="color: #BDBDBD">Try Out UTBK #1</li>
                         </ul>
-                        <h1 class="title">Try Out UTBK #1</h1>
+                        <h1 class="title text-white">Try Out UTBK #1</h1>
 
 
                         <ul class="rbt-meta mb-3">
-                            <li><p class="description"><i class="feather-calendar"></i>4-10 April 2024</p></li>
+                            <li><p class="description text-white"><i class="feather-calendar"></i>4-10 April 2024</p></li>
                             <span>|</span>
-                            <li><p class="description"><i class="feather-book"></i>155 Soal</p></li>
+                            <li><p class="description text-white"><i class="feather-book"></i>155 Soal</p></li>
                             <span>|</span>
-                            <li><p class="description"><i class="feather-clock"></i>195 Menit</p></li>
+                            <li><p class="description text-white"><i class="feather-clock"></i>195 Menit</p></li>
                         </ul>
 
-                        <div class="rbt-meta mt-5">
+                        {{-- <div class="rbt-meta mt-5">
                             <a class="rbt-btn btn-sm d-block text-center w-50" href="#">
                                 <span class="btn-text">Kerjakan Sekarang</span>
                                 <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -206,9 +210,8 @@
              
 
                 <div class="col-lg-4">
-                    <div class="course-sidebar sticky-top rbt-shadow-box course-sidebar-top rbt-gradient-border">
+                    <div class="course-sidebar sticky-top rbt-shadow-box course-sidebar-top rbt-gradient-border" style="box-shadow: none">
                         <div class="inner">
-
                             <div class="rbt-card-img text-center py-4 height-200 bg-color-gray radius-6 d-flex justify-content-center">
                                 <h1 class="color-black rbt-title-style-2 my-auto" style="font-size: 30px">
                                     Try Out UTBK #1
@@ -231,8 +234,8 @@
                                 </div>
 
                                 <div class="buy-now-btn">
-                                    <a class="rbt-btn btn-border icon-hover w-100 d-block text-center" href="/payment">
-                                        <span class="btn-text">Buy Now</span>
+                                    <a class="rbt-btn btn-gradient w-100 d-block text-center radius-10" href="/payment">
+                                        <span class="btn-text">Daftar Sekarang</span>
                                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                     </a>
                                 </div>

@@ -22,18 +22,17 @@
                     @if (!in_array($currentPath, $pageWithoutHeader))
                     <!-- Start Dashboard Top  -->
                     <div class="rbt-dashboard-content-wrapper">
-                        <div class="bg-color-gray height-200"></div>
+                        <div class="bg-gradient-19 border radius-10" style="height: 162px;"></div>
+                        <div class="bot-element-dashboard"></div>
                         <!-- Start Tutor Information  -->
                         <div class="rbt-tutor-information">
                             <div class="rbt-tutor-information-left">
-                                <div class="thumbnail rbt-avatars size-lg">
-                                    <img src="{{asset('/images/team/avatar.jpg')}}" alt="Instructor">
-                                </div>
                                 <div class="tutor-content">
-                                    <h5 class="title">Emily Hannah</h5>
+                                    <h5 class="title" style="font-size: 38px;">Emily Hannah</h5>
                                     <ul class="rbt-meta rbt-meta-white mt--5">
-                                        <li><i class="feather-book"></i>5 Courses Enroled</li>
-                                        <li><i class="feather-award"></i>4 Certificate</li>
+                                        <li><i class="feather-book"></i>5 Try Out Terdaftar</li>
+                                        <span style="color: white">|</span>
+                                        <li><i class="feather-award"></i>4 IE Gems</li>
                                     </ul>
                                 </div>
                             </div>
@@ -47,7 +46,7 @@
                         @if (!in_array($currentPath, $pageWithoutSidebar))
                         <div class="col-lg-3">
                             <!-- Start Dashboard Sidebar  -->
-                            <div class="rbt-default-sidebar sticky-top rbt-shadow-box rbt-gradient-border" style="top: 10px;">
+                            <div class="rbt-default-sidebar sticky-top rbt-shadow-box" style="top: 10px;">
                                 <div class="inner">
                                     <div class="content-item-content">
 

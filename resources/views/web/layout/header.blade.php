@@ -1,5 +1,5 @@
 <div class="rbt-sticky-placeholder"></div>
-<div class="rbt-header-wrapper header-space-betwween header-sticky" style="background-color: #1D3B64">
+<div class="rbt-header-wrapper header-space-betwween header-sticky">
     <div class="container-fluid">
         <div class="mainbar-row rbt-navigation-center align-items-center">
             <div class="header-left rbt-header-content">
@@ -30,7 +30,7 @@
                             </ul>
                         </li> --}}
                         <li class="with-megamenu has-menu-child-item position-static">
-                            <a href="/produk/try-out-utbk" style="color: white">Try Out UTBK</a>
+                            <a href="/try-out-utbk" style="color: white">Try Out UTBK</a>
                         </li>
                        
                     </ul>

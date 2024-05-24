@@ -32,7 +32,7 @@
                         <div class="contact-btn mt--30">
                             <a class="rbt-btn hover-icon-reverse btn-border-gradient radius-round" href="#">
                                 <div class="icon-reverse-wrapper">
-                                    <span class="btn-text">Contact With Us</span>
+                                    <span class="btn-text">Hubungi Kami</span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                 </div>

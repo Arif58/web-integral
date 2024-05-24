@@ -1,5 +1,5 @@
 <div class="rbt-sticky-placeholder"></div>
-<div class="rbt-header-wrapper header-space-betwween header-sticky" style="background-color: #1D3B64; padding: 15px 30px">
+<div class="rbt-header-wrapper header-space-betwween header-sticky" style="padding: 15px 30px">
     <div class="container-fluid">
         <div class="mainbar-row rbt-navigation-center align-items-center">
             <div class="header-left rbt-header-content">

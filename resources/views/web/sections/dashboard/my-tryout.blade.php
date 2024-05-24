@@ -38,7 +38,7 @@
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
                                         <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                                            <div class="rbt-card-img text-center py-4 radius-6" style="background-color: #616161">
+                                            <div class="rbt-card-img text-center py-4 radius-6 bg-gradient-20">
                                                 <div class="container text-center my-4">
                                                     <h1 class="color-white">
                                                         4
@@ -61,7 +61,7 @@
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
                                         <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                                            <div class="rbt-card-img text-center py-4 radius-6" style="background-color: #616161">
+                                            <div class="rbt-card-img text-center py-4 radius-6 bg-gradient-21">
                                                 <div class="container text-center my-4">
                                                     <h1 class="color-white">
                                                         4
@@ -88,7 +88,7 @@
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
                                         <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                                            <div class="rbt-card-img text-center py-4 radius-6" style="background-color: #616161">
+                                            <div class="rbt-card-img text-center py-4 radius-6 bg-gradient-20">
                                                 <div class="container text-center my-4">
                                                     <h1 class="color-white">
                                                         4
@@ -111,7 +111,7 @@
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
                                         <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                                            <div class="rbt-card-img text-center py-4 radius-6" style="background-color: #616161">
+                                            <div class="rbt-card-img text-center py-4 radius-6 bg-gradient-20">
                                                 <div class="container text-center my-4">
                                                     <h1 class="color-white">
                                                         4
@@ -134,7 +134,7 @@
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
                                         <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                                            <div class="rbt-card-img text-center py-4 radius-6" style="background-color: #616161">
+                                            <div class="rbt-card-img text-center py-4 radius-6 bg-gradient-20">
                                                 <div class="container text-center my-4">
                                                     <h1 class="color-white">
                                                         4
@@ -161,7 +161,7 @@
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
                                         <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                                            <div class="rbt-card-img text-center py-4 radius-6" style="background-color: #616161">
+                                            <div class="rbt-card-img text-center py-4 radius-6 bg-gradient-21">
                                                 <div class="container text-center my-4">
                                                     <h1 class="color-white">
                                                         4
@@ -184,7 +184,7 @@
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
                                         <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                                            <div class="rbt-card-img text-center py-4 radius-6" style="background-color: #616161">
+                                            <div class="rbt-card-img text-center py-4 radius-6 bg-gradient-21">
                                                 <div class="container text-center my-4">
                                                     <h1 class="color-white">
                                                         4
@@ -596,7 +596,7 @@
                     </div>
                     <div class="modal-footer pt--30 justify-content-center">
                         <button type="button" class="rbt-btn btn-border btn-md radius-round-10" data-bs-dismiss="modal">Batal</button>
-                        <button type="button" class="rbt-btn bg-primary btn-border btn-md radius-round-10" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-dismiss="modal" style="color: white" >Kerjakan Sekarang</button>
+                        <button type="button" class="rbt-btn btn-gradient btn-md radius-6" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-dismiss="modal" style="color: white" >Kerjakan Sekarang</button>
                         
                     </div>
                 </div>
@@ -616,9 +616,9 @@
                     <div class="modal-body">
                         <p>Apakah Anda yakin ingin mengerjakan sekarang? Anda tidak akan dapat kembali ke halaman sebelumnya, dan jika Anda mencoba kembali, jawaban Anda akan dikirimkan secara otomatis.</p>
                     </div>
-                    <div class="modal-footer pt--30 justify-content-center">
+                    <div class="modal-footer pt--30 justify-content-center" style="border-top: none">
                         <button type="button" class="rbt-btn btn-border btn-md radius-round-10" data-bs-dismiss="modal">Batal</button>
-                        <a href="/payment"><button type="button" class="rbt-btn bg-primary btn-border btn-md radius-round-10" style="color: white">Kerjakan Sekarang</button></a>
+                        <a href="/pengerjaan-tryout"><button type="button" class="rbt-btn btn-gradient btn-md radius-6" style="color: white">Kerjakan Sekarang</button></a>
                         
                     </div>
                 </div>

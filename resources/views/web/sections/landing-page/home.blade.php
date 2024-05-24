@@ -3,15 +3,15 @@
 @section('content')
     <main class="rbt-main-wrapper">
         <!-- Start Banner Area -->
-        <div class="rbt-banner-area rbt-banner-7 bg-gradient-1 theme-shape header-transperent-spacer">
+        <div class="rbt-banner-area rbt-banner-7 bg-gradient-18 header-transperent-spacer">
             <div class="wrapper w-100">
                 <div class="container">
                     <div class="row g-5 justify-content-between align-items-center">
                         <div class="col-lg-6 order-2 order-lg-1">
                             <div class="content">
                                 <div class="inner">
-                                    <h1 class="title">Lorem Ipsum</h1>
-                                    <p class="description">
+                                    <h1 class="title text-white">Lorem Ipsum</h1>
+                                    <p class="description text-white">
                                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, quas dolorem! Iure aliquid quidem nisi ad esse ex fugiat, aliquam debitis provident dolorem, vitae tenetur autem enim amet placeat adipisci!
                                     </p>
                                     <div class="rbt-button-group justify-content-start mt--30">
@@ -157,7 +157,7 @@
                             <div class="inner">
                                 <div class="clint-info-wrapper">
                                     <div class="thumb">
-                                        <img src="assets/images/testimonial/client-01.png" alt="Clint Images">
+                                        <img src="{{asset('/images/testimonial/client-01.png')}}" alt="Clint Images">
                                     </div>
                                     <div class="client-info">
                                         <h5 class="title">Martha Maldonado</h5>
@@ -174,8 +174,6 @@
                         </div>
                     </div>
                     <!-- End Single Testimonial  -->
-    
- 
     
                     <!-- Start Single Testimonial  -->
                     <div class="single-column-20">
@@ -592,7 +590,7 @@
         <!-- End Prestasi Area  -->
 
         <!-- Start About Us Area  -->
-        <div class="rbt-about-area about-style-1 bg-color-extra2 rbt-section-gap">
+        <div class="rbt-about-area about-style-1 bg-gradient-18 rbt-section-gap">
             <div class="container">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">
@@ -604,8 +602,8 @@
                         <div class="inner pl--50 pl_sm--5">
                             <div class="section-title text-start">
                                 <span class="subtitle bg-primary-opacity">About Integral Education</span>
-                                <h2 class="title">Apa itu Integral Education?</h2>
-                                <p class="description mt--20">Integral Education memfasilitasi siswa SD, SMP, SMA, dan Mahasiswa dalam mempersiapkan kegiatan belajar menghadapi ujian, olimpiade, dan persiapan masuk PTN bagi siswa SMA. Integral Education telah meluluskan puluhan siswa SMA ke perguruan tinggi diantaranya UI, UGM, IPB, UNDIP, UNPAD, dan lain-lain.</p>
+                                <h2 class="title text-white">Apa itu Integral Education?</h2>
+                                <p class="description mt--20" style="color: #E0E0E0">Integral Education memfasilitasi siswa SD, SMP, SMA, dan Mahasiswa dalam mempersiapkan kegiatan belajar menghadapi ujian, olimpiade, dan persiapan masuk PTN bagi siswa SMA. Integral Education telah meluluskan puluhan siswa SMA ke perguruan tinggi diantaranya UI, UGM, IPB, UNDIP, UNPAD, dan lain-lain.</p>
                                 <div class="read-more-btn mt--40">
                                     <a class="rbt-btn btn-gradient radius-round rbt-marquee-btn marquee-text-y" href="#">
                                         <span data-text="More About Us">

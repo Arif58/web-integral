@@ -9,11 +9,11 @@
         </li>
         <li class="rbt-breadcrumb-item active">Ubah Profil</li>
     </ul>
-    <div class="section-title">
-        <h4 class="rbt-title-style-3 border-bottom-0 pb--0 mb--20">Ubah Profil</h4>
-    </div>
     <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
         <!-- Start Profile Row  -->
+        <div class="section-title">
+            <h4 class="rbt-title-style-3 text-center border-bottom-0 pb--0 mb--20">Ubah Profil</h4>
+        </div>
         <form action="#" class="rbt-profile-row rbt-default-form row row--15">
             <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                 <div class="rbt-form-group">
@@ -85,6 +85,17 @@
                 <div class="filter-select rbt-modern-select">
                     <select id="city" class="w-100 mb--20">
                         <option selected disabled>Kabupaten/Kota</option>
+                        <option>John</option>
+                        <option>Due</option>
+                        <option>Due John</option>
+                        <option>johndue</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="filter-select rbt-modern-select">
+                    <select id="city" class="w-100 mb--20">
+                        <option selected disabled>Minat dan Bakat</option>
                         <option>John</option>
                         <option>Due</option>
                         <option>Due John</option>

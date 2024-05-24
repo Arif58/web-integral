@@ -30,7 +30,7 @@ Route::get('/register', function () {
     return view('web.sections.auth.register');
 });
 
-Route::get('/produk/try-out-utbk', function () {
+Route::get('/try-out-utbk', function () {
     return view('web.sections.landing-page.tryout');
 });
 
@@ -63,3 +63,7 @@ Route::get('/ubah-profil', function() {
 Route::get('/ubah-jurusan', function() {
     return view('web.sections.dashboard.edit-major');
 })->name('major-edit');
+
+Route::get('/pengerjaan-tryout', function() {
+    return view('web.sections.exam.tryout-test');
+})->name('tryout-test');

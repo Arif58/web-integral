@@ -12,9 +12,9 @@
                 </div>
                 <!-- Start Single Card  -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-primary-opacity">
+                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed" style="background: #E3EFF5;">
                         <div class="inner">
-                            <div class="rbt-round-icon bg-primary-opacity">
+                            <div class="rbt-round-icon" style="background: #BBD6E7;">
                                 <i class="feather-book-open"></i>
                             </div>
                             <div class="content">
@@ -29,9 +29,9 @@
 
                 <!-- Start Single Card  -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-secondary-opacity">
+                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed" style="background: #EFFFF6;">
                         <div class="inner">
-                            <div class="rbt-round-icon bg-secondary-opacity">
+                            <div class="rbt-round-icon" style="background:#DFF9EA;">
                                 <i class="feather-monitor"></i>
                             </div>
                             <div class="content">
@@ -47,9 +47,9 @@
 
                 <!-- Start Single Card  -->
                 <div class="col-lg-4 col-md-4 col-sm-6 col-12">
-                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed bg-violet-opacity">
+                    <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed" style="background: #F9F0A6;">
                         <div class="inner">
-                            <div class="rbt-round-icon bg-violet-opacity">
+                            <div class="rbt-round-icon" style="background: #F7EA86;">
                                 <i class="feather-award"></i>
                             </div>
                             <div class="content">

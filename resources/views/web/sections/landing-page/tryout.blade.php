@@ -3,15 +3,15 @@
 @section('content')
 <main class="rbt-main-wrapper">
     <!-- Start Banner Area -->
-    <div class="rbt-banner-area rbt-banner-7 bg-gradient-1 theme-shape header-transperent-spacer">
+    <div class="rbt-banner-area rbt-banner-7 bg-gradient-18 header-transperent-spacer">
         <div class="wrapper w-100">
             <div class="container">
                 <div class="row g-5 justify-content-between align-items-center">
                     <div class="col-lg-6 order-2 order-lg-1">
                         <div class="content">
                             <div class="inner">
-                                <h1 class="title">Lorem Ipsum</h1>
-                                <p class="description">
+                                <h1 class="title text-white">Lorem Ipsum</h1>
+                                <p class="description text-white">
                                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, quas dolorem! Iure aliquid quidem nisi ad esse ex fugiat, aliquam debitis provident dolorem, vitae tenetur autem enim amet placeat adipisci!
                                 </p>
                                 <div class="rbt-button-group justify-content-start mt--30">
@@ -135,7 +135,7 @@
                 <!-- Start Single Event  -->
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center py-4" style="background-color: #616161">
+                        <div class="rbt-card-img text-center py-4 bg-gradient-20">
                             <div class="container text-center my-4">
                                 <h1 class="color-white">
                                     4
@@ -168,7 +168,7 @@
                  <!-- Start Single Event  -->
                  <div class="col-lg-6 col-md-6 col-12">
                     <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center py-4" style="background-color: #616161">
+                        <div class="rbt-card-img text-center py-4 bg-gradient-20">
                             <div class="container text-center my-4">
                                 <h1 class="color-white">
                                     4
@@ -201,7 +201,7 @@
                  <!-- Start Single Event  -->
                  <div class="col-lg-6 col-md-6 col-12">
                     <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center py-4" style="background-color: #616161">
+                        <div class="rbt-card-img text-center py-4 bg-gradient-20">
                             <div class="container text-center my-4">
                                 <h1 class="color-white">
                                     4
@@ -234,7 +234,7 @@
                  <!-- Start Single Event  -->
                  <div class="col-lg-6 col-md-6 col-12">
                     <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center py-4" style="background-color: #616161">
+                        <div class="rbt-card-img text-center py-4 bg-gradient-20">
                             <div class="container text-center my-4">
                                 <h1 class="color-white">
                                     4

@@ -236,6 +236,8 @@
   --gradient-7: linear-gradient(218.15deg, var(--color-secondary) 0%, var(--color-primary) 100%);
   --gradient-8: linear-gradient(270deg, #9e77ff 0%, #4460ff 100%);
   --gradient-9: linear-gradient(180deg, #6827FF 0%, #E3F0FF 100%);
+  --gradient-10: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%);
+  --gradient-11: linear-gradient(rgb(61, 118, 166) 0%, rgb(29, 59, 100) 100%)
 }
 
 /**
@@ -1450,6 +1452,22 @@ ul.rbt-dropdown-menu li .sub-menu li a, ul.rbt-dropdown-menu li a .right-icon, u
   background: linear-gradient(151.71deg, #30C4FF 0%, #7259FF 100%) !important;
 }
 
+.bg-gradient-18 {
+  background: linear-gradient(rgb(29, 59, 100) 0%, rgb(55, 116, 155) 100%) !important;
+}
+
+.bg-gradient-19 {
+  background: linear-gradient(270deg, rgb(220, 127, 63) 0%, rgb(231, 164, 70) 100%) !important;
+}
+
+.bg-gradient-20 {
+  background: var(--gradient-11) !important;
+}
+
+.bg-gradient-21 {
+  background: linear-gradient(rgb(114, 187, 166) 0%, rgb(69, 143, 128) 100%)
+}
+
 .theme-mainbg-gradient {
   background-color: var(--color-light);
   position: relative;
@@ -1463,8 +1481,8 @@ ul.rbt-dropdown-menu li .sub-menu li a, ul.rbt-dropdown-menu li a .right-icon, u
     Background Opacity With Text Colors  
 ---------------------------------------*/
 .bg-primary-opacity {
-  background: var(--primary-opacity) !important;
-  color: var(--color-primary) !important;
+  background: #4682B2 !important;
+  color: #fff !important;
 }
 
 .bg-secondary-opacity {
@@ -8188,7 +8206,7 @@ textarea:-ms-input-placeholder {
 }
 
 .rbt-gradient-border {
-  background: linear-gradient(-145deg, #CFA2E8, #637FEA) !important;
+  background: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%) !important;
   z-index: 10;
 }
 .rbt-gradient-border::before {
@@ -8545,7 +8563,8 @@ hr {
   border-radius: var(--radius);
   background: var(--color-white);
   overflow: hidden;
-  box-shadow: var(--shadow-1);
+  /* box-shadow: var(--shadow-1); */
+  box-shadow: var(--shadow-3);
   padding: 30px;
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
@@ -10679,7 +10698,7 @@ Primary style
   display: block;
 }
 .logo a img {
-  max-height: 50px;
+  max-height: 91px;
   object-fit: cover;
 }
 
@@ -12041,8 +12060,8 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
   }
 }
 .rbt-header .rbt-header-wrapper {
-  background-color: #ffffff;
-  box-shadow: 0px 20px 34px #0000000d;
+  background-color: #1D3B64;
+  /* box-shadow: 0px 20px 34px #0000000d; */
 }
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .rbt-header .rbt-header-wrapper {
@@ -12075,11 +12094,10 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: var(--color-white);
+  background-color: #1D3B64;
   width: 100%;
   animation: stickySlideDown 0.65s cubic-bezier(0.23, 1, 0.32, 1) both;
   z-index: 99;
-  box-shadow: var(--shadow-1);
 }
 .rbt-header .rbt-header-wrapper.color-white-variation .mainmenu-nav .mainmenu > li > a {
   color: var(--color-white);
@@ -12737,7 +12755,7 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
 
 .dashboard-mainmenu li a.active span,
 .dashboard-mainmenu li a.active i {
-  color: var(--color-primary);
+  color: var(--gradient-10);
 }
 
 /*--------------------
@@ -13588,7 +13606,8 @@ fieldset:disabled {
 .rbt-btn.btn-gradient {
   color: var(--color-white);
   background-size: 300% 100%;
-  background-image: linear-gradient(to right, var(--color-primary), var(--color-secondary), var(--color-secondary), var(--color-primary));
+  border-radius: 100px;
+  background-image: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%);
 }
 .rbt-btn.btn-gradient.btn-gradient-2 {
   background-image: linear-gradient(to right, var(--color-pink), var(--color-violet), var(--color-violet), var(--color-pink));
@@ -13996,7 +14015,7 @@ fieldset:disabled {
   transition: 0.4s;
 }
 .rbt-btn.btn-border-gradient {
-  background: linear-gradient(90deg, #CFA2E8, #637FEA);
+  background: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%);
   border: none;
   outline: none;
   cursor: pointer;
@@ -14006,6 +14025,7 @@ fieldset:disabled {
   box-shadow: 0 10px 13px 0 rgba(209, 211, 237, 0.39);
   border-radius: 0;
 }
+
 .rbt-btn.btn-border-gradient::before {
   content: "";
   z-index: -1;
@@ -18638,6 +18658,26 @@ input:checked + .slider:before {
 @media only screen and (max-width: 767px) {
   .team-slide-activation-2 .swiper-wrapper {
     margin: -15px 0;
+  }
+}
+
+.bot-element-dashboard {
+  display: flex;
+  justify-content: end;
+  position: absolute;
+  width: 471px;
+  height: 162px;
+  z-index: 1;
+  bottom: 1px;
+  right: 1px;
+  background-image: url(../images/banner/Elemen.svg);
+}
+
+@media only screen and (max-width: 483px) {
+  .bot-element-dashboard {
+    width: 100%;
+    height: 162px;
+    background-image: url(../images/banner/Elemen.png);
   }
 }
 
@@ -26569,11 +26609,11 @@ blockquote.has-text-align-right cite,
   transition: 0.4s;
 }
 .rbt-sorting-list .course-switch-layout li button.active {
-  background: #757575;
+  background: var(--gradient-10);
   color: #fff;
 }
 .rbt-sorting-list .course-switch-layout li button.active i {
-  color: var(--color-primary);
+  color: var(--gradient-10);
 }
 
 .rbt-short-item .course-index {
@@ -27187,7 +27227,7 @@ Course Sidebar
   align-items: end;
   justify-content: space-between;
   position: absolute;
-  bottom: 30px;
+  top: 40px;
   padding: 0 40px;
   width: 100%;
   z-index: 2;
