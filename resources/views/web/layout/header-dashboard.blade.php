@@ -17,7 +17,7 @@
                 <ul class="quick-access">
 
                     <li class="rbt-user-wrapper d-none d-xl-block">
-                        <a href="#" style="color: white"><i class="feather-user"></i>Admin</a>                        
+                        <a href="#" style="color: white"><i class="feather-user"></i>{{ Auth::user()->username }}</a>                        
                         <div class="rbt-user-menu-list-wrapper mt--10" style="min-width: 165px">
                             <div class="inner">
                                 <ul class="user-list-wrapper">
@@ -27,9 +27,12 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="index.html">
+                                        <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <span>Keluar</span>
                                         </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                        </form>
                                     </li>
                                 </ul>
                             </div>

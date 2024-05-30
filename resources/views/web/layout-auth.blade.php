@@ -1,4 +1,7 @@
-@include('web.layout.head')
+<head>
+    @include('web.layout.head')
+    @stack('cdn')
+</head>
 <body class="rbt-elements-area bg-color-white rbt-section-gap d-flex">
     <div class="container my-auto">
         <div class="row gy-5 row--30">

@@ -2,17 +2,29 @@
 @section('title', 'Login Integral Education')
 @section('content')
 <div class="rbt-contact-form contact-form-style-1 max-width-auto">
+    @if (session('status'))
+    <div class="alert alert-warning" role="alert">
+        <span></span>{{ session('status') }}
+    </div>
+    @endif
     <h3 class="title">Login</h3>
-    <form>
+    <form action="/login" method="POST">
+        @csrf
         <div class="form-group">
-            <input name="con_name" type="text" />
-            <label>Email *</label>
-            <span class="focus-border"></span>
+            <input name="email" type="text" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="email"/>
+            @error('email')
+                <span class="message-info">{{ $message }}</span>  
+            @enderror
+            {{-- <label>Email *</label>
+            <span class="focus-border"></span> --}}
         </div>
         <div class="form-group">
-            <input name="con_email" type="email">
-            <label>Password *</label>
-            <span class="focus-border"></span>
+            <input name="password" type="password" value="{{ old('password') }}" class="form-control @error('password') is-invalid @enderror" placeholder="password">
+            @error('password')
+                <span class="message-info">{{ $message }}</span>
+            @enderror
+            {{-- <label>Password *</label>
+            <span class="focus-border"></span> --}}
         </div>
 
         <div class="row mb--30">

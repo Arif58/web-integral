@@ -28,7 +28,7 @@
                         <div class="rbt-tutor-information">
                             <div class="rbt-tutor-information-left">
                                 <div class="tutor-content">
-                                    <h5 class="title" style="font-size: 38px;">Emily Hannah</h5>
+                                    <h5 class="title" style="font-size: 38px;">{{ Auth::user()->fullname }}</h5>
                                     <ul class="rbt-meta rbt-meta-white mt--5">
                                         <li><i class="feather-book"></i>5 Try Out Terdaftar</li>
                                         <span style="color: white">|</span>

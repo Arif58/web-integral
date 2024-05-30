@@ -39,21 +39,23 @@
 
             <div class="header-right">
 
+                @if (Auth::check())
+                    
                 <!-- Navbar Icons -->
                 <ul class="quick-access">
 
                     <li class="account-access rbt-user-wrapper d-none d-xl-block">
-                        <a href="#" style="color: white"><i class="feather-user"></i>Admin</a>                        
+                        <a href="#" style="color: white"><i class="feather-user"></i>{{ Auth::user()->username }}</a>                        
                         <div class="rbt-user-menu-list-wrapper">
                             <div class="inner">
                                 <div class="rbt-admin-profile">
                                     <div class="admin-info">
-                                        <span class="name">Nipa Bali</span>
+                                        <span class="name">{{ Auth::user()->fullname }}</span>
                                     </div>
                                 </div>
                                 <ul class="user-list-wrapper">
                                     <li>
-                                        <a href="instructor-dashboard.html">
+                                        <a href="/dashboard">
                                             <i class="feather-home"></i>
                                             <span>My Dashboard</span>
                                         </a>
@@ -62,12 +64,6 @@
                                 </ul>
                                 <hr class="mt--10 mb--10">
                                 <ul class="user-list-wrapper">
-                                    <li>
-                                        <a href="instructor-settings.html">
-                                            <i class="feather-settings"></i>
-                                            <span>Edit Profile</span>
-                                        </a>
-                                    </li>
                                     <li>
                                         <a href="index.html">
                                             <i class="feather-log-out"></i>
@@ -80,7 +76,7 @@
                     </li>
 
                 </ul>
-
+                @else
                 <div class="row me-2 btn-wrapper d-none d-xl-block">
                     <div class="col-lg-12">
                         <div class="rbt-button-group">
@@ -89,6 +85,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 {{-- <div class="row rbt-btn-wrapper d-none d-xl-block">
                     <div class="col-lg">
                         

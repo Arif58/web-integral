@@ -3,29 +3,39 @@
 @section('content')
 <div class="rbt-contact-form contact-form-style-1 max-width-auto">
     <h3 class="title">Register</h3>
-    <form class="max-width-auto">
+    <form class="max-width-auto" action="/register" method="POST">
+        @csrf
         <div class="form-group">
-            <input name="register-email" type="text" />
-            <label>Email *</label>
-            <span class="focus-border"></span>
+            <input name="email" type="text" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="email"/>
+            @error('email')
+                <span class="message-info">{{ $message }}</span>  
+            @enderror
+            {{-- <label>Email *</label> --}}
+            {{-- <span class="focus-border"></span> --}}
         </div>
 
         <div class="form-group">
-            <input name="register_user" type="text">
-            <label>Username</label>
-            <span class="focus-border"></span>
+            <input name="username" type="text" value="{{ old('username') }}" class="form-control @error('username') is-invalid @enderror" placeholder="username">
+            @error('username')
+                <span class="message-info">{{ $message }}</span>
+            @enderror
+            {{-- <label>Username</label> --}}
+            {{-- <span class="focus-border"></span> --}}
         </div>
 
         <div class="form-group">
-            <input name="register_password" type="password">
-            <label>Password</label>
-            <span class="focus-border"></span>
+            <input name="password" type="password" value="{{ old('password') }}" class="form-control @error('password') is-invalid @enderror" placeholder="password">
+            @error('password')
+                <span class="message-info">{{ $message }}</span>
+            @enderror
+            {{-- <label>Password</label> --}}
+            {{-- <span class="focus-border"></span> --}}
         </div>
 
         <div class="form-group">
-            <input name="register_conpassword" type="password">
-            <label>Confirm Password</label>
-            <span class="focus-border"></span>
+            <input name="password_confirmation" type="password" value="{{ old('password_confirmation') }}" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="confirm password">
+            {{-- <label>Confirm Password</label> --}}
+            {{-- <span class="focus-border"></span> --}}
         </div>
 
         <div class="form-submit-group">
