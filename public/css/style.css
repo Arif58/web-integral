@@ -29370,3 +29370,8 @@ Course Sidebar
 .rotate-180 {
     transform: rotate(180deg);
 }
+
+.previewContainer {
+  max-width: 130px;
+  height: auto;
+}

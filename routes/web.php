@@ -53,7 +53,7 @@ Route::middleware(['auth', 'verified', 'cors'])->group(function () {
 
         Route::controller(TestimoniController::class)->group(function () {
             Route::get('/testimoni-siswa', 'index')->name('testimonials');
-
+            Route::get('/testimoni-siswa/get', 'getTestimonials')->name('testimonials.get');
             Route::post('/testimoni-siswa', 'store')->name('testimonials.store');
         });
     });

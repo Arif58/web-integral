@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('achievement');
             $table->string('school');
-            $table->string('photo');
-            $table->integer('highlighted_order');
+            $table->string('photo')->nullable();
+            $table->integer('highlighted_order')->nullable();
             $table->timestamps();
         });
     }

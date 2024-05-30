@@ -27,6 +27,7 @@
     <script src="{{ asset("js/vendor/countdown.js")}}"></script>
     <script src="{{ asset("js/vendor/plyr.js")}}"></script>
     <!-- Main JS -->
-    <script src="{{ asset("js/main.js")}}"></script>  
+    <script src="{{ asset("js/main.js")}}"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @stack('scripts')
   

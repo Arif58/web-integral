@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('major');
-            $table->string('testimonials');
-            $table->string('photo');
-            $table->integer('highlighted_order');
+            $table->text('testimonials');
+            $table->string('photo')->nullable();
+            $table->integer('highlighted_order')->nullable();
             $table->timestamps();
         });
     }

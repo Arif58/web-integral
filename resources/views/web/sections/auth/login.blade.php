@@ -4,7 +4,7 @@
 <div class="rbt-contact-form contact-form-style-1 max-width-auto">
     @if (session('status'))
     <div class="alert alert-warning" role="alert">
-        <span></span>{{ session('status') }}
+        <span>{{ session('status') }}</span>
     </div>
     @endif
     <h3 class="title">Login</h3>

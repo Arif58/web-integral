@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('tutors', function (Blueprint $table) {
             $table->id();
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->string('name');
             $table->string('position');
             $table->string('education');
-            $table->integer('highlighted_order');
+            $table->integer('highlighted_order')->nullable();
             $table->timestamps();
         });
     }

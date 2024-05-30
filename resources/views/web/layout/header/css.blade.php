@@ -16,3 +16,5 @@
  <link rel="stylesheet" href="{{ asset('css/plugins/magnigy-popup.min.css') }}">
  <link rel="stylesheet" href="{{ asset('css/plugins/plyr.css') }}">
  <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+ @stack('css')
