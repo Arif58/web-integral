@@ -44,7 +44,7 @@ Route::get('/payment', function() {
 })->name('payment'); 
 
 
-Route::middleware(['auth', 'verified', 'cors'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/lengkapi-profil', function() {
         return view('web.sections.dashboard.complete-profile');
     })->name('complete-profile');
@@ -55,6 +55,10 @@ Route::middleware(['auth', 'verified', 'cors'])->group(function () {
             Route::get('/testimoni-siswa', 'index')->name('testimonials');
             Route::get('/testimoni-siswa/get', 'getTestimonials')->name('testimonials.get');
             Route::post('/testimoni-siswa', 'store')->name('testimonials.store');
+            Route::post('/testimoni-siswa/delete/{id}', 'destroy')->name('testimonials.destroy');
+            Route::put('/testimoni-siswa/update/{id}', 'edit')->name('testimonials.update');
+            
+            Route::post('testimoni/update-highlight', 'updateHighlight')->name('testimonials.update-highlight');
         });
     });
 

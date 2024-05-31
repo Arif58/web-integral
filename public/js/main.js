@@ -125,9 +125,9 @@
         menuCurrentLink: function () {
             var currentPage = location.pathname.split("/"),
             current = currentPage[currentPage.length-1];
-            $('.mainmenu li a, .dashboard-mainmenu li a, .for-right-content .rbt-course-main-content li a').each(function(){
+            $('.mainmenu li a, .dashboard-mainmenu li a, .for-right-content .rbt-course-main-content li a, .rbt-default-sidebar-wrapper .rbt-default-sidebar-list li a').each(function(){
                 var $this = $(this);
-                if($this.attr('href') === current){
+                 if($this.attr('href') === location.pathname){
                     $this.addClass('active');
                     $this.parents('.has-menu-child-item').addClass('menu-item-open')
                 }

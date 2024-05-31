@@ -6,6 +6,13 @@
     <title>Lengkapi Profil</title>
     @include('web.layout.head')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        .checkout-form input, .checkout-form textarea, .rbt-default-form input, .rbt-default-form textarea {
+            border: 0;
+            border-bottom: 1px solid var(--color-badge-1);
+            border-radius: 0;
+        }
+    </style>
 </head>
 <body class="rbt-elements-area bg-color-white rbt-section-gap d-flex">
     <div class="container">
@@ -18,6 +25,7 @@
                 <h4 class="rbt-title-style-3 text-center border-bottom-0 pb--0 mb--20">Profil Saya</h4>
             </div>
             <form action="#" class="rbt-profile-row rbt-default-form row row--15">
+                @csrf
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="rbt-form-group">
                         {{-- <label for="firstname">Nama Lengkap</label> --}}
@@ -146,11 +154,6 @@
     <script>
         $(document).ready(function () {
             var provinceSelect = $('#province');
-            if (provinceSelect.length) {
-                console.log("Element <select> province ditemukan");
-            } else {
-                console.error("Element <select> province tidak ditemukan");
-            }
             // Mengambil data provinsi dari API
             $.ajax({
                 url: 'https://wilayah.id/api/provinces.json',

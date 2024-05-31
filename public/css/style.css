@@ -156,7 +156,7 @@
   --color-card-4: #e9f6ff;
   --color-card-5: #5024D1;
   --color-card-6: #3B3B46;
-  --color-success: #3EB75E;
+  --color-success: #29A039;
   --color-danger: #FF0003;
   --color-warning: #FF8F3C;
   --color-info: #1BA2DB;
@@ -12286,7 +12286,7 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
   transition: 0.3s;
 }
 .rbt-header .mainmenu-nav .mainmenu > li > a.active {
-  color: var(--color-primary);
+  color: #DC7E3F !important;
 }
 .rbt-header .mainmenu-nav .mainmenu > li:hover > a, .rbt-header .mainmenu-nav .mainmenu > li.active > a {
   color: var(--color-primary) !important;
@@ -12765,7 +12765,7 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
 
 .dashboard-mainmenu li a.active span,
 .dashboard-mainmenu li a.active i {
-  color: var(--gradient-10);
+  color: #DC7E3F !important;
 }
 
 /*--------------------
@@ -26852,7 +26852,7 @@ Course Sidebar
 .rbt-widget-details .rbt-default-sidebar-list li a:hover,
 .rbt-default-sidebar-wrapper .rbt-course-details-list-wrapper li a:hover,
 .rbt-default-sidebar-wrapper .rbt-default-sidebar-list li a:hover {
-  color: var(--color-primary);
+  color: #DC7E3F;
 }
 .rbt-widget-details .rbt-course-details-list-wrapper li + li,
 .rbt-widget-details .rbt-default-sidebar-list li + li,

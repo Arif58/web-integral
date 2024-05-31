@@ -14,6 +14,21 @@
         div.dt-container {
             margin-bottom: 20px;
         }
+        .bootstrap-select .dropdown-menu{
+            height: 70px;
+        }
+
+        .bootstrap-select {
+            width: 100% !important;
+        }
+        .inner .show {
+            max-height: 100%;
+            font-size: 14px;
+        }
+
+        .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
+            font-size: 14px;
+        }
     </style>
 @endpush
 @section('content')
@@ -26,7 +41,7 @@
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0">
                 Testimoni Siswa
             </h4>
-            <button class="rbt-btn btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#formModal" >Tambah +</button>
+            <button class="rbt-btn btn-sm bg-color-success" type="button" data-bs-toggle="modal" data-bs-target="#formModal" >Tambah +</button>
         </div>
         <div style="border-bottom: 2px solid var(--color-border-2); margin-bottom: 24px;">
             <table class="table" id="testimonials-table">
@@ -40,48 +55,22 @@
                         <th>Aksi</th>
                     </tr>
                 </thead>
-                {{-- <tbody>
-                    @foreach ($testimonials as $key => $testimonial)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                            <td>{{ $testimonial->name }}</td>
-                            <td>{{ $testimonial->major }}</td>
-                            <td>{{ $testimonial->testimonials }}</td>
-                            <td>
-                                <img src="{{ asset('storage/' . $testimonial->photo) }}" alt="{{ $testimonial->name }}" style="max-width: 100px; height: auto;">
-                            </td>
-                            <td>
-                                <a href="" class="btn btn-warning btn-sm">Edit</a>
-                                <form action="" method="POST" style="display: inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Hapus</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody> --}}
             </table>
         </div>
         <div class="section-title d-flex justify-content-between mb-4">
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0">
                 Testimoni yang Ditampilkan
             </h4>
-            <a href="/ubah-profil"><p class="font-weight-light">Ubah</p></a>
+            <a type="button" data-bs-toggle="modal" data-bs-target="#highlightedModal"><p class="font-weight-light">Ubah</p></a>
         </div>
-        <div class="row">
-            @foreach ($highlightOrderRowOne as $key => $item)
-                <div class="col">
-                    <b>Testimoni {{ $item->highlighted_order}}</b>
-                    <p class="">{{ $item->name }}</p>
-                </div>
-            @endforeach
-        </div>
-        <div class="row mt-5">
-            @foreach ($highlightOrderRowTwo as $key => $item)
-                <div class="col">
-                    <b>Testimoni {{ $item->highlighted_order}}</b>
-                    <div class="rbt-profile-content b2">{{ $item->name }}</div>
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
+            @foreach (range(1, 8) as $order)
+                @php
+                    $item = $highlightedOrder->firstWhere('highlighted_order', $order);
+                @endphp
+                <div class="col mb-4 px-3">
+                    <b>Testimoni {{ $order }}</b>
+                    <p class="">{{ $item ? $item->name : 'tidak ada' }}</p>
                 </div>
             @endforeach
         </div>
@@ -134,20 +123,128 @@
                                     @enderror
                                 </div>
                             </div>
-                            <button type="button" class="rbt-btn btn-border btn-md radius-round-10" data-bs-dismiss="modal" style="width: 280px;">Batal</button>
-                            <button type="submit" class="rbt-btn btn-gradient btn-md" style="color: white; border-radius: 4px; width: 280px">Simpan</button>
+                            <div class="row">
+                                <div class="col-4">
+                                    <button type="button" class="rbt-btn btn-border btn-md bg-color-white radius-round-10" data-bs-dismiss="modal" style="width: 100%; color: black;">Batal</button> 
+                                </div>
+                                <div class="col-8">
+                                    <button type="submit" class="rbt-btn btn-gradient btn-md" style="color: white; border-radius: 4px; width: 100%">Simpan</button>
+                                </div>
+                            </div>
+                            
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- End Modal Daftar -->
+    <!-- End Modal form testimoni -->
+
+    <!-- Edit Modal -->
+    <div class="rbt-default-modal modal fade @if($errors->any()) show @endif" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" style="background: transparent" @if($errors->any()) style="display: block;" @endif>
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 650px;">
+            <div class="modal-content" style="padding: 30px">
+                <div class="modal-header pb--5 justify-content-center">
+                    <h4 class="title">
+                        Ubah Testimoni Siswa
+                    </h4>
+                </div>
+                <div class="modal-body" style="border-top: 1px solid #dee2e6">
+                    <div class="inner checkout-form">
+                        <form action="" id="editTestimonialForm" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <input type="hidden" id="testimonialId" name="testimonialId">
+                            <div class="row">
+                                <div class="col-12 mb--30">
+                                    <label for="name">Nama Lengkap</label>
+                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control mb-0">
+                                </div>
+
+                                <div class="col-12 mb--30">
+                                    <label for="major">Jurusan</label>
+                                    <input type="text" id="major" name="major" placeholder="Jurusan" class="form-control mb-0">
+                                </div>
+
+                                <div class="col-12 mb--30">
+                                    <label for="testimonials">Testimoni</label>
+                                    <textarea id="testimonials" rows="5" name="testimonials" class="form-control mb-0"></textarea>
+                                </div>
+
+                                <div class="col-12 mb--30">
+                                    <label for="photo">Foto</label>
+                                    <div id="previewContainer"></div>
+                                    <input type="file" id="photo" name="photo" accept="image/*" style="border: none; margin-bottom: 0px;">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <button type="button" class="rbt-btn btn-border btn-md bg-color-white radius-round-10" data-bs-dismiss="modal" style="width: 100%; color: black;">Batal</button> 
+                                </div>
+                                <div class="col-8">
+                                    <button type="submit" class="rbt-btn btn-gradient btn-md" style="color: white; border-radius: 4px; width: 100%">Simpan</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <!-- start modal edit highlighted -->
+    <div class="rbt-default-modal modal fade @if($errors->any()) show @endif" id="highlightedModal" tabindex="-1" aria-labelledby="highlightedModalLabel" aria-hidden="true" style="background: transparent" @if($errors->any()) style="display: block;" @endif>
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 900px;">
+            <div class="modal-content" style="padding: 30px">
+                <div class="modal-header pb--5 justify-content-center">
+                    <h4 class="title">
+                        Testimoni yang Ditampilkan
+                    </h4>
+                </div>
+                <div class="modal-body" style="border-top: 1px solid #dee2e6">
+                    <form action="{{ route('testimonials.update-highlight') }}" method="POST">
+                        @csrf
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
+                            @foreach (range(1, 8) as $order)
+                            @php
+                                $item = $highlightedOrder->firstWhere('highlighted_order', $order);
+                                $selectName = "highlighted_order[]";
+                                $errorName = "highlighted_order.".$order-1;
+                            @endphp
+                            <div class="col mb-4">
+                                <b>Testimoni {{ $order }}</b>
+                                <select name="{{ $selectName }}" id="highlighted_order.{{ $order-1 }}" class="highlighted-select">
+                                    <option value="" @if(!$item) selected @endif>Tidak Ada</option>
+                                    @foreach ($testimonies as $testimonial)
+                                        <option value="{{ $testimonial->id }}" @if($item && $item->id == $testimonial->id) selected @endif>{{ $testimonial->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error($errorName)
+                                    <span class="text-danger" style="font-size: 10px;">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            @endforeach
+                        </div>
+                        <div class="row justify-content-center mt--55">
+                            <div class="col-3">
+                                <button type="button" class="rbt-btn btn-border btn-md bg-color-white radius-round-10" data-bs-dismiss="modal" style="width: 100%; color: black;">Batal</button> 
+                            </div>
+                            <div class="col-5">
+                                <button type="submit" class="rbt-btn btn-gradient btn-md" style="color: white; border-radius: 4px; width: 100%">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal edit highlighted --> 
 
 </div>
 <input type="hidden" id="table-url" value="{{ route('testimonials.get') }}">
 @endsection
 @push('scripts')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.js"></script>
 <script>
     document.getElementById('photo').addEventListener('change', function(event) {
@@ -170,11 +267,17 @@
 
     // JavaScript untuk menampilkan kembali modal jika ada error validasi
     document.addEventListener('DOMContentLoaded', function() {
-        @if($errors->any())
+        @if($errors->has('name') || $errors->has('major') || $errors->has('testimonials') || $errors->has('photo'))
             var formModal = new bootstrap.Modal(document.getElementById('formModal'));
             formModal.show();
+            
+        @elseif($errors->has('highlighted_order') || $errors->has('highlighted_order.*'))
+            var highlightedModal = new bootstrap.Modal(document.getElementById('highlightedModal'));
+            highlightedModal.show();
         @endif
     });
+
+
 </script>
 <script>
     $(document).ready(function() {
@@ -197,5 +300,46 @@
             ]
         });
     });
+
+    // Handle delete button click
+    $('#testimonials-table').on('click', '.delete-testimonial', function() {
+        var testimonialId = $(this).data('id');
+        if (confirm('Are you sure you want to delete this testimonial?')) {
+            $.ajax({
+                url: '/testimoni-siswa/delete/' + testimonialId,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    alert('Testimonial deleted successfully.');
+                    location.reload();
+                },
+                error: function(xhr) {
+                    alert('Error deleting testimonial.');
+                }
+            });
+        }
+    });
+
+    // Handle edit button click
+    $('#testimonials-table').on('click', '.edit-testimonial', function(e) {
+        e.preventDefault();
+        var rowData = $(this).closest('tr').find('td');
+        var testimonialId = $(this).data('id');
+        var route = '{{ route("testimonials.update", ":id") }}';
+        route = route.replace(':id', testimonialId);
+
+        // Fill the modal form with the current data
+        $('#editModal #testimonialId').val(testimonialId);
+        $('#editModal #name').val(rowData.eq(1).text());
+        $('#editModal #major').val(rowData.eq(2).text());
+        $('#editModal #testimonials').val(rowData.eq(3).text());
+        $('#editModal #editTestimonialForm').attr('action', route);
+        
+        // Show the modal
+        $('#editModal').modal('show');
+    });
 </script>
+
 @endpush

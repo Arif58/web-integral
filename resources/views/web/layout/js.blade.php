@@ -10,7 +10,7 @@
     <script src="{{ asset("js/vendor/magnify.min.js")}}"></script>
     <script src="{{ asset("js/vendor/jquery-appear.js")}}"></script>
     <script src="{{ asset("js/vendor/odometer.js")}}"></script>
-    <script src="{{ asset("js/vendor/backtotop.js")}}"></script>
+    {{-- <script src="{{ asset("js/vendor/backtotop.js")}}"></script> --}}
     <script src="{{ asset("js/vendor/isotop.js")}}"></script>
     <script src="{{ asset("js/vendor/imageloaded.js")}}"></script>
 
@@ -22,12 +22,11 @@
     <script src="{{ asset("js/vendor/bootstrap-select.min.js")}}"></script>
     <script src="{{ asset("js/vendor/jquery-ui.js")}}"></script>
     <script src="{{ asset("js/vendor/magnify-popup.min.js")}}"></script>
-    <script src="{{ asset("js/vendor/paralax-scroll.js")}}"></script>
-    <script src="{{ asset("js/vendor/paralax.min.js")}}"></script>
-    <script src="{{ asset("js/vendor/countdown.js")}}"></script>
+    {{-- <script src="{{ asset("js/vendor/paralax-scroll.js")}}"></script> --}}
+    {{-- <script src="{{ asset("js/vendor/paralax.min.js")}}"></script> --}}
+    {{-- <script src="{{ asset("js/vendor/countdown.js")}}"></script> --}}
     <script src="{{ asset("js/vendor/plyr.js")}}"></script>
     <!-- Main JS -->
     <script src="{{ asset("js/main.js")}}"></script> 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @stack('scripts')
   

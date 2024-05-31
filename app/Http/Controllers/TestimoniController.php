@@ -14,9 +14,9 @@ class TestimoniController extends Controller
      */
     public function index()
     {
-        $highlightOrderRowOne = Testimoni::whereBetween('highlighted_order', [1,4])->get();
-        $highlightOrderRowTwo = Testimoni::whereBetween('highlighted_order', [5,8])->get();
-        return view('web.sections.dashboard.admin.testimonial', compact('highlightOrderRowOne', 'highlightOrderRowTwo'));
+        $highlightedOrder = Testimoni::whereBetween('highlighted_order', [1,8])->get();
+        $testimonies = Testimoni::orderBy('name', 'asc')->get();
+        return view('web.sections.dashboard.admin.testimonial', compact('highlightedOrder', 'testimonies'));
     }
 
     public function getTestimonials()
@@ -29,12 +29,44 @@ class TestimoniController extends Controller
                 return '<img src="' . asset('storage/' . $testimoni->photo) . '" class="img-fluid" style="max-width: 100px;">';
             })
             ->addColumn('action', function ($testimoni) {
-                return '<a href="" class="btn btn-warning btn-lg me-2"><i class="fas fa-edit"></i></a>
+                return '
+                <button class="btn btn-warning btn-lg me-2 edit-testimonial" data-id="' . $testimoni->id . '"><i class="fas fa-edit"></i></button>
                 <button class="btn btn-lg btn-danger delete-testimonial" data-id="' . $testimoni->id . '"><i class="fas fa-trash"></i></button>';
             })
             ->rawColumns(['photo', 'action'])
             ->make(true);
     }
+
+    public function updateHighlight(Request $request)
+    {
+        // Validasi input
+
+        // dd($request->all());
+        $request->validate([
+            'highlighted_order.*' => 'nullable|distinct|integer',
+        ], [
+            'highlighted_order.*.distinct' => 'Nama testimoni tidak boleh sama.',
+        ]);
+
+        $highlightedOrder = $request->highlighted_order;
+
+        // Proses data yang diterima dari formulir
+        foreach ($highlightedOrder as $order => $testimonialId) {
+            if ($testimonialId == null) {
+                Testimoni::where('highlighted_order', $order + 1)->update([
+                    'highlighted_order' => null,
+                ]);
+            }
+            else {
+                Testimoni::where('id', $testimonialId)->update([
+                    'highlighted_order' => $order + 1,
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Testimoni yang ditampilkan berhasil diperbarui.');
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -99,16 +131,37 @@ class TestimoniController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Testimoni $testimoni)
+    public function update(Request $request, $id)
     {
-        //
+        $testimonial = Testimoni::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'major' => 'required|string|max:255',
+            'testimonials' => 'required|string',
+            'photo' => 'nullable|image|max:2048',
+        ]);
+
+        $testimonial->name = $request->name;
+        $testimonial->major = $request->major;
+        $testimonial->testimonials = $request->testimonials;
+
+        if ($request->hasFile('photo')) {
+            $testimonial->photo = $request->file('photo')->store('photos', 'public');
+        }
+
+        $testimonial->save();
+
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Testimoni $testimoni)
+    public function destroy($id)
     {
-        //
+        $testimoni = Testimoni::findOrFail($id);
+        $testimoni->delete();
+        return redirect()->back();
     }
 }

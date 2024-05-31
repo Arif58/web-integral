@@ -1,4 +1,4 @@
-<li><a href="/dashboard" class="active" aria-current="true"><i class="feather-home"></i><span>Dashboard</span></a></li>
+<li><a href="/dashboard"><i class="feather-home"></i><span>Dashboard</span></a></li>
 
 @if (Auth::user()->role === 'student')
 <li><a href="/tryout-saya"><i class="feather-book-open"></i><span>Try Out Saya</span></a></li>
@@ -38,7 +38,12 @@
 </li>
 @endif
 <li><a href="/profil"><i class="feather-user"></i><span>Profil Saya</span></a></li>
-<li><a href="/dashboard"><i class="feather-log-out"></i><span>Keluar</span></a></li>
+<li>
+    <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="feather-log-out"></i><span>Keluar</span></a>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+        @csrf
+    </form>
+</li>
 @push('scripts')
 <script>
     $(document).ready(function() {

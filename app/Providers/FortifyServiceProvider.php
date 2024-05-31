@@ -69,7 +69,7 @@ class FortifyServiceProvider extends ServiceProvider
 
         // verify
         Fortify::verifyEmailView(function () {
-            return redirect('/login')->with('status', 'Silakan verifikasi alamat email Anda dengan mengklik tautan yang telah kami kirimkan ke email Anda.');
+            return redirect('/lengkapi-profil');
         });
 
         $this->app->singleton(
