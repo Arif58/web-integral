@@ -58,18 +58,18 @@
         </div>
         <div class="section-title d-flex justify-content-between mb-4">
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0" style="font-size: 18px;">
-                Testimoni Siswa
+                Prestasi Siswa
             </h4>
             <button class="rbt-btn btn-sm bg-color-success" type="button" data-bs-toggle="modal" data-bs-target="#formModal" >Tambah<i class="feather feather-plus"></i></button>
         </div>
         <div style="border-bottom: 2px solid var(--color-border-2); margin-bottom: 24px;">
-            <table class="table" id="testimonials-table">
+            <table class="table" id="student-achievements-table">
                 <thead class="bg-gradient-18">
                     <tr class="color-white">
                         <th>No</th>
                         <th>Nama</th>
-                        <th>Jurusan</th>
-                        <th>Testimoni</th>
+                        <th>Prestasi</th>
+                        <th>Asal Sekolah</th>
                         <th>Foto</th>
                         <th>Aksi</th>
                     </tr>
@@ -78,35 +78,35 @@
         </div>
         <div class="section-title d-flex justify-content-between mb-4">
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0">
-                Testimoni yang Ditampilkan
+                Prestasi yang Ditampilkan
             </h4>
             <a type="button" data-bs-toggle="modal" data-bs-target="#highlightedModal"><p class="font-weight-light">Ubah</p></a>
         </div>
-        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
-            @foreach (range(1, 8) as $order)
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-3">
+            @foreach (range(1, 6) as $order)
                 @php
                     $item = $highlightedOrder->firstWhere('highlighted_order', $order);
                 @endphp
                 <div class="col px-3" style="margin-bottom: 24px;">
-                    <b>Testimoni {{ $order }}</b>
+                    <b>Prestasi {{ $order }}</b>
                     <p style="margin-top: 8px; color: #9f9f9f">{{ $item ? $item->name : 'tidak ada' }}</p>
                 </div>
             @endforeach
         </div>
     </div>
 
-     <!-- start modal form testimoni -->
+     <!-- Start Modal create student achievement -->
      <div class="rbt-default-modal modal fade @if($errors->any()) show @endif" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true" style="background: transparent" @if($errors->any()) style="display: block;" @endif>
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 650px;">
             <div class="modal-content" style="padding: 30px">
                 <div class="modal-header pb--5 justify-content-center">
                     <h4 class="title">
-                        Tambah Testimoni Siswa
+                        Tambah Prestasi Siswa
                     </h4>
                 </div>
                 <div class="modal-body" style="border-top: 1px solid #dee2e6">
                     <div class="inner checkout-form">
-                        <form action="{{ route('testimonials.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('student-achievements.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-12 mb--30">
@@ -118,17 +118,17 @@
                                 </div>
 
                                 <div class="col-12 mb--30">
-                                    <label for="major">Jurusan</label>
-                                    <input type="text" id="major" name="major" placeholder="Jurusan" class="form-control @error('major') is-invalid @enderror mb-0" value="{{ old('major') }}">
-                                    @error('major')
+                                    <label for="achievement">Prestasi</label>
+                                    <input type="text" id="achievement" name="achievement" placeholder="Prestasi" class="form-control @error('achievement') is-invalid @enderror mb-0" value="{{ old('achievement') }}">
+                                    @error('achievement')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
                                 </div>
 
                                 <div class="col-12 mb--30">
-                                    <label for="testimonials">Testimoni</label>
-                                    <textarea id="testimonials" rows="5" name="testimonials" class="form-control @error('testimonials') is-invalid @enderror mb-0">{{ old('testimonials') }}</textarea>
-                                    @error('testimonials')
+                                    <label for="school">asal sekolah</label>
+                                    <input type="text" id="school" name="school" placeholder="Asal Sekolah" class="form-control @error('school') is-invalid @enderror mb-0" value="{{ old('school') }}">
+                                    @error('school')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
                                 </div>
@@ -157,9 +157,9 @@
             </div>
         </div>
     </div>
-    <!-- End Modal form testimoni -->
+    <!-- End Modal create student achievement -->
 
-    <!-- Edit Modal -->
+    <!-- Start Modal edit student achievement -->
     <div class="rbt-default-modal modal fade @if($errors->any()) show @endif" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" style="background: transparent" @if($errors->any()) style="display: block;" @endif>
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 650px;">
             <div class="modal-content" style="padding: 30px">
@@ -173,21 +173,30 @@
                         <form action="" id="editTestimonialForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" id="testimonialId" name="testimonialId">
+                            <input type="hidden" id="studentAchievementId" name="studentAchievementId">
                             <div class="row">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Lengkap</label>
-                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control mb-0">
+                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0">
+                                    @error('name')
+                                        <span class="message-info">{{ $message }}</span>  
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 mb--30">
-                                    <label for="major">Jurusan</label>
-                                    <input type="text" id="major" name="major" placeholder="Jurusan" class="form-control mb-0">
+                                    <label for="achievement">Prestasi</label>
+                                    <input type="text" id="achievement" name="achievement" placeholder="Jurusan" class="form-control @error('achievement') is-invalid @enderror mb-0" value="{{ old('achievement') }}">
+                                    @error('achievement')
+                                        <span class="message-info">{{ $message }}</span>  
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 mb--30">
-                                    <label for="testimonials">Testimoni</label>
-                                    <textarea id="testimonials" rows="5" name="testimonials" class="form-control mb-0"></textarea>
+                                    <label for="school">Asal Sekolah</label>
+                                    <input type="text" id="school" name="school" placeholder="Asal Sekolah" class="form-control @error('school') is-invalid @enderror mb-0" value="{{ old('school') }}">
+                                    @error('school')
+                                        <span class="message-info">{{ $message }}</span>  
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 mb--30">
@@ -210,6 +219,7 @@
             </div>
         </div>
     </div>
+    <!-- End Modal edit student achievement -->
 
    <!-- start modal edit highlighted -->
     <div class="rbt-default-modal modal fade @if($errors->any()) show @endif" id="highlightedModal" tabindex="-1" aria-labelledby="highlightedModalLabel" aria-hidden="true" style="background: transparent" @if($errors->any()) style="display: block;" @endif>
@@ -217,25 +227,25 @@
             <div class="modal-content" style="padding: 30px">
                 <div class="modal-header pb--5 justify-content-center">
                     <h4 class="title">
-                        Testimoni yang Ditampilkan
+                        Prestasi yang Ditampilkan
                     </h4>
                 </div>
                 <div class="modal-body" style="border-top: 1px solid #dee2e6">
-                    <form action="{{ route('testimonials.update-highlight') }}" method="POST">
+                    <form action="{{ route('student-achievements.update-highlight') }}" method="POST">
                         @csrf
-                        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4">
-                            @foreach (range(1, 8) as $order)
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-3">
+                            @foreach (range(1, 6) as $order)
                             @php
                                 $item = $highlightedOrder->firstWhere('highlighted_order', $order);
                                 $selectName = "highlighted_order[]";
                                 $errorName = "highlighted_order.".$order-1;
                             @endphp
                             <div class="col mb-4">
-                                <b>Testimoni {{ $order }}</b>
+                                <b>Prestasi {{ $order }}</b>
                                 <select name="{{ $selectName }}" id="highlighted_order.{{ $order-1 }}" class="highlighted-select">
                                     <option value="" @if(!$item) selected @endif>Tidak Ada</option>
-                                    @foreach ($testimonies as $testimonial)
-                                        <option value="{{ $testimonial->id }}" @if($item && $item->id == $testimonial->id) selected @endif>{{ $testimonial->name }}</option>
+                                    @foreach ($achievements as $achievement)
+                                        <option value="{{ $achievement->id }}" @if($item && $item->id == $achievement->id) selected @endif>{{ $achievement->name }}</option>
                                     @endforeach
                                 </select>
                                 @error($errorName)
@@ -260,7 +270,7 @@
     <!-- End Modal edit highlighted --> 
 
 </div>
-<input type="hidden" id="table-url" value="{{ route('testimonials.get') }}">
+<input type="hidden" id="table-url" value="{{ route('student-achievements.get') }}">
 @endsection
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -304,7 +314,7 @@
 
     // JavaScript untuk menampilkan kembali modal jika ada error validasi
     document.addEventListener('DOMContentLoaded', function() {
-        @if($errors->has('name') || $errors->has('major') || $errors->has('testimonials') || $errors->has('photo'))
+        @if($errors->has('name') || $errors->has('achievement') || $errors->has('school') || $errors->has('photo'))
             var formModal = new bootstrap.Modal(document.getElementById('formModal'));
             formModal.show();
             
@@ -318,7 +328,7 @@
 </script>
 <script>
     $(document).ready(function() {
-        $('#testimonials-table').DataTable({
+        $('#student-achievements-table').DataTable({
             ordering: true,
             processing: true,
             serverSide: true,
@@ -330,8 +340,8 @@
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '10px'},
                 { data: 'name', name: 'name', width: '15%'},
-                { data: 'major', name: 'major', width: '15%'},
-                { data: 'testimonials', name: 'testimonials', width: '35%'},
+                { data: 'achievement', name: 'achievement', width: '15%'},
+                { data: 'school', name: 'school', width: '35%'},
                 { data: 'photo', name: 'photo' },
                 { data: 'action', name: 'action' },
             ]
@@ -339,39 +349,39 @@
     });
 
     // Handle delete button click
-    $('#testimonials-table').on('click', '.delete-testimonial', function() {
-        var testimonialId = $(this).data('id');
-        if (confirm('Are you sure you want to delete this testimonial?')) {
+    $('#student-achievements-table').on('click', '.delete-achievement', function() {
+        var studentAchievementId = $(this).data('id');
+        if (confirm('Are you sure you want to delete this student achievement?')) {
             $.ajax({
-                url: '/testimoni-siswa/delete/' + testimonialId,
+                url: '/prestasi-siswa/delete/' + studentAchievementId,
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    alert('Testimonial deleted successfully.');
+                    alert('Student Achievement deleted successfully.');
                     location.reload();
                 },
                 error: function(xhr) {
-                    alert('Error deleting testimonial.');
+                    alert('Error deleting student achievement.');
                 }
             });
         }
     });
 
     // Handle edit button click
-    $('#testimonials-table').on('click', '.edit-testimonial', function(e) {
+    $('#student-achievements-table').on('click', '.edit-achievement', function(e) {
         e.preventDefault();
         var rowData = $(this).closest('tr').find('td');
-        var testimonialId = $(this).data('id');
-        var route = '{{ route("testimonials.update", ":id") }}';
-        route = route.replace(':id', testimonialId);
+        var studentAchievementId = $(this).data('id');
+        var route = '{{ route("student-achievements.update", ":id") }}';
+        route = route.replace(':id', studentAchievementId);
 
         // Fill the modal form with the current data
-        $('#editModal #testimonialId').val(testimonialId);
+        $('#editModal #studentAchievementId').val(studentAchievementId);
         $('#editModal #name').val(rowData.eq(1).text());
-        $('#editModal #major').val(rowData.eq(2).text());
-        $('#editModal #testimonials').val(rowData.eq(3).text());
+        $('#editModal #achievement').val(rowData.eq(2).text());
+        $('#editModal #school').val(rowData.eq(3).text());
         $('#editModal #editTestimonialForm').attr('action', route);
 
         // Set the image preview

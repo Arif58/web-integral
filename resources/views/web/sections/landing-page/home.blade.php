@@ -785,7 +785,7 @@
                             </h2>
                             <div id="collapseTwo1" class="accordion-collapse collapse show" aria-labelledby="headingTwo1" data-bs-parent="#accordionExampleb2">
                                 <div class="accordion-body card-body">
-                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
+                                    <p class="faq">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
                                 </div>
                             </div>
                         </div>
@@ -798,7 +798,7 @@
                             </h2>
                             <div id="collapseTwo2" class="accordion-collapse collapse" aria-labelledby="headingTwo2" data-bs-parent="#accordionExampleb2">
                                 <div class="accordion-body card-body">
-                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
+                                    <p class="faq">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
                                 </div>
                             </div>
                         </div>
@@ -811,7 +811,7 @@
                             </h2>
                             <div id="collapseTwo3" class="accordion-collapse collapse" aria-labelledby="headingTwo3" data-bs-parent="#accordionExampleb2">
                                 <div class="accordion-body card-body">
-                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
+                                    <p class="faq">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
                                 </div>
                             </div>
                         </div>

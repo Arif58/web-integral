@@ -30,10 +30,15 @@
                                 <div class="tutor-content">
                                     <h5 class="title" style="font-size: 38px;">{{ Auth::user()->fullname }}</h5>
                                     <ul class="rbt-meta rbt-meta-white mt--5">
+                                        @if (Auth::user()->role === 'student')
                                         <li><i class="feather-book"></i>5 Try Out Terdaftar</li>
                                         <span style="color: white">|</span>
                                         <li><i class="feather-award"></i>4 IE Gems</li>
+                                        @elseif (Auth::user()->role === 'admin')
+                                        <li><i class="feather-user"></i>{{ Auth::user()->role}}</li>
+                                        @endif
                                     </ul>
+                                    
                                 </div>
                             </div>
                         </div>

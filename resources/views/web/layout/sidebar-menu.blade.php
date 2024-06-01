@@ -14,7 +14,7 @@
         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionOne">
             <ul>
                 <li class="mt-2 mb--0 ms-3"><a href="/testimoni-siswa"><span>Testimoni Siswa</span></a></li>
-                <li class="border-top-0 my-0 ms-3"><a href="/tryout/hasil"><span>Prestasi Siswa</span></a></li>
+                <li class="border-top-0 my-0 ms-3"><a href="/prestasi-siswa"><span>Prestasi Siswa</span></a></li>
                 <li class="border-top-0 my-0 ms-3"><a href="/tryout/hasil"><span>Tutor</span></a></li>
                 <li class="border-top-0 my-0 ms-3"><a href="/tryout/hasil"><span>FAQ</span></a></li>
             </ul>

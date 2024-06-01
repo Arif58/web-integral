@@ -125,7 +125,7 @@
   --color-violet: #800080;
   --color-pink: #DB7093;
   --color-heading: #192335;
-  --color-body: #6b7385;
+  --color-body: #616161;
   --color-white: #ffffff;
   --color-white-off: #FFFFFFAB;
   --color-bodyest: #273041;
@@ -796,10 +796,15 @@ h6,
 }
 
 p {
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.45;
   margin-bottom: 30px;
 }
+
+.faq {
+  font-size: 18px !important;
+}
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   p {
     font-size: 16px;
@@ -12289,7 +12294,7 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
   color: #DC7E3F !important;
 }
 .rbt-header .mainmenu-nav .mainmenu > li:hover > a, .rbt-header .mainmenu-nav .mainmenu > li.active > a {
-  color: var(--color-primary) !important;
+  color: #DC7E3F !important;
 }
 .rbt-header .mainmenu-nav .mainmenu > li:hover > a i, .rbt-header .mainmenu-nav .mainmenu > li.active > a i {
   transform: rotate(180deg);
@@ -14492,7 +14497,7 @@ span.transparent-button:hover i {
 
 .rbt-title-style-3 {
   margin-bottom: 24px;
-  font-size: 20px;
+  font-size: 22px;
   padding-bottom: 20px;
   border-bottom: 2px solid var(--color-border-2);
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StudentAchievementController;
 use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\TryoutDetailController;
 use Illuminate\Support\Facades\Auth;
@@ -56,9 +57,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/testimoni-siswa/get', 'getTestimonials')->name('testimonials.get');
             Route::post('/testimoni-siswa', 'store')->name('testimonials.store');
             Route::post('/testimoni-siswa/delete/{id}', 'destroy')->name('testimonials.destroy');
-            Route::put('/testimoni-siswa/update/{id}', 'edit')->name('testimonials.update');
-            
+            Route::put('/testimoni-siswa/update/{id}', 'update')->name('testimonials.update');
             Route::post('testimoni/update-highlight', 'updateHighlight')->name('testimonials.update-highlight');
+        });
+
+        Route::controller(StudentAchievementController::class)->group(function () {
+            Route::get('/prestasi-siswa', 'index')->name('student-achievements');
+            Route::get('/prestasi-siswa/get', 'getStudentAchievements')->name('student-achievements.get');
+            Route::post('/prestasi-siswa', 'store')->name('student-achievements.store');
+            Route::post('/prestasi-siswa/delete/{id}', 'destroy')->name('student-achievements.destroy');
+            Route::put('/prestasi-siswa/update/{id}', 'update')->name('student-achievements.update');
+            Route::post('prestasi/update-highlight', 'updateHighlight')->name('student-achievements.update-highlight');
         });
     });
 

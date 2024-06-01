@@ -40,8 +40,6 @@ class TestimoniController extends Controller
     public function updateHighlight(Request $request)
     {
         // Validasi input
-
-        // dd($request->all());
         $request->validate([
             'highlighted_order.*' => 'nullable|distinct|integer',
         ], [
@@ -65,15 +63,6 @@ class TestimoniController extends Controller
         }
 
         return redirect()->back()->with('success', 'Testimoni yang ditampilkan berhasil diperbarui.');
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        
     }
 
     /**
@@ -113,22 +102,6 @@ class TestimoniController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Testimoni $testimoni)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Testimoni $testimoni)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
@@ -142,13 +115,14 @@ class TestimoniController extends Controller
             'photo' => 'nullable|image|max:2048',
         ]);
 
+        if ($request->hasFile('photo')) {
+            $imageName = Storage::disk('public')->put('posts/images', request()->file('photo'));
+            $testimonial->photo = $imageName;
+        }
+
         $testimonial->name = $request->name;
         $testimonial->major = $request->major;
         $testimonial->testimonials = $request->testimonials;
-
-        if ($request->hasFile('photo')) {
-            $testimonial->photo = $request->file('photo')->store('photos', 'public');
-        }
 
         $testimonial->save();
 
