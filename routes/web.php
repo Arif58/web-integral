@@ -1,8 +1,14 @@
 <?php
 
+use App\Http\Controllers\ClusterController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MajorController;
+use App\Http\Controllers\QnaController;
 use App\Http\Controllers\StudentAchievementController;
 use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\TryoutDetailController;
+use App\Http\Controllers\TutorController;
+use App\Http\Controllers\UniversityController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -17,9 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('web.sections.landing-page.home');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/login', function () {
     return view('web.sections.auth.login');
@@ -40,15 +44,14 @@ Route::get('/try-out-utbk', function () {
 Route::get('/produk/try-out-utbk/detail', [TryoutDetailController::class, 'index'])->name('tryout-detail');
 
 
-Route::get('/payment', function() {
-    return view('web.sections.landing-page.payment');
-})->name('payment'); 
-
-
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/lengkapi-profil', function() {
         return view('web.sections.dashboard.complete-profile');
     })->name('complete-profile');
+
+    Route::get('/payment', function() {
+        return view('web.sections.landing-page.payment');
+    })->name('payment'); 
 
     Route::middleware(['admin'])->group(function () {
 
@@ -68,6 +71,47 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/prestasi-siswa/delete/{id}', 'destroy')->name('student-achievements.destroy');
             Route::put('/prestasi-siswa/update/{id}', 'update')->name('student-achievements.update');
             Route::post('prestasi/update-highlight', 'updateHighlight')->name('student-achievements.update-highlight');
+        });
+
+        Route::controller(TutorController::class)->group(function () {
+            Route::get('/tutor', 'index')->name('tutors');
+            Route::get('/tutor/get', 'getTutors')->name('tutors.get');
+            Route::post('/tutor', 'store')->name('tutors.store');
+            Route::post('/tutor/delete/{id}', 'destroy')->name('tutors.destroy');
+            Route::put('/tutor/update/{id}', 'update')->name('tutors.update');
+            Route::post('tutor/update-highlight', 'updateHighlight')->name('tutors.update-highlight');
+        });
+
+        Route::controller(QnaController::class)->group(function () {
+            Route::get('/faq', 'index')->name('faqs');
+            Route::get('/faq/get', 'getFaqs')->name('faqs.get');
+            Route::post('/faq', 'store')->name('faqs.store');
+            Route::post('/faq/delete/{id}', 'destroy')->name('faqs.destroy');
+            Route::put('/faq/update/{id}', 'update')->name('faqs.update');
+        });
+
+        Route::controller(ClusterController::class)->group(function () {
+            Route::get('/rumpun', 'index')->name('clusters');
+            Route::get('/rumpun/get', 'getClusters')->name('clusters.get');
+            Route::post('/rumpun', 'store')->name('clusters.store');
+            Route::post('/rumpun/delete/{id}', 'destroy')->name('clusters.destroy');
+            Route::put('/rumpun/update/{id}', 'update')->name('clusters.update');
+        });
+
+        Route::controller(UniversityController::class)->group(function () {
+            Route::get('/universitas', 'index')->name('universities');
+            Route::get('/universitas/get', 'getUniversities')->name('universities.get');
+            Route::post('/universitas', 'store')->name('universities.store');
+            Route::post('/universitas/delete/{id}', 'destroy')->name('universities.destroy');
+            Route::put('/universitas/update/{id}', 'update')->name('universities.update');
+        });
+
+        Route::controller(MajorController::class)->group(function () {
+            Route::get('/program-studi', 'index')->name('majors');
+            Route::get('/program-studi/get', 'getMajors')->name('majors.get');
+            Route::post('/program-studi', 'store')->name('majors.store');
+            Route::post('/program-studi/delete/{id}', 'destroy')->name('majors.destroy');
+            Route::put('/program-studi/update/{id}', 'update')->name('majors.update');
         });
     });
 

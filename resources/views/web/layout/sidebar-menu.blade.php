@@ -15,8 +15,8 @@
             <ul>
                 <li class="mt-2 mb--0 ms-3"><a href="/testimoni-siswa"><span>Testimoni Siswa</span></a></li>
                 <li class="border-top-0 my-0 ms-3"><a href="/prestasi-siswa"><span>Prestasi Siswa</span></a></li>
-                <li class="border-top-0 my-0 ms-3"><a href="/tryout/hasil"><span>Tutor</span></a></li>
-                <li class="border-top-0 my-0 ms-3"><a href="/tryout/hasil"><span>FAQ</span></a></li>
+                <li class="border-top-0 my-0 ms-3"><a href="/tutor"><span>Tutor</span></a></li>
+                <li class="border-top-0 my-0 ms-3"><a href="/faq"><span>FAQ</span></a></li>
             </ul>
         </div>
     </div>
@@ -29,9 +29,9 @@
         </a>
         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionTwo">
             <ul>
-                <li class="mt-2 mb--0 ms-3"><a href="/tryout"><span>Rumpun</span></a></li>
-                <li class="border-top-0 my-0 ms-3"><a href="/tryout/hasil"><span>Universitas</span></a></li>
-                <li class="border-top-0 my-0 ms-3"><a href="/tryout/hasil"><span>Program Studi</span></a></li>
+                <li class="mt-2 mb--0 ms-3"><a href="/rumpun"><span>Rumpun</span></a></li>
+                <li class="border-top-0 my-0 ms-3"><a href="/universitas"><span>Universitas</span></a></li>
+                <li class="border-top-0 my-0 ms-3"><a href="/program-studi"><span>Program Studi</span></a></li>
             </ul>
         </div>
     </div>

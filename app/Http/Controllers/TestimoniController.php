@@ -112,7 +112,7 @@ class TestimoniController extends Controller
             'name' => 'required|string|max:255',
             'major' => 'required|string|max:255',
             'testimonials' => 'required|string',
-            'photo' => 'nullable|image|max:2048',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg|file|max:2048',
         ]);
 
         if ($request->hasFile('photo')) {

@@ -20442,6 +20442,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
   overflow: hidden;
   min-width: 70px;
   border: 2px solid var(--primary-opacity);
+  aspect-ratio: 1 / 1;
 }
 .rbt-testimonial-box .clint-info-wrapper .thumb img {
   height: 100%;
@@ -29380,3 +29381,4 @@ Course Sidebar
   max-width: 130px;
   height: auto;
 }
+

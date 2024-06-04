@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\University;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class UniversityController extends Controller
 {
@@ -12,15 +13,22 @@ class UniversityController extends Controller
      */
     public function index()
     {
-        //
+        return view('web.sections.dashboard.admin.university');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getUniversities()
     {
-        //
+        $query = University::query();
+
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('action', function ($university) {
+                return '
+                <button class="btn btn-warning btn-lg me-2 edit-university" data-id="' . $university->id . '"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-lg btn-danger delete-university" data-id="' . $university->id . '"><i class="fas fa-trash"></i></button>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**
@@ -28,38 +36,47 @@ class UniversityController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        //validasi input
+        $request->validate([
+            'name' => 'required',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(University $university)
-    {
-        //
-    }
+        //proses data yang diterima dari formulir
+        University::create([
+            'name' => $request->name,
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(University $university)
-    {
-        //
+        return back()->with('success', 'Universitas berhasil ditambahkan.');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, University $university)
+    public function update(Request $request, $id)
     {
-        //
+        $university = University::findOrFail($id);
+
+        //validasi input
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        //proses data yang diterima dari formulir
+        $university->update([
+            'name' => $request->name,
+        ]);
+
+        return back()->with('success', 'Universitas berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(University $university)
+    public function destroy($id)
     {
-        //
+        $university = University::findOrFail($id);
+        $university->delete();
+
+        return back()->with('success', 'Universitas berhasil dihapus.');
     }
 }

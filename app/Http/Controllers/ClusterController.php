@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cluster;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class ClusterController extends Controller
 {
@@ -12,54 +13,71 @@ class ClusterController extends Controller
      */
     public function index()
     {
-        //
+        return view('web.sections.dashboard.admin.cluster');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getClusters()
     {
-        //
+        $query = Cluster::query();
+
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('action', function ($cluster) {
+                return '
+                <button class="btn btn-warning btn-lg me-2 edit-cluster" data-id="' . $cluster->id . '"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-lg btn-danger delete-cluster" data-id="' . $cluster->id . '"><i class="fas fa-trash"></i></button>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
-    }
+        //validasi input
+        $request->validate([
+            'name' => 'required',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Cluster $cluster)
-    {
-        //
-    }
+        //proses data yang diterima dari formulir
+        Cluster::create([
+            'name' => $request->name,
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cluster $cluster)
-    {
-        //
+        return back()->with('success', 'Cluster berhasil ditambahkan.');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cluster $cluster)
+    public function update(Request $request,$id)
     {
-        //
+        $cluster = Cluster::findOrFail($id);
+
+        //validasi input
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        //proses data yang diterima dari formulir
+        $cluster->update([
+            'name' => $request->name,
+        ]);
+
+        return back()->with('success', 'Cluster berhasil diperbarui.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cluster $cluster)
+    public function destroy($id)
     {
-        //
+        $cluster = Cluster::findOrFail($id);
+        $cluster->delete();
+
+        return back()->with('success', 'Cluster berhasil dihapus.');
     }
 }

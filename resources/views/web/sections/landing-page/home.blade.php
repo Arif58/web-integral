@@ -152,319 +152,56 @@
                 <div class="scroll-animation scroll-right-left">
     
                     <!-- Start Single Testimonial  -->
+                    @foreach ($testimonialHighlightRowOne as $item)
                     <div class="single-column-20">
                         <div class="rbt-testimonial-box">
                             <div class="inner">
                                 <div class="clint-info-wrapper">
                                     <div class="thumb">
-                                        <img src="{{asset('/images/testimonial/client-01.png')}}" alt="Clint Images">
+                                        <img src="{{ asset('storage/'.$item->photo)}}" alt="Testimoni Images">
                                     </div>
                                     <div class="client-info">
-                                        <h5 class="title">Martha Maldonado</h5>
-                                        <span>Executive Chairman <i>@ Google</i></span>
+                                        <h5 class="title">{{ $item->name }}</h5>
+                                        <span>{{ $item->major }}</span>
                                     </div>
                                 </div>
                                 <div class="description">
-                                    <p class="subtitle-3">After the launch, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
+                                    <p class="subtitle-3">{{ $item->testimonials }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- End Single Testimonial  -->
-    
-                    <!-- Start Single Testimonial  -->
-                    <div class="single-column-20">
-                        <div class="rbt-testimonial-box">
-                            <div class="inner">
-                                <div class="clint-info-wrapper">
-                                    <div class="thumb">
-                                        <img src="assets/images/testimonial/client-07.png" alt="Clint Images">
-                                    </div>
-                                    <div class="client-info">
-                                        <h5 class="title">Mildred W. Diaz</h5>
-                                        <span>Executive Officer <i>@ Yelp</i></span>
-                                    </div>
-                                </div>
-                                <div class="description">
-                                    <p class="subtitle-3">Online leaning, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Testimonial  -->
-    
-                    <!-- Start Single Testimonial  -->
-                    <div class="single-column-20">
-                        <div class="rbt-testimonial-box">
-                            <div class="inner">
-                                <div class="clint-info-wrapper">
-                                    <div class="thumb">
-                                        <img src="assets/images/testimonial/client-08.png" alt="Clint Images">
-                                    </div>
-                                    <div class="client-info">
-                                        <h5 class="title">Christopher H. Win</h5>
-                                        <span>Product Designer <i>@ Google</i></span>
-                                    </div>
-                                </div>
-                                <div class="description">
-                                    <p class="subtitle-3">Remote learning, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Testimonial  -->
-    
-                    <!-- Start Single Testimonial  -->
-                    <div class="single-column-20">
-                        <div class="rbt-testimonial-box">
-                            <div class="inner">
-                                <div class="clint-info-wrapper">
-                                    <div class="thumb">
-                                        <img src="assets/images/testimonial/client-01.png" alt="Clint Images">
-                                    </div>
-                                    <div class="client-info">
-                                        <h5 class="title">Martha Maldonado</h5>
-                                        <span>Executive Chairman <i>@ Google</i></span>
-                                    </div>
-                                </div>
-                                <div class="description">
-                                    <p class="subtitle-3">University managemnet, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
+
                     <!-- End Single Testimonial  -->
                 </div>
             </div>
     
             <div class="scroll-animation-wrapper mt--30">
                 <div class="scroll-animation scroll-left-right">
-    
+                    
                     <!-- Start Single Testimonial  -->
+                    @foreach ($testimonialHighlightRowTwo as $item)
                     <div class="single-column-20">
                         <div class="rbt-testimonial-box">
                             <div class="inner">
                                 <div class="clint-info-wrapper">
                                     <div class="thumb">
-                                        <img src="assets/images/testimonial/client-01.png" alt="Clint Images">
+                                        <img src="{{ asset('storage/'.$item->photo)}}" alt="Testimoni Images">
                                     </div>
                                     <div class="client-info">
-                                        <h5 class="title">Martha Maldonado</h5>
-                                        <span>Executive Chairman <i>@ Google</i></span>
+                                        <h5 class="title">{{ $item->name }}</h5>
+                                        <span>{{ $item->major }}</span>
                                     </div>
                                 </div>
                                 <div class="description">
-                                    <p class="subtitle-3">After the launch, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
+                                    <p class="subtitle-3">{{ $item->testimonials }}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- End Single Testimonial  -->
-    
-                    <!-- Start Single Testimonial  -->
-                    <div class="single-column-20">
-                        <div class="rbt-testimonial-box">
-                            <div class="inner">
-                                <div class="clint-info-wrapper">
-                                    <div class="thumb">
-                                        <img src="assets/images/testimonial/client-02.png" alt="Clint Images">
-                                    </div>
-                                    <div class="client-info">
-                                        <h5 class="title">Michael D. Lovelady</h5>
-                                        <span>CEO <i>@ Google</i></span>
-                                    </div>
-                                </div>
-                                <div class="description">
-                                    <p class="subtitle-3">Histudy education, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Testimonial  -->
-    
-                    <!-- Start Single Testimonial  -->
-                    <div class="single-column-20">
-                        <div class="rbt-testimonial-box">
-                            <div class="inner">
-                                <div class="clint-info-wrapper">
-                                    <div class="thumb">
-                                        <img src="assets/images/testimonial/client-03.png" alt="Clint Images">
-                                    </div>
-                                    <div class="client-info">
-                                        <h5 class="title">Valerie J. Creasman</h5>
-                                        <span>Executive Designer <i>@ Google</i></span>
-                                    </div>
-                                </div>
-                                <div class="description">
-                                    <p class="subtitle-3">Our educational, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Testimonial  -->
-    
-                    <!-- Start Single Testimonial  -->
-                    <div class="single-column-20">
-                        <div class="rbt-testimonial-box">
-                            <div class="inner">
-                                <div class="clint-info-wrapper">
-                                    <div class="thumb">
-                                        <img src="assets/images/testimonial/client-04.png" alt="Clint Images">
-                                    </div>
-                                    <div class="client-info">
-                                        <h5 class="title">Hannah R. Sutton</h5>
-                                        <span>Executive Chairman <i>@ Facebook</i></span>
-                                    </div>
-                                </div>
-                                <div class="description">
-                                    <p class="subtitle-3">People says about, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Testimonial  -->
-                    <!-- Start Single Testimonial  -->
-                    <div class="single-column-20">
-                        <div class="rbt-testimonial-box">
-                            <div class="inner">
-                                <div class="clint-info-wrapper">
-                                    <div class="thumb">
-                                        <img src="assets/images/testimonial/client-05.png" alt="Clint Images">
-                                    </div>
-                                    <div class="client-info">
-                                        <h5 class="title">Pearl B. Hill</h5>
-                                        <span>Chairman SR <i>@ Facebook</i></span>
-                                    </div>
-                                </div>
-                                <div class="description">
-                                    <p class="subtitle-3">Like this histudy, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Testimonial  -->
-    
-                    <!-- Start Single Testimonial  -->
-                    <div class="single-column-20">
-                        <div class="rbt-testimonial-box">
-                            <div class="inner">
-                                <div class="clint-info-wrapper">
-                                    <div class="thumb">
-                                        <img src="assets/images/testimonial/client-06.png" alt="Clint Images">
-                                    </div>
-                                    <div class="client-info">
-                                        <h5 class="title">Mandy F. Wood</h5>
-                                        <span>SR Designer <i>@ Google</i></span>
-                                    </div>
-                                </div>
-                                <div class="description">
-                                    <p class="subtitle-3">Educational template, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Testimonial  -->
-    
-                    <!-- Start Single Testimonial  -->
-                    <div class="single-column-20">
-                        <div class="rbt-testimonial-box">
-                            <div class="inner">
-                                <div class="clint-info-wrapper">
-                                    <div class="thumb">
-                                        <img src="assets/images/testimonial/client-07.png" alt="Clint Images">
-                                    </div>
-                                    <div class="client-info">
-                                        <h5 class="title">Mildred W. Diaz</h5>
-                                        <span>Executive Officer <i>@ Yelp</i></span>
-                                    </div>
-                                </div>
-                                <div class="description">
-                                    <p class="subtitle-3">Online leaning, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Testimonial  -->
-    
-                    <!-- Start Single Testimonial  -->
-                    <div class="single-column-20">
-                        <div class="rbt-testimonial-box">
-                            <div class="inner">
-                                <div class="clint-info-wrapper">
-                                    <div class="thumb">
-                                        <img src="assets/images/testimonial/client-08.png" alt="Clint Images">
-                                    </div>
-                                    <div class="client-info">
-                                        <h5 class="title">Christopher H. Win</h5>
-                                        <span>Product Designer <i>@ Google</i></span>
-                                    </div>
-                                </div>
-                                <div class="description">
-                                    <p class="subtitle-3">Remote learning, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Testimonial  -->
-    
-                    <!-- Start Single Testimonial  -->
-                    <div class="single-column-20">
-                        <div class="rbt-testimonial-box">
-                            <div class="inner">
-                                <div class="clint-info-wrapper">
-                                    <div class="thumb">
-                                        <img src="assets/images/testimonial/client-01.png" alt="Clint Images">
-                                    </div>
-                                    <div class="client-info">
-                                        <h5 class="title">Martha Maldonado</h5>
-                                        <span>Executive Chairman <i>@ Google</i></span>
-                                    </div>
-                                </div>
-                                <div class="description">
-                                    <p class="subtitle-3">University managemnet, vulputate at sapien sit amet,
-                                        auctor iaculis lorem. In vel hend rerit nisi. Vestibulum eget risus velit.</p>
-                                    <a class="rbt-btn-link" href="#">Read Project Case Study<i
-                                    class="feather-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
+                   
                     <!-- End Single Testimonial  -->
                 </div>
             </div>
@@ -487,19 +224,19 @@
 
                             <div class="swiper-wrapper">
                                 <!-- Start Single Slide  -->
+                                @foreach ($studentAchievementsHighlight as $item)
                                 <div class="swiper-slide">
                                     <div class="single-slide">
                                          <!-- Start Single Team  -->
                                         <div class="">
                                             <div class="rbt-team team-style-default style-three rbt-hover">
                                                 <div class="inner">
-                                                    <div class="thumbnail"><img src="{{ asset("images/team/team-08.jpg") }}" alt="Corporate Template"></div>
+                                                    <div class="thumbnail"><img src="{{ asset('storage/'.$item->photo)}}" alt="Corporate Template" style="height: 360px;" loading="lazy"></div>
                                                     <div class="content">
-                                                        <h2 class="title">John Due</h2>
-                                                        <h6 class="subtitle theme-gradient">Depertment Head</h6>
+                                                        <h2 class="title" style="font-size: 24px;">{{$item->name}}</h2>
+                                                        <h6 class="subtitle">{{$item->achievement}}</h6>
                                                         <span class="team-form">
-                                                        <i class="feather-map-pin"></i>
-                                                        <span class="location">CO Miego, AD,USA</span>
+                                                        {{ $item->school }}
                                                         </span>
                                                     </div>
                                                 </div>
@@ -508,78 +245,8 @@
                                         <!-- End Single Team  -->
                                     </div>
                                 </div>
-                                <!-- End Single Slide  -->
-                                <!-- Start Single Slide  -->
-                                <div class="swiper-slide">
-                                    <div class="single-slide">
-                                         <!-- Start Single Team  -->
-                                        <div class="">
-                                            <div class="rbt-team team-style-default style-three rbt-hover">
-                                                <div class="inner">
-                                                    <div class="thumbnail"><img src="{{ asset("images/team/team-08.jpg") }}" alt="Corporate Template"></div>
-                                                    <div class="content">
-                                                        <h2 class="title">Annisa</h2>
-                                                        <h6 class="subtitle theme-gradient">Depertment Head</h6>
-                                                        <span class="team-form">
-                                                        <i class="feather-map-pin"></i>
-                                                        <span class="location">CO Miego, AD,USA</span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Team  -->
-                                    </div>
-                                </div>
-                                <!-- End Single Slide  -->
-
-                                <!-- Start Single Slide  -->
-                                <div class="swiper-slide">
-                                    <div class="single-slide">
-                                        <!-- Start Single Team  -->
-                                        <div class="">
-                                            <div class="rbt-team team-style-default style-three rbt-hover">
-                                                <div class="inner">
-                                                    <div class="thumbnail"><img src="{{ asset("images/team/team-08.jpg") }}" alt="Corporate Template"></div>
-                                                    <div class="content">
-                                                        <h2 class="title">Zahra</h2>
-                                                        <h6 class="subtitle theme-gradient">Depertment Head</h6>
-                                                        <span class="team-form">
-                                                        <i class="feather-map-pin"></i>
-                                                        <span class="location">CO Miego, AD,USA</span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Team  -->
-                                    </div>
-                                </div>
-                                <!-- End Single Slide  -->
-
-                                <!-- Start Single Slide  -->
-                                <div class="swiper-slide">
-                                    <div class="single-slide">
-                                        <!-- Start Single Team  -->
-                                        <div class="">
-                                            <div class="rbt-team team-style-default style-three rbt-hover">
-                                                <div class="inner">
-                                                    <div class="thumbnail"><img src="{{ asset("images/team/team-08.jpg") }}" alt="Corporate Template"></div>
-                                                    <div class="content">
-                                                        <h2 class="title">Finns</h2>
-                                                        <h6 class="subtitle theme-gradient">Depertment Head</h6>
-                                                        <span class="team-form">
-                                                        <i class="feather-map-pin"></i>
-                                                        <span class="location">CO Miego, AD,USA</span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Team  -->
-                                    </div>
-                                </div>
-                                <!-- End Single Slide  -->
+                                @endforeach
+                              
                             </div>
                             <div class="rbt-swiper-pagination"></div>
                         </div>
@@ -634,78 +301,24 @@
                 </div>
                 <div class="row row--15 mt_dec--30">
                     <!-- Start Single Team  -->
+                    @foreach ($tutorHighlight as $item)
                     <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30">
                         <div class="team">
-                            <div class="thumbnail"><img src="{{ asset("images/team/team-05.jpg") }}"  alt="Blog Images">
+                            <div class="thumbnail"><img src="{{ asset('storage/'.$item->photo)}}" alt="Foto Tutor" style="height: 400px;" loading="lazy">
                             </div>
                             <div class="content">
-                                <h4 class="title">Hafidz Agraprana</h4>
-                                <p class="designation mb--0 mt-2">Depertment Head</p>
-                                <p class="designation" style="font-size: 11px;">S1 Matematika - Universitas Indonesia</p>
+                                <h4 class="title">{{$item->name}}</h4>
+                                <p class="designation mb--0 mt-2">{{$item->position}}</p>
+                                <p class="designation" style="font-size: 11px;">{{$item->education}}</p>
                             </div>
-                            <ul class="social-icon">
+                            {{-- <ul class="social-icon">
                                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
                                 <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
                                 <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            </ul>
+                            </ul> --}}
                         </div>
                     </div>
-                    <!-- End Single Team  -->
-    
-                    <!-- Start Single Team  -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30">
-                        <div class="team">
-                            <div class="thumbnail"><img src="{{ asset("images/team/team-09.jpg") }}"  alt="Blog Images">
-                            </div>
-                            <div class="content">
-                                <h4 class="title">Rafiq Bali</h4>
-                                <p class="designation mb-1 mt-2">Tutor Alpro</p>
-                                <p class="designation" style="font-size: 11px;">D4 Teknologi Rekayasa Perangkat Lunak - Universitas Gadjah Mada</p>
-                            </div>
-                            <ul class="social-icon">
-                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- End Single Team  -->
-    
-                    <!-- Start Single Team  -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30">
-                        <div class="team">
-                            <div class="thumbnail"><img src="{{ asset("images/team/team-03.jpg") }}"  alt="Blog Images">
-                            </div>
-                            <div class="content">
-                                <h4 class="title">Fatima Usa</h4>
-                                <p class="designation">Depertment Head</p>
-                            </div>
-                            <ul class="social-icon">
-                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- End Single Team  -->
-    
-                    <!-- Start Single Team  -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt--30">
-                        <div class="team">
-                            <div class="thumbnail"><img src="{{ asset("images/team/team-03.jpg") }}"  alt="Blog Images">
-                            </div>
-                            <div class="content">
-                                <h4 class="title">John Due</h4>
-                                <p class="designation">Depertment Head</p>
-                            </div>
-                            <ul class="social-icon">
-                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- End Single Team  -->
+                    @endforeach
     
                 </div>
             </div>
@@ -749,13 +362,13 @@
                         <div class="tab-content">
                             <div class="tab-pane fade advance-tab-content-1 active show" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="thumbnail">
-                                    <img src="{{ asset("images/tab/tabs-03.jpg")}}"alt="advance-tab-image">
+                                    <img src="{{ asset("images/tab/tabs-03.jpg")}}"alt="advance-tab-image" loading="lazy">
                                 </div>
 
                             </div>
                             <div class="tab-pane fade advance-tab-content-1" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="thumbnail">
-                                    <img src="{{ asset("images/tab/tabs-02.jpg")}}"alt="advance-tab-image">
+                                    <img src="{{ asset("images/tab/tabs-02.jpg")}}"alt="advance-tab-image" loading="lazy">
                                 </div>
                             </div>
                         </div>
@@ -777,70 +390,20 @@
             <div class="course-content rbt-shadow-box mt--60">
                 <div class="rbt-accordion-style rbt-accordion-02 accordion mt--45">
                     <div class="accordion" id="accordionExampleb2">
+                        @foreach ($faqs as $key => $item)
                         <div class="accordion-item card">
-                            <h2 class="accordion-header card-header" id="headingTwo1">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo1" aria-expanded="true" aria-controls="collapseTwo1">
-                                    Intro to Course and Histudy?
+                            <h2 class="accordion-header card-header" id="heading_{{$key}}">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{$key}}" aria-expanded="false" aria-controls="collapse_{{$key}}">
+                                    {{ $item->question }}
                                 </button>
                             </h2>
-                            <div id="collapseTwo1" class="accordion-collapse collapse show" aria-labelledby="headingTwo1" data-bs-parent="#accordionExampleb2">
+                            <div id="collapse_{{$key}}" class="accordion-collapse collapse" aria-labelledby="heading_{{$key}}" data-bs-parent="#accordionExampleb2">
                                 <div class="accordion-body card-body">
-                                    <p class="faq">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
+                                    <p class="faq">{{ $item->answer }}</p>
                                 </div>
                             </div>
                         </div>
-    
-                        <div class="accordion-item card">
-                            <h2 class="accordion-header card-header" id="headingTwo2">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2">
-                                    Course Fundamentals?
-                                </button>
-                            </h2>
-                            <div id="collapseTwo2" class="accordion-collapse collapse" aria-labelledby="headingTwo2" data-bs-parent="#accordionExampleb2">
-                                <div class="accordion-body card-body">
-                                    <p class="faq">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="accordion-item card">
-                            <h2 class="accordion-header card-header" id="headingTwo3">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo3" aria-expanded="false" aria-controls="collapseTwo3">
-                                    You can develop skill and setup?
-                                </button>
-                            </h2>
-                            <div id="collapseTwo3" class="accordion-collapse collapse" aria-labelledby="headingTwo3" data-bs-parent="#accordionExampleb2">
-                                <div class="accordion-body card-body">
-                                    <p class="faq">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="accordion-item card">
-                            <h2 class="accordion-header card-header" id="headingTwo4">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo4" aria-expanded="false" aria-controls="collapseTwo4">
-                                    15 Things To Know About Education?
-                                </button>
-                            </h2>
-                            <div id="collapseTwo4" class="accordion-collapse collapse" aria-labelledby="headingTwo4" data-bs-parent="#accordionExampleb2">
-                                <div class="accordion-body card-body">
-                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="accordion-item card">
-                            <h2 class="accordion-header card-header" id="headingTwo5">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5">
-                                    Course Description?
-                                </button>
-                            </h2>
-                            <div id="collapseTwo5" class="accordion-collapse collapse" aria-labelledby="headingTwo5" data-bs-parent="#accordionExampleb2">
-                                <div class="accordion-body card-body">
-                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis, quisquam qui. Quia, tempore, atque, pariatur eius nobis quas nulla ipsam molestias provident fuga odio cum dolorum maiores minima? Aliquam, sequi.</p>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

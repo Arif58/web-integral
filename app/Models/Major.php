@@ -22,4 +22,14 @@ class Major extends Model
         'name',
         'passing_grade',
     ];
+
+    public function cluster()
+    {
+        return $this->belongsTo(Cluster::class, 'cluster_id');
+    }
+
+    public function university()
+    {
+        return $this->belongsTo(University::class, 'university_id');
+    }
 }
