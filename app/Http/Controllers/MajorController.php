@@ -27,9 +27,15 @@ class MajorController extends Controller
         return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('university.name', function ($major) {
+                if ($major->university == null) {
+                    return '-';
+                }
                 return $major->university->name;
             })
             ->addColumn('cluster.name', function ($major) {
+                if ($major->cluster == null) {
+                    return '-';
+                }
                 return $major->cluster->name;
             })
             ->addColumn('action', function ($major) {

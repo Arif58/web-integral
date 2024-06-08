@@ -11,7 +11,10 @@
     <form action="/login" method="POST">
         @csrf
         <div class="form-group">
-            <input name="email" type="text" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="email"/>
+            {{-- <input name="email" type="text" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="email"/> --}}
+            <input name="email" type="text" value="{{old('email')}}"/>
+            <label>Email *</label>
+            <span class="focus-border"></span>
             @error('email')
                 <span class="message-info">{{ $message }}</span>  
             @enderror
@@ -19,7 +22,10 @@
             <span class="focus-border"></span> --}}
         </div>
         <div class="form-group">
-            <input name="password" type="password" value="{{ old('password') }}" class="form-control @error('password') is-invalid @enderror" placeholder="password">
+            {{-- <input name="password" type="password" value="{{ old('password') }}" class="form-control @error('password') is-invalid @enderror" placeholder="password"> --}}
+            <input name="password" type="password" value="{{ old('password') }}"/>
+            <label>Password *</label>
+            <span class="focus-border"></span>
             @error('password')
                 <span class="message-info">{{ $message }}</span>
             @enderror
@@ -42,10 +48,9 @@
         </div>
 
         <div class="form-submit-group">
-            <button type="submit" class="rbt-btn btn-md bg-primary hover-icon-reverse w-100">
+            <button type="submit" class="rbt-btn btn-gradient btn-md icon-hover w-100 radius-6">
                 <span class="icon-reverse-wrapper">
                     <span class="btn-text">Log In</span>
-                <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                 <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                 </span>
             </button>

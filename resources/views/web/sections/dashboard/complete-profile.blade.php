@@ -11,6 +11,15 @@
             border: 0;
             border-bottom: 1px solid var(--color-badge-1);
             border-radius: 0;
+            margin-bottom: 0px;
+        }
+
+        .rbt-form-group {
+            margin-bottom: 30px;
+        }
+
+        .message-info {
+            position: relative;
         }
     </style>
 </head>
@@ -22,173 +31,265 @@
             </div>
             <!-- Start Profile Row  -->
             <div class="section-title">
-                <h4 class="rbt-title-style-3 text-center border-bottom-0 pb--0 mb--20">Profil Saya</h4>
+                <h4 class="rbt-title-style-3 text-center border-bottom-0 pb--0 mb--30">Profil Saya</h4>
             </div>
-            <form action="#" class="rbt-profile-row rbt-default-form row row--15">
+            <form action="{{route('complete-profile.update', $profile->id)}}" method="POST" class="rbt-profile-row rbt-default-form row row--15">
+                @method('PUT')
                 @csrf
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="rbt-form-group">
                         {{-- <label for="firstname">Nama Lengkap</label> --}}
-                        <input id="firstname" type="text" value="" placeholder="Nama Lengkap">
+                        <label for="fullname" class=" mb--0">Nama Lengkap</label>
+                        <input id="fullname" name="fullname" type="text" value="{{ $profile->fullname }}" placeholder="Nama Lengkap">
+                        @error('fullname')
+                            <span class="message-info">{{ $message }}</span>
+                        @enderror
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+    
                     <div class="rbt-form-group">
-                        {{-- <label for="phonenumber">Phone Number</label> --}}
-                        <input id="school" type="text" value="" placeholder="Asal Sekolah">
+                        <label for="phone" class="mb--0">Nomor Handphone</label>
+                        <input id="phone" name="phone" type="text" value="{{ $profile->phone }}" placeholder="Nomor Handphone">
+                        @error('phone')
+                            <span class="message-info">{{ $message }}</span>
+                        @enderror
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+
                     <div class="rbt-form-group">
-                        <input id="phone" type="text" value="" placeholder="Nomor Handphone">
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="filter-select rbt-modern-select">
-                        {{-- <label for="displayname" class="">Display name publicly as</label> --}}
-                        <select id="province" name="province" class="selectpicker w-100 mb--20">
-                            <option selected disabled value="">Provinsi</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="rbt-form-group">
-                        {{-- <label for="lastname">Last Name</label> --}}
+                        <label for="level" class="mb--0">Jenjang Sekolah</label>
                         <div class="filter-select rbt-modern-select">
-                            <select id="displayname" class="w-100 mb--20">
-                                <option selected disabled>Jenjang Sekolah</option>
-                                <option>SD</option>
-                                <option>SMP</option>
-                                <option>SMA/SMK</option>
-                                <option>Kuliah</option>
+                            <select id="level" name="level" class="w-100">
+                                @foreach ($level as $key => $value)
+                                    <option value="{{$key}}" @if ($key == $profile->level) selected @endif>
+                                        {{$value}}
+                                    </option>
+                                @endforeach
                             </select>
+                            @error('level')
+                                <span class="message-info">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
-                </div>   
+                </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="filter-select rbt-modern-select">
-                        <select id="regency" name="regency" class="selectpicker w-100 mb--20">
-                            <option selected disabled value="">Kabupaten/Kota</option>
-                        </select>
+                    <div class="rbt-form-group">
+                        <label for="institution" class="mb--0">Asal Sekolah</label>
+                        <input id="institution" name="institution" type="text" value="{{$profile->institution}}" placeholder="Asal Sekolah">
+                        @error('institution')
+                            <span class="message-info">{{ $message }}</span>
+                        @enderror
+                    </div>
+    
+                    <div class="rbt-form-group">
+                        <div class="filter-select rbt-modern-select">
+                            <label for="province" class="mb--0">Provinsi</label>
+                            <select id="province" name="province" class="select-picker w-100 ">
+                                <option selected disabled value="">Pilih Provinsi</option>
+                                @php
+                                    $provinceId = $profile->city->province_id ?? '';
+                                @endphp
+                                @foreach ($province as $key => $value)
+                                    <option value="{{ $key }}" @if($key == $provinceId) selected @endif>{{ $value }}</option>
+                                @endforeach
+                            </select>
+                            @error('province')
+                                <span class="message-info">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+    
+                    <div class="rbt-form-group">
+                        <div class="filter-select rbt-modern-select">
+                            <label for="city" class="mb--0">Kabupaten/Kota</label>
+                            <select id="city" name="city" class="select-picker w-100 " data-id="{{ $profile->city_id }}">
+                                <option value="" selected disabled>Pilih Kabupaten/Kota</option>
+                            </select>
+                            @error('city')
+                                <span class="message-info">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
+    
                 <div class="col-12">
-                    <div class="filter-select rbt-modern-select">
-                        <select id="city" class="w-100 mb--20">
-                            <option selected disabled>Minat dan Bakat</option>
-                            <option>John</option>
-                            <option>Due</option>
-                            <option>Due John</option>
-                            <option>johndue</option>
-                        </select>
+                    <div class="rbt-form-group">
+                        <div class="filter-select rbt-modern-select">
+                            <label for="interest" class="mb--0">Minat dan Bakat</label>
+                            <select id="interest" name="interest" class="w-100 ">
+                                <option selected disabled>Minat dan Bakat</option>
+                                @foreach ($cluster as $key => $value)
+                                    <option value="{{ $key }}" @if($key == $profile->interest) selected @endif>{{ $value }}</option>
+                                @endforeach
+                            </select>
+                            @error('interest')
+                                <span class="message-info">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="section-title">
-                    <h4 class="rbt-title-style-3 text-center border-bottom-0 pb--0 mb--20">Target Jurusan</h4>
+                    <h4 class="rbt-title-style-3 text-center border-bottom-0 pb--0 mb--30">Target Jurusan</h4>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                    {{-- <h6>Target Jurusan 1</h6> --}}
+    
                     <div class="rbt-form-group">
-                        {{-- <label for="lastname">Last Name</label> --}}
+                        <label for="first_university">Target Perguruan Tinggi 1</label>
                         <div class="filter-select rbt-modern-select">
-                            <select id="displayname" class="w-100 mb--20">
-                                <option selected disabled>Universitas Gadjah Mada</option>
-                                <option>SD</option>
-                                <option>SMP</option>
-                                <option>SMA/SMK</option>
-                                <option>Kuliah</option>
+                            <select id="first_university" name="first_university" class="select-picker w-100 ">
+                                <option value="" selected disabled>Pilih Universitas</option>
+                                @php
+                                    $firstMajor = $profile->firstMajor->university_id ?? '';
+                                @endphp
+                                @foreach ($university as $key => $value)
+                                    <option value="{{ $key }}" @if ($key == $firstMajor) selected @endif>{{$value}}</option>
+                                @endforeach
                             </select>
+                            @error('first_university')
+                                <span class="message-info">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="rbt-form-group">
+                        <label for="first_major">Target Jurusan 1</label>
+                        <div class="filter-select rbt-modern-select">
+                            <select id="first_major" name="first_major" class="select-picker w-100 " data-id="{{$profile->first_major}}">
+                                <option value="" selected disabled>Pilih Program Studi</option>
+                            </select>
+                            @error('first_major')
+                                <span class="message-info">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                    {{-- <h6>Target Jurusan 2</h6> --}}
+    
+                    <div class="rbt-form-group">
+                        <label for="second_university">Target Perguruan Tinggi 2</label>
+                        <div class="filter-select rbt-modern-select">
+                            <select id="second_university" name="second_university" class="select-picker w-100 ">
+                                <option value="" selected disabled>Pilih Universitas</option>
+                                @php
+                                    $secondMajor = $profile->secondMajor->university_id ?? '';
+                                @endphp
+                                @foreach ($university as $key => $value)
+                                    <option value="{{ $key }}" @if ($key == $secondMajor) selected @endif>{{$value}}</option>
+                                @endforeach
+                            </select>
+                            @error('second_university')
+                                <span class="message-info">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+    
+                    <div class="rbt-form-group">
+                        <label for="second_university">Target Perguruan Tinggi 2</label>
+                        <div class="filter-select rbt-modern-select">
+                            <select id="second_major" name="second_major" class="select-picker w-100 " data-id="{{$profile->second_major}}">
+                                <option value="" selected disabled>Pilih Program Studi</option>
+                            </select>
+                            @error('second_major')
+                                <span class="message-info">{{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="rbt-form-group">
-                        {{-- <label for="lastname">Last Name</label> --}}
-                        <div class="filter-select rbt-modern-select">
-                            <select id="displayname" class="w-100 mb--20">
-                                <option selected disabled>Universitas Padjajaran</option>
-                                <option>SD</option>
-                                <option>SMP</option>
-                                <option>SMA/SMK</option>
-                                <option>Kuliah</option>
-                            </select>
-                        </div>
+                <div class="row justify-content-center">
+                    <div class="col-5 mt--20">
+                        <button type="submit" class="rbt-btn btn-gradient btn-md text-center hover-icon-reverse" style="color: white; border-radius: 4px; width: 100%">
+                            <span class="icon-reverse-wrapper">
+                                <span class="btn-text">Simpan</span>
+                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                            <span class="btn-icon"><i class="feather-arrow-right"></i></span>
+                            </span>
+                        </button>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="rbt-form-group">
-                        {{-- <label for="lastname">Last Name</label> --}}
-                        <div class="filter-select rbt-modern-select">
-                            <select id="displayname" class="w-100 mb--20">
-                                <option selected disabled>Kedokteran</option>
-                                <option>SD</option>
-                                <option>SMP</option>
-                                <option>SMA/SMK</option>
-                                <option>Kuliah</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                    <div class="rbt-form-group">
-                        {{-- <label for="lastname">Last Name</label> --}}
-                        <div class="filter-select rbt-modern-select">
-                            <select id="displayname" class="w-100 mb--20">
-                                <option selected disabled>Informatika</option>
-                                <option>SD</option>
-                                <option>SMP</option>
-                                <option>SMA/SMK</option>
-                                <option>Kuliah</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 mt--20">
-                    <div class="rbt-form-group text-center">
-                        <a class="rbt-btn btn-sm" href="#" style="padding: 0px 120px">Simpan</a>
-                    </div>
-                </div>
+                
             </form>
             <!-- End Profile Row  -->
         </div>
     </div>
     <script>
         $(document).ready(function () {
-            var provinceSelect = $('#province');
-            // Mengambil data provinsi dari API
-            $.ajax({
-                url: 'https://wilayah.id/api/provinces.json',
-                method: 'GET',
-                success: function (data) {
-                    var provinceSelect = $('select[name="province"]');
-                    data['data'].forEach(function (province) {
-                        provinceSelect.append('<option data-id="'+province.code+'" value="' + province.name + '">' + province.name + '</option>');
-                    });
-                    provinceSelect.selectpicker('refresh');
-                }
-            });
-
-            // Mengambil data kabupaten berdasarkan provinsi yang dipilih
-            $('#province').change(function () {
-                var selectedOption = $(this).find('option:selected');
-                var provinceId = selectedOption.data('id');
-                $('#province_id').val(provinceId); // Simpan ID provinsi ke input hidden
-                
-                var regencySelect = $('#regency');
-                regencySelect.empty().append(new Option('Pilih Kabupaten', ''));
-                regencySelect.selectpicker('refresh'); // Inisialisasi ulang selectpicker
-
+            // Fungsi untuk mengambil data kota berdasarkan provinsi yang dipilih
+            function populateCities(provinceId) {
+                var citySelect = $('#city');
+                citySelect.empty().append(new Option('Pilih Kabupaten/Kota', ''));
+                var cityId = citySelect.data('id');
+    
                 if (provinceId) {
                     $.ajax({
-                        url: 'https://wilayah.id/api/regencies/' + provinceId + '.json',
+                        url: '/profil/get-city/' + provinceId,
                         method: 'GET',
                         success: function (data) {
-                            data['data'].forEach(function (regency) {
-                                regencySelect.append(new Option(regency.name, regency.id));
+                            data.forEach(function (city) {
+                                var option = new Option(city.name, city.id);
+                                if (city.id === cityId) {
+                                    $(option).prop('selected', true); // Menandai option yang sesuai dengan selectedCityId
+                                }
+                                citySelect.append(option);
                             });
-                            regencySelect.selectpicker('refresh'); // Inisialisasi ulang selectpicker
+                            citySelect.selectpicker('refresh'); // Inisialisasi ulang selectpicker
                         }
                     });
                 }
+            }
+    
+            // Ketika halaman pertama kali dimuat, pilih kota berdasarkan province_id yang tersimpan
+            var selectedProvinceId = $('#province').val();
+            populateCities(selectedProvinceId);
+    
+            // Ketika nilai provinsi berubah, perbarui daftar kota
+            $('#province').change(function () {
+                var selectedProvinceId = $(this).val();
+                populateCities(selectedProvinceId);
+            });
+    
+            // Fungsi untuk mengambil data jurusan berdasarkan universitas yang dipilih
+            function populateMajor(universityId, majorSelect) {
+                // var majorSelect = $('#city');
+                // majorSelect.empty().append(new Option('Pilih Jurusan', ''));
+                var majorId = majorSelect.data('id');
+    
+                if (universityId) {
+                    $.ajax({
+                        url: '/profil/get-major/' + universityId,
+                        method: 'GET',
+                        success: function (data) {
+                            data.forEach(function (major) {
+                                var option = new Option(major.name, major.id);
+                                if (major.id === majorId) {
+                                    $(option).prop('selected', true); // Menandai option yang sesuai dengan selectedmajorId
+                                }
+                                majorSelect.append(option);
+                            });
+                            majorSelect.selectpicker('refresh'); // Inisialisasi ulang selectpicker
+                        }
+                    });
+                }
+            }
+    
+            // Ketika halaman pertama kali dimuat, pilih kota berdasarkan province_id yang tersimpan
+            var selectedFirstUniversityId = $('#first_university').val();
+            var firstMajorSelect = $('#first_major');
+    
+            var selectedSecondUniversityId = $('#second_university').val();
+            var secondMajorSelect = $('#second_major');
+            populateMajor(selectedFirstUniversityId, firstMajorSelect);
+            populateMajor(selectedSecondUniversityId, secondMajorSelect);
+    
+            // Ketika nilai first major berubah, perbarui daftar jurusan
+            $('#first_university').change(function () {
+                var selectedFirstUniversityId = $(this).val();
+                populateMajor(selectedFirstUniversityId, firstMajorSelect);
+            });
+    
+            // Ketika nilai second major berubah, perbarui daftar jurusan
+            $('#second_university').change(function () {
+                var selectedSecondUniversityId = $(this).val();
+                populateMajor(selectedSecondUniversityId, secondMajorSelect);
             });
         });
     </script>

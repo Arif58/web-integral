@@ -157,7 +157,7 @@
   --color-card-5: #5024D1;
   --color-card-6: #3B3B46;
   --color-success: #29A039;
-  --color-danger: #FF0003;
+  --color-danger: #C0333B;
   --color-warning: #FF8F3C;
   --color-info: #1BA2DB;
   --color-primary-alt: #D1EBE6;
@@ -167,7 +167,7 @@
   --color-extra: rgb(249, 249, 255);
   --color-extra2: #F9F9FF;
   --color-border: #e6e3f1;
-  --color-border-2: #e6e3f14f;
+  --color-border-2: #E0E0E0;
   --color-badge-1: #303F5B;
   --color-badge-2: #F2C94C;
   --color-facebook: #3B5997;
@@ -460,7 +460,7 @@ input[type=submit] {
 
 button[disabled],
 input[disabled] {
-  cursor: default;
+  cursor: not-allowed;
 }
 
 input[type=checkbox],
@@ -9189,7 +9189,7 @@ input[type=number]:focus,
 input[type=tel]:focus,
 input[type=date]:focus,
 textarea:focus {
-  border-color: var(--color-primary);
+  border-color: #E7A446;
 }
 
 input[type=checkbox],
@@ -9308,7 +9308,7 @@ input[type=radio] ~ label::after {
   width: 100%;
 }
 .form-group input:focus {
-  border-color: var(--color-primary);
+  border-color: #E7A446;
 }
 .form-group textarea {
   height: auto;
@@ -9386,7 +9386,8 @@ input[type=submit]:hover {
 }
 
 input[disabled] {
-  display: none;
+  display: block;
+  /* background-color: #BDBDBD !important; */
 }
 
 /* For Image Radio  */
@@ -13606,8 +13607,8 @@ fieldset:disabled {
   line-height: 57px;
 }
 .rbt-btn.btn-border:hover {
-  background: var(--color-primary);
-  border-color: var(--color-primary);
+  background: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%);
+  border-color: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%);
   color: var(--color-white);
 }
 .rbt-btn.btn-border.color-white-off {
@@ -19984,13 +19985,13 @@ input:checked + .slider:before {
   left: 0;
   width: 0;
   height: 2px;
-  background-color: var(--color-primary);
+  background-color: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%);
   transition: 0.4s;
 }
 .form-group.focused label {
   top: -10px;
   font-size: 12px;
-  color: var(--color-primary);
+  color: #212121;
   transition: 0.3s;
 }
 .form-group.focused span.focus-border {

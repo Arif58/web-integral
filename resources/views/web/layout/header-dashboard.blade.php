@@ -22,7 +22,7 @@
                             <div class="inner">
                                 <ul class="user-list-wrapper">
                                     <li class="mb-2">
-                                        <a href="/profil">
+                                        <a href="/profil-saya">
                                             <span>Profile Saya</span>
                                         </a>
                                     </li>

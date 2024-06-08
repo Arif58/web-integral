@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,12 +30,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone',
         'level',
         'institution',
-        'city',
-        'province',
+        'city_id',
         'first_major',
         'second_major',
         'interest',
         'is_completed',
+    ];
+
+    public static $level = [
+        null => 'Jenjang Sekolah',
+        'sd' => 'SD',
+        'smp' => 'SMP',
+        'sma' => 'SMA/SMK',
+        'kuliah' => 'Kuliah',
     ];
 
     /**
@@ -56,4 +64,19 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
+    }
+
+    public function firstMajor()
+    {
+        return $this->belongsTo(Major::class, 'first_major');
+    }
+
+    public function secondMajor()
+    {
+        return $this->belongsTo(Major::class, 'second_major');
+    }
 }

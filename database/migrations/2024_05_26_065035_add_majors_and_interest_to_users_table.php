@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->foreign('first_major')->references('id')->on('majors')->onDelete('set null');
             $table->foreign('second_major')->references('id')->on('majors')->onDelete('set null');
-            $table->foreign('interest')->references('id')->on('majors')->onDelete('set null');
+            $table->foreign('interest')->references('id')->on('clusters')->onDelete('set null');
         });
     }
 

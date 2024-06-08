@@ -36,8 +36,10 @@
         </div>
     </div>
 </li>
+<li><a href="/try-out"><i class=" feather-clipboard"></i><span>Try Out</span></a></li>
+<li><a href="/manajemen-user"><i class="feather-users"></i><span>Manajemen User</span></a></li>
 @endif
-<li><a href="/profil"><i class="feather-user"></i><span>Profil Saya</span></a></li>
+<li><a href="/profil-saya"><i class="feather-user"></i><span>Profil Saya</span></a></li>
 <li>
     <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="feather-log-out"></i><span>Keluar</span></a>
     <form id="logout-form" action="{{ route('logout') }}" method="POST">
