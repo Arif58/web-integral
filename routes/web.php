@@ -1,12 +1,16 @@
 <?php
 
+use App\Http\Controllers\CategorySubtestController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QnaController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\StudentAchievementController;
+use App\Http\Controllers\SubTestController;
 use App\Http\Controllers\TestimoniController;
+use App\Http\Controllers\TryOutController;
 use App\Http\Controllers\TryoutDetailController;
 use App\Http\Controllers\TutorController;
 use App\Http\Controllers\UniversityController;
@@ -130,6 +134,38 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/manajemen-user/get', 'getUsers')->name('user-management.get');
             Route::post('/manajemen-user/delete/{id}', 'destroy')->name('user-management.destroy');
             Route::get('/manajemen-user/detail/{id}', 'show')->name('user-management.show');
+        });
+
+        Route::controller(TryOutController::class)->group(function () {
+            Route::get('/tryout', 'index')->name('tryouts');
+            Route::get('/tryout/get', 'getTryouts')->name('tryouts.get');
+            Route::post('/tryout', 'store')->name('tryouts.store');
+            Route::post('/tryout/delete/{id}', 'destroy')->name('tryouts.destroy');
+            Route::put('/tryout/update/{id}', 'update')->name('tryouts.update');
+        });
+
+        Route::controller(CategorySubtestController::class)->group(function () {
+            Route::get('/kategori-subtest', 'index')->name('category-subtests');
+            Route::get('/kategori-subtest/get', 'getCategorySubtests')->name('category-subtests.get');
+            Route::post('/kategori-subtest', 'store')->name('category-subtests.store');
+            Route::post('/kategori-subtest/delete/{id}', 'destroy')->name('category-subtests.destroy');
+            Route::put('/kategori-subtest/update/{id}', 'update')->name('category-subtests.update');
+        });
+
+        Route::controller(SubTestController::class)->group(function () {
+            Route::get('/subtest/{id}', 'index')->name('subtests');
+            Route::get('/subtest/get/{tryOutId}', 'getSubTests')->name('subtests.get');
+            Route::post('/subtest/{id}', 'store')->name('subtests.store');
+            Route::post('/subtest/delete/{id}', 'destroy')->name('subtests.destroy');
+            Route::put('/subtest/update/{id}', 'update')->name('subtests.update');
+        });
+
+        Route::controller(QuestionController::class)->group(function () {
+            Route::get('/soal/{subTestId}', 'index')->name('questions');
+            // Route::get('/soal/get/{subTestId}', 'getQuestions')->name('questions.get');
+            Route::post('/soal/{subTestId}', 'store')->name('questions.store');
+            Route::post('/soal/delete/{id}', 'destroy')->name('questions.destroy');
+            Route::put('/soal/update/{id}', 'update')->name('questions.update');
         });
     });
 

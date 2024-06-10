@@ -9262,6 +9262,7 @@ input[type=radio] ~ label::after {
   color: red;
   position: absolute;
   font-size: medium;
+  display: block;
 } 
 
 .font-size-30 {

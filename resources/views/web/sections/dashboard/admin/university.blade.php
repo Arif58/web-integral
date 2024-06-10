@@ -1,24 +1,7 @@
 @extends('web.layout-dashboard')
 @section('title', 'Universitas')
 @push('css')
-    <link href="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.css" rel="stylesheet">
     <style>
-        div.dt-container select.dt-input {
-            width: 20%;
-            height: auto;
-            margin-right: 10px;
-        }
-
-        div.dt-container .dt-search input {
-            margin-left: 10px;
-        }
-        div.dt-container .dt-paging .dt-paging-button.current {
-            background: linear-gradient(rgb(29, 59, 100) 0%, rgb(55, 116, 155) 100%) !important;
-            color: white !important;
-        }
-        div.dt-container {
-            margin-bottom: 20px;
-        }
         .bootstrap-select .dropdown-menu{
             height: 70px;
         }
@@ -34,27 +17,13 @@
         .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
             font-size: 14px;
         }
-
-        table.dataTable>tbody>tr>th, table.dataTable>tbody>tr>td {
-            color: #616161;
-            font-size: 16px;
-        }
-
-        table.dataTable thead th, table.dataTable tfoot th {
-            font-weight: normal;
-            font-size: 16px;
-        }
-
-        div.dt-container div.dt-layout-row {
-            font-size: 16px;
-        }
     </style>
 @endpush
 @section('content')
 <div class="content">
     <div class="rbt-dashboard-content bg-coolor-white rbt-shadow-box mb--60">
         <div class="section-title">
-            <h4 class="rbt-title-style-3 text-center">Landing Page</h4>
+            <h4 class="rbt-title-style-3 text-center">Pendidikan Tinggi</h4>
         </div>
         <div class="section-title d-flex justify-content-between mb-4">
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0" style="font-size: 18px;">

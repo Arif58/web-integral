@@ -117,7 +117,7 @@
                 <div class="rbt-form-group">
                     <div class="filter-select rbt-modern-select">
                         <label for="province" class="">Provinsi</label>
-                        <select id="province" name="province" class="select-picker w-100 ">
+                        <select id="province" name="province" class="select-picker w-100 " data-live-search="true">
                             <option selected disabled value="">Pilih Provinsi</option>
                             @php
                                 $oldProvince = $profile->city->province_id ?? '';

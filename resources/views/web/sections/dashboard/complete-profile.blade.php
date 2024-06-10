@@ -82,7 +82,7 @@
                     <div class="rbt-form-group">
                         <div class="filter-select rbt-modern-select">
                             <label for="province" class="mb--0">Provinsi</label>
-                            <select id="province" name="province" class="select-picker w-100 ">
+                            <select id="province" name="province" class="select-picker w-100 " data-live-search="true">
                                 <option selected disabled value="">Pilih Provinsi</option>
                                 @php
                                     $provinceId = $profile->city->province_id ?? '';
@@ -100,7 +100,7 @@
                     <div class="rbt-form-group">
                         <div class="filter-select rbt-modern-select">
                             <label for="city" class="mb--0">Kabupaten/Kota</label>
-                            <select id="city" name="city" class="select-picker w-100 " data-id="{{ $profile->city_id }}">
+                            <select id="city" name="city" class="select-picker w-100 " data-id="{{ $profile->city_id }}" data-live-search="true">
                                 <option value="" selected disabled>Pilih Kabupaten/Kota</option>
                             </select>
                             @error('city')
@@ -135,7 +135,7 @@
                     <div class="rbt-form-group">
                         <label for="first_university">Target Perguruan Tinggi 1</label>
                         <div class="filter-select rbt-modern-select">
-                            <select id="first_university" name="first_university" class="select-picker w-100 ">
+                            <select id="first_university" name="first_university" class="select-picker w-100 " data-live-search="true">
                                 <option value="" selected disabled>Pilih Universitas</option>
                                 @php
                                     $firstMajor = $profile->firstMajor->university_id ?? '';
@@ -152,7 +152,7 @@
                     <div class="rbt-form-group">
                         <label for="first_major">Target Jurusan 1</label>
                         <div class="filter-select rbt-modern-select">
-                            <select id="first_major" name="first_major" class="select-picker w-100 " data-id="{{$profile->first_major}}">
+                            <select id="first_major" name="first_major" class="select-picker w-100 " data-id="{{$profile->first_major}}" data-live-search="true">
                                 <option value="" selected disabled>Pilih Program Studi</option>
                             </select>
                             @error('first_major')
@@ -168,7 +168,7 @@
                     <div class="rbt-form-group">
                         <label for="second_university">Target Perguruan Tinggi 2</label>
                         <div class="filter-select rbt-modern-select">
-                            <select id="second_university" name="second_university" class="select-picker w-100 ">
+                            <select id="second_university" name="second_university" class="select-picker w-100 " data-live-search="true">
                                 <option value="" selected disabled>Pilih Universitas</option>
                                 @php
                                     $secondMajor = $profile->secondMajor->university_id ?? '';
@@ -186,7 +186,7 @@
                     <div class="rbt-form-group">
                         <label for="second_university">Target Perguruan Tinggi 2</label>
                         <div class="filter-select rbt-modern-select">
-                            <select id="second_major" name="second_major" class="select-picker w-100 " data-id="{{$profile->second_major}}">
+                            <select id="second_major" name="second_major" class="select-picker w-100 " data-id="{{$profile->second_major}}" data-live-search="true">
                                 <option value="" selected disabled>Pilih Program Studi</option>
                             </select>
                             @error('second_major')
@@ -212,6 +212,7 @@
         </div>
     </div>
     <script>
+        
         $(document).ready(function () {
             // Fungsi untuk mengambil data kota berdasarkan provinsi yang dipilih
             function populateCities(provinceId) {
@@ -250,7 +251,7 @@
             // Fungsi untuk mengambil data jurusan berdasarkan universitas yang dipilih
             function populateMajor(universityId, majorSelect) {
                 // var majorSelect = $('#city');
-                // majorSelect.empty().append(new Option('Pilih Jurusan', ''));
+                majorSelect.empty().append(new Option('Pilih Jurusan', ''));
                 var majorId = majorSelect.data('id');
     
                 if (universityId) {

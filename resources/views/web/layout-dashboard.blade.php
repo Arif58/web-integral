@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     @include('web.layout.head')
+    <link href="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/datatable.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 @php

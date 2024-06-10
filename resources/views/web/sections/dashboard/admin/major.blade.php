@@ -1,26 +1,9 @@
 @extends('web.layout-dashboard')
 @section('title', 'Program Studi')
 @push('css')
-    <link href="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.css" rel="stylesheet">
     <style>
-        div.dt-container select.dt-input {
-            width: 20%;
-            height: auto;
-            margin-right: 10px;
-        }
-
-        div.dt-container .dt-search input {
-            margin-left: 10px;
-        }
-        div.dt-container .dt-paging .dt-paging-button.current {
-            background: linear-gradient(rgb(29, 59, 100) 0%, rgb(55, 116, 155) 100%) !important;
-            color: white !important;
-        }
-        div.dt-container {
-            margin-bottom: 20px;
-        }
         .bootstrap-select .dropdown-menu{
-            height: 120px;
+            height: 180px;
         }
 
         .bootstrap-select {
@@ -35,18 +18,9 @@
             font-size: 14px;
         }
 
-        table.dataTable>tbody>tr>th, table.dataTable>tbody>tr>td {
-            color: #616161;
-            font-size: 16px;
-        }
-
-        table.dataTable thead th, table.dataTable tfoot th {
-            font-weight: normal;
-            font-size: 16px;
-        }
-
-        div.dt-container div.dt-layout-row {
-            font-size: 16px;
+        .rbt-modern-select .bootstrap-select button.btn-light {
+            border: 1px solid var(--color-badge-1);
+            border-radius: 6px;
         }
     </style>
 @endpush
@@ -54,7 +28,7 @@
 <div class="content">
     <div class="rbt-dashboard-content bg-coolor-white rbt-shadow-box mb--60">
         <div class="section-title">
-            <h4 class="rbt-title-style-3 text-center">Landing Page</h4>
+            <h4 class="rbt-title-style-3 text-center">Pendidikan Tinggi</h4>
         </div>
         <div class="section-title d-flex justify-content-between mb-4">
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0" style="font-size: 18px;">
@@ -92,29 +66,34 @@
                         <form action="{{ route('majors.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <div class="col-12 mb--30">
+                                <div class="rbt-form-group col-12 mb--30">
                                     <label for="university">Universitas</label>
-                                    <select id="university_id" name="university_id" class="form-control @error('university_id') is-invalid @enderror mb-0">
-                                        <option value="" selected disabled>Pilih Universitas</option>
-                                        @foreach ($universities as $university)
-                                            <option value="{{ $university->id }}">{{ $university->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('university_id')
-                                        <span class="message-info">{{ $message }}</span>  
-                                    @enderror
+                                    <div class="filter-select rbt-modern-select">
+                                        <select id="university_id" name="university_id" class="mb-0" data-live-search="true">
+                                            <option value="" selected disabled>Pilih Universitas</option>
+                                            @foreach ($universities as $university)
+                                                <option value="{{ $university->id }}">{{ $university->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('university_id')
+                                            <span class="message-info">{{ $message }}</span>  
+                                        @enderror
+                                    </div>
                                 </div>
-                                <div class="col-12 mb--30">
+                                <div class="rbt-form-group col-12 mb--30">
                                     <label for="cluster">Rumpun</label>
-                                    <select id="cluster_id" name="cluster_id" class="form-control @error('cluster_id') is-invalid @enderror mb-0">
-                                        <option value="" selected disabled>Pilih Rumpun</option>
-                                        @foreach ($clusters as $cluster)
-                                            <option value="{{ $cluster->id }}">{{ $cluster->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('cluster_id')
-                                        <span class="message-info">{{ $message }}</span>  
-                                    @enderror
+                                    <div class="filter-select rbt-modern-select">
+                                        <select id="cluster_id" name="cluster_id" class="mb-0">
+                                            <option value="" selected disabled>Pilih Rumpun</option>
+                                            @foreach ($clusters as $cluster)
+                                                <option value="{{ $cluster->id }}">{{ $cluster->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('cluster_id')
+                                            <span class="message-info">{{ $message }}</span>  
+                                        @enderror
+                                    </div>
+                                    
                                 </div>
                                 <div class="col-12 mb--30">
                                     <label for="name">Jurusan</label>
@@ -170,29 +149,34 @@
                             @method('PUT')
                             <input type="hidden" id="majorId" name="majorId">
                             <div class="row">
-                                <div class="col-12 mb--30">
+                                <div class="rbt-form-group col-12 mb--30">
                                     <label for="university">Universitas</label>
-                                    <select id="edit_university_id" name="university_id" class="form-control @error('university_id') is-invalid @enderror mb-0">
-                                        <option value="" disabled>Pilih Universitas</option>
-                                        @foreach ($universities as $university)
-                                            <option value="{{ $university->id }}">{{ $university->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('university_id')
-                                        <span class="message-info">{{ $message }}</span>
-                                    @enderror
+                                    <div class="filter-select rbt-modern-select">
+                                        <select id="edit_university_id" name="university_id" class="mb-0" data-live-search="true">
+                                            <option value="" disabled>Pilih Universitas</option>
+                                            @foreach ($universities as $university)
+                                                <option value="{{ $university->id }}">{{ $university->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('university_id')
+                                            <span class="message-info">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
-                                <div class="col-12 mb--30">
+                                <div class="rbt-form-group col-12 mb--30">
                                     <label for="cluster">Rumpun</label>
-                                    <select id="edit_cluster_id" name="cluster_id" class="form-control @error('cluster_id') is-invalid @enderror mb-0">
-                                        <option value="" disabled>Pilih Rumpun</option>
-                                        @foreach ($clusters as $cluster)
-                                            <option value="{{ $cluster->id }}">{{ $cluster->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('cluster_id')
-                                        <span class="message-info">{{ $message }}</span>
-                                    @enderror
+                                    <div class="filter-select rbt-modern-select">
+                                        <select id="edit_cluster_id" name="cluster_id" class="select-picker mb-0">
+                                            <option value="" disabled>Pilih Rumpun</option>
+                                            {{-- @foreach ($clusters as $cluster)
+                                                <option value="{{ $cluster->id }}">{{ $cluster->name }}</option>
+                                            @endforeach --}}
+                                        </select>
+                                        @error('cluster_id')
+                                            <span class="message-info">{{ $message }}</span>
+                                        @enderror
+                                    </div> 
+                                    
                                 </div>
                                 <div class="col-12 mb--30">
                                     <label for="name">Jurusan</label>
@@ -235,7 +219,7 @@
 <input type="hidden" id="table-url" value="{{ route('majors.get') }}">
 @endsection
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 <script src="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.js"></script>
 <script>
     // JavaScript untuk menampilkan kembali modal jika ada error validasi
@@ -247,6 +231,7 @@
     });
 </script>
 <script>
+    
     $(document).ready(function() {
         $('#major-table').DataTable({
             ordering: true,
@@ -267,6 +252,8 @@
             ]
         });
     });
+
+
 
     // Handle delete button click
     $('#major-table').on('click', '.delete-major', function() {
@@ -296,11 +283,36 @@
         var majorId = $(this).data('id');
         var universityId = $(this).data('university_id');
         var clusterId = $(this).data('cluster_id');
+        var clusters = @json($clusters);
+        var universities = @json($universities);
+ 
+        // Set the values for the select elements
+        var universitySelect = $('#edit_university_id');
+        var clusterSelect = $('#edit_cluster_id');
 
-        // Check the data retrieved from the clicked button
-        // console.log('Major ID:', majorId);
-        // console.log('University ID:', universityId);
-        // console.log('Cluster ID:', clusterId);
+        clusterSelect.empty();
+        universitySelect.empty();
+
+        universities.forEach(function (university) {
+            var option = new Option(university.name, university.id);
+            if (university.id == universityId) {
+                $(option).prop('selected', true);
+            }
+            universitySelect.append(option);
+        })
+
+        universitySelect.selectpicker('refresh');
+
+        clusters.forEach(function (cluster) {
+            var option = new Option(cluster.name, cluster.id);
+            if (cluster.id == clusterId) {
+                $(option).prop('selected', true);
+            }
+            clusterSelect.append(option);
+        })
+
+        clusterSelect.selectpicker('refresh');
+
 
         var route = '{{ route("majors.update", ":id") }}';
         route = route.replace(':id', majorId);
@@ -309,11 +321,11 @@
         
         // Fill the modal form with the current data
         $('#editModal #majorId').val(majorId);
-        $('#editModal #edit_university_id').val(universityId).change();
-        $('#editModal #edit_cluster_id').val(clusterId).change();
         $('#editModal #edit_name').val(rowData.eq(3).text());
         $('#editModal #edit_passing_grade').val(rowData.eq(4).text());
         $('#editModal #editMajorForm').attr('action', route);
+
+        
 
         // Show the modal
         $('#editModal').modal('show');

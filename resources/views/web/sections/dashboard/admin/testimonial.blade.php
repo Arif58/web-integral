@@ -1,24 +1,7 @@
 @extends('web.layout-dashboard')
 @section('title', 'Testimoni Siswa')
 @push('css')
-    <link href="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.css" rel="stylesheet">
     <style>
-        div.dt-container select.dt-input {
-            width: 20%;
-            height: auto;
-            margin-right: 10px;
-        }
-
-        div.dt-container .dt-search input {
-            margin-left: 10px;
-        }
-        div.dt-container .dt-paging .dt-paging-button.current {
-            background: linear-gradient(rgb(29, 59, 100) 0%, rgb(55, 116, 155) 100%) !important;
-            color: white !important;
-        }
-        div.dt-container {
-            margin-bottom: 20px;
-        }
         .bootstrap-select .dropdown-menu{
             height: 70px;
         }
@@ -35,19 +18,6 @@
             font-size: 14px;
         }
 
-        table.dataTable>tbody>tr>th, table.dataTable>tbody>tr>td {
-            color: #616161;
-            font-size: 16px;
-        }
-
-        table.dataTable thead th, table.dataTable tfoot th {
-            font-weight: normal;
-            font-size: 16px;
-        }
-
-        div.dt-container div.dt-layout-row {
-            font-size: 16px;
-        }
     </style>
 @endpush
 @section('content')

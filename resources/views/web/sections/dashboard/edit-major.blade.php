@@ -55,7 +55,7 @@
                 <div class="rbt-form-group">
                     {{-- <label for="lastname">Last Name</label> --}}
                     <div class="filter-select rbt-modern-select">
-                        <select id="first_university" name="first_university" class="select-picker w-100 mb--20">
+                        <select id="first_university" name="first_university" class="select-picker w-100 mb--20" data-live-search="true">
                             <option value="" selected disabled>Pilih Universitas</option>
                             @php
                                 $firstMajor = $profile->firstMajor->university_id ?? '';
@@ -69,7 +69,7 @@
                 <div class="rbt-form-group">
                     {{-- <label for="lastname">Last Name</label> --}}
                     <div class="filter-select rbt-modern-select">
-                        <select id="first_major" name="first_major" class="select-picker w-100 mb--20" data-id="{{$profile->first_major}}">
+                        <select id="first_major" name="first_major" class="select-picker w-100 mb--20" data-id="{{$profile->first_major}}" data-live-search="true">
                         </select>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                 <div class="rbt-form-group">
                     {{-- <label for="lastname">Last Name</label> --}}
                     <div class="filter-select rbt-modern-select">
-                        <select id="second_university" name="second_university" class="select-picker w-100 mb--20">
+                        <select id="second_university" name="second_university" class="select-picker w-100 mb--20" data-live-search="true">
                             <option value="" selected disabled>Pilih Universitas</option>
                             @php
                                 $secondMajor = $profile->secondMajor->university_id ?? '';
@@ -96,7 +96,7 @@
                 <div class="rbt-form-group">
                     {{-- <label for="lastname">Last Name</label> --}}
                     <div class="filter-select rbt-modern-select">
-                        <select id="second_major" name="second_major" class="select-picker w-100 mb--20" data-id="{{$profile->second_major}}">
+                        <select id="second_major" name="second_major" class="select-picker w-100 mb--20" data-id="{{$profile->second_major}}" data-live-search="true">
                         </select>
                     </div>
                 </div>

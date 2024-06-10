@@ -1,7 +1,8 @@
 @extends('web.layout-dashboard')
-@section('title', 'Rumpun')
+@section('title', 'Kategori Subtest')
 @push('css')
     <style>
+        
         .bootstrap-select .dropdown-menu{
             height: 70px;
         }
@@ -17,26 +18,27 @@
         .bootstrap-select .dropdown-toggle .filter-option-inner-inner {
             font-size: 14px;
         }
+
     </style>
 @endpush
 @section('content')
 <div class="content">
     <div class="rbt-dashboard-content bg-coolor-white rbt-shadow-box mb--60">
         <div class="section-title">
-            <h4 class="rbt-title-style-3 text-center">Pendidikan Tinggi</h4>
+            <h4 class="rbt-title-style-3 text-center">Manajemen Tryout</h4>
         </div>
         <div class="section-title d-flex justify-content-between mb-4">
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0" style="font-size: 18px;">
-                Rumpun
+                Kategori Subtest
             </h4>
             <button class="rbt-btn btn-sm bg-color-success" type="button" data-bs-toggle="modal" data-bs-target="#formModal">Tambah<i class="feather feather-plus"></i></button>
         </div>
         <div style="border-bottom: 2px solid var(--color-border-2); margin-bottom: 24px;">
-            <table class="table" id="cluster-table">
+            <table class="table" id="category-subtest-table">
                 <thead class="bg-gradient-18">
                     <tr class="color-white">
                         <th>No</th>
-                        <th>Rumpun</th>
+                        <th>Nama</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -50,17 +52,17 @@
             <div class="modal-content" style="padding: 30px">
                 <div class="modal-header pb--5 justify-content-center">
                     <h4 class="title">
-                        Tambah Rumpun
+                        Tambah Subtest Kategori
                     </h4>
                 </div>
                 <div class="modal-body" style="border-top: 1px solid #dee2e6">
                     <div class="inner checkout-form">
-                        <form action="{{ route('clusters.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('category-subtests.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-12 mb--30">
-                                    <label for="name">Rumpun</label>
-                                    <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" placeholder="Rumpun">
+                                    <label for="name">Nama Kategori</label>
+                                    <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" placeholder="Nama Kategori">
                                     @error('name')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -95,19 +97,19 @@
             <div class="modal-content" style="padding: 30px">
                 <div class="modal-header pb--5 justify-content-center">
                     <h4 class="title">
-                        Ubah Rumpun
+                        Ubah Subtest Kategori
                     </h4>
                 </div>
                 <div class="modal-body" style="border-top: 1px solid #dee2e6">
                     <div class="inner checkout-form">
-                        <form action="" id="editClusterForm" method="POST" enctype="multipart/form-data">
+                        <form action="" id="editCategorySubtestForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <input type="hidden" id="clusterId" name="clusterId">
+                            <input type="hidden" id="subtestCategoryId" name="subtestCategoryId">
                             <div class="row">
                                 <div class="col-12 mb--30">
-                                    <label for="name">Rumpun</label>
-                                    <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" placeholder="Rumpun">
+                                    <label for="name">Nama Kategori</label>
+                                    <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" placeholder="Nama Kategori">
                                     @error('name')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -136,7 +138,7 @@
     <!-- End Modal edit tutor -->
 
 </div>
-<input type="hidden" id="table-url" value="{{ route('clusters.get') }}">
+<input type="hidden" id="table-url" value="{{ route('category-subtests.get') }}">
 @endsection
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -152,7 +154,7 @@
 </script>
 <script>
     $(document).ready(function() {
-        $('#cluster-table').DataTable({
+        $('#category-subtest-table').DataTable({
             ordering: true,
             processing: true,
             serverSide: true,
@@ -170,38 +172,38 @@
     });
 
     // Handle delete button click
-    $('#cluster-table').on('click', '.delete-cluster', function() {
-        var clusterId = $(this).data('id');
-        if (confirm('Are you sure you want to delete this cluster?')) {
+    $('#category-subtest-table').on('click', '.delete-category-subtest', function() {
+        var subtestCategoryId = $(this).data('id');
+        if (confirm('Are you sure you want to delete this category subtest?')) {
             $.ajax({
-                url: '/rumpun/delete/' + clusterId,
+                url: '/kategori-subtest/delete/' + subtestCategoryId,
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(response) {
-                    alert('Cluster deleted successfully.');
+                    alert('Category Subtest deleted successfully.');
                     location.reload();
                 },
                 error: function(xhr) {
-                    alert('Error deleting cluster.');
+                    alert('Error deleting Category Subtest.');
                 }
             });
         }
     });
 
     // Handle edit button click
-    $('#cluster-table').on('click', '.edit-cluster', function(e) {
+    $('#category-subtest-table').on('click', '.edit-category-subtest', function(e) {
         e.preventDefault();
         var rowData = $(this).closest('tr').find('td');
-        var clusterId = $(this).data('id');
-        var route = '{{ route("clusters.update", ":id") }}';
-        route = route.replace(':id', clusterId);
+        var subtestCategoryId = $(this).data('id');
+        var route = '{{ route("category-subtests.update", ":id") }}';
+        route = route.replace(':id', subtestCategoryId);
 
         // Fill the modal form with the current data
-        $('#editModal #clusterId').val(clusterId);
+        $('#editModal #subtestCategoryId').val(subtestCategoryId);
         $('#editModal #name').val(rowData.eq(1).text());
-        $('#editModal #editClusterForm').attr('action', route);
+        $('#editModal #editCategorySubtestForm').attr('action', route);
         
         // Show the modal
         $('#editModal').modal('show');
