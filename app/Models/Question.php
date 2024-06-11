@@ -17,6 +17,13 @@ class Question extends Model
         'question_image',
     ];
 
+    public static $types = [
+        'pilihan_ganda' => 'Pilihan Ganda',
+        'pilihan_ganda_majemuk' => 'Pilihan Ganda Majemuk',
+        'pernyataan' => 'Pernyataan',
+        'isian_singkat' => 'Isian Singkat',
+    ];
+
     public function subTest()
     {
         return $this->belongsTo(SubTest::class);

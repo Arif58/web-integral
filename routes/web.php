@@ -49,6 +49,10 @@ Route::get('/try-out-utbk', function () {
 
 Route::get('/produk/try-out-utbk/detail', [TryoutDetailController::class, 'index'])->name('tryout-detail');
 
+Route::get('/welcome', function () {
+    return view('welcome');
+});
+
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
@@ -162,8 +166,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::controller(QuestionController::class)->group(function () {
             Route::get('/soal/{subTestId}', 'index')->name('questions');
-            // Route::get('/soal/get/{subTestId}', 'getQuestions')->name('questions.get');
+            Route::get('soal/create/{subTestId}', 'create')->name('questions.create');
             Route::post('/soal/{subTestId}', 'store')->name('questions.store');
+            Route::post('/soal/upload', 'upload')->name('ckeditor.upload');
             Route::post('/soal/delete/{id}', 'destroy')->name('questions.destroy');
             Route::put('/soal/update/{id}', 'update')->name('questions.update');
         });

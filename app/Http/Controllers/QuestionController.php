@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Question;
 use App\Models\SubTest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class QuestionController extends Controller
 {
@@ -20,20 +21,45 @@ class QuestionController extends Controller
         return view('web.sections.dashboard.admin.question', compact('subTest','questions', 'no'));
     }
 
+    public function upload(Request $request)
+    {
+        dd('test');
+        try {
+                $question = new Question();
+                $question->id = 0;
+                $question->exists = true;
+                $image = $question->addMediaFromRequest('upload')->toMediaCollection('thumb');
+        return response()->json([
+                    'uploaded' => true,
+                    'url' => $image->getUrl('thumb')
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'uploaded' => false,
+                    'error' => [
+                        'message' => $e->getMessage()
+                    ]
+                ]);
+            }
+    }
+
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($subTestId)
     {
-        //
+        $subTest = SubTest::findOrFail($subTestId);
+        $types = Question::$types;
+        return view('web.sections.dashboard.admin.question-create', compact('subTest', 'types'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        dd($request->all());
+
     }
 
     /**
