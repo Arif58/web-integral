@@ -35,6 +35,7 @@
 
         .checkout-form input {
             margin-bottom: 0px;
+            width: fit-content;
         }
 
         .ck.ck-editor {
@@ -50,10 +51,16 @@
 @endpush
 @section('content')
 <div class="content">
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="rbt-dashboard-content bg-color-white rbt-shadow-box mb--30">
         <div class="section-title mb-4">
             <h4 class="rbt-title-style-3">
-                <a href="{{route('subtests', $subTest->try_out_id)}}" class="me-4"><i class="feather feather-arrow-left"></i></a>
+                <a href="{{route('questions', $subTest->id)}}" class="me-4"><i class="feather feather-arrow-left"></i></a>
                 <b>Daftar Try Out / </b>
                 <b>{{ $subTest->tryOut->name }} / </b>
                 <span style="color: #9f9f9f; font-weight: normal">{{ $subTest->name }}</span>       
@@ -75,8 +82,12 @@
                     <label for="question_text">
                         Soal
                     </label>
-                    <textarea name="question_text" id="editor"></textarea>
+                    <textarea name="question_text" id="editor">{{ old('question_text') }}</textarea>
+                    @error('question_text')
+                        <span class="message-info">{{$message}}</span>
+                    @enderror
                 </div>
+                <input type="hidden" id="question" value="{{old('question_text')}}">
 
                 <div class="mb-5">
                     <label for="type">
@@ -85,11 +96,16 @@
                     <div class="d-flex justify-content-between">
                         @foreach ($types as $key => $value)
                         <div class="single-method">
-                            <input type="radio" name="type" value="{{$key}}" id="type_{{$key}}">
+                            <input type="radio" name="type" value="{{$key}}" id="type_{{$key}}" {{ old('type') == $key ? 'checked' : '' }}>
                             <label for="type_{{$key}}">{{$value}}</label>
                         </div>
                         @endforeach                           
                     </div>
+                    @error('type')
+                        <span class="message-info">
+                            {{$message}}
+                        </span>
+                    @enderror
                 </div>
 
                 <div class="mb-5">
@@ -97,6 +113,23 @@
                         Jawaban
                     </label>
                     <div id="answer-fields"></div>
+                    {{-- @error('answers')
+                        <span class="message-info">
+                            {{$message}}
+                        </span>
+                    @enderror
+
+                    @error('is_correct')
+                        <span class="message-info">
+                            {{$message}}
+                        </span>
+                    @enderror 
+
+                    @error('statement')
+                        <span class="message-info">
+                            {{$message}}
+                        </span>
+                    @enderror --}}
                 </div>
 
                 <div class="row mt-5">
@@ -123,9 +156,10 @@
 <script>
     const ckeditorAnswerConfig = {
         // CKEditor configuration
-        ckfinder: {
-            // uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
-        },
+        // ckfinder: {
+        //     // uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+        // },
+        fileBrowserUploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
         image: {
             toolbar: [
                 'toggleImageCaption', 'imageTextAlternative',
@@ -173,12 +207,142 @@
         ]
     }
 
-    function createCKEditor(element) {
-        CKEDITOR.ClassicEditor.create(element, ckeditorAnswerConfig);
+    const ckEditorQuestionConfig = {
+            // ckfinder: {
+            //     uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+            // },
+            // filebrowserUploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+            // filebrowserUploadMethod: 'form',
+            image: {
+                insert: {
+                    type: 'inline'
+                },
+                toolbar: [
+                    'toggleImageCaption', 'imageTextAlternative',
+                    // 'ckboxImageEdit',
+                    'imageStyle:inline',
+                    'imageStyle:wrapText', 'imageStyle:breakText',
+                    'imageStyle:side',
+                    'positionImageLeft',
+                    'positionImageCenter', 'positionImageRight',
+                    'resizeImage',
+                    'imageStyle:full',
+                    
+                ]
+            },
+            toolbar: {
+                items: [
+                    'findAndReplace', '|',
+                    'heading', '|',
+                    'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+                    'bulletedList', 'numberedList', 'todoList', '|',
+                    'outdent', 'indent', '|',
+                    'undo', 'redo',
+                    '-',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+                    'alignment', '|',
+                    'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', '|',
+                    'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+                    'textPartLanguage'
+                ],
+                shouldNotGroupWhenFull: true
+            },
+            list: {
+                properties: {
+                    styles: true,
+                    startIndex: true,
+                    reversed: true
+                }
+            },
+            heading: {
+                options: [
+                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+                    { model: 'heading1', title: 'Heading 1', class: 'ck-heading_heading1' },
+                    { model: 'heading2', title: 'Heading 2', class: 'ck-heading_heading2' },
+                    { model: 'heading3', title: 'Heading 3', class: 'ck-heading_heading3' },
+                    { model: 'heading4', title: 'Heading 4', class: 'ck-heading_heading4' },
+                    { model: 'heading5', title: 'Heading 5', class: 'ck-heading_heading5' },
+                    { model: 'heading6', title: 'Heading 6', class: 'ck-heading_heading6' }
+                ]
+            },
+            placeholder: 'Isi Soal',
+            fontFamily: {
+                options: [
+                    'default',
+                    'Arial, Helvetica, sans-serif',
+                    'Courier New, Courier, monospace',
+                    'Georgia, serif',
+                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
+                    'Tahoma, Geneva, sans-serif',
+                    'Times New Roman, Times, serif',
+                    'Trebuchet MS, Helvetica, sans-serif',
+                    'Verdana, Geneva, sans-serif'
+                ],
+                supportAllValues: true
+            },
+            fontSize: {
+                options: [10, 12, 14, 'default', 18, 20, 22],
+                supportAllValues: true
+            },
+            // htmlSupport: {
+            //     allow: [
+            //         {
+            //             name: /.*/,
+            //             attributes: true,
+            //             classes: true,
+            //             styles: true
+            //         }
+            //     ]
+            // },
+            // htmlEmbed: {
+            //     showPreviews: true
+            // },
+            link: {
+                decorators: {
+                    addTargetToExternalLinks: true,
+                    defaultProtocol: 'https://',
+                    toggleDownloadable: {
+                        mode: 'manual',
+                        label: 'Downloadable',
+                        attributes: {
+                            download: 'file'
+                        }
+                    }
+                }
+            },
+            removePlugins: [
+                'AIAssistant',
+                'CKBox',
+                'MultiLevelList',
+                'RealTimeCollaborativeComments',
+                'RealTimeCollaborativeTrackChanges',
+                'RealTimeCollaborativeRevisionHistory',
+                'PresenceList',
+                'Comments',
+                'TrackChanges',
+                'TrackChangesData',
+                'RevisionHistory',
+                'Pagination',
+                'WProofreader',
+                'MathType',
+                'SlashCommand',
+                'Template',
+                'DocumentOutline',
+                'FormatPainter',
+                'TableOfContents',
+                'PasteFromOfficeEnhanced',
+                'CaseChange',
+                'easyImage',
+            ]
+    }
+
+    function createCKEditor(element, config) {
+        CKEDITOR.ClassicEditor.create(element, config);
     }
     document.addEventListener('DOMContentLoaded', function () {
         const answerFieldsContainer = document.getElementById('answer-fields');
         const typeRadios = document.querySelectorAll('input[name="type"]');
+        const soalOld = document.getElementById('question');
 
         typeRadios.forEach(radio => {
             radio.addEventListener('change', function () {
@@ -220,7 +384,7 @@
                         div.appendChild(textarea);
                         answerFieldsContainer.appendChild(div);
 
-                        createCKEditor(textarea);
+                        createCKEditor(textarea, ckEditorQuestionConfig);
                     }
                 } else if(this.value === 'pilihan_ganda_majemuk') {
                     for (let i = 1; i <= 5; i++) {
@@ -252,6 +416,15 @@
                         checkbox.value = 1;
                         checkbox.classList.add('form-check-input');
 
+                        //menampilkan alert ketika lebih dari 2 checkbox yang dipilih
+                        checkbox.addEventListener('change', function () {
+                            const checkedCheckboxes = document.querySelectorAll('input[name^="is_correct"]:checked');
+                            if (checkedCheckboxes.length > 2) {
+                                alert('Anda hanya dapat memilih maksimal 2 jawaban yang benar.');
+                                this.checked = false;
+                            }
+                        });
+
                         divCheckbox.appendChild(hiddenInput);
                         divCheckbox.appendChild(checkbox);
                         divCheckbox.appendChild(label);
@@ -259,7 +432,7 @@
                         div.appendChild(textarea);
                         answerFieldsContainer.appendChild(div);
 
-                        createCKEditor(textarea);
+                        createCKEditor(textarea, ckeditorAnswerConfig);
                     }
                 } else if (this.value === 'pernyataan') {
                      createPernyataanFields();
@@ -268,10 +441,15 @@
                         const div = document.createElement('div');
                         div.classList.add('d-flex', 'align-items-center', 'mb-2');
 
-                        const textarea = document.createElement('textarea');
-                        textarea.name = 'answers';
-                        textarea.id = 'answer-editor';
-                        textarea.classList.add('form-control', 'me-2');
+                        // const textarea = document.createElement('textarea');
+                        // textarea.name = 'answers';
+                        // textarea.id = 'answer-editor';
+                        // textarea.classList.add('form-control', 'me-2');
+
+                        const input = document.createElement('input');
+                        input.type = 'text';
+                        input.name = 'answers';
+                        input.classList.add('form-control', 'me-2', 'w-100');
 
                         const radio = document.createElement('input');
                         radio.type = 'radio';
@@ -279,11 +457,11 @@
                         radio.value = 1;
                         radio.classList.add('form-check-input');
 
-                        div.appendChild(textarea);
+                        div.appendChild(input);
                         div.appendChild(radio);
                         answerFieldsContainer.appendChild(div);
 
-                       createCKEditor(textarea);
+                       createCKEditor(textarea, ckeditorAnswerConfig);
                     }
                 });
         });
@@ -300,13 +478,13 @@
             const answerOption = document.createElement('input');
             answerOption.type = 'text';
             answerOption.name = 'answer[]';
-            answerOption.classList.add('form-control', 'me-2');
+            answerOption.classList.add('form-control', 'me-2','w-100');
             answerOption.placeholder = 'Option';
 
             const statement = document.createElement('input');
             statement.type = 'text';
             statement.name = 'statement[]';
-            statement.classList.add('form-control', 'me-2');
+            statement.classList.add('form-control', 'me-2', 'w-100');
             statement.placeholder = 'Jawaban Benar';
 
             const addButton = document.createElement('button');
@@ -322,128 +500,130 @@
             answerFieldsContainer.appendChild(div);
         }
 
-        CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
-            ckfinder: {
-                // uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
-            },
-            image: {
-                toolbar: [
-                    'toggleImageCaption', 'imageTextAlternative',
-                    'ckboxImageEdit',
-                    'imageStyle:inline',
-                    'imageStyle:wrapText', 'imageStyle:breakText',
-                    'positionImageLeft',
-                    'positionImageCenter', 'positionImageRight',
-                    'resizeImage',
-                    'imageStyle:full',
-                    'imageStyle:side', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
-                    'imageInlineEditing'
-                ]
-            },
-            toolbar: {
-                items: [
-                    'findAndReplace', '|',
-                    'heading', '|',
-                    'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
-                    'bulletedList', 'numberedList', 'todoList', '|',
-                    'outdent', 'indent', '|',
-                    'undo', 'redo',
-                    '-',
-                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
-                    'alignment', '|',
-                    'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
-                    'specialCharacters', 'horizontalLine', 'pageBreak', '|',
-                    'textPartLanguage'
-                ],
-                shouldNotGroupWhenFull: true
-            },
-            list: {
-                properties: {
-                    styles: true,
-                    startIndex: true,
-                    reversed: true
-                }
-            },
-            heading: {
-                options: [
-                    { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                    { model: 'heading1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                    { model: 'heading2', title: 'Heading 2', class: 'ck-heading_heading2' },
-                    { model: 'heading3', title: 'Heading 3', class: 'ck-heading_heading3' },
-                    { model: 'heading4', title: 'Heading 4', class: 'ck-heading_heading4' },
-                    { model: 'heading5', title: 'Heading 5', class: 'ck-heading_heading5' },
-                    { model: 'heading6', title: 'Heading 6', class: 'ck-heading_heading6' }
-                ]
-            },
-            placeholder: 'Welcome to CKEditor 5!',
-            fontFamily: {
-                options: [
-                    'default',
-                    'Arial, Helvetica, sans-serif',
-                    'Courier New, Courier, monospace',
-                    'Georgia, serif',
-                    'Lucida Sans Unicode, Lucida Grande, sans-serif',
-                    'Tahoma, Geneva, sans-serif',
-                    'Times New Roman, Times, serif',
-                    'Trebuchet MS, Helvetica, sans-serif',
-                    'Verdana, Geneva, sans-serif'
-                ],
-                supportAllValues: true
-            },
-            fontSize: {
-                options: [10, 12, 14, 'default', 18, 20, 22],
-                supportAllValues: true
-            },
-            htmlSupport: {
-                allow: [
-                    {
-                        name: /.*/,
-                        attributes: true,
-                        classes: true,
-                        styles: true
-                    }
-                ]
-            },
-            htmlEmbed: {
-                showPreviews: true
-            },
-            link: {
-                decorators: {
-                    addTargetToExternalLinks: true,
-                    defaultProtocol: 'https://',
-                    toggleDownloadable: {
-                        mode: 'manual',
-                        label: 'Downloadable',
-                        attributes: {
-                            download: 'file'
-                        }
-                    }
-                }
-            },
-            removePlugins: [
-                'AIAssistant',
-                'CKBox',
-                'MultiLevelList',
-                'RealTimeCollaborativeComments',
-                'RealTimeCollaborativeTrackChanges',
-                'RealTimeCollaborativeRevisionHistory',
-                'PresenceList',
-                'Comments',
-                'TrackChanges',
-                'TrackChangesData',
-                'RevisionHistory',
-                'Pagination',
-                'WProofreader',
-                'MathType',
-                'SlashCommand',
-                'Template',
-                'DocumentOutline',
-                'FormatPainter',
-                'TableOfContents',
-                'PasteFromOfficeEnhanced',
-                'CaseChange'
-            ]
-        });
+        // CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+        //     // ckfinder: {
+        //     //     // uploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+        //     // },
+        //     fileBrowserUploadUrl: "{{ route('ckeditor.upload', ['_token' => csrf_token()]) }}",
+        //     image: {
+        //         toolbar: [
+        //             'toggleImageCaption', 'imageTextAlternative',
+        //             'ckboxImageEdit',
+        //             'imageStyle:inline',
+        //             'imageStyle:wrapText', 'imageStyle:breakText',
+        //             'positionImageLeft',
+        //             'positionImageCenter', 'positionImageRight',
+        //             'resizeImage',
+        //             'imageStyle:full',
+        //             'imageStyle:side', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
+        //             'imageInlineEditing'
+        //         ]
+        //     },
+        //     toolbar: {
+        //         items: [
+        //             'findAndReplace', '|',
+        //             'heading', '|',
+        //             'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+        //             'bulletedList', 'numberedList', 'todoList', '|',
+        //             'outdent', 'indent', '|',
+        //             'undo', 'redo',
+        //             '-',
+        //             'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+        //             'alignment', '|',
+        //             'link', 'uploadImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+        //             'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+        //             'textPartLanguage'
+        //         ],
+        //         shouldNotGroupWhenFull: true
+        //     },
+        //     list: {
+        //         properties: {
+        //             styles: true,
+        //             startIndex: true,
+        //             reversed: true
+        //         }
+        //     },
+        //     heading: {
+        //         options: [
+        //             { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+        //             { model: 'heading1', title: 'Heading 1', class: 'ck-heading_heading1' },
+        //             { model: 'heading2', title: 'Heading 2', class: 'ck-heading_heading2' },
+        //             { model: 'heading3', title: 'Heading 3', class: 'ck-heading_heading3' },
+        //             { model: 'heading4', title: 'Heading 4', class: 'ck-heading_heading4' },
+        //             { model: 'heading5', title: 'Heading 5', class: 'ck-heading_heading5' },
+        //             { model: 'heading6', title: 'Heading 6', class: 'ck-heading_heading6' }
+        //         ]
+        //     },
+        //     placeholder: 'Welcome to CKEditor 5!',
+        //     fontFamily: {
+        //         options: [
+        //             'default',
+        //             'Arial, Helvetica, sans-serif',
+        //             'Courier New, Courier, monospace',
+        //             'Georgia, serif',
+        //             'Lucida Sans Unicode, Lucida Grande, sans-serif',
+        //             'Tahoma, Geneva, sans-serif',
+        //             'Times New Roman, Times, serif',
+        //             'Trebuchet MS, Helvetica, sans-serif',
+        //             'Verdana, Geneva, sans-serif'
+        //         ],
+        //         supportAllValues: true
+        //     },
+        //     fontSize: {
+        //         options: [10, 12, 14, 'default', 18, 20, 22],
+        //         supportAllValues: true
+        //     },
+        //     htmlSupport: {
+        //         allow: [
+        //             {
+        //                 name: /.*/,
+        //                 attributes: true,
+        //                 classes: true,
+        //                 styles: true
+        //             }
+        //         ]
+        //     },
+        //     htmlEmbed: {
+        //         showPreviews: true
+        //     },
+        //     link: {
+        //         decorators: {
+        //             addTargetToExternalLinks: true,
+        //             defaultProtocol: 'https://',
+        //             toggleDownloadable: {
+        //                 mode: 'manual',
+        //                 label: 'Downloadable',
+        //                 attributes: {
+        //                     download: 'file'
+        //                 }
+        //             }
+        //         }
+        //     },
+        //     removePlugins: [
+        //         'AIAssistant',
+        //         'CKBox',
+        //         'MultiLevelList',
+        //         'RealTimeCollaborativeComments',
+        //         'RealTimeCollaborativeTrackChanges',
+        //         'RealTimeCollaborativeRevisionHistory',
+        //         'PresenceList',
+        //         'Comments',
+        //         'TrackChanges',
+        //         'TrackChangesData',
+        //         'RevisionHistory',
+        //         'Pagination',
+        //         'WProofreader',
+        //         'MathType',
+        //         'SlashCommand',
+        //         'Template',
+        //         'DocumentOutline',
+        //         'FormatPainter',
+        //         'TableOfContents',
+        //         'PasteFromOfficeEnhanced',
+        //         'CaseChange'
+        //     ]
+        // });
+        createCKEditor(document.getElementById("editor"), ckEditorQuestionConfig);
     });
 </script>
 @endpush

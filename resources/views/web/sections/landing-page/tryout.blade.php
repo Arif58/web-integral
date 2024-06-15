@@ -25,7 +25,7 @@
                     <div class="col-lg-6 order-1 order-lg-2">
                         <div class="thumbnail-wrapper">
                             <div class="thumbnail text-end">
-                                <img src="{{asset('images/banner/language-club.png')}}" alt="Education Images">
+                                <img src="{{asset('images/banner/pana.svg')}}" alt="Education Images">
                             </div>
                         </div>
                     </div>

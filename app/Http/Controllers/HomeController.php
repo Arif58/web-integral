@@ -14,9 +14,9 @@ class HomeController extends Controller
     {
         $studentAchievementsHighlight = StudentAchievement::whereBetween('highlighted_order', [1, 6])->orderBY('highlighted_order', 'asc')->get();
 
-        $testimonialHighlightRowOne = Testimoni::whereBetween('highlighted_order', [1, 4])->orderBY('highlighted_order', 'asc')->get();
+        $testimonialHighlightRowOne = Testimoni::whereBetween('highlighted_order', [1, 8])->orderBY('highlighted_order', 'asc')->get();
 
-        $testimonialHighlightRowTwo = Testimoni::whereBetween('highlighted_order', [5, 8])->orderBY('highlighted_order', 'asc')->get();
+        $testimonialHighlightRowTwo = Testimoni::whereBetween('highlighted_order', [1, 8])->orderBY('highlighted_order', 'desc')->get();
 
         $tutorHighlight = Tutor::whereBetween('highlighted_order', [1, 4])->orderBY('highlighted_order', 'asc')->get();
 

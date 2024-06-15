@@ -10,9 +10,9 @@
                         <div class="col-lg-6 order-2 order-lg-1">
                             <div class="content">
                                 <div class="inner">
-                                    <h1 class="title text-white">Lorem Ipsum</h1>
+                                    <h1 class="title text-white">Sukses UTBK-SNBT Bersama Try Out Integral Education</h1>
                                     <p class="description text-white">
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, quas dolorem! Iure aliquid quidem nisi ad esse ex fugiat, aliquam debitis provident dolorem, vitae tenetur autem enim amet placeat adipisci!
+                                        Persiapkan dirimu dalam menghadapi UTBK-SNBT dengan mengikuti Try Out Integral Education!
                                     </p>
                                     <div class="rbt-button-group justify-content-start mt--30">
                                         <a class="rbt-btn btn-gradient" href="#">
@@ -25,7 +25,7 @@
                         <div class="col-lg-6 order-1 order-lg-2">
                             <div class="thumbnail-wrapper">
                                 <div class="thumbnail text-end">
-                                    <img src="{{asset('images/banner/language-club.png')}}" alt="Education Images">
+                                    <img src="{{asset('images/banner/pana.svg')}}" alt="Education Images">
                                 </div>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                 <div class="scroll-animation scroll-left-right">
                     
                     <!-- Start Single Testimonial  -->
-                    @foreach ($testimonialHighlightRowTwo as $item)
+                    @foreach ($testimonialHighlightRowOne as $item)
                     <div class="single-column-20">
                         <div class="rbt-testimonial-box">
                             <div class="inner">

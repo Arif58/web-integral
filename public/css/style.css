@@ -20289,6 +20289,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 .scroll-animation-wrapper {
   position: relative;
   z-index: 1;
+  height: 300px;
 }
 .scroll-animation-wrapper::before, .scroll-animation-wrapper::after {
   position: absolute;
@@ -20331,19 +20332,20 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
 .scroll-animation.scroll-right-left {
   -webkit-animation: scroll 80s linear infinite;
   -moz-animation: scroll 80s linear infinite;
-  animation: scroll 80s linear infinite;
+  animation: scroll 40s linear infinite;
   -webkit-animation-fill-mode: forwards;
   -moz-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
 .scroll-animation.scroll-left-right {
-  -webkit-animation: scrollLeft 80s linear infinite;
-  -moz-animation: scrollLeft 80s linear infinite;
-  animation: scrollLeft 80s linear infinite;
+  -webkit-animation: scrollReverse 80s linear infinite;
+  -moz-animation: scrollReverse 80s linear infinite;
+  animation: scrollReverse 40s linear infinite;
   -webkit-animation-fill-mode: forwards;
   -moz-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
+
 .scroll-animation .single-column-20 {
   width: 500px;
   padding: 0 15px;
@@ -20367,6 +20369,7 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
   background: var(--color-white);
   border-radius: var(--radius);
   box-shadow: var(--shadow-9);
+  height: 290px;
 }
 @media only screen and (min-width: 1200px) and (max-width: 1599px) {
   .rbt-testimonial-box .inner {
@@ -20654,6 +20657,40 @@ ul.testimonial-thumb-wrapper li a.active .thumb img {
     transform: translateX(0);
   }
 }
+
+@-webkit-keyframes scrollReverse {
+  0% {
+    -webkit-transform: translateX(-webkit-calc(-250px * 7));
+    transform: translateX(-1750px);
+  }
+  to {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@-moz-keyframes scrollReverse {
+  0% {
+    -moz-transform: translateX(-moz-calc(-250px * 7));
+    transform: translateX(-1750px);
+  }
+  to {
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes scrollReverse {
+  0% {
+    -webkit-transform: translateX(-webkit-calc(-250px * 7));
+    -moz-transform: translateX(-moz-calc(-250px * 7));
+    transform: translateX(-1750px);
+  }
+  to {
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+
 .advance-tab-button-1 .tab-button-list {
   list-style: none;
   padding: 0;
