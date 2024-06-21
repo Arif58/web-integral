@@ -170,8 +170,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/soal/{subTestId}', 'store')->name('questions.store');
             Route::post('/soal/upload', 'upload')->name('ckeditor.upload');
             Route::post('/soal/delete/{id}', 'destroy')->name('questions.destroy');
+            Route::get('/soal/edit/{id}', 'edit')->name('questions.edit');
             Route::put('/soal/update/{id}', 'update')->name('questions.update');
         });
+
+        
     });
 
     Route::middleware(['profile.completed'])->group(function () {

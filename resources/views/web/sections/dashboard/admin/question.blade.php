@@ -2,23 +2,24 @@
 @section('title', 'Tryout Subtest')
 @push('css')
     <style>
-        .rbt-title-style-3{
+        .rbt-title-style-3 {
             font-size: 18px;
         }
 
         .rbt-btn.btn-sm {
-            padding: 0 10px; 
-            height: 35px; 
+            padding: 0 10px;
+            height: 35px;
             line-height: 35px;
         }
 
-        .bootstrap-select .dropdown-menu{
+        .bootstrap-select .dropdown-menu {
             height: 70px;
         }
 
         .bootstrap-select {
             width: 100% !important;
         }
+
         .inner .show {
             max-height: 100%;
             font-size: 14px;
@@ -36,9 +37,17 @@
         .checkout-form input {
             margin-bottom: 0px;
         }
+
+        .page-item.active .page-link {
+            background: linear-gradient(rgb(29, 59, 100) 0%, rgb(55, 116, 155) 100%) !important;
+            border-color: #dee2e6 !important;
+        }
+
+        .page-link {
+            color: #757575;
+        }
     </style>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
-
 
     <style type="text/css">
         .ck-editor__editable_inline {
@@ -61,10 +70,10 @@
         </div>
         <div class="section-title mb-4">
             <h4 class="rbt-title-style-3">
-                <a href="{{route('subtests', $subTest->try_out_id)}}" class="me-4"><i class="feather feather-arrow-left"></i></a>
+                <a href="{{ route('subtests', $subTest->try_out_id) }}" class="me-4"><i class="feather feather-arrow-left"></i></a>
                 <b>Daftar Try Out / </b>
                 <b>{{ $subTest->tryOut->name }} / </b>
-                <span style="color: #9f9f9f; font-weight: normal">{{ $subTest->name }}</span>       
+                <span style="color: #9f9f9f; font-weight: normal">{{ $subTest->name }}</span>
             </h4>
         </div>
         
@@ -73,112 +82,87 @@
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0" style="font-size: 18px;">
                 Soal
             </h4>
-            <a class="rbt-btn btn-sm bg-color-success" type="button" href="{{route('questions.create', $subTest->id)}}">Tambah Soal<i class="feather feather-plus"></i></a>
+            <a class="rbt-btn btn-sm bg-color-success" type="button" href="{{ route('questions.create', $subTest->id) }}">Tambah Soal<i class="feather feather-plus"></i></a>
         </div>
        
         <div style="margin-bottom: 24px;">
-            @php
+            {{-- @php
                 $countQuestion = $questions->count();
             @endphp
-            <span>Total : {{$countQuestion}} soal</span>
+            <span>Total : {{ $countQuestion }} soal</span> --}}
             @foreach($questions as $key => $item)
             <div class="rbt-shadow-box overflow-visible mt-3">
                 <div class="row">
                     <div class="col-1">
-                        {{++$no}}
+                        {{ ++$no }}
                     </div>
-                    <div class="col-10">
+                    <div class="col-9">
                         <div class="row mb-2 pb-3" style="border-bottom: 1px solid var(--color-border-2)">
-                            {!!$item->question_text!!}
+                            {!! $item->question_text !!}
                         </div>
                         @php
                             $answers = $item->questionChoices;
+                            $statements = \App\Models\TestAnswer::select('statement')->where('question_id', $item->id)->distinct()->pluck('statement');
                         @endphp
+                        @if($item->type !== 'pernyataan')
                         <ul>
                             @foreach ($answers as $answer)
                             <li>
                                 @if($answer->is_correct)
                                     @if ($item->type === 'pernyataan' || $item->type === 'isian_singkat')
-                                        <p style="color: green;">{{$answer->answer}}</p>
+                                        <p style="color: green;">{{ $answer->answer }}</p>
                                     @else
                                         {!! str_replace('<p>', '<p style="color: green;">', $answer->answer) !!}
                                     @endif
                                 @else
                                 {!! $answer->answer !!}
                                 @endif
-
                             </li>
-                        @endforeach
+                            @endforeach
                         </ul>
-                       
-                        
+                        @else
+                        <table class="table table-bordered">
+                            <thead style="background-color: #F5F5F5">
+                                <tr class="text-center">
+                                    <th>Pernyataan</th>
+                                    @foreach ($statements as $statement)
+                                    <th class="statement-header">{{ $statement }}</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($answers as $answer)
+                                <tr>
+                                    <td>{{ $answer->answer }}</td>
+                                    @foreach ($statements as $statement)
+                                    <td class="text-center">
+                                        @if($answer->statement == $statement)
+                                            <i class="feather feather-check"></i>
+                                        @endif
+                                    </td>
+                                    @endforeach
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        @endif
                     </div>
-                    <div class="col-1">
-                        <button class="rbt-btn btn-sm bg-color-danger" type="button" data-bs-toggle="modal" data-bs-target="#editModal" onclick="editSubtest({{$item->id}})">Edit</button>
-
+                    <div class="col-2 d-flex justify-content-center">
+                        <a class="rbt-btn btn-sm bg-color-warning me-2" href="{{route('questions.edit', $item->id)}}"><i class="feather-edit pl--0"></i></a>
+                        <form action="{{route('questions.destroy', $item->id)}}" method="post">
+                            @csrf
+                            <button class="rbt-btn btn-sm bg-color-danger"><i class="feather-trash pl--0" onClick="return confirm('Apakah anda yakin untuk menghapus pertanyaan?')"></i></button>
+                        </form>                        
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
-    </div>
-     <!-- Start Modal create tutor -->
-     <div class="rbt-default-modal modal fade @if($errors->any()) show @endif" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true" style="background: transparent" @if($errors->any()) style="display: block;" @endif>
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 1000px;">
-            <div class="modal-content" style="padding: 30px">
-                <div class="modal-header pb--5 justify-content-center">
-                    <h4 class="title">
-                        Tambah Subtes
-                    </h4>
-                </div>
-                <div class="modal-body" style="border-top: 1px solid #dee2e6">
-                    <div class="inner checkout-form">
-                        <form action="{{ route('questions.store', $subTest->id) }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            
-                            <div class="row">
-                                <div class="col-4">
-                                    <button type="button" class="rbt-btn btn-border btn-md bg-color-white radius-round-10" data-bs-dismiss="modal" style="width: 100%; color: black;">Batal</button> 
-                                </div>
-                                <div class="col-8">
-                                    <button type="submit" class="rbt-btn btn-gradient btn-md text-center hover-icon-reverse" style="color: white; border-radius: 4px; width: 100%">
-                                        <span class="icon-reverse-wrapper">
-                                            <span class="btn-text">Simpan</span>
-                                        <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                        <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                        </span>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                        </form>
-                    </div>
-                </div>
-            </div>
+        <div>
+            {{$questions->links('vendor.pagination.bootstrap-5')}}
         </div>
     </div>
 </div>
 @endsection
 @push('scripts')
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
-
-
-<script>
-    // JavaScript untuk menampilkan kembali modal jika ada error validasi
-    document.addEventListener('DOMContentLoaded', function() {
-        @if($errors->has('name') || $errors->has('category_subtest_id') || $errors->has('duration') || $errors->has('total_question'))
-            var formModal = new bootstrap.Modal(document.getElementById('formModal'));
-            formModal.show();
-        @endif
-    });
-</script>
-<script>
-    (function () {
-        var dates = document.getElementsByClassName('local_date');
-        for(var i = 0; i < dates.length; i++) {
-            var date = moment.utc(dates[i].textContent);
-            dates[i].textContent = date.local().format('DD MMMM YYYY, HH:mm');
-        }
-    })();
-</script>    
 @endpush

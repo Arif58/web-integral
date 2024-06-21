@@ -50,10 +50,6 @@
             padding-right: 0;
         }
 
-        .message-info {
-            position: unset;
-        }
-
     </style>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
 @endpush
@@ -68,34 +64,35 @@
     <div class="rbt-dashboard-content bg-color-white rbt-shadow-box mb--30">
         <div class="section-title mb-4">
             <h4 class="rbt-title-style-3">
-                <a href="{{route('questions', $subTest->id)}}" class="me-4"><i class="feather feather-arrow-left"></i></a>
+                <a href="{{route('questions', $question->sub_test_id)}}" class="me-4"><i class="feather feather-arrow-left"></i></a>
                 <b>Daftar Try Out / </b>
-                <b>{{ $subTest->tryOut->name }} / </b>
-                <span style="color: #9f9f9f; font-weight: normal">{{ $subTest->name }}</span>       
+                <b>{{ $question->subTest->tryOut->name }} / </b>
+                <span style="color: #9f9f9f; font-weight: normal">{{ $question->subTest->name }}</span>       
             </h4>
         </div>
         
         {{-- subtest --}}
         <div class="section-title mb-4">
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0 text-center" style="font-size: 18px;">
-                Tambah Pertanyaan
+                Edit Pertanyaan
             </h4>
         </div>
        
         <div class="inner checkout-form" style="margin-bottom: 24px;">
-            <form action="{{route('questions.store', $subTest->id)}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('questions.update', $question->id)}}" method="POST" enctype="multipart/form-data">
+                @method('PUT')
                 @csrf
-                <input type="hidden" name="sub_test_id" value="{{$subTest->id}}">
+                <input type="hidden" name="sub_test_id" value="{{$question->sub_test_id}}">
+                <input type="hidden" name="question_id" value="{{$question->id}}">
                 <div class="mb-5">
                     <label for="question_text">
                         Soal
                     </label>
-                    <textarea name="question_text" id="editor">{{ old('question_text') }}</textarea>
+                    <textarea name="question_text" id="editor" class="@error('question_text') is-invalid @enderror">{{ $question->question_text }}</textarea>
                     @error('question_text')
                         <span class="message-info">{{$message}}</span>
                     @enderror
                 </div>
-                <input type="hidden" id="question" value="{{old('question_text')}}">
 
                 <div class="mb-5">
                     <label for="type">
@@ -104,7 +101,7 @@
                     <div class="d-flex justify-content-between">
                         @foreach ($types as $key => $value)
                         <div class="single-method">
-                            <input type="radio" name="type" value="{{$key}}" id="type_{{$key}}" {{ old('type') == $key ? 'checked' : '' }}>
+                            <input type="radio" name="type" value="{{$key}}" id="type_{{$key}}" {{ $question->type == $key ? 'checked' : '' }}>
                             <label for="type_{{$key}}">{{$value}}</label>
                         </div>
                         @endforeach                           
@@ -114,6 +111,7 @@
                             {{$message}}
                         </span>
                     @enderror
+                    {{-- <input type="hidden" name="initalType" value="{{$question->type}}"> --}}
                 </div>
 
                 <div class="mb-5">
@@ -121,9 +119,10 @@
                         <label for="answer">
                             Jawaban
                         </label>
-                        <div id="add-answer">
+                        <div id=add-answer>
 
                         </div>
+                        {{-- <button type="button" class="btn btn-primary" id="add-answer">Tambah Jawaban</button> --}}
                     </div>
                     <div id="answer-fields"></div>
                     @error('answers')
@@ -138,11 +137,11 @@
                         </span>
                     @enderror 
 
-                    @error('statements')
+                    {{-- @error('statement')
                         <span class="message-info">
                             {{$message}}
                         </span>
-                    @enderror
+                    @enderror --}}
                 </div>
 
                 <div class="row mt-5">
@@ -395,106 +394,309 @@
         CKEDITOR.ClassicEditor.create(element, config);
     }
 
-    // const initialType = document.querySelector('input[name="type"]:checked') ?? null;
-    // const initialTypeValue = initialType?.value ?? null;
-    const initialType = @json(old('type')) ?? null;
-    const oldAnswers = @json(old('answers', []));
-    const oldStatements = @json(old('statements', []));
-    const oldIsCorrect = @json(old('is_correct', []));
-    const answerFieldsContainer = document.getElementById('answer-fields');
-    const buttonAddAnswerFieldContainer = document.getElementById('add-answer');
+    createCKEditor(document.getElementById("editor"), ckEditorQuestionConfig);
 
-        function createPilihanGandaFields() {
-            for (let i = 1; i <= 5; i++) {
-                const div = document.createElement('div');
-                div.classList.add('d-flex', 'align-items-center', 'mb-2');
-                        // div.style.cssText = 'border: 1px solid #E0E0E0; border-radius: 5px; padding: 0px 10px;'
+    const initialType = @json($question->type);
+    const answerData = @json($testAnswer);
 
-                const textarea = document.createElement('textarea');
-                textarea.name = `answers[${i}]`;
-                textarea.id = `answer-editor-${i}`;
-                textarea.classList.add('form-control', 'me-2');
-                textarea.value = initialType==='pilihan_ganda' ? (oldAnswers[i] ?? '') : '';
+    document.addEventListener('DOMContentLoaded', function () {
+        const answerFieldsContainer = document.getElementById('answer-fields');
+        const typeRadios = document.querySelectorAll('input[name="type"]');
+        const soalOld = document.getElementById('question');
+        const buttonAddAnswerFieldContainer = document.getElementById('add-answer');
 
-                // Tambahkan input hidden dengan nilai 0
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = `is_correct[${i}]`;
-                hiddenInput.value = 0;
+        function getAnswerFields(type) {
 
-                const divRadio = document.createElement('div');
-                divRadio.classList.add('single-method');
-
-                const label = document.createElement('label');
-                label.htmlFor = `correct_answer_${i}`;
-
-                const radio = document.createElement('input');
-                radio.type = 'radio';
-                radio.name = `is_correct[${i}]`;
-                radio.id = `correct_answer_${i}`;
-                radio.value = 1;
-                radio.classList.add('form-check-input');
-
-                divRadio.appendChild(hiddenInput);
-                divRadio.appendChild(radio);
-                divRadio.appendChild(label);
-                div.appendChild(divRadio);
-                div.appendChild(textarea);
-                answerFieldsContainer.appendChild(div);
-
-                createCKEditor(textarea, ckEditorQuestionConfig);
+            if(type == 'pilihan_ganda') {
+                createPilihanGandaFields();
+            } else if(type == 'pilihan_ganda_majemuk') {
+                createPilihanGandaMajemukFields();
+            } else if(type == 'pernyataan') {
+                createPernyataanFields();
+            } else if(type == 'isian_singkat') {
+                createIsianSingkatFields();
             }
         }
 
-        function createPilihanGandaMajemuk() {
-            for (let i = 1; i <= 5; i++) {
+        getAnswerFields(initialType);
+
+        typeRadios.forEach(radio => {
+            radio.addEventListener('change', function () {
+                answerFieldsContainer.innerHTML = '';
+                buttonAddAnswerFieldContainer.innerHTML = '';
+                getAnswerFields(this.value);
+            });
+        });
+
+        function createPilihanGandaFields() {
+            if (initialType === 'pilihan_ganda') {
+                answerData.forEach((answer, index) => {
+                    const i = index + 1;
+                    const div = document.createElement('div');
+                    div.classList.add('d-flex', 'align-items-center', 'mb-2');
+
+                    const textarea = document.createElement('textarea');
+                    textarea.name = `answers[${i}]`;
+                    textarea.id = `answer-editor-${i}`;
+                    textarea.classList.add('form-control', 'me-2');
+                    textarea.value = answer.answer;
+
+                    const hiddenInputIdAnswer = document.createElement('input');
+                    hiddenInputIdAnswer.type = 'hidden';
+                    hiddenInputIdAnswer.name = `id_answers[${i}]`;
+                    hiddenInputIdAnswer.value = answer.id;
+
+                    // Tambahkan input hidden dengan nilai 0
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = `is_correct[${i}]`;
+                    hiddenInput.value = 0;
+
+                    const divRadio = document.createElement('div');
+                    divRadio.classList.add('single-method');
+
+                    const label = document.createElement('label');
+                    label.htmlFor = `correct_answer_${i}`;
+
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `is_correct[${i}]`;
+                    radio.id = `correct_answer_${i}`;
+                    radio.value = 1;
+                    // radio.classList.add('form-check-input');
+                    // Add the checked attribute based on is_correct property
+                    if (answer.is_correct) {
+                        radio.checked = true;
+                    }
+
+                    div.appendChild(hiddenInput);
+                    div.appendChild(hiddenInputIdAnswer);
+                    divRadio.appendChild(radio);
+                    divRadio.appendChild(label);
+                    div.appendChild(divRadio);
+                    div.appendChild(textarea);
+                    answerFieldsContainer.appendChild(div);
+
+                    createCKEditor(textarea, ckEditorQuestionConfig);
+                })
+            } else {
+                for (let i = 1; i <= 5; i++) {
+                        const div = document.createElement('div');
+                        div.classList.add('d-flex', 'align-items-center', 'mb-2');
+                        // div.style.cssText = 'border: 1px solid #E0E0E0; border-radius: 5px; padding: 0px 10px;'
+
+                        const textarea = document.createElement('textarea');
+                        textarea.name = `answers[${i}]`;
+                        textarea.id = `answer-editor-${i}`;
+                        textarea.classList.add('form-control', 'me-2');
+
+                        const hiddenInputIdAnswer = document.createElement('input');
+                        hiddenInputIdAnswer.type = 'hidden';
+                        hiddenInputIdAnswer.name = `id_answers[${i}]`;
+                        hiddenInputIdAnswer.value = '';
+
+                        // Tambahkan input hidden dengan nilai 0
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = `is_correct[${i}]`;
+                        hiddenInput.value = 0;
+
+                        const divRadio = document.createElement('div');
+                        divRadio.classList.add('single-method');
+
+                        const label = document.createElement('label');
+                        label.htmlFor = `correct_answer_${i}`;
+
+                        const radio = document.createElement('input');
+                        radio.type = 'radio';
+                        radio.name = `is_correct[${i}]`;
+                        radio.id = `correct_answer_${i}`;
+                        radio.value = 1;
+                        radio.classList.add('form-check-input');
+
+                        div.appendChild(hiddenInput);
+                        div.appendChild(hiddenInputIdAnswer);
+                        divRadio.appendChild(radio);
+                        divRadio.appendChild(label);
+                        div.appendChild(divRadio);
+                        div.appendChild(textarea);
+                        answerFieldsContainer.appendChild(div);
+
+                        createCKEditor(textarea, ckEditorQuestionConfig);
+                    }
+            }
+        }
+
+        function createPilihanGandaMajemukFields() {
+            if (initialType === 'pilihan_ganda_majemuk') {
+                answerData.forEach ((answer, index) => {
+                    const div = document.createElement('div');
+                    const i = index + 1;
+
+                    div.classList.add('d-flex', 'align-items-center', 'mb-2');
+                    // div.style.cssText = 'border: 1px solid #E0E0E0; border-radius: 5px; padding: 0px 10px;'
+
+                    const hiddenInputIdAnswer = document.createElement('input');
+                    hiddenInputIdAnswer.type = 'hidden';
+                    hiddenInputIdAnswer.name = `id_answers[${i}]`;
+                    hiddenInputIdAnswer.value = answer.id;
+
+                    const textarea = document.createElement('textarea');
+                    textarea.name = `answers[${i}]`;
+                    textarea.id = `answer-editor-${i}`;
+                    textarea.classList.add('form-control', 'me-2');
+                    textarea.value = answer.answer;
+
+                    const divCheckbox = document.createElement('div');
+                    divCheckbox.classList.add('single-method');
+
+                    // Tambahkan input hidden dengan nilai 0
+                    const hiddenInput = document.createElement('input');
+                    hiddenInput.type = 'hidden';
+                    hiddenInput.name = `is_correct[${i}]`;
+                    hiddenInput.value = 0;
+
+                    const label = document.createElement('label');
+                    label.htmlFor = `correct_answer_${i}`;
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.name = `is_correct[${i}]`;
+                    checkbox.id = `correct_answer_${i}`;
+                    checkbox.value = 1;
+                    checkbox.classList.add('form-check-input');
+                    // Add the checked attribute based on is_correct property
+                    if (answer.is_correct) {
+                        checkbox.checked = true;
+                    }
+
+                    //menampilkan alert ketika lebih dari 2 checkbox yang dipilih
+                    checkbox.addEventListener('change', function () {
+                        const checkedCheckboxes = document.querySelectorAll('input[name^="is_correct"]:checked');
+                        if (checkedCheckboxes.length > 2) {
+                            alert('Anda hanya dapat memilih maksimal 2 jawaban yang benar.');
+                            this.checked = false;
+                        }
+                    });
+
+                    div.appendChild(hiddenInputIdAnswer);
+                    divCheckbox.appendChild(hiddenInput);
+                    divCheckbox.appendChild(checkbox);
+                    divCheckbox.appendChild(label);
+                    div.appendChild(divCheckbox);
+                    div.appendChild(textarea);
+                    answerFieldsContainer.appendChild(div);
+
+                    createCKEditor(textarea, ckeditorAnswerConfig);
+                })
+            } else {
+                for (let i = 1; i <= 5; i++) {
+                        const div = document.createElement('div');
+                        div.classList.add('d-flex', 'align-items-center', 'mb-2');
+                        // div.style.cssText = 'border: 1px solid #E0E0E0; border-radius: 5px; padding: 0px 10px;'
+
+                        const textarea = document.createElement('textarea');
+                        textarea.name = `answers[${i}]`;
+                        textarea.id = `answer-editor-${i}`;
+                        textarea.classList.add('form-control', 'me-2');
+
+                        const divCheckbox = document.createElement('div');
+                        divCheckbox.classList.add('single-method');
+
+                        const hiddenInputIdAnswer = document.createElement('input');
+                        hiddenInputIdAnswer.type = 'hidden';
+                        hiddenInputIdAnswer.name = `id_answers[${i}]`;
+                        hiddenInputIdAnswer.value = '';
+
+                        // Tambahkan input hidden dengan nilai 0
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = `is_correct[${i}]`;
+                        hiddenInput.value = 0;
+
+                        const label = document.createElement('label');
+                        label.htmlFor = `correct_answer_${i}`;
+
+                        const checkbox = document.createElement('input');
+                        checkbox.type = 'checkbox';
+                        checkbox.name = `is_correct[${i}]`;
+                        checkbox.id = `correct_answer_${i}`;
+                        checkbox.value = 1;
+                        checkbox.classList.add('form-check-input');
+
+                        //menampilkan alert ketika lebih dari 2 checkbox yang dipilih
+                        checkbox.addEventListener('change', function () {
+                            const checkedCheckboxes = document.querySelectorAll('input[name^="is_correct"]:checked');
+                            if (checkedCheckboxes.length > 2) {
+                                alert('Anda hanya dapat memilih maksimal 2 jawaban yang benar.');
+                                this.checked = false;
+                            }
+                        });
+
+                        div.appendChild(hiddenInputIdAnswer);
+                        divCheckbox.appendChild(hiddenInput);
+                        divCheckbox.appendChild(checkbox);
+                        divCheckbox.appendChild(label);
+                        div.appendChild(divCheckbox);
+                        div.appendChild(textarea);
+                        answerFieldsContainer.appendChild(div);
+
+                        createCKEditor(textarea, ckeditorAnswerConfig);
+                    }
+            }
+        }
+
+        function createIsianSingkatFields() {
+            if (initialType === 'isian_singkat') {
                 const div = document.createElement('div');
                 div.classList.add('d-flex', 'align-items-center', 'mb-2');
-                // div.style.cssText = 'border: 1px solid #E0E0E0; border-radius: 5px; padding: 0px 10px;'
 
-                const textarea = document.createElement('textarea');
-                textarea.name = `answers[${i}]`;
-                textarea.id = `answer-editor-${i}`;
-                textarea.classList.add('form-control', 'me-2');
-                textarea.value = initialType==='pilihan_ganda_majemuk' ? (oldAnswers[i] ?? '') : '';
+                const inputIdAnswer = document.createElement('input');
+                inputIdAnswer.type = 'hidden';
+                inputIdAnswer.name = 'id_answers[]';
+                inputIdAnswer.value = answerData[0].id ?? null;
 
-                const divCheckbox = document.createElement('div');
-                divCheckbox.classList.add('single-method');
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = 'answers';
+                input.value = answerData[0].answer ?? null;
+                input.classList.add('form-control', 'me-2', 'w-100');
 
-                // Tambahkan input hidden dengan nilai 0
-                const hiddenInput = document.createElement('input');
-                hiddenInput.type = 'hidden';
-                hiddenInput.name = `is_correct[${i}]`;
-                hiddenInput.value = 0;
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'is_correct';
+                radio.value = 1;
+                radio.classList.add('form-check-input');
 
-                const label = document.createElement('label');
-                label.htmlFor = `correct_answer_${i}`;
-
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.name = `is_correct[${i}]`;
-                checkbox.id = `correct_answer_${i}`;
-                checkbox.value = 1;
-                checkbox.classList.add('form-check-input');
-
-                //menampilkan alert ketika lebih dari 2 checkbox yang dipilih
-                checkbox.addEventListener('change', function () {
-                    const checkedCheckboxes = document.querySelectorAll('input[name^="is_correct"]:checked');
-                    if (checkedCheckboxes.length > 2) {
-                        alert('Anda hanya dapat memilih maksimal 2 jawaban yang benar.');
-                                this.checked = false;
-                    }
-                });
-
-                divCheckbox.appendChild(hiddenInput);
-                divCheckbox.appendChild(checkbox);
-                divCheckbox.appendChild(label);
-                div.appendChild(divCheckbox);
-                div.appendChild(textarea);
+                div.appendChild(input);
+                div.appendChild(radio);
+                div.appendChild(inputIdAnswer);
                 answerFieldsContainer.appendChild(div);
+            } else {
+                const div = document.createElement('div');
+                div.classList.add('d-flex', 'align-items-center', 'mb-2');
 
-                createCKEditor(textarea, ckeditorAnswerConfig);
-            }
+                const inputIdAnswer = document.createElement('input');
+                inputIdAnswer.type = 'hidden';
+                inputIdAnswer.name = 'id_answers[]';
+                inputIdAnswer.value = '';
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = 'answers';
+                input.classList.add('form-control', 'me-2', 'w-100');
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = 'is_correct';
+                radio.value = 1;
+                radio.classList.add('form-check-input');
+
+                div.appendChild(input);
+                div.appendChild(radio);
+                div.appendChild(inputIdAnswer);
+                answerFieldsContainer.appendChild(div);
+            } 
         }
 
         function createPernyataanFields() {
@@ -505,11 +707,13 @@
             addButton.addEventListener('click', fieldStatement);
 
             buttonAddAnswerFieldContainer.appendChild(addButton);
-
-            if (Object.keys(oldAnswers).length > 0 || Object.keys(oldStatements).length) {
-                oldAnswers.forEach((answer, index) => {
+            if (initialType === 'pernyataan') {
+                answerData.forEach ((answer, index) => {
                     const div = document.createElement('div');
+                    const i = index + 1;
+
                     div.classList.add('row', 'align-items-center', 'mb-2');
+                    // div.classList.add('col')
 
                     const divNumber = document.createElement('div');
                     // divNumber.classList.add('col-1')
@@ -527,30 +731,34 @@
 
                     const number = document.createElement('span');
                     number.classList.add('me-2');
-                    number.textContent = index + 1;
+                    number.textContent = i;
 
                     const hiddenInput = document.createElement('input');
                     hiddenInput.type = 'hidden';
-                    hiddenInput.name = `is_correct[]`;
+                    hiddenInput.name = `is_correct[${i}]`;
                     hiddenInput.value = 1;
+
+                    const hiddenInputIdAnswer = document.createElement('input');
+                    hiddenInputIdAnswer.type = 'hidden';
+                    hiddenInputIdAnswer.name = `id_answers[${i}]`;
+                    hiddenInputIdAnswer.value = answer.id;
 
                     const answerOption = document.createElement('input');
                     answerOption.type = 'text';
-                    answerOption.name = 'answers[]';
+                    answerOption.name = `answers[${i}]`;
                     answerOption.classList.add('form-control', 'me-2','w-100');
-                    answerOption.placeholder = 'Pernyataan';
-                    answerOption.value = answer;
+                    answerOption.value = answer.answer;
 
                     const statement = document.createElement('input');
                     statement.type = 'text';
-                    statement.name = 'statements[]';
+                    statement.name = `statements[${i}]`;
                     statement.classList.add('form-control', 'me-2', 'w-100');
-                    statement.placeholder = 'Jawaban Benar';
-                    statement.value = oldStatements[index];
-
+                    statement.value = answer.statement;
+                    
                     const removeButton = document.createElement('button');
                     removeButton.type = 'button';
                     removeButton.classList.add('btn', 'border', 'border-danger');
+                    // removeButton.textContent = iconRemove;
                     removeButton.addEventListener('click', function() {
                         div.remove();
                         updateNumbers();
@@ -564,6 +772,7 @@
                     divNumber.appendChild(number);
                     divAnswerOption.appendChild(answerOption);
                     divStatement.appendChild(statement);
+                    div.appendChild(hiddenInputIdAnswer);
                     divButton.appendChild(removeButton);
                     div.appendChild(divNumber);
                     div.appendChild(divAnswerOption);
@@ -571,33 +780,10 @@
                     div.appendChild(divButton);
 
                     answerFieldsContainer.appendChild(div);
-                }
-            )} else {
+                })
+            } else {
                 fieldStatement();
             }
-        }
-
-        function createIsianSingkatFields() {
-            const div = document.createElement('div');
-            div.classList.add('d-flex', 'align-items-center', 'mb-2');
-
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.name = 'answers';
-            input.classList.add('form-control', 'me-2', 'w-100');
-            input.value = oldAnswers ?? '';
-            console.log(oldAnswers);
-
-            const radio = document.createElement('input');
-            radio.type = 'radio';
-            radio.name = 'is_correct';
-            radio.value = 1;
-            radio.classList.add('form-check-input');
-
-            div.appendChild(input);
-            div.appendChild(radio);
-            answerFieldsContainer.appendChild(div);
-
         }
 
         function updateNumbers() {
@@ -610,110 +796,76 @@
 
         function fieldStatement() {
             const div = document.createElement('div');
-            div.classList.add('row', 'align-items-center', 'mb-2');
+                div.classList.add('row', 'align-items-center', 'mb-2');
 
-            const divNumber = document.createElement('div');
-            // divNumber.classList.add('col-1')
-            divNumber.style.cssText = 'width: 4%; padding-right: 0'
+                const divNumber = document.createElement('div');
+                // divNumber.classList.add('col-1')
+                divNumber.style.cssText = 'width: 4%; padding-right: 0'
 
-            const divAnswerOption = document.createElement('div');
-            divAnswerOption.classList.add('col-6')
+                const divAnswerOption = document.createElement('div');
+                divAnswerOption.classList.add('col-6')
 
-            const divStatement = document.createElement('div');
-            divStatement.classList.add('col-5')
+                const divStatement = document.createElement('div');
+                divStatement.classList.add('col-5')
 
-            const divButton = document.createElement('div');
-            // divButton.classList.add('col-1')
-            divButton.style.cssText = 'width: fit-content;'
+                const divButton = document.createElement('div');
+                // divButton.classList.add('col-1')
+                divButton.style.cssText = 'width: fit-content;'
 
-            const number = document.createElement('span');
-            number.classList.add('me-2');
-            number.textContent = answerFieldsContainer.children.length + 1;
+                const number = document.createElement('span');
+                number.classList.add('me-2');
+                number.textContent = answerFieldsContainer.children.length + 1;
 
-            const hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = `is_correct[]`;
-            hiddenInput.value = 1;
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden';
+                hiddenInput.name = `is_correct[]`;
+                hiddenInput.value = 1;
 
-            const answerOption = document.createElement('input');
-            answerOption.type = 'text';
-            answerOption.name = 'answers[]';
-            answerOption.classList.add('form-control', 'me-2','w-100');
-            answerOption.placeholder = 'Pernyataan';
+                const hiddenInputIdAnswer = document.createElement('input');
+                hiddenInputIdAnswer.type = 'hidden';
+                hiddenInputIdAnswer.name = `id_answers[]`;
+                hiddenInputIdAnswer.value = '';
 
-            const statement = document.createElement('input');
-            statement.type = 'text';
-            statement.name = 'statements[]';
-            statement.classList.add('form-control', 'me-2', 'w-100');
-            statement.placeholder = 'Jawaban Benar';
+                const answerOption = document.createElement('input');
+                answerOption.type = 'text';
+                answerOption.name = 'answers[]';
+                answerOption.classList.add('form-control', 'me-2','w-100');
+                answerOption.placeholder = 'Pernyataan';
 
-            const removeButton = document.createElement('button');
-            removeButton.type = 'button';
-            removeButton.classList.add('btn', 'border', 'border-danger');
-            removeButton.addEventListener('click', function() {
-                div.remove();
-                updateNumbers();
-            })
+                const statement = document.createElement('input');
+                statement.type = 'text';
+                statement.name = 'statements[]';
+                statement.classList.add('form-control', 'me-2', 'w-100');
+                statement.placeholder = 'Jawaban Benar';
 
-            const iconRemove = document.createElement('i');
-            iconRemove.classList.add('feather', 'feather-trash', 'text-danger');
-            removeButton.appendChild(iconRemove);
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.classList.add('btn', 'border', 'border-danger');
+                removeButton.addEventListener('click', function() {
+                    div.remove();
+                    updateNumbers();
+                })
 
-            div.appendChild(hiddenInput);
-            divNumber.appendChild(number);
-            divAnswerOption.appendChild(answerOption);
-            divStatement.appendChild(statement);
-            divButton.appendChild(removeButton);
-            div.appendChild(divNumber);
-            div.appendChild(divAnswerOption);
-            div.appendChild(divStatement);
-            div.appendChild(divButton);
+                const iconRemove = document.createElement('i');
+                iconRemove.classList.add('feather', 'feather-trash', 'text-danger');
+                removeButton.appendChild(iconRemove);
 
-            answerFieldsContainer.appendChild(div);
-            
+                div.appendChild(hiddenInput);
+                div.appendChild(hiddenInputIdAnswer);
+                divNumber.appendChild(number);
+                divAnswerOption.appendChild(answerOption);
+                divStatement.appendChild(statement);
+                divButton.appendChild(removeButton);
+                div.appendChild(divNumber);
+                div.appendChild(divAnswerOption);
+                div.appendChild(divStatement);
+                div.appendChild(divButton);
+
+                answerFieldsContainer.appendChild(div);
         }
 
-        function getAnswerFields(type) {
-            if (type === 'pilihan_ganda') {
-                createPilihanGandaFields();
-            } else if(type === 'pilihan_ganda_majemuk') {
-                createPilihanGandaMajemuk();
-            } else if (type === 'pernyataan') {
-                createPernyataanFields();
-            } else if (type === 'isian_singkat') {
-                createIsianSingkatFields();
-            }
-        }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        const typeRadios = document.querySelectorAll('input[name="type"]');
-
-        // if(Object.keys(oldAnswers).length > 0) {
-        //     oldAnswers.forEach((answer, index) => {
-        //         if (initialType === 'pilihan_ganda' || initialType === 'pilihan_ganda_majemuk') {
-        //             document.querySelector(`input[name="answers[${index}]"]`).value = answer;
-        //               if (oldIsCorrect.includes(index)) {
-        //                 document.querySelector(`input[name="is_correct[${index}]"]`).checked = true;
-        //             }
-        //         } 
-        //     })
-        // }
-
-        typeRadios.forEach(radio => {
-            radio.addEventListener('change', function () {
-                answerFieldsContainer.innerHTML = '';
-                buttonAddAnswerFieldContainer.innerHTML = '';
-                getAnswerFields(this.value);
-            });
-        });
-
-
-
-        getAnswerFields(initialType);
-
-
-
-        createCKEditor(document.getElementById("editor"), ckEditorQuestionConfig);
+        
     });
+
 </script>
 @endpush

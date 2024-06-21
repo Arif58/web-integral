@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreQuestionRequest;
+use App\Http\Requests\UpdateQuestionRequest;
 use App\Models\Question;
 use App\Models\SubTest;
 use App\Models\TestAnswer;
@@ -19,7 +20,7 @@ class QuestionController extends Controller
      */
     public function index($subTestId)
     {
-        $boundary = 5;
+        $boundary = 10;
         $subTest = SubTest::findOrFail($subTestId);
         $questions = Question::where('sub_test_id', $subTestId)->paginate($boundary);
         $no = $boundary * ($questions->currentPage() - 1);
@@ -121,24 +122,108 @@ class QuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Question $question)
+    public function edit($id)
     {
-        //
+        $question = Question::find($id);
+        $types = Question::$types;
+        $testAnswer = TestAnswer::where('question_id', $id)->get();
+
+        return view('web.sections.dashboard.admin.question-edit', compact('question', 'types', 'testAnswer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Question $question)
+    public function update(UpdateQuestionRequest $request, $id)
     {
-        //
+        // dd($request->all());
+        try {
+            DB::transaction(function () use($request, $id) {
+                $question = Question::find($id);
+                $question->update([
+                    'type' => $request->type,
+                    'question_text' => $request->question_text,
+                ]);
+
+                $answers = $request->answers;
+                $isCorrects = $request->is_correct;
+                $statements = $request->statements ?? null;
+                $initialIdAnswers = $request->id_answers;
+                // dd($id_answers);
+                $oldIdAnswers = TestAnswer::where('question_id', $id)->pluck('id')->toArray();
+                // dd($initialIdAnswers, $oldIdAnswers);
+                // check apakah ada id yang dihapus
+                foreach($oldIdAnswers as $index => $id_answer) {
+                    if (!in_array($id_answer, $initialIdAnswers)) {
+                        TestAnswer::find($id_answer)->delete();
+                    }
+                }
+    
+                if ($request->type === 'pilihan_ganda' || $request->type === 'pilihan_ganda_majemuk') {
+                    foreach ($answers as $index => $answer) {
+                        if ($initialIdAnswers[$index] !== null) {
+                            TestAnswer::find($initialIdAnswers[$index])->update([
+                                'answer' => $answer,
+                                'is_correct' => $isCorrects[$index],
+                                'statement' => $statements[$index] ?? null,
+                            ]);
+                        } else {
+                            TestAnswer::create([
+                                'question_id' => $id,
+                                'answer' => $answer,
+                                'is_correct' => $isCorrects[$index], // Pastikan ini mencocokkan index yang benar
+                                'statement' => $statements[$index] ?? null,
+                            ]);
+                        }
+                    }
+                } else if ($request->type === 'pernyataan') {
+                    foreach ($answers as $index => $answer) {
+                        if ($initialIdAnswers[$index] !== null) {
+                            TestAnswer::find($initialIdAnswers[$index])->update([
+                                'answer' => $answer,
+                                'is_correct' => $isCorrects[$index],
+                                'statement' => $statements[$index] ?? null,
+                            ]);
+                        } else {
+                            TestAnswer::create([
+                                'question_id' => $id,
+                                'answer' => $answer,
+                                'is_correct' => $isCorrects[$index], // Pastikan ini mencocokkan index yang benar
+                                'statement' => $statements[$index] ?? null,
+                            ]);
+                        }
+                    }
+                } else {
+                    if ($initialIdAnswers[0] !== null) {
+                        TestAnswer::find($initialIdAnswers[0])->update([
+                            'answer' => $answers,
+                            'is_correct' => 1,
+                        ]);
+                    } else {
+                        TestAnswer::create([
+                            'question_id' => $id,
+                            'answer' => $answers,
+                            'is_correct' => 1,
+                        ]);
+                    }
+                }
+                
+            });
+            return redirect()->route('questions', $request->sub_test_id)->with('success', 'Pertanyaan berhasil diubah.');
+        } catch (QueryException $e) {
+            return back()->with('error', 'Gagal mengubah pertanyaan karena.'.$e->getMessage());
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Question $question)
+    public function destroy($id)
     {
-        //
+        $question = Question::find($id);
+        $subtestId = $question->sub_test_id;
+        $question->delete();
+
+        return redirect()->route('questions', $subtestId)->with('success', 'pertanyaan berhasil dihapus');
     }
 }

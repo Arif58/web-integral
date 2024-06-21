@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Log;
 
-class StoreQuestionRequest extends FormRequest
+class UpdateQuestionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,34 +19,22 @@ class StoreQuestionRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules()
+    public function rules(): array
     {
         $rules = [
+            'question_id' => 'required|exists:questions,id',
             'question_text' => 'required|string',
             'type' => 'required|in:pilihan_ganda,pilihan_ganda_majemuk,pernyataan,isian_singkat',
         ]; 
 
         if ($this->type === 'pernyataan') {
-            $rules['answers'] = ['required', 'array', function ($attribute, $value, $fail) {
-                if (in_array(null, $value, true)) {
-                    $fail('Pernyataan tidak boleh ada yang kosong');
-                }
-            }];
-            // $rules['answers.*'] = 'required|string';
-            $rules['statements'] = ['required', 'array', function ($attribute, $value, $fail) {
-                if (in_array(null, $value, true)) {
-                    $fail('Jawaban benar tidak boleh ada yang kosong');
-                }
-            }];
-            // $rules['statements.*'] = 'required|string';
+            $rules['answers'] = 'required|array|min:1';
+            $rules['answers.*'] = 'required|string';
+            $rules['statements'] = 'required|array|min:1';
+            $rules['statements.*'] = 'required|string';
         } else if($this->type === 'pilihan_ganda' || $this->type === 'pilihan_ganda_majemuk') {
-            // $rules['answers'] = 'required|array|min:5';
-            // $rules['answers.*'] = 'required|string';
-            $rules['answers'] = ['required', 'array', function($attribute, $value, $fail) {
-                if (in_array(null, $value, true)) {
-                    $fail('Jawaban tidak boleh ada yang kosong');
-                }
-            }];
+            $rules['answers'] = 'required|array|min:5';
+            $rules['answers.*'] = 'required|string';
             $rules['is_correct.*'] = 'in:0,1';
             $rules['is_correct'] = ['required', 'array', function ($attribute, $value, $fail) {
                 if (!in_array('1', $value, true)) {
@@ -63,6 +50,7 @@ class StoreQuestionRequest extends FormRequest
     public function messages()
     {
         return [
+            'question_id.required' => 'Data soal wajib ada',
             'question_text.required' => 'Soal wajib diisi.',
             'type.required' => 'Tipe soal wajib dipilih.',
             'type.in' => 'Tipe soal yang dipilih tidak valid.',
