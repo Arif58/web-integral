@@ -132,215 +132,50 @@
                 </div>
             </div>
             <div class="row g-5">
+                @foreach ($products as $product)
                 <!-- Start Single Event  -->
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center py-4 bg-gradient-20">
-                            <div class="container text-center my-4">
-                                <h1 class="color-white">
-                                    4
-                                    <p>April 2024</p>
+                        <div class="rbt-card-img text-center bg-gradient-20 d-flex align-content-center flex-wrap justify-content-center radius-6">
+                            <div class="container text-center">
+                                @php
+                                    $startDate = date('d', strtotime($product->tryOut->start_date));
+                                    $startMonth = date('F Y', strtotime($product->tryOut->start_date));
+                                    $price = number_format($product->price, 0, ',', '.');
+                                    $endDate = date('d F Y', strtotime($product->tryOut->end_date));
+                                    $tryOutDate = $startDate . ' - ' . $endDate;
+                                @endphp
+                                <h1 class="color-white mb-0">
+                                    {{$startDate}}
+                                    <p>{{$startMonth}}</p>
                                 </h1>
                             </div>
                         </div>
                         <div class="rbt-card-body">
-                            <h4 class="rbt-card-title">Try Out UTBK #1</h4>
+                            <h4 class="rbt-card-title">{{$product->tryOut->name}}</h4>
                             <ul class="rbt-meta mb-0">
-                                <li><p class="description">Rp.10.000</p></li>
+                                <li><p class="description">Rp. {{$price}}</p></li>
                                 <span>|</span>
-                                <li><p class="description">100 Poin</p></li>
+                                <li><p class="description">{{$product->ie_gems}} Poin</p></li>
                             </ul>
-                            <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
+                            <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
                             <div class="read-more-btn">
-                                <a class="rbt-btn btn-border btn-sm radius-round" href="/produk/try-out-utbk/detail">
+                                <a class="rbt-btn btn-border btn-sm radius-round" href="{{route('tryout-detail', $product->id)}}">
                                     <span class="icon-reverse-wrapper">
                                         <span class="btn-text">Daftar Sekarang</span>
                                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    
                                     </span>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- End Single Event  -->
-
-                 <!-- Start Single Event  -->
-                 <div class="col-lg-6 col-md-6 col-12">
-                    <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center py-4 bg-gradient-20">
-                            <div class="container text-center my-4">
-                                <h1 class="color-white">
-                                    4
-                                    <p>April 2024</p>
-                                </h1>
-                            </div>
-                        </div>
-                        <div class="rbt-card-body">
-                            <h4 class="rbt-card-title">Try Out UTBK #1</h4>
-                            <ul class="rbt-meta mb-0">
-                                <li><p class="description">Rp.10.000</p></li>
-                                <span>|</span>
-                                <li><p class="description">100 Poin</p></li>
-                            </ul>
-                            <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
-                            <div class="read-more-btn">
-                                <a class="rbt-btn btn-border hover-icon-reverse btn-sm radius-round" href="/produk/try-out-utbk/detail">
-                                    <span class="icon-reverse-wrapper">
-                                        <span class="btn-text">Daftar Sekarang</span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Single Event  -->
-
-                 <!-- Start Single Event  -->
-                 <div class="col-lg-6 col-md-6 col-12">
-                    <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center py-4 bg-gradient-20">
-                            <div class="container text-center my-4">
-                                <h1 class="color-white">
-                                    4
-                                    <p>April 2024</p>
-                                </h1>
-                            </div>
-                        </div>
-                        <div class="rbt-card-body">
-                            <h4 class="rbt-card-title">Try Out UTBK #1</h4>
-                            <ul class="rbt-meta mb-0">
-                                <li><p class="description">Rp.10.000</p></li>
-                                <span>|</span>
-                                <li><p class="description">100 Poin</p></li>
-                            </ul>
-                            <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
-                            <div class="read-more-btn">
-                                <a class="rbt-btn btn-border hover-icon-reverse btn-sm radius-round" href="event-details.html">
-                                    <span class="icon-reverse-wrapper">
-                                        <span class="btn-text">Daftar Sekarang</span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Single Event  -->
-
-                 <!-- Start Single Event  -->
-                 <div class="col-lg-6 col-md-6 col-12">
-                    <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center py-4 bg-gradient-20">
-                            <div class="container text-center my-4">
-                                <h1 class="color-white">
-                                    4
-                                    <p>April 2024</p>
-                                </h1>
-                            </div>
-                        </div>
-                        <div class="rbt-card-body">
-                            <h4 class="rbt-card-title">Try Out UTBK #1</h4>
-                            <ul class="rbt-meta mb-0">
-                                <li><p class="description">Rp.10.000</p></li>
-                                <span>|</span>
-                                <li><p class="description">100 Poin</p></li>
-                            </ul>
-                            <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
-                            <div class="read-more-btn">
-                                <a class="rbt-btn btn-border hover-icon-reverse btn-sm radius-round" href="event-details.html">
-                                    <span class="icon-reverse-wrapper">
-                                        <span class="btn-text">Daftar Sekarang</span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Single Event  -->
-
-                 <!-- Start Single Event  -->
-                 <div class="col-lg-6 col-md-6 col-12">
-                    <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center py-4" style="background-color: #616161">
-                            <div class="container text-center my-4">
-                                <h1 class="color-white">
-                                    4
-                                    <p>April 2024</p>
-                                </h1>
-                            </div>
-                        </div>
-                        <div class="rbt-card-body">
-                            <h4 class="rbt-card-title">Try Out UTBK #1</h4>
-                            <ul class="rbt-meta mb-0">
-                                <li><p class="description">Rp.10.000</p></li>
-                                <span>|</span>
-                                <li><p class="description">100 Poin</p></li>
-                            </ul>
-                            <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
-                            <div class="read-more-btn">
-                                <a class="rbt-btn btn-border hover-icon-reverse btn-sm radius-round" href="event-details.html">
-                                    <span class="icon-reverse-wrapper">
-                                        <span class="btn-text">Daftar Sekarang</span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Single Event  -->
-
-                 <!-- Start Single Event  -->
-                 <div class="col-lg-6 col-md-6 col-12">
-                    <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center py-4" style="background-color: #616161">
-                            <div class="container text-center my-4">
-                                <h1 class="color-white">
-                                    4
-                                    <p>April 2024</p>
-                                </h1>
-                            </div>
-                        </div>
-                        <div class="rbt-card-body">
-                            <h4 class="rbt-card-title">Try Out UTBK #1</h4>
-                            <ul class="rbt-meta mb-0">
-                                <li><p class="description">Rp.10.000</p></li>
-                                <span>|</span>
-                                <li><p class="description">100 Poin</p></li>
-                            </ul>
-                            <p class="description mb-4"><i class="feather-calendar"></i> 1 - 15 April 2024</p>
-                            <div class="read-more-btn">
-                                <a class="rbt-btn btn-border hover-icon-reverse btn-sm radius-round" href="event-details.html">
-                                    <span class="icon-reverse-wrapper">
-                                        <span class="btn-text">Daftar Sekarang</span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    <span class="btn-icon"><i class="feather-arrow-right"></i></span>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Single Event  -->
+                <!-- End Single Event  -->                    
+                @endforeach
             </div>
             <div class="row">
                 <div class="col-lg-12 mt--60">
-                    <nav>
-                        <ul class="rbt-pagination">
-                            <li><a href="#" aria-label="Previous"><i class="feather-chevron-left"></i></a></li>
-                            <li><a href="#">1</a></li>
-                            <li class="active"><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#" aria-label="Next"><i class="feather-chevron-right"></i></a></li>
-                        </ul>
-                    </nav>
+                    {{$products->links('vendor.pagination.custom')}}
                 </div>
             </div>
         </div>

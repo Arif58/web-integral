@@ -42,7 +42,7 @@ class TryOutController extends Controller
             })
             ->addColumn('action', function ($tryOut) {
                 return '
-                <button class="btn btn-primary btn-lg me-2 view-subtest" data-id="' . $tryOut->id . '"><i class="fas fa-eye"></i></button>
+                <button class="btn btn-primary btn-lg me-2 view-subtest" data-id="' . $tryOut->id . '" data-toggle="tooltip" title="Lihat Subtest"><i class="fas fa-eye"></i></button>
                 <button class="btn btn-warning btn-lg me-2 edit-tryout" data-id="' . $tryOut->id . '"><i class="fas fa-edit"></i></button>
                 <button class="btn btn-lg btn-danger delete-tryout" data-id="' . $tryOut->id . '"><i class="fas fa-trash"></i></button>';
             })

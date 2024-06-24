@@ -311,7 +311,7 @@
             processing: true,
             serverSide: true,
             autoWidth: true,
-            responsive: true,
+            responsive: false,
             ajax: {
                 'url': $('#table-url').val(),
             },

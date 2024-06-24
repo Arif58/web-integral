@@ -4,6 +4,8 @@ use App\Http\Controllers\CategorySubtestController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QnaController;
 use App\Http\Controllers\QuestionController;
@@ -12,6 +14,7 @@ use App\Http\Controllers\SubTestController;
 use App\Http\Controllers\TestimoniController;
 use App\Http\Controllers\TryOutController;
 use App\Http\Controllers\TryoutDetailController;
+use App\Http\Controllers\TryOutUtbkController;
 use App\Http\Controllers\TutorController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\UserManagementController;
@@ -43,11 +46,9 @@ Route::get('/register', function () {
 //     return view('web.sections.landing-page.home');
 // })->name('logout');
 
-Route::get('/try-out-utbk', function () {
-    return view('web.sections.landing-page.tryout');
-});
+Route::get('/try-out-utbk', [TryOutUtbkController::class, 'index'])->name('tryout-utbk');
 
-Route::get('/produk/try-out-utbk/detail', [TryoutDetailController::class, 'index'])->name('tryout-detail');
+Route::get('/produk/try-out-utbk/{id}', [TryOutUtbkController::class, 'show'])->name('tryout-detail');
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -56,9 +57,7 @@ Route::get('/welcome', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/payment', function() {
-        return view('web.sections.landing-page.payment');
-    })->name('payment');
+    Route::get('/payment/{productId}', [PaymentController::class, 'index'])->name('payment');
     
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profil-saya', 'index')->name('profile');
@@ -172,6 +171,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/soal/delete/{id}', 'destroy')->name('questions.destroy');
             Route::get('/soal/edit/{id}', 'edit')->name('questions.edit');
             Route::put('/soal/update/{id}', 'update')->name('questions.update');
+        });
+
+        Route::controller(ProductController::class)->group(function () {
+            Route::get('/produk', 'index')->name('products');
+            Route::get('/produk/get', 'getProducts')->name('products.get');
+            Route::post('/produk', 'store')->name('products.store');
+            Route::post('/produk/delete/{id}', 'softDelete')->name('products.soft-delete');
+            Route::put('/produk/update/{id}', 'update')->name('products.update');
         });
 
         

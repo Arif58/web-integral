@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('tryout_id');
             $table->integer('price');
-            $table->integer('discount');
+            $table->integer('ie_gems')->nullable();
             $table->json('features');
-            $table->text('answer_explanation_file');
+            $table->text('answer_explanation_file')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->foreign('tryout_id')->references('id')->on('try_outs')->onDelete('cascade');
             $table->timestamps();
         });

@@ -10,6 +10,13 @@ class TryOut extends Model
 {
     use HasFactory;
 
+     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'try_outs';
+
     protected $fillable = [
         'name',
         'start_date',
@@ -21,5 +28,8 @@ class TryOut extends Model
     {
         return $this->hasMany(SubTest::class);
     }
-    
+   
+    public function product() {
+        return $this->hasOne(Product::class);
+    }
 }

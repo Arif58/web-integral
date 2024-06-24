@@ -9,6 +9,8 @@ class CategorySubtest extends Model
 {
     use HasFactory;
 
+    protected $table = 'category_subtests';
+
     protected $fillable = [
         'name',
     ];

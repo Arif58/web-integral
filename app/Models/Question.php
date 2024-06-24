@@ -9,6 +9,8 @@ class Question extends Model
 {
     use HasFactory;
 
+    protected $table = 'questions';
+
     protected $fillable = [
         'sub_test_id',
         'type',

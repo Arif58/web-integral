@@ -151,7 +151,7 @@
                         <a class="rbt-btn btn-sm bg-color-warning me-2" href="{{route('questions.edit', $item->id)}}"><i class="feather-edit pl--0"></i></a>
                         <form action="{{route('questions.destroy', $item->id)}}" method="post">
                             @csrf
-                            <button class="rbt-btn btn-sm bg-color-danger"><i class="feather-trash pl--0" onClick="return confirm('Apakah anda yakin untuk menghapus pertanyaan?')"></i></button>
+                            <button class="rbt-btn btn-sm bg-color-danger" onclick="return confirm('Apakah anda yakin untuk menghapus pertanyaan?')"><i class="feather-trash pl--0"></i></button>
                         </form>                        
                     </div>
                 </div>

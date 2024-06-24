@@ -1,3 +1,6 @@
+{{-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> --}}
+
+ 
  <!-- CSS
  ============================================ -->
  <link rel="stylesheet" href="{{ asset('css/vendor/bootstrap.min.css') }}">

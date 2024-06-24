@@ -1473,6 +1473,10 @@ ul.rbt-dropdown-menu li .sub-menu li a, ul.rbt-dropdown-menu li a .right-icon, u
   background: linear-gradient(rgb(114, 187, 166) 0%, rgb(69, 143, 128) 100%)
 }
 
+.bg-gradient-22 {
+  background: linear-gradient(0deg, #FAFAFA 0%, #BBD6E7 100%) !important;
+}
+
 .theme-mainbg-gradient {
   background-color: var(--color-light);
   position: relative;
@@ -9388,7 +9392,7 @@ input[type=submit]:hover {
 
 input[disabled] {
   display: block;
-  /* background-color: #BDBDBD !important; */
+  background-color: #EEEEEE !important;
 }
 
 /* For Image Radio  */

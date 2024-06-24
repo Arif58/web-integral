@@ -50,6 +50,7 @@
         </div>
     </div>
 </li>
+<li><a href="/produk"><i class="feather-shopping-cart"></i><span>Produk</span></a></li>
 <li><a href="/manajemen-user"><i class="feather-users"></i><span>Manajemen User</span></a></li>
 @endif
 <li><a href="/profil-saya"><i class="feather-user"></i><span>Profil Saya</span></a></li>

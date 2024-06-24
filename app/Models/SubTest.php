@@ -9,6 +9,8 @@ class SubTest extends Model
 {
     use HasFactory;
 
+    protected $table = 'sub_tests';
+
     protected $fillable = [
         'category_subtest_id',
         'try_out_id',
@@ -19,7 +21,7 @@ class SubTest extends Model
 
     public function categorySubtest()
     {
-        return $this->belongsTo(CategorySubtest::class);
+        return $this->belongsTo(CategorySubtest::class, 'category_subtest_id');
     }
 
     public function tryOut()
