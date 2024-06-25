@@ -5,7 +5,7 @@
             <div class="header-left rbt-header-content">
                 <div class="header-info">
                     <div class="logo">
-                        <a href="index.html">
+                        <a href="/">
                             <img src="{{ asset('images/logo/logo_IE.png') }}" alt="Education Logo Images">
                         </a>
                     </div>
@@ -65,9 +65,14 @@
                                 <hr class="mt--10 mb--10">
                                 <ul class="user-list-wrapper">
                                     <li>
-                                        <a href="index.html">
+                                        <a href="/logout">
+                                            <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <i class="feather-log-out"></i>
-                                            <span>Logout</span>
+                                            <span>Keluar</span>
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                                @csrf
+                                            </form>
                                         </a>
                                     </li>
                                 </ul>

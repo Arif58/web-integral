@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->unsignedBigInteger('tryout_id');
-            $table->integer('price');
+            $table->bigInteger('price');
             $table->integer('ie_gems')->nullable();
             $table->json('features');
             $table->text('answer_explanation_file')->nullable();

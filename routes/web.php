@@ -4,7 +4,7 @@ use App\Http\Controllers\CategorySubtestController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MajorController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QnaController;
@@ -57,7 +57,9 @@ Route::get('/welcome', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/payment/{productId}', [PaymentController::class, 'index'])->name('payment');
+    Route::get('/payment/{productId}', [OrderController::class, 'index'])->name('payment');
+
+    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
     
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profil-saya', 'index')->name('profile');
