@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Participant;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -58,6 +60,31 @@ class OrderController extends Controller
             $snapToken = \Midtrans\Snap::getSnapToken($params);
 
             return view('web.sections.payment.payment-qris', compact('snapToken'));
+        }
+    }
+
+    public function callback(Request $request)
+    {
+        $serverKey = config('midtrans.server_key');
+        $hashed = hash('sha512', $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
+        if ($hashed==$request->signature_key){
+            if($request->transaction_status == 'capture'){
+                DB::transaction(function () use($request) {
+                    $order = Order::find($request->order_id);
+                    $order->update([
+                        'status' => 'success',
+                    ]);
+
+                    $tryout_id = $order->product->tryout_id;
+
+                    Participant::create([
+                        'user_id' => $order->user_id,
+                        'tryout_id' => $tryout_id,
+                    ]);
+                });
+
+
+            }
         }
     }
 }
