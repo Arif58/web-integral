@@ -4,6 +4,7 @@ use App\Http\Controllers\CategorySubtestController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\MyTryOutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -191,12 +192,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('web.sections.dashboard.dashboard');
         })->name('dashboard');    
         
-        Route::get('/tryout-saya', function() {
-            return view('web.sections.dashboard.my-tryout');
-        })->name('my-tryout');
+        Route::get('/tryout-saya',[MyTryOutController::class, 'index'])->name('my-tryout');
         
         Route::get('/pencapaian', function() {
-            return view('web.sections.dashboard.achievement');
+            return view('web.sections.dashboard.student.achievement');
         })->name('achievement');
         
         // Route::get('/ubah-profil', function() {

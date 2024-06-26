@@ -136,7 +136,7 @@
                 <!-- Start Single Event  -->
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center bg-gradient-20 d-flex align-content-center flex-wrap justify-content-center radius-6">
+                        <div class="rbt-card-img text-center bg-gradient-20 d-flex align-content-center flex-wrap justify-content-center radius-6" style="height: 150px;">
                             <div class="container text-center">
                                 @php
                                     $startDate = date('d', strtotime($product->tryOut->start_date));

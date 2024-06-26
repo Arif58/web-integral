@@ -32,6 +32,11 @@
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+    @elseif (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
     <form action="{{route('checkout')}}" method="post">
         @csrf
@@ -89,6 +94,7 @@
                                                     <label for="ie_gems">
                                                         <img src="{{asset('images/icons/diamond.svg')}}" alt="" style="width: 50px; height: 30px;" class="mx-3">IE Gems
                                                     </label>
+                                                    <div style="font-size: 12px; font-weight: 200; padding-left: 90px;">Jumlah IE Gems : {{$user->ie_gems}}</div>
                                                 </h2>
                                             </div>
 

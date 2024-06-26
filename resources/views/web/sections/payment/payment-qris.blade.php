@@ -13,7 +13,7 @@
     {{-- <button id="pay-button">Pay!</button> --}}
 
     <!-- @TODO: You can add the desired ID as a reference for the embedId parameter. -->
-    <div id="snap-container" style="width: 100%"></div>
+    <div id="snap-container" style="width: 100%; height: 100%;"></div>
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {

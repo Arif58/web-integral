@@ -35,6 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'second_major',
         'interest',
         'is_completed',
+        'ie_gems',
     ];
 
     public static $level = [
@@ -83,5 +84,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function Orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function participants()
+    {
+        return $this->hasMany(Participant::class);
     }
 }

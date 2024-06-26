@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Participant;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -56,10 +57,40 @@ class OrderController extends Controller
                     'phone' => $request->phone,
                 ),
             );
-
             $snapToken = \Midtrans\Snap::getSnapToken($params);
 
             return view('web.sections.payment.payment-qris', compact('snapToken'));
+
+        } else if ($request->payment_method === 'ie_gems')
+        {
+            $userIeGems = User::select('ie_gems')->where('id', $request->user_id)->first();
+
+            if ($userIeGems->ie_gems - $order->total_price >= 0)
+            {
+                DB::transaction(function () use($request, $order) {
+                    $user = User::find($request->user_id);
+                    $user->update([
+                        'ie_gems' => $user->ie_gems - $order->total_price,
+                    ]);
+
+                    $order->update([
+                        'status' => 'success',
+                    ]);
+
+                    $tryout_id = $order->product->tryout_id;
+
+                    Participant::create([
+                        'user_id' => $order->user_id,
+                        'tryout_id' => $tryout_id,
+                    ]);
+                });
+
+                return redirect()->route('my-tryout')->with('success', 'Pembelian berhasil dilakukan. Silahkan cek di menu Tryout Saya.');
+            } else {
+                //rollback order
+                $order->delete();
+                return back()->with('error', 'IE Gems Anda tidak mencukupi untuk melakukan pembelian ini.');
+            }
         }
     }
 
@@ -67,7 +98,7 @@ class OrderController extends Controller
     {
         $serverKey = config('midtrans.server_key');
         $hashed = hash('sha512', $request->order_id . $request->status_code . $request->gross_amount . $serverKey);
-        
+
         if ($hashed==$request->signature_key){
             if($request->transaction_status == 'settlement'){
                 DB::transaction(function () use($request) {

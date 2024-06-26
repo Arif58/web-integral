@@ -13,4 +13,14 @@ class Participant extends Model
     protected $table = 'participants';
 
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function tryOut()
+    {
+        return $this->belongsTo(TryOut::class, 'tryout_id');
+    }
 }
