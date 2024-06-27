@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategorySubtestController;
 use App\Http\Controllers\ClusterController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MyTryOutController;
@@ -52,7 +53,11 @@ Route::get('/try-out-utbk', [TryOutUtbkController::class, 'index'])->name('tryou
 Route::get('/produk/try-out-utbk/{id}', [TryOutUtbkController::class, 'show'])->name('tryout-detail');
 
 Route::get('/welcome', function () {
-    return view('welcome');
+    return view('web.sections.exam.confirm-test');
+});
+
+Route::get('/tryout/kerjakan', function () {
+    return view('web.sections.exam.tryout-test');
 });
 
 
@@ -72,6 +77,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/profil/update-major/{id}', 'updateMajor')->name('profile.update-major');
         Route::get('/lengkapi-profil', 'getCompleteProfile')->name('complete-profile');
         Route::put('/lengkapi-profil/{id}', 'completeProfile')->name('complete-profile.update');
+    });
+
+    Route::controller(ExamController::class)->group(function () {
+        Route::get('/exam/{id}', 'index')->name('exam');
+        Route::get('/exam/{participantId}/sub-test/{subTestId}', 'getQuestion')->name('get-question');
     });
 
     Route::middleware(['admin'])->group(function () {

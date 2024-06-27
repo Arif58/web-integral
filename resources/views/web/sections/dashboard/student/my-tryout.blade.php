@@ -25,9 +25,6 @@
                                 <li class="nav-item course-switch-item" role="presentation"><button id="finished-tab" data-bs-toggle="tab" data-bs-target="#finished" type="button" role="tab" aria-controls="finished" aria-selected="false"><span
                                     class="text">Sudah Dikerjakan</span></button>
                                 </li>
-                                {{-- <li class="nav-item course-switch-item" role="presentation"><button id="others-tab" data-bs-toggle="tab" data-bs-target="#others" type="button" role="tab" aria-controls="others" aria-selected="false"><span
-                                    class="text">Lainnya</span></button>
-                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -79,7 +76,7 @@
                             {{-- tab belum dikerjakan --}}
                             <div class="tab-pane fade" id="unfinished" role="tabpanel" aria-labelledby="unfinished-tab">
                                 <div class="rbt-course-grid-column">   
-                                    @foreach ($unfinishedTryOuts as $item)
+                                    @foreach ($unfinishedTryOuts as $index => $item)
                                     @php
                                         $startDate = date('d', strtotime($item->tryOut->start_date));
                                         $startMonth = date('F Y', strtotime($item->tryOut->start_date));
@@ -100,7 +97,7 @@
                                             <div class="rbt-card-body">
                                                 <h4 class="rbt-card-title mb--5">{{$item->tryOut->name}}</h4>
                                                 <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
-                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#unfinishedModal" style="font-size: 14px; padding: 0px;" >
+                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#unfinishedModal_{{$index}}" style="font-size: 14px; padding: 0px;" >
                                                     <span class="btn-text">Kerjakan Sekarang</span>
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i>
                                                     </span>
@@ -157,6 +154,9 @@
             <div class="container mt-5">
                 <div class="section-title">
                     <h4 class="rbt-title-style-3 text-center">Ikuti Try Out Lainnya</h4>
+                    @if ($orderedOtherTryOuts->isEmpty())
+                        <p class="text-center">Tidak ada try out lainnya</p>
+                    @else
                     <div class="rbt-course-grid-column">
                         @foreach ($orderedOtherTryOuts as $index => $item)
                         @php
@@ -197,6 +197,7 @@
                         @endforeach
                         
                     </div>
+                    @endif
                 </div> 
             </div>            
         </div>
@@ -320,11 +321,15 @@
                 </div>
             </div>
         </div>
-        <!-- End Modal Daftar -->
         @endforeach
+        <!-- End Modal Daftar -->
 
         <!-- Start Modal Kerjakan  -->
-        <div class="rbt-default-modal modal fade" id="unfinishedModal" tabindex="-1" aria-labelledby="unfinishedModalLabel" aria-hidden="true" style="background: transparent">
+        @foreach ($unfinishedTryOuts as $index => $item)
+        @php
+            $subTestCategory = $item->tryOut->subTests->groupBy('category_subtest_id');
+        @endphp
+        <div class="rbt-default-modal modal fade" id="unfinishedModal_{{$index}}" tabindex="-1" aria-labelledby="unfinishedModalLabel" aria-hidden="true" style="background: transparent">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 800px;">
                 <div class="modal-content" style="padding: 30px">
                     <div class="modal-header pb--5 justify-content-center">
@@ -339,117 +344,36 @@
                                     <div class="course-field mb--20">
                                         <div class="rbt-course-feature-inner">
                                             <div class="mb--30">
+
+                                                @foreach ($subTestCategory as $subTest)
+                                                    
                                                 <div class="mb-5">
-                                                    <h5 class="title mb--10">TPS (Tes Potensi Skolastik)</h5>
+                                                    <h5 class="title mb--10">{{$subTest->first()->categorySubTest->name}}</h5>
+
+                                                    @foreach ($subTest as $itemSubTest)
+                                                        
                                                     <!-- Start Feture Box  -->
                                                     <div class="mb-3">
                                                         <li>
-                                                            Lorem Ipsum
+                                                            {{$itemSubTest->name}}
                                                         </li>
                                                         <ul class="rbt-meta ms-4 mt-1">
                                                             <li>
                                                                 <i class="feather-book"></i>
-                                                                30 Soal
+                                                                {{$itemSubTest->total_question}} Soal
                                                             </li>
                                                             <span>|</span>
                                                             <li>
                                                                 <i class="feather-clock"></i>
-                                                                50 Menit
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <li>Lorem Ipsum</li>
-                                                        <ul class="rbt-meta ms-4 mt-1">
-                                                            <li>
-                                                                <i class="feather-book"></i>
-                                                                30 Soal
-                                                            </li>
-                                                            <span>|</span>
-                                                            <li>
-                                                                <i class="feather-clock"></i>
-                                                                50 Menit
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <li>Lorem Ipsum</li>
-                                                        <ul class="rbt-meta ms-4 mt-1">
-                                                            <li>
-                                                                <i class="feather-book"></i>
-                                                                30 Soal
-                                                            </li>
-                                                            <span>|</span>
-                                                            <li>
-                                                                <i class="feather-clock"></i>
-                                                                50 Menit
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <li>Lorem Ipsum</li>
-                                                        <ul class="rbt-meta ms-4 mt-1">
-                                                            <li>
-                                                                <i class="feather-book"></i>
-                                                                30 Soal
-                                                            </li>
-                                                            <span>|</span>
-                                                            <li>
-                                                                <i class="feather-clock"></i>
-                                                                50 Menit
+                                                                {{$itemSubTest->duration}} Menit
                                                             </li>
                                                         </ul>
                                                     </div>
                                                     
                                                     <!-- End Feture Box  -->
+                                                    @endforeach
                                                 </div>
-                                                
-            
-                                                <div>
-                                                    <h5 class="title mb--10">Tes Literasi dan Penalaran Matematika</h5>
-                                                    <div class="mb-3">
-                                                        <li>Lorem Ipsum</li>
-                                                        <ul class="rbt-meta ms-4 mt-1">
-                                                            <li>
-                                                                <i class="feather-book"></i>
-                                                                30 Soal
-                                                            </li>
-                                                            <span>|</span>
-                                                            <li>
-                                                                <i class="feather-clock"></i>
-                                                                50 Menit
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <li>Lorem Ipsum</li>
-                                                        <ul class="rbt-meta ms-4 mt-1">
-                                                            <li>
-                                                                <i class="feather-book"></i>
-                                                                30 Soal
-                                                            </li>
-                                                            <span>|</span>
-                                                            <li>
-                                                                <i class="feather-clock"></i>
-                                                                50 Menit
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <li>Lorem Ipsum</li>
-                                                        <ul class="rbt-meta ms-4 mt-1">
-                                                            <li>
-                                                                <i class="feather-book"></i>
-                                                                30 Soal
-                                                            </li>
-                                                            <span>|</span>
-                                                            <li>
-                                                                <i class="feather-clock"></i>
-                                                                50 Menit
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -459,34 +383,37 @@
                     </div>
                     <div class="modal-footer pt--30 justify-content-center">
                         <button type="button" class="rbt-btn btn-border btn-md radius-round-10" data-bs-dismiss="modal">Batal</button>
-                        <button type="button" class="rbt-btn btn-gradient btn-md radius-6" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-dismiss="modal" style="color: white" >Kerjakan Sekarang</button>
+                        <button type="button" class="rbt-btn btn-gradient btn-md radius-6" data-bs-toggle="modal" data-bs-target="#confirmModal_{{$index}}" data-bs-dismiss="modal" style="color: white" >Kerjakan Sekarang</button>
                         
                     </div>
                 </div>
             </div>
         </div>
         <!-- End Modal Kerjakan  -->
-
-         <!-- Start Modal Konfirmasi -->
-         <div class="rbt-default-modal modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true" style="background: transparent">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 800px;">
-                <div class="modal-content" style="padding: 30px">
-                    <div class="modal-header pb--5 justify-content-center">
-                        <h4 class="title">
-                            Kerjakan Try Out!
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Apakah Anda yakin ingin mengerjakan sekarang? Anda tidak akan dapat kembali ke halaman sebelumnya, dan jika Anda mencoba kembali, jawaban Anda akan dikirimkan secara otomatis.</p>
-                    </div>
-                    <div class="modal-footer pt--30 justify-content-center" style="border-top: none">
-                        <button type="button" class="rbt-btn btn-border btn-md radius-round-10" data-bs-dismiss="modal">Batal</button>
-                        <a href="/pengerjaan-tryout"><button type="button" class="rbt-btn btn-gradient btn-md radius-6" style="color: white">Kerjakan Sekarang</button></a>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Modal Konfirmasi -->
+        @endforeach
+        
+        @foreach ($unfinishedTryOuts as $index => $item)    
+        <!-- Start Modal Konfirmasi -->
+        <div class="rbt-default-modal modal fade" id="confirmModal_{{$index}}" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true" style="background: transparent">
+           <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 600px;">
+               <div class="modal-content" style="padding: 30px">
+                   <div class="modal-header pb--5 justify-content-center">
+                       <h4 class="title text-center">
+                           Anda yakin ingin mengerjakan Try Out sekarang?
+                       </h4>
+                   </div>
+                   <div class="modal-body">
+                       <p class="text-center px-4">Saat mengerjakan Try Out kamu tidak bisa berpindah ke halaman lain.</p>
+                   </div>
+                   <div class="modal-footer pt--30 justify-content-center" style="border-top: none">
+                       <button type="button" class="rbt-btn btn-border btn-md radius-round-10" data-bs-dismiss="modal">Batal</button>
+                       <a href="{{route('exam', $item->id)}}"><button type="button" class="rbt-btn btn-gradient btn-md radius-6" style="color: white">Kerjakan Sekarang</button></a>
+                       
+                   </div>
+               </div>
+           </div>
+       </div>
+       <!-- End Modal Konfirmasi -->
+        @endforeach
     </div>
 @endsection

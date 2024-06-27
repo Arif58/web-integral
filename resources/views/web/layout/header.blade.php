@@ -14,26 +14,7 @@
 
             <div class="rbt-main-navigation d-none d-xl-block">
                 <nav class="mainmenu-nav">
-                    <ul class="mainmenu">
-                        <li class="with-megamenu has-menu-child-item position-static">
-                            <a href="/" style="color: white">Beranda</a>
-                        </li>
-                        {{-- <li class="has-dropdown has-menu-child-item">
-                            <a href="#" style="color: white">Produk
-                                <i class="feather-chevron-down"></i>
-                            </a>
-                            <ul class="submenu">
-                                <li class="has-dropdown"><a href="/produk/try-out-utbk">Try Out UTBK</a>
-                                </li>
-                                <li class="has-dropdown"><a href="#">Bimbel</a>
-                                </li>
-                            </ul>
-                        </li> --}}
-                        <li class="with-megamenu has-menu-child-item position-static">
-                            <a href="/try-out-utbk" style="color: white">Try Out UTBK</a>
-                        </li>
-                       
-                    </ul>
+                    @include('web.layout.header-menu')
                 </nav>
             </div>
 
