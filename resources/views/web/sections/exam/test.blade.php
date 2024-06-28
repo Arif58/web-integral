@@ -38,11 +38,19 @@
 
         input[type=checkbox], input[type=radio] {
             position: fixed;
+            width: fit-content;
         }
 
         .rbt-btn {
             background: white !important;
             color: #757575 !important;
+        }
+
+        .single-method {
+            border: 1px solid #E0E0E0;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 10px !important;
         }
     </style>
 </head>
@@ -153,7 +161,7 @@
 
                                     </div>
                                     {{-- {!! $item->question_text !!} --}}
-                                    <div class="container">
+                                    <div>
                                         <div id="question_container" class="question-container">
                                             <h5 id="question_number"></h5>
                                             <div id="question_text"></div>
@@ -205,19 +213,35 @@
             let subTest = @json($subTest);
             let start_time = JSON.parse(localStorage.getItem('start_test'));
             // countdown(start_time, subTest.duration, 'time');
-            countdown(start_time, 90, 'time');
+            countdown(start_time, 900, 'time');
 
             let currentQuestionIndex = 0;
             let questions = @json($questions);
             let totalQuestions = questions.length;
+            let answers = JSON.parse(localStorage.getItem('answers')) || {};
+            console.log(answers);
 
-            console.log(questions);
+            function markQuestion(index) {
+                let questionNumber = document.getElementById('question_number_' + index);
+                let questionNumberBefore = document.getElementById('question_number_' + (index - 1));
+                let answers = JSON.parse(localStorage.getItem('answers')) || {};
+                let answer = answers[index];
+                let answerBefore = answers[index - 1];
+                if (answer) {
+                    questionNumber.style.background = 'var(--gradient-10)';
+                    questionNumber.style.color = 'white';
+                } else {
+                    questionNumber.style.backgroundColor = 'white';
+                    questionNumber.style.border = '1px solid #DC7E3F';
+                }
+
+            }
 
             function loadQuestion(index) {
                 let question = questions[index];
                 document.getElementById('question_number').innerHTML = `Nomor Soal ${index + 1}`;
                 document.getElementById('question_text').innerHTML = question.question_text;
-                document.getElementById('question_number_'+index).style.backgroundColor = 'green';
+                // document.getElementById('question_number_'+index).style.backgroundColor = 'green';
             }
 
             function saveAnswer(index, answer) {
@@ -229,7 +253,12 @@
             function loadTestAnswer(index) {
                 let choices = questions[index].question_choices;
                 document.getElementById('answer').innerHTML = ''; // Clear previous answers
+                let answers = JSON.parse(localStorage.getItem('answers')) || {};
 
+                // menentukan key dari data answers yang ingin diambil
+                let keyAnswers = questions[index].id
+
+                let answer = answers[keyAnswers];
 
                 if (questions[index].type === 'pilihan_ganda') {
                     for (let i = 0; i < choices.length; i++) {
@@ -243,8 +272,11 @@
                         input.value = choice.id;
                         input.id = 'choice_' + choice.id;
                         input.addEventListener('change', (event) => {
-                            saveAnswer(index, choice.id);
+                            saveAnswer(questions[index].id, choice.id);
                         });
+                        if (answer == choice.id) {
+                            input.checked = true;
+                        }
 
                         let label = document.createElement('label');
                         label.htmlFor = 'choice_' + choice.id;
@@ -265,9 +297,17 @@
                         input.name = 'answer';
                         input.value = choice.id;
                         input.id = 'choice_' + choice.id;
+                        
                         input.addEventListener('change', (event) => {
-                            saveAnswer(index, choice.id);
+                            saveAnswer(questions[index].id, choice.id);
                         });
+                        if (answer) {
+                            for (let j = 0; j < answer.length; j++) {
+                                if (answer[j] == choice.id) {
+                                    input.checked = true;
+                                }
+                            }
+                        }
 
                         let label = document.createElement('label');
                         label.htmlFor = 'choice_' + choice.id;
@@ -277,22 +317,54 @@
                         divRadio.appendChild(label);
                         document.getElementById('answer').appendChild(divRadio);
                     }
-            }
-            } 
+                } else if (questions[index].type === 'isian_singkat') {
 
-            function loadAnswer(index) {
-                let answers = JSON.parse(localStorage.getItem('answers')) || {};
-                return answers[index] || '';
-            }
+                    let input = document.createElement('input');
+                    input.type = 'text';
+                    input.name = 'answer';
+                    if (answer) {
+                        input.value = answer;
+                    }
+                    // input.value = '';
+                    input.style.border = '1px solid #E0E0E0';
+                    input.addEventListener('change', (event) => {
+                        saveAnswer(questions[index].id, event.target.value);
+                    });
+                    document.getElementById('answer').appendChild(input);
+                } else if (questions[index].type === 'pernyataan') {
+                    // let textarea = document.createElement('textarea');
+                    // textarea.name = 'answer';
+                    // textarea.value = answer;
+                    // textarea.addEventListener('change', (event) => {
+                    //     saveAnswer(questions[index].id, event.target.value);
+                    // });
+                    // document.getElementById('answer').appendChild(textarea);
+                }
+            } 
 
             function showQuestion(index) {
                 if (index < 0 || index >= totalQuestions) return;
                 currentQuestionIndex = index;
                 loadQuestion(index);
                 loadTestAnswer(index);
+                markQuestion(index);
+            }
+
+            function saveCurrentAnswer() {
+                if (questions[currentQuestionIndex].type === 'pilihan_ganda_majemuk' || questions[currentQuestionIndex].type === 'pilihan_ganda') {
+                    let answer = [];
+                    document.querySelectorAll('input[name="answer"]:checked').forEach((input) => {
+                        answer.push(input.value);
+                    });
+                    saveAnswer(questions[currentQuestionIndex].id, answer);
+                } else if (questions[currentQuestionIndex].type === 'isian_singkat') {
+                    let answer = document.querySelector('input[name="answer"]').value;
+                    saveAnswer(questions[currentQuestionIndex].id, answer);
+                }
             }
 
             document.getElementById('prev_button').addEventListener('click', () => {
+                saveCurrentAnswer();
                 if (currentQuestionIndex > 0) {
                     showQuestion(currentQuestionIndex - 1);
                 }
@@ -305,8 +377,7 @@
             // });
 
             document.getElementById('save_button').addEventListener('click', () => {
-                let answer = document.getElementById('answer').value;
-                saveAnswer(currentQuestionIndex, answer);
+                saveCurrentAnswer();
                 if (currentQuestionIndex < totalQuestions - 1) {
                     showQuestion(currentQuestionIndex + 1);
                 }

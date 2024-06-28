@@ -69,11 +69,14 @@
                                 </div>
                                 <div class="mb--30">
                                     <!-- Start Feture Box  -->
+                                    @php
+                                        $features = json_decode($product->features);
+                                    @endphp
                                     <div>
-                                        @if(is_array($product->features))
+                                        @if($features)
                                         <ul class="plan-offer-list">
-                                            @if(isset($product->features['supported']))
-                                                @foreach($product->features['supported'] as $item)
+                                            @if($features->supported)
+                                                @foreach($features->supported as $item)
                                                 <li>
                                                     <i class="feather-check"></i>
                                                     {{trim($item)}}
@@ -81,8 +84,8 @@
                                                 @endforeach
                                             @endif
 
-                                            @if (isset($product->features['not_supported']))
-                                                @foreach($product->features['not_supported'] as $item)
+                                            @if ($features->not_supported)
+                                                @foreach($features->not_supported as $item)
                                                 <li class="off"><i class="feather-x"></i>{{trim($item)}}</li>
                                                 @endforeach
                                                 
