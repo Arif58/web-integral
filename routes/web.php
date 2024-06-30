@@ -83,6 +83,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/exam/{id}', 'index')->name('exam');
         Route::get('/exam/{participantId}/sub-test/{subTestId}', 'getQuestion')->name('get-question');
         Route::post('/exam/submit', 'submitAnswer')->name('submit-answer');
+        Route::get('/exam/finish/{participantId}', 'finishExam')->name('finish-exam');
     });
 
     Route::middleware(['admin'])->group(function () {

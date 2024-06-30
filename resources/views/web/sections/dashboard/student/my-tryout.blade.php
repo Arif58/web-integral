@@ -9,7 +9,6 @@
             @php
                 $unfinishedTryOuts = $myTryOuts->where('start_test', null);
                 $finishedTryOuts = $myTryOuts->where('end_test', '!=', null);
-                $orderedOtherTryOuts = $otherTryOuts->sortByDesc('tryOut.start_date');
             @endphp
             <!-- Start Course Top  -->
                 <div class="container">
@@ -154,11 +153,12 @@
             <div class="container mt-5">
                 <div class="section-title">
                     <h4 class="rbt-title-style-3 text-center">Ikuti Try Out Lainnya</h4>
-                    @if ($orderedOtherTryOuts->isEmpty())
+                    @if ($otherTryOuts->isEmpty())
                         <p class="text-center">Tidak ada try out lainnya</p>
                     @else
                     <div class="rbt-course-grid-column">
-                        @foreach ($orderedOtherTryOuts as $index => $item)
+                        {{-- @dd($otherTryOuts) --}}
+                        @foreach ($otherTryOuts as $index => $item)
                         @php
                             $startDate = date('d', strtotime($item->tryOut->start_date));
                             $startMonth = date('F Y', strtotime($item->tryOut->start_date));
@@ -199,11 +199,14 @@
                     </div>
                     @endif
                 </div> 
+                <div class="mt-5">
+                    {{ $otherTryOuts->links('vendor.pagination.custom') }}
+                </div>
             </div>            
         </div>
 
         <!-- Start Modal Daftar -->
-        @foreach ($orderedOtherTryOuts as $index => $item)    
+        @foreach ($otherTryOuts as $index => $item)    
         @php
             $startDate = date('d', strtotime($item->tryOut->start_date));
             $startMonth = date('F Y', strtotime($item->tryOut->start_date));
@@ -407,8 +410,7 @@
                    </div>
                    <div class="modal-footer pt--30 justify-content-center" style="border-top: none">
                        <button type="button" class="rbt-btn btn-border btn-md radius-round-10" data-bs-dismiss="modal">Batal</button>
-                       <a href="{{route('exam', $item->id)}}"><button type="button" class="rbt-btn btn-gradient btn-md radius-6" style="color: white">Kerjakan Sekarang</button></a>
-                       
+                       <a href="{{route('exam', $item->id)}}"><button type="button" class="rbt-btn btn-gradient btn-md radius-6" style="color: white">Kerjakan Sekarang</button></a> 
                    </div>
                </div>
            </div>

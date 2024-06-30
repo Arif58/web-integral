@@ -224,13 +224,18 @@
                         participant_id: participantId,
                         answers: answers,
                         startTest: startTestFormatted,
+                    });
+                } else if (subTestCurrentIndex == lengthSubTest - 1) {
+                    requestBody = JSON.stringify({
+                        participant_id: participantId,
+                        answers: answers,
                         endTest: endTestFormatted,
+                        ieGems: 3,
                     });
                 } else {
                     requestBody = JSON.stringify({
                         participant_id: participantId,
                         answers: answers,
-                        endTest: endTestFormatted,
                     });
                 }
                 
@@ -258,10 +263,10 @@
                             localStorage.removeItem('subTestId');
                             localStorage.removeItem('subTestCurrentIndex');
                             localStorage.removeItem('start_test');
-                            window.location.href = '/tryout-saya';
+                            window.location.href = `/exam/finish/${participantId}`;
                         }
                     } else {
-                        alert('Gagal menyimpan jawaban');
+                        alert(data.message);
                     }
                 });
         }

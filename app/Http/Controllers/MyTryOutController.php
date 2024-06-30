@@ -12,18 +12,22 @@ class MyTryOutController extends Controller
 {
     public function index()
     {
+        $boundary = 6;
         $timeNow = Carbon::parse(now())->setTimezone('Asia/Jakarta');
         $myTryOuts = Participant::where('user_id', auth()->id())->with('tryOut')->get();
         
+        // Query untuk mendapatkan produk tryout yang belum diikuti oleh pengguna saat ini dan belum berakhir
         $otherTryOuts = Product::whereNotIn('tryout_id', function($query) {
-            $query->select('tryout_id')->from('participants')->where('user_id', auth()->id());
-        })->get();
+            $query->select('tryout_id')
+                ->from('participants')
+                ->where('user_id', auth()->id());
+        })
+        ->join('try_outs', 'products.tryout_id', '=', 'try_outs.id') // Bergabung dengan tabel try_outs
+        ->where('try_outs.end_date', '>', $timeNow)
+        ->orderBy('try_outs.start_date', 'asc') 
+        ->paginate($boundary); // Mengambil semua kolom dari tabel products
 
-        $otherTryOuts = $otherTryOuts->filter(function($product) use ($timeNow) {
-            return Carbon::parse($product->tryOut->end_date)->setTimezone('Asia/Jakarta') > $timeNow;
-        });
-
-        return view('web.sections.dashboard.student.my-tryout', compact('myTryOuts', 'otherTryOuts'));
+        return view('web.sections.dashboard.student.my-tryout', compact('myTryOuts', 'otherTryOuts', 'boundary'));
 
     }
 }

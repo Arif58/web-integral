@@ -1,39 +1,42 @@
 @extends('web.layout-exam')
+@push('css')
+    <style>
+        @media only screen and (max-width: 767px) {
+           .rbt-card-img {
+                max-width: 300px;
+           }
+        }
+    </style>
+@endpush
 @section('content')
 <div class="content">
-    {{-- @php
-    @endphp --}}
-    <div class="container" style="width: 500px;">
-                <div class="course-sidebar sticky-top rbt-shadow-box">
-                    <div class="inner">
-                        <div class="rbt-card-img text-center py-4 height-200 bg-gradient-20 d-flex align-content-center flex-wrap justify-content-center radius-6">
-                            <p class="color-white mb-0" id="category_subtest">
-                            </p>
-                            <p style="font-size: 30px; font-weight: normal; color: white;" id="sub_test"></p>
-                        </div>
+    <div class="inner">
+        <div class="rbt-card-img text-center py-4 px-5 height-200 bg-gradient-20 align-content-center flex-wrap justify-content-center radius-6" style="width: 400px">
+            <p class="color-white mb-0" id="category_subtest">
+            </p>
+            <p style="font-size: 30px; font-weight: normal; color: white;" id="sub_test"></p>
+        </div>
             
-                        <div class="content-item-content">
-                            <div class="rbt-price-wrapper text-center">
-                                <ul class="rbt-meta my-3">
-                                    <li id="total_question">
+        <div class="content-item-content">
+            <div class="rbt-price-wrapper text-center">
+                <ul class="rbt-meta my-3">
+                    <li id="total_question">
                                         
-                                    </li>
-                                    <span>|</span>
-                                    <li id="duration">
+                    </li>
+                    <span>|</span>
+                    <li id="duration">
                                         
-                                    </li>
-                                </ul>
-                            </div>
+                    </li>
+                </ul>
+            </div>
             
             
-                            <div class="buy-now-btn">
-                                <a class="rbt-btn btn-gradient w-100 d-block text-center radius-10" id="start_exam_button">
-                                    <span class="btn-text">Kerjakan Sekarang</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="buy-now-btn">
+                <a class="rbt-btn btn-gradient w-100 d-block text-center radius-10" id="start_exam_button">
+                    <span class="btn-text">Kerjakan Sekarang</span>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
