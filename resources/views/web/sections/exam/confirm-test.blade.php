@@ -58,23 +58,18 @@
                 localStorage.setItem('subTestId', JSON.stringify(subTestIds));
                 localStorage.setItem('subTestCurrentIndex', 0);
                 let subTest = @json($subTest[0]);
-                console.log(subTest.categorySubtest);
-
+ 
                 categorySubTestField.innerHTML = subTest.category_subtest.name;
                 subTestField.innerHTML = subTest.name;
                 totalQuestionField.innerHTML = `<i class="feather-book"></i> ${subTest.total_question} Soal`;
                 durationField.innerHTML = `<i class="feather-clock"></i> ${subTest.duration} Menit`;
                 startExamButton.href = `/exam/${participant.id}/sub-test/${subTest.id}`;
 
-                startTest = new Date().getTime();
-                localStorage.setItem('start_test', startTest);
-
             } else {
                 let subTestIdLength = subTestId.length;
                 if (subTestCurrentIndex < subTestIdLength) {
                     subTestCurrentIndex = parseInt(subTestCurrentIndex, 10);
                     let subTest = @json($subTest)[subTestCurrentIndex];
-                    localStorage.setItem('subTestCurrentIndex', subTestCurrentIndex);
                     categorySubTestField.innerHTML = subTest.category_subtest.name;
                     subTestField.innerHTML = subTest.name;
                     totalQuestionField.innerHTML = `<i class="feather-book"></i> ${subTest.total_question} Soal`;
@@ -83,6 +78,8 @@
 
                 }       
             }
+            startTest = new Date().getTime();
+            localStorage.setItem('start_test', startTest);
         });
     </script>
 @endpush

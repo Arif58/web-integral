@@ -10,4 +10,11 @@ class UserAnswer extends Model
     use HasFactory;
 
     protected $table = 'user_answers';
+
+    protected $fillable = [
+        'participant_id', 
+        'question_id', 
+        'test_answer_id', 
+        'answer_text'
+    ];
 }

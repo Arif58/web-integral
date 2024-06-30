@@ -23,4 +23,9 @@ class Participant extends Model
     {
         return $this->belongsTo(TryOut::class, 'tryout_id');
     }
+
+    protected $casts = [
+        'start_test' => 'datetime',
+        'end_test' => 'datetime',
+    ];
 }
