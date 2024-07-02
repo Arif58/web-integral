@@ -25,7 +25,7 @@ class MyTryOutController extends Controller
         ->join('try_outs', 'products.tryout_id', '=', 'try_outs.id') // Bergabung dengan tabel try_outs
         ->where('try_outs.end_date', '>', $timeNow)
         ->orderBy('try_outs.start_date', 'asc') 
-        ->paginate($boundary); // Mengambil semua kolom dari tabel products
+        ->paginate($boundary, ['products.*']); // Mengambil semua kolom dari tabel products
 
         return view('web.sections.dashboard.student.my-tryout', compact('myTryOuts', 'otherTryOuts', 'boundary'));
 

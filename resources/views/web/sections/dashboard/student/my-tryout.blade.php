@@ -204,7 +204,6 @@
                 </div>
             </div>            
         </div>
-
         <!-- Start Modal Daftar -->
         @foreach ($otherTryOuts as $index => $item)    
         @php
