@@ -19,6 +19,11 @@ trait GradingIrt {
 
         $maxCorrectPerSubTest = [];
         $determine = [];
+
+        $weight = [];
+
+        $skorAfterGrading = [];
+        
         foreach ($SubTest as $value) {
             $userAnswer = DB::table('user_answers')
                 ->join('test_answers', 'user_answers.test_answer_id', '=', 'test_answers.id')
@@ -29,10 +34,10 @@ trait GradingIrt {
                         // ->where('type', 'pilihan_ganda')
                         ->where('sub_test_id', $value->id);
                 })
-                ->select('user_answers.id', 'user_answers.participant_id', 'user_answers.question_id','user_answers.answer_text', 'test_answers.is_correct', 'questions.type', 'test_answers.answer', 'test_answers.statement' )
+                ->select('user_answers.id', 'user_answers.participant_id', 'user_answers.question_id','user_answers.answer_text', 'test_answers.is_correct', 'questions.type', 'test_answers.answer', 'test_answers.statement', 'questions.sub_test_id')
                 ->orderBy('user_answers.participant_id')
                 ->get();
-            
+
             $questionPilihanGanda[$value->id] = $userAnswer;
             //tentukan banyak soal yang terjawab benar oleh peserta dari satu subtest
             $maxCorrect = $this->maxCorrectAnswer($userAnswer);
@@ -42,7 +47,15 @@ trait GradingIrt {
             $determineAndScore = $this->determineRangeAndScore($totalParticipant, $partition, $maxCorrect);
             $determine[$value->id] = $determineAndScore;
 
-            $gradingMultipleChoice = $this->gradingMultipleChoice($determineAndScore, $userAnswer);
+            //tambahkan bobot soal
+            $questionIds = $value->questions->pluck('id');
+            $weightQuestion = $this->addWeightQuestion($questionIds, $userAnswer, $determineAndScore);
+            $weight[$value->id] = $weightQuestion;
+
+            //nilai akhir tiap user answer
+            $questions = Question::where('sub_test_id', $value->id)->get();
+            $grading = $this->gradingAnswer($userAnswer, $weightQuestion, $questions);
+            $skorAfterGrading[$value->id] = $grading;
 
         }
         return [
@@ -51,6 +64,8 @@ trait GradingIrt {
             'partition' => $partition,
             'maxCorrectPerSubTest' => $maxCorrectPerSubTest,
             'determine and Score' => $determine,
+            'weight' => $weight,
+            'skorAfterGrading' => $skorAfterGrading,
         ];
     }
 
@@ -158,43 +173,275 @@ trait GradingIrt {
 
     }
 
-    public function gradingMultipleChoice($determineRangeAndScore, $answers) {
-        $answer = $answers->where('type', 'pilihan_ganda');
-        $questionIds = $answer->pluck('question_id')->unique();
+    public function addWeightQuestion($questions, $answer, $determineRangeAndScore) {
 
-        $total = [];
-        
-        foreach ($questionIds as $question) {
+        $weightQuestion = [];
+        // dd($questions, $answer->where('question_id', $questions[4]));
+        foreach ($questions as $question) {
+            //mendapatkan jawaban per nomor
             $answerPerQuestion = $answer->where('question_id', $question);
-            $totalAnswerPerQuestion = $answerPerQuestion->where('is_correct', 1)->count();
 
-            foreach($answerPerQuestion as $key => $value) {
-                $participant = $value->participant_id;
-                $answer = $value->answer;
-                $isCorrect = $value->is_correct;
+            $skor = 0;
+            // menentukan type soal
+            if ($answerPerQuestion->first()->type === 'pilihan_ganda') {
+                // $totalCorrectAnswer = $answerPerQuestion->where('is_correct', 1)->count();
+    
+                
+                // for ($i=0; $i < count($determineRangeAndScore['batasBawahPartisi']); $i++) { 
+                //     if ($totalCorrectAnswer >= $determineRangeAndScore['batasBawahPartisi'][$i] && $totalCorrectAnswer <= $determineRangeAndScore['batasAtasPartisi'][$i]) {
+                //         $skor = $determineRangeAndScore['skorPadaPartisi'][$i];
+                //     }
+                // }
+                $skor = $this->addWeightMultipleChoiceQuestion($answerPerQuestion, $determineRangeAndScore);
+            } else if ($answerPerQuestion->first()->type === 'isian_singkat') {
+                // $totalCorrectAnswer = 0;
 
-                $skor = 0;
-                for ($i=0; $i < count($determineRangeAndScore['batasBawahPartisi']); $i++) { 
-                    if ($totalAnswerPerQuestion >= $determineRangeAndScore['batasBawahPartisi'][$i] && $totalAnswerPerQuestion <= $determineRangeAndScore['batasAtasPartisi'][$i]) {
-                        $skor = $determineRangeAndScore['skorPadaPartisi'][$i];
-                    }
-                }
+                // //mendapatkan total siswa yang menjawab benar
+                // foreach ($answerPerQuestion as $key => $value) {
+                //     intval($value->answer_text) == intval($value->answer) ? $totalCorrectAnswer++ : null;
+                // }
 
-                if ($isCorrect == 1) {
-                    $skor = $skor;
-                } else {
-                    $skor = 0;
-                }
+                // //menentukan total jawaban benar per nomor berada pada partisi mana
+                // for ($i=0; $i < count($determineRangeAndScore['batasBawahPartisi']); $i++) { 
+                //     if ($totalCorrectAnswer >= $determineRangeAndScore['batasBawahPartisi'][$i] && $totalCorrectAnswer <= $determineRangeAndScore['batasAtasPartisi'][$i]) {
+                //         //menentukan bobot soal berdasarkan partisi
+                //         $skor = $determineRangeAndScore['skorPadaPartisi'][$i];
+                //     }
+                // }
 
-                $total[$participant] = [$question, $skor];
-            }
-            dd($total);
+                $skor = $this->addWeightEssayQuestion($answerPerQuestion, $determineRangeAndScore);
+
+            } else if ($answerPerQuestion->first()->type === 'pilihan_ganda_majemuk') {
+                // //mendapatkan total jawaban yg dijawab benar oleh masing-masing siswa
+                // $totalCorrectAnswerUser = [];
+
+                // //mendapatkan total siswa yang menjawab benar
+                // foreach ($answerPerQuestion as $value) {
+
+                //     if (isset($totalCorrectAnswerUser[$value->participant_id])) {
+                //         $totalCorrectAnswerUser[$value->participant_id] += $value->is_correct;
+                //     } else {
+                //         $totalCorrectAnswerUser[$value->participant_id] = $value->is_correct;
+                //     }
+                // }
+
+                // //tentukan max berapa jawaban yg dijawab benar oleh masing-masing siswa
+                // $maxCorrectAnswer = max($totalCorrectAnswerUser);
+
+                // //tentukan ada berapa user yang menjawab max jawaban benar 
+                // $totalCorrectAnswer = count(array_keys($totalCorrectAnswerUser, $maxCorrectAnswer));
+
+                // //menentukan total jawaban benar per nomor berada pada partisi mana
+                // for ($i=0; $i < count($determineRangeAndScore['batasBawahPartisi']); $i++) { 
+                //     if ($totalCorrectAnswer >= $determineRangeAndScore['batasBawahPartisi'][$i] && $totalCorrectAnswer <= $determineRangeAndScore['batasAtasPartisi'][$i]) {
+                //         //menentukan bobot soal berdasarkan partisi
+                //         $skor = $determineRangeAndScore['skorPadaPartisi'][$i];
+                //     }
+                // }
+                $skor = $this->addWeightCompundMultipleChoiceQuestion($answerPerQuestion, $determineRangeAndScore);
+            } else if ($answerPerQuestion->first()->type === 'pernyataan') {
+                $skor = $this->addWeightStatementQuestion($answerPerQuestion, $determineRangeAndScore);
+            } 
+
+            $weightQuestion[$question] = $skor;
         }
 
-
+        return $weightQuestion;
+        // dd($weightQuestion);
     }
 
-    public function compoundMultipleChoiceGrading() {
+    public function addWeightMultipleChoiceQuestion($answerPerQuestion, $determineRangeAndScore) {
+        $totalCorrectAnswer = $answerPerQuestion->where('is_correct', 1)->count();
+    
+        $skor = 0;
+                
+        for ($i=0; $i < count($determineRangeAndScore['batasBawahPartisi']); $i++) { 
+            if ($totalCorrectAnswer >= $determineRangeAndScore['batasBawahPartisi'][$i] && $totalCorrectAnswer <= $determineRangeAndScore['batasAtasPartisi'][$i]) {
+                $skor = $determineRangeAndScore['skorPadaPartisi'][$i];
+            }
+        }
+
+        return $skor;
+    }
+
+    public function addWeightCompundMultipleChoiceQuestion($answerPerQuestion, $determineRangeAndScore) {
+        //mendapatkan total jawaban yg dijawab benar oleh masing-masing siswa
+        $totalCorrectAnswerUser = [];
+
+        $skor = 0;
+
+       //mendapatkan total siswa yang menjawab benar
+        foreach ($answerPerQuestion as $value) {
+
+            if (isset($totalCorrectAnswerUser[$value->participant_id])) {
+                $totalCorrectAnswerUser[$value->participant_id] += $value->is_correct;
+            } else {
+                $totalCorrectAnswerUser[$value->participant_id] = $value->is_correct;
+            }
+        }
+
+        //tentukan max berapa jawaban yg dijawab benar oleh masing-masing siswa
+        $maxCorrectAnswer = max($totalCorrectAnswerUser);
+
+        //tentukan ada berapa user yang menjawab max jawaban benar 
+        $totalCorrectAnswer = count(array_keys($totalCorrectAnswerUser, $maxCorrectAnswer));
+
+        //menentukan total jawaban benar per nomor berada pada partisi mana
+        for ($i=0; $i < count($determineRangeAndScore['batasBawahPartisi']); $i++) { 
+            if ($totalCorrectAnswer >= $determineRangeAndScore['batasBawahPartisi'][$i] && $totalCorrectAnswer <= $determineRangeAndScore['batasAtasPartisi'][$i]) {
+                //menentukan bobot soal berdasarkan partisi
+                $skor = $determineRangeAndScore['skorPadaPartisi'][$i];
+            }
+        }
+        
+        return $skor;
+    }
+
+    public function addWeightStatementQuestion($answerPerQuestion, $determineRangeAndScore) {
+        //mendapatkan total jawaban yg dijawab benar oleh masing-masing siswa
+        $totalCorrectAnswerUser = [];
+
+        $skor = 0;
+
+         //mendapatkan total siswa yang menjawab benar
+        foreach ($answerPerQuestion as $answer) {
+            if ($answer->answer_text == $answer->statement) {
+                if (isset($totalCorrectAnswerUser[$answer->participant_id])) {
+                    $totalCorrectAnswerUser[$answer->participant_id] += $answer->is_correct;
+                } else {
+                    $totalCorrectAnswerUser[$answer->participant_id] = $answer->is_correct;
+                }
+            }
+        }
+
+         //tentukan max berapa jawaban yg dijawab benar oleh masing-masing siswa
+        $maxCorrectAnswer = max($totalCorrectAnswerUser);
+
+         //tentukan ada berapa user yang menjawab max jawaban benar 
+        $totalCorrectAnswer = count(array_keys($totalCorrectAnswerUser, $maxCorrectAnswer));
+
+         //menentukan total jawaban benar per nomor berada pada partisi mana
+        for ($i=0; $i < count($determineRangeAndScore['batasBawahPartisi']); $i++) { 
+            if ($totalCorrectAnswer >= $determineRangeAndScore['batasBawahPartisi'][$i] && $totalCorrectAnswer <= $determineRangeAndScore['batasAtasPartisi'][$i]) {
+                 //menentukan bobot soal berdasarkan partisi
+                $skor = $determineRangeAndScore['skorPadaPartisi'][$i];
+            }
+        }
+
+         return $skor;
+    }
+
+    public function addWeightEssayQuestion($answerPerQuestion, $determineRangeAndScore) {
+        $totalCorrectAnswer = 0;
+
+        $skor = 0;
+
+        //mendapatkan total siswa yang menjawab benar
+        foreach ($answerPerQuestion as $key => $value) {
+            intval($value->answer_text) == intval($value->answer) ? $totalCorrectAnswer++ : null;
+        }
+
+        //menentukan total jawaban benar per nomor berada pada partisi mana
+        for ($i=0; $i < count($determineRangeAndScore['batasBawahPartisi']); $i++) { 
+            if ($totalCorrectAnswer >= $determineRangeAndScore['batasBawahPartisi'][$i] && $totalCorrectAnswer <= $determineRangeAndScore['batasAtasPartisi'][$i]) {
+                //menentukan bobot soal berdasarkan partisi
+                $skor = $determineRangeAndScore['skorPadaPartisi'][$i];
+            }
+        }
+
+        return $skor;
+    }
+
+    public function gradingAnswer($answer, $weightQuestion, $questions) {
+
+        $participants = $answer->pluck('participant_id')->unique();
+
+        $questionIds = $questions->pluck('id');
+
+        $testAnswer = TestAnswer::whereIn('question_id', $questionIds)->get();
+
+        $dataItemSkorParticipant = [];
+
+        $dataSkorParticipantAfterGrading = [];
+
+        foreach ($participants as $participant) {
+            // jawaban benar user per nomor pilihan ganda majemuk
+            $totalCorrectAnswerUserPilganMajemuk = [];
+
+            // jawaban benar user per nomor pernyataan
+            $totalCorrectAnswerUserPernyataan = [];
+
+            //total jawaban benar pada question pilihan ganda majemuk
+            $totalCorrectQuestionPilganMajemuk = [];
+
+            //total jawaban benar pada question pernyataan
+            $totalCorrectQuestionPernyataan = [];
+            
+            foreach ($questionIds as $question) {
+                $userAnswer = $answer->where('question_id', $question)->where('participant_id', $participant);
+
+                $typeQuestion = $userAnswer ? $userAnswer->first()->type : null;
+                $userAnswerText = $userAnswer ? $userAnswer->first()->answer_text : null;
+                $questionAnswer = $userAnswer ? $userAnswer->first()->answer : null;
+                
+                if ($typeQuestion === 'pilihan_ganda') {
+
+                    $dataItemSkorParticipant[$participant][$question] = $userAnswer->first()->is_correct ?? null;
+                } elseif ($typeQuestion === 'isian_singkat') {
+
+                    $dataItemSkorParticipant[$participant][$question] = intval($userAnswerText) == intval($questionAnswer) ? $userAnswer->first()->is_correct : 0;
+                } elseif ($typeQuestion === 'pilihan_ganda_majemuk') {
+
+                    $totalCorrect = $testAnswer->where('question_id', $question)->where('is_correct', 1)->count();
+
+                    $totalCorrectQuestionPilganMajemuk[$question] = $totalCorrect;
+                    
+                    foreach ($userAnswer as $item) {
+                        if (isset($totalCorrectAnswerUserPilganMajemuk[$question])) {
+                            $totalCorrectAnswerUserPilganMajemuk[$question] += $item->is_correct;
+                        } else {
+                            $totalCorrectAnswerUserPilganMajemuk[$question] = $item->is_correct;
+                        }
+                    }
+
+                } elseif ($typeQuestion === 'pernyataan') {
+                    $totalCorrect = $testAnswer->where('question_id', $question)->where('is_correct', 1)->count();
+
+                    $totalCorrectQuestionPernyataan[$question] = $totalCorrect;
+
+                    foreach ($userAnswer as $item) {
+                        if ($item->answer_text == $item->statement) {
+                            if (isset($totalCorrectAnswerUserPernyataan[$question])) {
+                                $totalCorrectAnswerUserPernyataan[$question] += $item->is_correct;
+                            } else {
+                                $totalCorrectAnswerUserPernyataan[$question] = $item->is_correct;
+                            }
+                        }
+                    }
+                }        
+                        
+            }
+            
+            foreach ($totalCorrectAnswerUserPilganMajemuk as $key => $value) {
+                $total = $value/$totalCorrectQuestionPilganMajemuk[$key];
+                $dataItemSkorParticipant[$participant][$key] = $total;
+            }
+
+            foreach ($totalCorrectAnswerUserPernyataan as $key => $value) {
+                $total = $value/$totalCorrectQuestionPernyataan[$key];
+                $dataItemSkorParticipant[$participant][$key] = $total;
+            }
+        }
+
+        foreach ($dataItemSkorParticipant as $participantId => $itemAnswer) {
+            // $skor = 0;
+            foreach ($itemAnswer as $questionId => $answer) {
+                $skor = $answer * $weightQuestion[$questionId];
+                $dataSkorParticipantAfterGrading[$participantId][$questionId] = $skor;
+            }
+        }
+
+        return $dataSkorParticipantAfterGrading;
 
     }
 }
