@@ -11,8 +11,13 @@ class TryOutUtbkController extends Controller
     public function index() 
     {
         $boundary = 6;
-        $products = Product::with('tryOut')->where('is_active', true)->latest()->paginate($boundary);
-        return view('web.sections.landing-page.tryout', compact('products'));
+        // $products = Product::with('tryOut')->where('is_active', true)->paginate($boundary);
+        $products = Product::join('try_outs', 'products.tryout_id', '=', 'try_outs.id')
+            ->where('try_outs.is_active', true)
+            ->orderBy('try_outs.start_date', 'asc')
+            ->paginate($boundary, ['products.*']);
+        $dateNow = Carbon::parse(now())->setTimezone('Asia/Jakarta');
+        return view('web.sections.landing-page.tryout', compact('products', 'dateNow'));
     }
 
     public function show($id)

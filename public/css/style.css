@@ -8663,11 +8663,11 @@ hr {
     Card bg Inner Color 
 --------------------------------*/
 .bg-card-color-1 .inner {
-  background: #fde29275 !important;
+  background: #EFFFF6 !important;
 }
 
 .bg-card-color-2 .inner {
-  background: #ffdbe175 !important;
+  background: #F9F0A6 !important;
 }
 
 .bg-card-color-3 .inner {
@@ -15966,7 +15966,7 @@ span.transparent-button:hover i {
   top: 0;
   left: 0;
   position: absolute;
-  background: linear-gradient(90deg, #CFA2E8, #637FEA);
+  background: #BDBDBD;
   width: 100%;
   height: 100%;
 }
@@ -17441,7 +17441,7 @@ input:checked + .slider:before {
   overflow: hidden;
 }
 .rbt-counterup.border-bottom-gradient::before {
-  background: linear-gradient(90deg, #CFA2E8, #637FEA);
+  /* background: linear-gradient(90deg, #CFA2E8, #637FEA); */
   position: absolute;
   content: "";
   left: 0;
@@ -18698,7 +18698,7 @@ input:checked + .slider:before {
   .bot-element-dashboard {
     width: 100%;
     height: 162px;
-    background-image: url(../images/banner/Elemen.png);
+    background-image: url(../images/banner/Elemen.svg);
   }
 }
 

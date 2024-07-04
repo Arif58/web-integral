@@ -38,16 +38,16 @@
         <!-- Start Category Area  -->
         <div class="rbt-category-area bg-color-white rbt-section-gapTop">
             <div class="container">
-                <div class="row g-5">
+                <div class="row justify-content-center">
                     <!-- Start Service Grid  -->
                     <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-3 col-sm-4 col-6">
                         <div class="service-card service-card-5 variation-2">
                             <div class="inner">
                                 <div class="icon">
-                                    <a href="#"><img src="{{ asset('images/category/image/web-design.jpg') }}" alt="Shape Images"></a>
+                                    <a><img src="{{ asset('images/icons/sd.svg') }}" alt="Shape Images"></a>
                                 </div>
                                 <div class="content">
-                                    <h6 class="title"><a href="#">Bimbel SD</a></h6>
+                                    <h6 class="title">Bimbel SD</h6>
                                 </div>
                             </div>
                         </div>
@@ -59,10 +59,10 @@
                         <div class="service-card service-card-5 variation-2">
                             <div class="inner">
                                 <div class="icon">
-                                    <a href="#"><img src="{{ asset("images/category/image/graphic-design.jpg") }}" alt="Shape Images"></a>
+                                    <a><img src="{{ asset("images/icons/smp.svg") }}" alt="Shape Images"></a>
                                 </div>
                                 <div class="content">
-                                    <h6 class="title"><a href="#">Bimbel SMP</a></h6>
+                                    <h6 class="title">Bimbel SMP</h6>
                                 </div>
                             </div>
                         </div>
@@ -74,10 +74,10 @@
                         <div class="service-card service-card-5 variation-2">
                             <div class="inner">
                                 <div class="icon">
-                                    <a href="#"><img src="{{ asset('images/category/image/software.jpg') }}" alt="Shape Images"></a>
+                                    <a><img src="{{ asset('images/icons/sma.svg') }}" alt="Shape Images"></a>
                                 </div>
                                 <div class="content">
-                                    <h6 class="title"><a href="#">Bimbel SMA</a></h6>
+                                    <h6 class="title">Bimbel SMA</h6>
                                 </div>
                             </div>
                         </div>
@@ -89,10 +89,10 @@
                         <div class="service-card service-card-5 variation-2">
                             <div class="inner">
                                 <div class="icon">
-                                    <a href="#"><img src="{{ asset('images/category/image/mobile.jpg') }}" alt="Shape Images"></a>
+                                    <a><img src="{{ asset('images/icons/utbk.svg') }}" alt="Shape Images"></a>
                                 </div>
                                 <div class="content">
-                                    <h6 class="title"><a href="#">Bimbel UTBK</a></h6>
+                                    <h6 class="title">Bimbel UTBK</h6>
                                 </div>
                             </div>
                         </div>
@@ -104,25 +104,10 @@
                         <div class="service-card service-card-5 variation-2">
                             <div class="inner">
                                 <div class="icon">
-                                    <a href="#"><img src="{{ asset('images/category/image/finance.jpg') }}" alt="Shape Images"></a>
+                                    <a><img src="{{ asset('images/icons/mahasiswa.svg') }}" alt="Shape Images"></a>
                                 </div>
                                 <div class="content">
-                                    <h6 class="title"><a href="#">Bimbel Ujian Mandiri</a></h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Service Grid  -->
-
-                    <!-- Start Service Grid  -->
-                    <div class="col-lg-2 col-xl-2 col-xxl-2 col-md-3 col-sm-4 col-6">
-                        <div class="service-card service-card-5 variation-2">
-                            <div class="inner">
-                                <div class="icon">
-                                    <a href="#"><img src="{{ asset('images/category/image/arts.jpg') }}" alt="Shape Images"></a>
-                                </div>
-                                <div class="content">
-                                    <h6 class="title"><a href="#">Bimbel Mahasiswa</a></h6>
+                                    <h6 class="title">Bimbel Mahasiswa</h6>
                                 </div>
                             </div>
                         </div>
@@ -262,7 +247,7 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">
                         <div class="content">
-                            <img src="{{ asset("images/about/about-06.png") }}" alt="About Images">
+                            <img src="{{ asset("images/banner/about.svg") }}" alt="About Images" loading="lazy">
                         </div>
                     </div>
                     <div class="col-lg-6" >

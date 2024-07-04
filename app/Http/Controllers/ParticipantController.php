@@ -12,10 +12,6 @@ class ParticipantController extends Controller
     public function index($productId) {
 
         $product = Product::where('id', $productId)->with('participants')->first();
-        // $query = Participant::where('tryout_id', $product->tryout_id)->with('user', 'userScores')->get();
-        // dd($query->first()->userScores()->avg('score'));
-        // $participants = Participant::where('tryout_id', $product->tryout_id)->with('user')->get();
-        // dd($participants);
 
         return view('web.sections.dashboard.admin.participants', compact('product'));
     }
@@ -35,7 +31,10 @@ class ParticipantController extends Controller
             })
             ->addColumn('average_score', function ($participant) {
                 $avg = $participant->userScores->avg('score');
-                $avg = number_format($avg, 2);
+                if ($avg == null) {
+                    return 'Belum ada nilai';
+                }
+                $avg = number_format($avg, 2) + 200;
                 return $avg;
             })
             ->make(true);

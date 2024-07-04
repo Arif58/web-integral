@@ -34,6 +34,11 @@
                             $totalTime = $product->tryOut->subTests->sum('duration');
                             $subTestCategory = $product->tryOut->subTests->groupBy('category_subtest_id');
                             $isExpired = $dateNow > $product->tryOut->end_date;
+
+                            $isPurchased = false;
+                            if(Auth::check()){
+                                $isPurchased = Auth::user()->participants->contains('tryout_id', $product->tryout_id);
+                            }
                         @endphp
                         <ul class="rbt-meta mb-3">
                             <li><p class="description text-white"><i class="feather-calendar"></i>{{$tryOutDate}}</p></li>
@@ -168,8 +173,8 @@
 
                                 @if(!$isExpired)
                                 <div class="buy-now-btn">
-                                    <a class="rbt-btn btn-gradient w-100 d-block text-center radius-10" href="{{route('payment', $product->id)}}">
-                                        <span class="btn-text">Daftar Sekarang</span>
+                                    <a class="rbt-btn btn-gradient w-100 d-block text-center radius-10" @if($isPurchased) href="/tryout-saya" @else href="{{route('payment', $product->id)}}" @endif>
+                                        <span class="btn-text">@if($isPurchased) Lihat Tryout Saya @else Daftar Sekarang @endif</span>
                                         <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                     </a>
                                 </div>

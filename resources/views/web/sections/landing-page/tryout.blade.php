@@ -50,7 +50,7 @@
                 <!-- Start Service Grid  -->
                 <div class="col-lg-4 col-xl-3 col-xxl-3 col-md-6 col-sm-6 col-12 mt--30">
                     <div class="service-card service-card-6 bg-color bg-card-color-1">
-                        <div class="inner">
+                        <div class="inner text-center">
                             <div class="icon">
                                 <img src="{{asset('images/shape/service-01.png')}}" alt="Shape Images">
                                 <img class="opacity_image" src="{{asset('images/shape/service-01.png')}}" alt="Shape Images">
@@ -67,7 +67,7 @@
                 <!-- Start Service Grid  -->
                 <div class="col-lg-4 col-xl-3 col-xxl-3 col-md-6 col-sm-6 col-12 mt--30">
                     <div class="service-card service-card-6 bg-color bg-card-color-2">
-                        <div class="inner">
+                        <div class="inner text-center">
                             <div class="icon">
                                 <img src="{{asset('images/shape/service-04.png')}}" alt="Shape Images">
                                 <img class="opacity_image" src="{{asset('images/shape/service-04.png')}}" alt="Shape Images">
@@ -83,8 +83,8 @@
 
                 <!-- Start Service Grid  -->
                 <div class="col-lg-4 col-xl-3 col-xxl-3 col-md-6 col-sm-6 col-12 mt--30">
-                    <div class="service-card service-card-6 bg-color bg-card-color-3">
-                        <div class="inner">
+                    <div class="service-card service-card-6 bg-color bg-card-color-1">
+                        <div class="inner text-center">
                             <div class="icon">
                                 <img src="{{asset('images/shape/service-03.png')}}" alt="Shape Images">
                                 <img class="opacity_image" src="{{asset('images/shape/service-03.png')}}" alt="Shape Images">
@@ -100,8 +100,8 @@
 
                 <!-- Start Service Grid  -->
                 <div class="col-lg-4 col-xl-3 col-xxl-3 col-md-6 col-sm-6 col-12 mt--30">
-                    <div class="service-card service-card-6 bg-color bg-card-color-4">
-                        <div class="inner">
+                    <div class="service-card service-card-6 bg-color bg-card-color-2">
+                        <div class="inner text-center">
                             <div class="icon">
                                 <img src="{{asset('images/shape/service-02.png')}}" alt="Shape Images">
                                 <img class="opacity_image" src="{{asset('images/shape/service-02.png')}}" alt="Shape Images">
@@ -133,18 +133,19 @@
             </div>
             <div class="row g-5">
                 @foreach ($products as $product)
+                @php
+                    $startDate = date('d', strtotime($product->tryOut->start_date));
+                    $startMonth = date('F Y', strtotime($product->tryOut->start_date));
+                    $price = number_format($product->price, 0, ',', '.');
+                    $endDate = date('d F Y', strtotime($product->tryOut->end_date));
+                    $tryOutDate = $startDate . ' - ' . $endDate;
+                    $isExpired = $dateNow > $product->tryOut->end_date;
+                @endphp
                 <!-- Start Single Event  -->
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                        <div class="rbt-card-img text-center bg-gradient-20 d-flex align-content-center flex-wrap justify-content-center radius-6" style="height: 150px;">
+                        <div class="rbt-card-img text-center @if($isExpired) bg-gradient-21 @else bg-gradient-20 @endif d-flex align-content-center flex-wrap justify-content-center radius-6" style="height: 150px;">
                             <div class="container text-center">
-                                @php
-                                    $startDate = date('d', strtotime($product->tryOut->start_date));
-                                    $startMonth = date('F Y', strtotime($product->tryOut->start_date));
-                                    $price = number_format($product->price, 0, ',', '.');
-                                    $endDate = date('d F Y', strtotime($product->tryOut->end_date));
-                                    $tryOutDate = $startDate . ' - ' . $endDate;
-                                @endphp
                                 <h1 class="color-white mb-0">
                                     {{$startDate}}
                                     <p>{{$startMonth}}</p>
@@ -196,10 +197,9 @@
             <div class="row g-5 hanger-line">
                 <!-- Start Single Counter  -->
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="rbt-counterup rbt-hover-03 border-bottom-gradient">
-                        <div class="top-circle-shape"></div>
+                    <div class="rbt-counterup rbt-hover-03 border-bottom-gradient" style="background: #EFFFF6">
                         <div class="inner">
-                            <div class="rbt-round-icon">
+                            <div class="rbt-round-icon" style="background: #DFF9EA">
                                 <h3 class="mb-0">1</h3>
                             </div>
                             <div class="content">
@@ -213,10 +213,9 @@
 
                 <!-- Start Single Counter  -->
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt--60 mt_md--30 mt_sm--30 mt_mobile--60">
-                    <div class="rbt-counterup rbt-hover-03 border-bottom-gradient">
-                        <div class="top-circle-shape"></div>
+                    <div class="rbt-counterup rbt-hover-03 border-bottom-gradient" style="background: #F9F0A6">
                         <div class="inner">
-                            <div class="rbt-round-icon">
+                            <div class="rbt-round-icon" style="background: #F7EA86">
                                 <h3 class="mb-0">2</h3>
                             </div>
                             <div class="content">
@@ -230,10 +229,9 @@
 
                 <!-- Start Single Counter  -->
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt_md--60 mt_sm--60">
-                    <div class="rbt-counterup rbt-hover-03 border-bottom-gradient">
-                        <div class="top-circle-shape"></div>
+                    <div class="rbt-counterup rbt-hover-03 border-bottom-gradient" style="background: #EFFFF6">
                         <div class="inner">
-                            <div class="rbt-round-icon">
+                            <div class="rbt-round-icon" style="background: #DFF9EA">
                                 <h3 class="mb-0">3</h3>
                             </div>
                             <div class="content">
@@ -247,10 +245,9 @@
 
                 <!-- Start Single Counter  -->
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12 mt--60 mt_md--30 mt_sm--30 mt_mobile--60">
-                    <div class="rbt-counterup rbt-hover-03 border-bottom-gradient">
-                        <div class="top-circle-shape"></div>
+                    <div class="rbt-counterup rbt-hover-03 border-bottom-gradient" style="background: #F9F0A6">
                         <div class="inner">
-                            <div class="rbt-round-icon">
+                            <div class="rbt-round-icon" style="background: #F7EA86">
                                 <h3 class="mb-0">4</h3>
                             </div>
                             <div class="content">
