@@ -6,7 +6,9 @@ use App\Models\Participant;
 use App\Models\Question;
 use App\Models\SubTest;
 use App\Models\TestAnswer;
+use App\Models\TryOut;
 use App\Models\UserAnswer;
+use App\Models\UserItemScore;
 use Illuminate\Support\Facades\DB;
 use Termwind\Components\Raw;
 
@@ -34,13 +36,17 @@ trait GradingIrt {
                         // ->where('type', 'pilihan_ganda')
                         ->where('sub_test_id', $value->id);
                 })
-                ->select('user_answers.id', 'user_answers.participant_id', 'user_answers.question_id','user_answers.answer_text', 'test_answers.is_correct', 'questions.type', 'test_answers.answer', 'test_answers.statement', 'questions.sub_test_id')
+                ->select('user_answers.id', 'user_answers.participant_id', 'user_answers.test_answer_id', 'user_answers.question_id','user_answers.answer_text', 'test_answers.is_correct', 'questions.type', 'test_answers.answer', 'test_answers.statement', 'questions.sub_test_id')
                 ->orderBy('user_answers.participant_id')
                 ->get();
 
+            $questions = Question::where('sub_test_id', $value->id)->get();
+            $questionIds = $questions->pluck('id');
+            $testAnswer = TestAnswer::whereIn('question_id', $questionIds)->get();
+
             $questionPilihanGanda[$value->id] = $userAnswer;
             //tentukan banyak soal yang terjawab benar oleh peserta dari satu subtest
-            $maxCorrect = $this->maxCorrectAnswer($userAnswer);
+            $maxCorrect = $this->maxCorrectAnswer($userAnswer, $testAnswer);
             $maxCorrectPerSubTest[$value->id] = $maxCorrect;
 
             //tentukan range dan skor
@@ -48,28 +54,26 @@ trait GradingIrt {
             $determine[$value->id] = $determineAndScore;
 
             //tambahkan bobot soal
-            $questionIds = $value->questions->pluck('id');
             $weightQuestion = $this->addWeightQuestion($questionIds, $userAnswer, $determineAndScore);
             $weight[$value->id] = $weightQuestion;
 
             //nilai akhir tiap user answer
-            $questions = Question::where('sub_test_id', $value->id)->get();
             $grading = $this->gradingAnswer($userAnswer, $weightQuestion, $questions);
             $skorAfterGrading[$value->id] = $grading;
 
         }
-        return [
-            // 'SubTest' => $SubTest,
-            'totalParticipant' => $totalParticipant,
-            'partition' => $partition,
-            'maxCorrectPerSubTest' => $maxCorrectPerSubTest,
-            'determine and Score' => $determine,
-            'weight' => $weight,
-            'skorAfterGrading' => $skorAfterGrading,
-        ];
+
+        try {
+            $this->storeGrading($skorAfterGrading, $weight, $tryOutId);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
+        
     }
 
-    public function maxCorrectAnswer($answers) {
+    public function maxCorrectAnswer($answers, $testAnswer) {
         $participant = $answers->select('participant_id')->pluck('participant_id')->unique();
 
         $userAnswer = [];
@@ -97,7 +101,8 @@ trait GradingIrt {
                 } elseif ($answer->type == 'isian_singkat') {
                     intval($answer->answer_text) == intval($answer->answer) ? $totalCorrectAnswer++ : null;
                 } elseif ($answer->type == 'pilihan_ganda_majemuk') {
-                    $totalCorrectQuestion = TestAnswer::where('question_id', $answer->question_id)->where('is_correct', 1)->count();
+                    // $totalCorrectQuestion = TestAnswer::where('question_id', $answer->question_id)->where('is_correct', 1)->count();
+                    $totalCorrectQuestion = $testAnswer->where('question_id', $answer->question_id)->where('is_correct', 1)->count();
 
                     $totalCorrectQuestionPilganMajemuk[$answer->question_id] = $totalCorrectQuestion;
                     
@@ -184,60 +189,10 @@ trait GradingIrt {
             $skor = 0;
             // menentukan type soal
             if ($answerPerQuestion->first()->type === 'pilihan_ganda') {
-                // $totalCorrectAnswer = $answerPerQuestion->where('is_correct', 1)->count();
-    
-                
-                // for ($i=0; $i < count($determineRangeAndScore['batasBawahPartisi']); $i++) { 
-                //     if ($totalCorrectAnswer >= $determineRangeAndScore['batasBawahPartisi'][$i] && $totalCorrectAnswer <= $determineRangeAndScore['batasAtasPartisi'][$i]) {
-                //         $skor = $determineRangeAndScore['skorPadaPartisi'][$i];
-                //     }
-                // }
+
                 $skor = $this->addWeightMultipleChoiceQuestion($answerPerQuestion, $determineRangeAndScore);
             } else if ($answerPerQuestion->first()->type === 'isian_singkat') {
-                // $totalCorrectAnswer = 0;
 
-                // //mendapatkan total siswa yang menjawab benar
-                // foreach ($answerPerQuestion as $key => $value) {
-                //     intval($value->answer_text) == intval($value->answer) ? $totalCorrectAnswer++ : null;
-                // }
-
-                // //menentukan total jawaban benar per nomor berada pada partisi mana
-                // for ($i=0; $i < count($determineRangeAndScore['batasBawahPartisi']); $i++) { 
-                //     if ($totalCorrectAnswer >= $determineRangeAndScore['batasBawahPartisi'][$i] && $totalCorrectAnswer <= $determineRangeAndScore['batasAtasPartisi'][$i]) {
-                //         //menentukan bobot soal berdasarkan partisi
-                //         $skor = $determineRangeAndScore['skorPadaPartisi'][$i];
-                //     }
-                // }
-
-                $skor = $this->addWeightEssayQuestion($answerPerQuestion, $determineRangeAndScore);
-
-            } else if ($answerPerQuestion->first()->type === 'pilihan_ganda_majemuk') {
-                // //mendapatkan total jawaban yg dijawab benar oleh masing-masing siswa
-                // $totalCorrectAnswerUser = [];
-
-                // //mendapatkan total siswa yang menjawab benar
-                // foreach ($answerPerQuestion as $value) {
-
-                //     if (isset($totalCorrectAnswerUser[$value->participant_id])) {
-                //         $totalCorrectAnswerUser[$value->participant_id] += $value->is_correct;
-                //     } else {
-                //         $totalCorrectAnswerUser[$value->participant_id] = $value->is_correct;
-                //     }
-                // }
-
-                // //tentukan max berapa jawaban yg dijawab benar oleh masing-masing siswa
-                // $maxCorrectAnswer = max($totalCorrectAnswerUser);
-
-                // //tentukan ada berapa user yang menjawab max jawaban benar 
-                // $totalCorrectAnswer = count(array_keys($totalCorrectAnswerUser, $maxCorrectAnswer));
-
-                // //menentukan total jawaban benar per nomor berada pada partisi mana
-                // for ($i=0; $i < count($determineRangeAndScore['batasBawahPartisi']); $i++) { 
-                //     if ($totalCorrectAnswer >= $determineRangeAndScore['batasBawahPartisi'][$i] && $totalCorrectAnswer <= $determineRangeAndScore['batasAtasPartisi'][$i]) {
-                //         //menentukan bobot soal berdasarkan partisi
-                //         $skor = $determineRangeAndScore['skorPadaPartisi'][$i];
-                //     }
-                // }
                 $skor = $this->addWeightCompundMultipleChoiceQuestion($answerPerQuestion, $determineRangeAndScore);
             } else if ($answerPerQuestion->first()->type === 'pernyataan') {
                 $skor = $this->addWeightStatementQuestion($answerPerQuestion, $determineRangeAndScore);
@@ -364,6 +319,7 @@ trait GradingIrt {
 
         $dataSkorParticipantAfterGrading = [];
 
+
         foreach ($participants as $participant) {
             // jawaban benar user per nomor pilihan ganda majemuk
             $totalCorrectAnswerUserPilganMajemuk = [];
@@ -443,5 +399,38 @@ trait GradingIrt {
 
         return $dataSkorParticipantAfterGrading;
 
+    }
+
+    public function storeGrading($skorAfterGrading, $weight, $tryOutId) {
+        DB::transaction(function () use ($skorAfterGrading, $weight, $tryOutId) {
+            foreach ($weight as $subTestId => $questions) {
+                foreach ($questions as $questionId => $weight) {
+                    $question = Question::find($questionId);
+                    $question->update([
+                        'difficulty_parameter' => $weight
+                    ]);
+                }
+            }
+            
+            foreach ($skorAfterGrading as $subTestId => $participant) {
+                foreach ($participant as $participantId => $question) {
+                    foreach ($question as $questionId => $skor) {
+                        UserItemScore::create([
+                            'participant_id' => $participantId,
+                            'question_id' => $questionId,
+                            'sub_test_id' => $subTestId,
+                            'score' => $skor
+                        ]);
+                    }
+                }
+            }
+
+            $tryOut = TryOut::find($tryOutId);
+            $tryOut->update([
+                'is_grading_completed' => true,
+            ]);
+
+
+        });
     }
 }

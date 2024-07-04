@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MyTryOutController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QnaController;
@@ -194,6 +195,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/produk', 'store')->name('products.store');
             Route::post('/produk/delete/{id}', 'softDelete')->name('products.soft-delete');
             Route::put('/produk/update/{id}', 'update')->name('products.update');
+            Route::post('/proses-nilai/{tryOutId}', 'generateScore')->name('products.generate-score');
+        });
+
+        Route::controller(ParticipantController::class)->group(function () {
+            Route::get('/peserta/{productId}', 'index')->name('participants');
+            Route::get('/peserta/get/{productId}', 'getParticipant')->name('participants.get');
         });
 
         

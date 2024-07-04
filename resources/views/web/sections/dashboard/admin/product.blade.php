@@ -48,6 +48,7 @@
                         <th>Tanggal Pelaksanaan</th>
                         <th>Price</th>
                         <th>Ie Gems</th>
+                        <th>Peserta</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -193,6 +194,7 @@
                 { data: 'try_outs.date', name: 'try_outs.date'},
                 { data: 'price', name: 'price'},
                 { data: 'ie_gems', name: 'ie_gems'},
+                { data: 'participants', name: 'participants'},
                 { data: 'action', name: 'action'},
             ]
         });
@@ -220,19 +222,41 @@
     });
 
     //handle detail button click
-    $('#product-table').on('click', '.view-subtest', function() {
+    $('#product-table').on('click', '.view-participants', function() {
         var productId = $(this).data('id');
+        console.log(productId);
         $.ajax({
-            url: '/subtest/' + productId,
+            url: '/peserta/' + productId,
             type: 'GET',
             success: function(response) {
-                location.href = '/subtest/' + productId;
+                location.href = '/peserta/' + productId;
             },
             error: function(xhr) {
-                alert('Error showing detail tryout.');
+                alert('Error showing detail participants.');
             }
         });
     });
+
+    $('#product-table').on('click', '.generate-score', function() {
+        var tryOutId = $(this).data('id');
+        console.log(tryOutId);
+        if (confirm('Are you sure you want to process scoring for this try out?')) {
+            $.ajax({
+                url: '/proses-nilai/' + tryOutId,
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    alert('Nilai Berhasil dibuat');
+                    location.reload();
+                },
+                error: function(xhr) {
+                    alert('Error saat memproses nilai.');
+                }
+            });
+        } 
+    })
 
 </script>
 

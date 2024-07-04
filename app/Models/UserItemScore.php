@@ -10,4 +10,10 @@ class UserItemScore extends Model
     use HasFactory;
 
     protected $table = 'user_item_scores';
+
+    protected $fillable = [
+        'participant_id',
+        'question_id',
+        'score',
+    ];
 }

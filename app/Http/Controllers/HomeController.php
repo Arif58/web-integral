@@ -25,9 +25,9 @@ class HomeController extends Controller
 
         $faqs = Qna::orderBy('id', 'asc')->get();
 
-        $grading = $this->grading(3);
+        // $grading = $this->grading(3);
 
-        dd($grading);
+        // dd($grading);
 
         return view('web.sections.landing-page.home', compact('testimonialHighlightRowOne', 'testimonialHighlightRowTwo', 'studentAchievementsHighlight', 'tutorHighlight', 'faqs'));
     }

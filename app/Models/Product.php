@@ -34,4 +34,9 @@ class Product extends Model
     {
         return $this->belongsTo(TryOut::class, 'tryout_id');
     }
+
+    public function participants()
+    {
+        return $this->hasMany(Participant::class, 'tryout_id', 'tryout_id');
+    }
 }

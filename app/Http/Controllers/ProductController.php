@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\TryOut;
+use App\Traits\GradingIrt;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -11,11 +12,13 @@ use Yajra\DataTables\DataTables;
 
 class ProductController extends Controller
 {
+    use GradingIrt;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        
         $selectedTryoutIds = Product::pluck('tryout_id')->toArray();
         $tryouts = Tryout::whereNotIn('id', $selectedTryoutIds)->where('is_active', true)->get();
         // $tryouts = TryOut::where('is_active', true)->orderBy('created_at', 'desc')->get();
@@ -24,8 +27,8 @@ class ProductController extends Controller
 
     public function getProducts()
     {
-        $query = Product::with('tryOut')->where('is_active', true)->get();
-
+        $query = Product::with('tryOut', 'participants')->where('is_active', true)->get();
+ 
         return DataTables::of($query)
             ->addIndexColumn()
             ->addColumn('try_outs.name', function ($product) {
@@ -45,10 +48,40 @@ class ProductController extends Controller
             ->addColumn('price', function ($product) {
                 return 'Rp ' . number_format($product->price, 0, ',', '.');
             })
+            ->addColumn('ie_gems', function ($product) {
+                return $product->ie_gems;
+            })
+            ->addColumn('participants', function ($product) {
+                return $product->participants->count();
+            })
             ->addColumn('action', function ($product) {
-                return '
-                <button class="btn btn-primary btn-lg me-2 detail-product" data-id="' . $product->id . '"><i class="fas fa-eye"></i></button>
-                <button class="btn btn-lg btn-danger delete-product" data-id="' . $product->id . '"><i class="fas fa-trash"></i></button>';
+                $dateNow = Carbon::parse(now())->setTimezone('Asia/Jakarta');
+
+                if($product->tryOut->end_date < $dateNow && $product->tryOut->is_grading_completed == false) {
+                    return '
+                    <div class="row text-center">
+                        <div class="col-12">
+                        <button class="btn btn-warning btn-lg generate-score" data-id="' . $product->tryout_id . '">Proses Nilai</button>
+                        </div>
+                    </div>
+                    <div class="row text-center mt-2">
+                        <div class="col-12">
+                        <button class="btn btn-primary btn-lg me-2 view-participants" data-id="' . $product->id . '"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-lg btn-danger delete-product" data-id="' . $product->id . '"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>';
+                } else {
+                    return '
+                    <div class="row text-center mt-2">
+                        <div class="col-12">
+                        <button class="btn btn-primary btn-lg me-2 view-participants" data-id="' . $product->id . '"><i class="fas fa-eye"></i></button>
+                        <button class="btn btn-lg btn-danger delete-product" data-id="' . $product->id . '"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>';
+                }
+                
+                
+                
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -140,4 +173,14 @@ class ProductController extends Controller
         $product->delete();
         return back()->with('success', 'Produk berhasil dihapus');
     }
+
+    public function generateScore($tryOutId)
+    {
+        try {
+            $this->grading($tryOutId);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'message' => $th->getMessage()], 500);
+        }
+    }
+
 }

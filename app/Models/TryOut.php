@@ -22,6 +22,7 @@ class TryOut extends Model
         'start_date',
         'end_date',
         'is_active',
+        'is_grading_completed',
     ];
 
     public function subTests()

@@ -24,6 +24,11 @@ class Participant extends Model
         return $this->belongsTo(TryOut::class, 'tryout_id');
     }
 
+    public function userScores()
+    {
+        return $this->hasMany(UserItemScore::class, 'participant_id');
+    }
+
     protected $casts = [
         'start_test' => 'datetime',
         'end_test' => 'datetime',
