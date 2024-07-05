@@ -15,7 +15,8 @@ class LoginResponse implements LoginResponseContract
      */
     public function toResponse($request)
     {
-        $home = '/dashboard';
+        $home = Auth::user()->is_completed ? '/dashboard' : '/lengkapi-profil';
+        // ketika user belum melakukan verifikasi email
         return redirect()->intended($home);
 
     }

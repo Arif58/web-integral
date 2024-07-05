@@ -3,8 +3,9 @@
 @section('content')
 <div class="rbt-contact-form contact-form-style-1 max-width-auto">
     @if (session('status'))
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <span>{{ session('status') }}</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
     <h3 class="title">Login</h3>

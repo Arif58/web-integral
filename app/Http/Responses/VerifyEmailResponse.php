@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Http\Responses;
 
 use Illuminate\Support\Facades\Auth;
-use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
+use Laravel\Fortify\Contracts\VerifyEmailResponse as VerifyEmailResponseContract;
 
-class RegisterResponse implements RegisterResponseContract
+class VerifyEmailResponse implements VerifyEmailResponseContract
 {
     /**
      * Create an HTTP response that represents the object.
@@ -15,7 +14,6 @@ class RegisterResponse implements RegisterResponseContract
      */
     public function toResponse($request)
     {
-        return redirect()->intended('/login')->with('status', 'Silakan verifikasi alamat email Anda dengan mengklik tautan yang telah kami kirimkan ke email Anda.');
-
+        return redirect()->intended('/lengkapi-profil')->with('status', 'Alamat email Anda telah diverifikasi.');
     }
 }

@@ -3,6 +3,9 @@
 use App\Http\Controllers\CategorySubtestController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\Fortify\AuthenticatedSessionController;
+use App\Http\Controllers\Fortify\RegisteredUserController;
+use App\Http\Controllers\Fortify\VerifyEmailController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\MyTryOutController;
@@ -37,13 +40,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/login', function () {
-    return view('web.sections.auth.login');
-})->name('login');
-
-Route::get('/register', function () {
-    return view('web.sections.auth.register');
-})->name('register');
 
 // Route::get('/logout', function () {
 //     return view('web.sections.landing-page.home');
@@ -53,12 +49,18 @@ Route::get('/try-out-utbk', [TryOutUtbkController::class, 'index'])->name('tryou
 
 Route::get('/produk/try-out-utbk/{id}', [TryOutUtbkController::class, 'show'])->name('tryout-detail');
 
-Route::get('/welcome', function () {
-    return view('web.sections.exam.confirm-test');
-});
+//override register routes
+Route::middleware('guest')->group(function () {
+    
+    Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+    Route::post('/register', [RegisteredUserController::class, 'store']);
 
-Route::get('/tryout/kerjakan', function () {
-    return view('web.sections.exam.tryout-test');
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+
+    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
+
+    Route::get('/email/verify/{id}/{hash}', VerifyEmailController::class)
+    ->name('verification.verify');
 });
 
 

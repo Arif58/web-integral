@@ -10,9 +10,9 @@
                     <div class="col-lg-6 order-2 order-lg-1">
                         <div class="content">
                             <div class="inner">
-                                <h1 class="title text-white">Lorem Ipsum</h1>
+                                <h1 class="title text-white">Belajar Bersama Try Out UTBK Integral Education</h1>
                                 <p class="description text-white">
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eligendi, quas dolorem! Iure aliquid quidem nisi ad esse ex fugiat, aliquam debitis provident dolorem, vitae tenetur autem enim amet placeat adipisci!
+                                    Kuasai soal-soal HOTS denga mengikuti Try Out UTBK Integral Education. Dapatkan poin IE Gems setiap kali kamu mengerjakan soal.
                                 </p>
                                 <div class="rbt-button-group justify-content-start mt--30">
                                     <a class="rbt-btn btn-gradient" href="#">
