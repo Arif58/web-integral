@@ -17,6 +17,9 @@ trait GradingIrt {
     public function grading($tryOutId) {
         $SubTest = SubTest::where('try_out_id', $tryOutId)->with('questions')->get();
         $totalParticipant = Participant::where('tryout_id', $tryOutId)->count();
+
+        // $totalQuestion = Question::whereIn('sub_test_id', $SubTest->pluck('id'))->count();
+        
         $partition = 2;
 
         $maxCorrectPerSubTest = [];
@@ -25,6 +28,10 @@ trait GradingIrt {
         $weight = [];
 
         $skorAfterGrading = [];
+
+        $totalScoreParticipantAllSubtest = [];
+
+        $averageScoreParticipant = [];
         
         foreach ($SubTest as $value) {
             $userAnswer = DB::table('user_answers')
@@ -61,10 +68,24 @@ trait GradingIrt {
             $grading = $this->gradingAnswer($userAnswer, $weightQuestion, $questions);
             $skorAfterGrading[$value->id] = $grading;
 
+            //menentukan rata-rata skor peserta
+            foreach ($grading as $participantId => $question) {
+                $totalScore = array_sum($question) + 200;
+                if (isset($totalScoreParticipantAllSubtest[$participantId])) {
+                    $totalScoreParticipantAllSubtest[$participantId] += $totalScore;
+                } else {
+                    $totalScoreParticipantAllSubtest[$participantId] = $totalScore;
+                }
+            }
+
+        }
+
+        foreach ($totalScoreParticipantAllSubtest as $participantId => $totalScore) {
+            $averageScoreParticipant[$participantId] = $totalScore / count($SubTest);
         }
 
         try {
-            $this->storeGrading($skorAfterGrading, $weight, $tryOutId);
+            $this->storeGrading($skorAfterGrading, $weight, $tryOutId, $averageScoreParticipant);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
@@ -185,15 +206,18 @@ trait GradingIrt {
         foreach ($questions as $question) {
             //mendapatkan jawaban per nomor
             $answerPerQuestion = $answer->where('question_id', $question);
+            $answerPerNumber[$question] = $answerPerQuestion;
 
             $skor = 0;
             // menentukan type soal
             if ($answerPerQuestion->first()->type === 'pilihan_ganda') {
 
                 $skor = $this->addWeightMultipleChoiceQuestion($answerPerQuestion, $determineRangeAndScore);
-            } else if ($answerPerQuestion->first()->type === 'isian_singkat') {
-
+            } else if ($answerPerQuestion->first()->type === 'pilihan_ganda_majemuk') {
                 $skor = $this->addWeightCompundMultipleChoiceQuestion($answerPerQuestion, $determineRangeAndScore);
+            } else if ($answerPerQuestion->first()->type === 'isian_singkat') {
+                $skor = $this->addWeightEssayQuestion($answerPerQuestion, $determineRangeAndScore);
+
             } else if ($answerPerQuestion->first()->type === 'pernyataan') {
                 $skor = $this->addWeightStatementQuestion($answerPerQuestion, $determineRangeAndScore);
             } 
@@ -207,6 +231,7 @@ trait GradingIrt {
 
     public function addWeightMultipleChoiceQuestion($answerPerQuestion, $determineRangeAndScore) {
         $totalCorrectAnswer = $answerPerQuestion->where('is_correct', 1)->count();
+        // dd($totalCorrectAnswer);
     
         $skor = 0;
                 
@@ -290,7 +315,6 @@ trait GradingIrt {
         $totalCorrectAnswer = 0;
 
         $skor = 0;
-
         //mendapatkan total siswa yang menjawab benar
         foreach ($answerPerQuestion as $key => $value) {
             intval($value->answer_text) == intval($value->answer) ? $totalCorrectAnswer++ : null;
@@ -401,8 +425,8 @@ trait GradingIrt {
 
     }
 
-    public function storeGrading($skorAfterGrading, $weight, $tryOutId) {
-        DB::transaction(function () use ($skorAfterGrading, $weight, $tryOutId) {
+    public function storeGrading($skorAfterGrading, $weight, $tryOutId, $averageScoreParticipant) {
+        DB::transaction(function () use ($skorAfterGrading, $weight, $tryOutId, $averageScoreParticipant) {
             foreach ($weight as $subTestId => $questions) {
                 foreach ($questions as $questionId => $weight) {
                     $question = Question::find($questionId);
@@ -424,6 +448,15 @@ trait GradingIrt {
                     }
                 }
             }
+
+            foreach ($averageScoreParticipant as $participantId => $averageScore) {
+                $participant = Participant::find($participantId);
+                $participant->update([
+                    'average_score' => $averageScore
+                ]);
+            }
+
+
 
             $tryOut = TryOut::find($tryOutId);
             $tryOut->update([

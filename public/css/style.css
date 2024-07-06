@@ -1465,6 +1465,10 @@ ul.rbt-dropdown-menu li .sub-menu li a, ul.rbt-dropdown-menu li a .right-icon, u
   background: linear-gradient(270deg, rgb(220, 127, 63) 0%, rgb(231, 164, 70) 100%) !important;
 }
 
+.bg-gradient-19-top-to-bottom {
+  background: linear-gradient(0deg, rgb(220, 127, 63) 0%, rgb(231, 164, 70) 100%) !important;
+}
+
 .bg-gradient-20 {
   background: var(--gradient-11) !important;
 }
@@ -1475,6 +1479,11 @@ ul.rbt-dropdown-menu li .sub-menu li a, ul.rbt-dropdown-menu li a .right-icon, u
 
 .bg-gradient-22 {
   background: linear-gradient(0deg, #FAFAFA 0%, #BBD6E7 100%) !important;
+}
+
+.bg-gradient-23 {
+  background: linear-gradient(rgb(112, 164, 198) 0%, rgb(61, 118, 166) 100%) !important;
+
 }
 
 .theme-mainbg-gradient {
@@ -13553,6 +13562,7 @@ Button Area
 fieldset:disabled {
   pointer-events: none !important;
   opacity: 0.65 !important;
+  background-color: #EEEEEE !important;
 }
 
 .rbt-btn {

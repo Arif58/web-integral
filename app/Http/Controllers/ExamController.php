@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\IeGemsHistory;
+use App\Models\Major;
 use App\Models\Participant;
 use App\Models\Question;
 use App\Models\SubTest;
 use App\Models\User;
 use App\Models\UserAnswer;
+use App\Models\UserItemScore;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -121,5 +123,52 @@ class ExamController extends Controller
         $participant = Participant::where('id', $participantId)->with('tryOut')->first();
 
         return view('web.sections.exam.finish-test', compact('participant'));
+    }
+
+    public function getExamResult($participantId)
+    {
+        $participant = Participant::where('id', $participantId)->with('tryOut', 'user')->first();
+
+        $subTest = $participant->tryOut->subTests()->with('questions', 'categorySubtest')->get();
+
+        // $tryOutParticipantsIds = Participant::where('tryout_id', $participant->tryout_id)->pluck('id');
+
+        $subTestIds = $subTest->pluck('id');
+
+        $averageAllParticipantScore = Participant::where('tryout_id', $participant->tryout_id)->avg('average_score');
+        $averageAllParticipantScore = number_format($averageAllParticipantScore, 2);
+
+        //mencari peringkat peserta
+        $rankParticipant = Participant::where('tryout_id', $participant->tryout_id)
+            ->where('average_score', '>', $participant->average_score)
+            ->count() + 1;
+
+        // $participantScore = UserItemScore::whereIn('question_id', function($query) use ($subTestIds) {
+        //     $query->select('id')
+        //         ->from('questions')
+        //         ->whereIn('sub_test_id', $subTestIds);
+        // })->where('participant_id', $participantId);
+
+        //rata rata skor peserta pada tryout
+        // $averageAllParticipantScore = UserItemScore::select('participant_id', DB::raw('sum(score) as total_score'))
+        //     ->whereIn('question_id', function($query) use ($subTestIds) {
+        //         $query->select('id')
+        //             ->from('questions')
+        //             ->whereIn('sub_test_id', $subTestIds);
+        //     })->whereIn('participant_id', $tryOutParticipantsIds)
+        //     ->groupBy('participant_id')
+        //     ->get();
+
+
+        $totalQuestion = Question::whereIn('sub_test_id', $subTestIds)->count();
+
+        // $averageScore = $participantScore->sum('score') / $totalQuestion;
+        // $totalAnswered = $participantScore->count();
+
+        $firstMajor = Major::where('id', $participant->user->first_major)->with('university')->first();
+        $secondMajor = Major::where('id', $participant->user->second_major)->with('university')->first();
+        // dd($participant, $subTest, $answers, $subTestIds);
+
+        return view('web.sections.exam.result', compact('participant', 'subTest', 'subTestIds', 'firstMajor', 'secondMajor', 'averageAllParticipantScore', 'rankParticipant'));
     }
 }

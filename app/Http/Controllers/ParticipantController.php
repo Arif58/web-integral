@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Participant;
 use App\Models\Product;
+use App\Traits\GradingIrt;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class ParticipantController extends Controller
 {
+    use GradingIrt;
     public function index($productId) {
 
         $product = Product::where('id', $productId)->with('participants')->first();
@@ -30,11 +32,11 @@ class ParticipantController extends Controller
                 return $participant->user->email;
             })
             ->addColumn('average_score', function ($participant) {
-                $avg = $participant->userScores->avg('score');
+                $avg = $participant->average_score;
                 if ($avg == null) {
                     return 'Belum ada nilai';
                 }
-                $avg = number_format($avg, 2) + 200;
+                $avg = number_format($avg, 2);
                 return $avg;
             })
             ->make(true);

@@ -59,7 +59,7 @@
                                             <div class="rbt-card-body">
                                                 <h4 class="rbt-card-title mb--5">{{$item->tryOut->name}}</h4>
                                                 <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
-                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" href="#" style="font-size: 14px; padding: 0px;">
+                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" href="" style="font-size: 14px; padding: 0px;">
                                                     <span class="btn-text">@if($isFinished) Lihat Hasil @else Kerjakan Sekarang @endif</span>
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i>
                                                     </span>
@@ -118,6 +118,7 @@
                                         $startMonth = date('F Y', strtotime($item->tryOut->start_date));
                                         $endDate = date('d F Y', strtotime($item->tryOut->end_date));
                                         $tryOutDate = $startDate . ' - ' . $endDate;
+                                        $isGradingCompleted = $item->tryOut->is_grading_completed;
                                     @endphp
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
@@ -133,7 +134,7 @@
                                             <div class="rbt-card-body">
                                                 <h4 class="rbt-card-title mb--5">{{$item->tryOut->name}}</h4>
                                                 <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
-                                                <a class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" href="#" style="font-size: 14px; padding: 0px;">
+                                                <a class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap @if(!$isGradingCompleted) disabled @endif" href="{{route('exam-result', $item->id)}}" style="font-size: 14px; padding: 0px;">
                                                     <span class="btn-text">Lihat Hasil</span>
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i>
                                                     </span>
