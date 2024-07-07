@@ -14,6 +14,7 @@ class ParticipantController extends Controller
     public function index($productId) {
 
         $product = Product::where('id', $productId)->with('participants')->first();
+        // dd($this->grading($product->tryout_id));
 
         return view('web.sections.dashboard.admin.participants', compact('product'));
     }

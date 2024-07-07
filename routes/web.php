@@ -88,6 +88,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/exam/submit', 'submitAnswer')->name('submit-answer');
         Route::get('/exam/finish/{participantId}', 'finishExam')->name('finish-exam');
         Route::get('/exam/result/{participantId}', 'getExamResult')->name('exam-result');
+        Route::get('/exam/leaderboard/{tryOutId}', 'getLeaderboard')->name('leaderboard.get');
     });
 
     Route::middleware(['admin'])->group(function () {

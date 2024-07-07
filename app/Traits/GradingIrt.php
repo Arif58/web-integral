@@ -16,10 +16,11 @@ trait GradingIrt {
 
     public function grading($tryOutId) {
         $SubTest = SubTest::where('try_out_id', $tryOutId)->with('questions')->get();
-        $totalParticipant = Participant::where('tryout_id', $tryOutId)->count();
+        $participants = Participant::where('tryout_id', $tryOutId)->get();
+        $totalParticipant = $participants->count();
+        // dd($SubTest);
 
         // $totalQuestion = Question::whereIn('sub_test_id', $SubTest->pluck('id'))->count();
-        
         $partition = 2;
 
         $maxCorrectPerSubTest = [];
@@ -47,36 +48,51 @@ trait GradingIrt {
                 ->orderBy('user_answers.participant_id')
                 ->get();
 
-            $questions = Question::where('sub_test_id', $value->id)->get();
-            $questionIds = $questions->pluck('id');
-            $testAnswer = TestAnswer::whereIn('question_id', $questionIds)->get();
-
-            $questionPilihanGanda[$value->id] = $userAnswer;
-            //tentukan banyak soal yang terjawab benar oleh peserta dari satu subtest
-            $maxCorrect = $this->maxCorrectAnswer($userAnswer, $testAnswer);
-            $maxCorrectPerSubTest[$value->id] = $maxCorrect;
-
-            //tentukan range dan skor
-            $determineAndScore = $this->determineRangeAndScore($totalParticipant, $partition, $maxCorrect);
-            $determine[$value->id] = $determineAndScore;
-
-            //tambahkan bobot soal
-            $weightQuestion = $this->addWeightQuestion($questionIds, $userAnswer, $determineAndScore);
-            $weight[$value->id] = $weightQuestion;
-
-            //nilai akhir tiap user answer
-            $grading = $this->gradingAnswer($userAnswer, $weightQuestion, $questions);
-            $skorAfterGrading[$value->id] = $grading;
-
-            //menentukan rata-rata skor peserta
-            foreach ($grading as $participantId => $question) {
-                $totalScore = array_sum($question) + 200;
-                if (isset($totalScoreParticipantAllSubtest[$participantId])) {
-                    $totalScoreParticipantAllSubtest[$participantId] += $totalScore;
-                } else {
-                    $totalScoreParticipantAllSubtest[$participantId] = $totalScore;
+            if ($userAnswer->count() !== 0) {
+                $questions = Question::where('sub_test_id', $value->id)->get();
+                $questionIds = $questions->pluck('id');
+                $testAnswer = TestAnswer::whereIn('question_id', $questionIds)->get();
+    
+                $questionPilihanGanda[$value->id] = $userAnswer;
+                //tentukan banyak soal yang terjawab benar oleh peserta dari satu subtest
+                $maxCorrect = $this->maxCorrectAnswer($userAnswer, $testAnswer);
+                $maxCorrectPerSubTest[$value->id] = $maxCorrect;
+    
+                //tentukan range dan skor
+                $determineAndScore = $this->determineRangeAndScore($totalParticipant, $partition, $maxCorrect);
+                $determine[$value->id] = $determineAndScore;
+    
+                //tambahkan bobot soal
+                $weightQuestion = $this->addWeightQuestion($questionIds, $userAnswer, $determineAndScore);
+                $weight[$value->id] = $weightQuestion;
+    
+                //nilai akhir tiap user answer
+                $grading = $this->gradingAnswer($userAnswer, $weightQuestion, $questions);
+                $skorAfterGrading[$value->id] = $grading;
+    
+                //menentukan rata-rata skor peserta
+                foreach ($grading as $participantId => $question) {
+                    $totalScore = array_sum($question) + 200;
+                    if (isset($totalScoreParticipantAllSubtest[$participantId])) {
+                        $totalScoreParticipantAllSubtest[$participantId] += $totalScore;
+                    } else {
+                        $totalScoreParticipantAllSubtest[$participantId] = $totalScore;
+                    }
                 }
             }
+            //ketika subtest tidak ada yg menjawab sama sekali, set nilai default per subtestnya adalah 200
+            else {
+                if ($totalScoreParticipantAllSubtest !== []) {
+                    foreach ($totalScoreParticipantAllSubtest as $participantId => $score) {
+                        $totalScoreParticipantAllSubtest[$participantId] += 200;
+                    }
+                } else {
+                    foreach ($participants as $participant) {
+                        $totalScoreParticipantAllSubtest[$participant->id] = 200;
+                    }
+                }
+            }
+            
 
         }
 

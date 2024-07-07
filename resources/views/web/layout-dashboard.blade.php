@@ -8,11 +8,12 @@
 </head>
 @php
     $currentPath = Route::currentRouteName();
-    $pageWithoutSidebar = ['profile-edit', 'major-edit'];
-    $pageWithoutHeader = ['profile-edit', 'major-edit'];
+    $pageWithoutSidebar = ['profile.edit', 'profile.edit-major'];
+    $pageWithoutHeader = ['profile.edit', 'profile.edit-major'];
+    $pageWithoutNavbar = ['profile.edit', 'profile.edit-major']
 @endphp
 <body>
-    @if (!in_array($currentPath, $pageWithoutHeader))
+    @if (!in_array($currentPath, $pageWithoutNavbar))
     <header class="rbt-header rbt-header-10">
         @include('web.layout.header-dashboard')
     </header>

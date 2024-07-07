@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link href="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/datatable.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <style>
         .rbt-counterup {
             padding: 20px
@@ -252,7 +255,7 @@
                                                 </h5>
                                             </div>
                                             <div class="col-12 text-center">
-                                                <a class="rbt-btn btn-gradient rbt-shadow-box" href="#">
+                                                <a class="rbt-btn btn-gradient rbt-shadow-box" href="{{asset('storage/'.$product->answer_explanation_file)}}" target="_blank">
                                                     Lihat Pembahasan Soal <i class="feather-download"></i>
                                                 </a>
                                             </div>
@@ -263,26 +266,37 @@
 
                                     {{-- start detail skor --}}
                                     <div class="mt-5">
+                                        @php
+                                            $participantSubtestHasScore = $averageScoreSubtest->pluck('sub_test_id')->unique();
+                                        @endphp
+                                        @foreach($categorySubtest as $idCategory => $nameCategory)
                                         <div class="mb-5">
                                             <h5 class="mb-4">
-                                                TPS (Test Potensi Skolastik)
+                                                {{$nameCategory}}
                                             </h5>
-                                            <div class="d-flex align-items-center mb-3">
-                                                <div class="dot"></div>
-                                                <div class="d-flex justify-content-between" style="width: 100%">
-                                                    <div>Penalaran Umum</div>
-                                                    <div>400</div>
+                                            @foreach ($subTests as $subTest)
+                                            @if ($subTest->category_subtest_id == $idCategory)
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <div class="dot"></div>
+                                                    <div class="d-flex justify-content-between" style="width: 100%">
+                                                        <div>{{$subTest->name}}</div>
+                                                        {{-- check apakah subtest tersebut mempunyai skor --}}
+                                                        @if (in_array($subTest->id, $participantSubtestHasScore->toArray()))
+                                                        @foreach ($averageScoreSubtest as $averageScore)
+                                                            @if ($averageScore->sub_test_id == $subTest->id)
+                                                                <div>{{$averageScore->total_score + 200}}</div>
+                                                            @endif
+                                                        @endforeach
+                                                        @else
+                                                            <div>200</div>
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="d-flex align-items-center mb-3">
-                                                <div class="dot"></div>
-                                                <div class="d-flex justify-content-between" style="width: 100%">
-                                                    <div>Kemampuan Kuantitatif</div>
-                                                    <div>400</div>
-                                                </div>
-                                            </div>
-                                            
+                                                
+                                            @endif
+                                            @endforeach
                                         </div>
+                                        @endforeach
                                     </div>
                                     {{-- end detail skor --}}
                                 </div>
@@ -293,7 +307,15 @@
                                     <h5 class="rbt-title-style-3 text-center">
                                         Leaderboard
                                     </h5>
-                                    
+                                    <table class="cell-border stripe" id="leaderboard-table">
+                                        <thead>
+                                            <tr class="color-black">
+                                                <th>Peringkat</th>
+                                                <th>Nama</th>
+                                                <th>Nilai</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
                                 </div>
                                 {{-- end leaderboard --}}
                             </div>
@@ -305,6 +327,35 @@
         </div>
     </div>
     <!-- End Card Style -->
+
+    <footer class="rbt-footer footer-style-1 bg-color-white overflow-hidden">
+        @include('web.layout.footer')
+    </footer>
+
+    <input type="hidden" id="table-url" value="{{ route('leaderboard.get', $participant->tryout_id) }}">
     
+    @include('web.layout.js')
+    <script src="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.fn.dataTable.ext.order['data-rank'] = function(settings, col) {
+                return this.api().column(col, { order: 'index' }).nodes().map(function(td, i) {
+                    return $(td).find('span').data('rank');
+                });
+            };
+
+            $('#leaderboard-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: $('#table-url').val(),
+                columns: [
+                    {data: 'ranking', name: 'ranking', width: '6px', className: 'text-center'},
+                    {data: 'user.username', name: 'user.username'},
+                    {data: 'average_score', name: 'average_score'},
+                ],
+                order: [[0, 'asc']]
+            });
+        });
+    </script>
 </body>
 </html>
