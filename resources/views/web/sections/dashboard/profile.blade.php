@@ -2,7 +2,7 @@
 @section('title', 'Profil Saya')
 @push('css')
     <style>
-        p:last-child {
+        .edit {
             margin-bottom: 0;
             color: #DC7E3F;
             text-decoration: underline;
@@ -29,7 +29,7 @@
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0">
                 Profil Saya
             </h4>
-            <a href="{{route('profile.edit', $profile->id)}}"><p class="font-weight-light">Ubah</p></a>
+            <a href="{{route('profile.edit', $profile->id)}}"><p class="font-weight-light edit">Ubah</p></a>
         </div>
         <!-- Start Profile Row  -->
         <div class="rbt-profile-row row row--15 pt--30">
@@ -132,7 +132,7 @@
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0">
                 Target Jurusan
             </h4>
-            <a href="{{route('profile.edit-major', $profile->id)}}"><p class="font-weight-light">Ubah</p></a>
+            <a href="{{route('profile.edit-major', $profile->id)}}"><p class="font-weight-light edit">Ubah</p></a>
         </div>
         @php
             $firstMajor = $profile->first_major ?? '';

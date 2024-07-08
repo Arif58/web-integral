@@ -3,7 +3,7 @@
 @if (Auth::user()->role === 'student')
 <li><a href="/tryout-saya"><i class="feather-book-open"></i><span>Try Out Saya</span></a></li>
 <li><a href="/pencapaian"><i class="feather-award"></i><span>Pencapaian</span></a></li>
-<li><a href="/pencapaian"><i class="feather-shopping-cart"></i><span>Riwayat Pembelian</span></a></li>
+<li><a href="/riwayat-pembelian"><i class="feather-shopping-cart"></i><span>Riwayat Pembelian</span></a></li>
 @elseif (Auth::user()->role === 'admin')
 <li class="accordion" id="accordionOne">
     <div class="accordion-item border-0">

@@ -59,7 +59,12 @@ class OrderController extends Controller
             );
             $snapToken = \Midtrans\Snap::getSnapToken($params);
 
-            return view('web.sections.payment.payment-qris', compact('snapToken'));
+            $order->update([
+                'snap_token' => $snapToken,
+            ]);
+
+            // return view('web.sections.payment.payment-qris', compact('snapToken'));
+            return redirect()->route('payment-qris', $snapToken);
 
         } else if ($request->payment_method === 'ie_gems')
         {
@@ -94,6 +99,11 @@ class OrderController extends Controller
         }
     }
 
+    public function paymentQris($snapToken)
+    {
+        return view('web.sections.payment.payment-qris', compact('snapToken'));
+    }
+
     public function callback(Request $request)
     {
         $serverKey = config('midtrans.server_key');
@@ -116,5 +126,14 @@ class OrderController extends Controller
                 });
             }
         }
+    }
+
+    public function getOrderHistory()
+    {
+        $boundary = 10;
+        $userId = auth()->id();
+        $orders = Order::where('user_id', $userId)->with('product')->latest()->paginate($boundary);
+
+        return view('web.sections.dashboard.student.order-history', compact('orders'));
     }
 }

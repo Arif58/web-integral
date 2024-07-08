@@ -66,9 +66,15 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/payment/{productId}', [OrderController::class, 'index'])->name('payment');
+    Route::controller(OrderController::class)->group(function () {
+        Route::get('/payment/{productId}', 'index')->name('payment');
+    
+        Route::post('/checkout', 'checkout')->name('checkout');
 
-    Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+        Route::get('/riwayat-pembelian', 'getOrderHistory')->name('order-history');
+
+        Route::get('/payment/qris/{snapToken}', 'paymentQris')->name('payment-qris');
+    });
     
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profil-saya', 'index')->name('profile');
