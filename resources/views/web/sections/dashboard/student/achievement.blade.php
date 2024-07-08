@@ -6,6 +6,10 @@
         span {
             font-weight: bold;
         }    
+
+        img {
+            filter: drop-shadow(2px 4px 6px black);
+        }
     </style>    
 @endpush
 @section('content')
@@ -31,7 +35,7 @@
                             <div class="course-grid-3">
                                 <div class="rbt-card variation-03 rbt-hover" style="padding: 0px; box-shadow: none;">
                                     <div class="rbt-card-img text-center">
-                                        <img src="{{asset('/images/icons/score-700.svg')}}" alt="Course">
+                                        <img src="{{asset('/images/icons/score-700.svg')}}" alt="Course" class="image-achievement" style="filter: drop-shadow(2px 4px 6px black)">
                                         <div class="rbt-card-badge text-center">
                                             <span>700 Score Reached</span>
                                         </div>

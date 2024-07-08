@@ -2,23 +2,21 @@
 @section('title', 'Pembayaran')
 @section('content')
 <main class="rbt-main-wrapper">
-      <!-- Start breadcrumb Area -->
-      <div class="rbt-breadcrumb-default ptb--100 ptb_md--50 ptb_sm--30 bg-gradient-22">
+    <!-- Start Breadcrumb Area -->
+    <div class="rbt-breadcrumb-default ptb--100 ptb_md--50 ptb_sm--30 bg-gradient-22">
         <div class="container">
-            <div class="row">
-                <div class="col-2">
+            <div class="d-flex">
+                <div>
                     <h3>
                         <a href="/tryout-saya"><i class="feather-arrow-left"></i></a>
                     </h3>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                        <div class="breadcrumb-inner text-center">
-                            <h2 class="title"><i class="feather-shopping-cart"></i></h2>
-                        </div>
-                </div>
-                <div class="col-lg-12">
+
+                <div style="width: 100%">
+                    <div class="breadcrumb-inner text-center">
+                        <h2 class="title"><i class="feather-shopping-cart"></i></h2>
+                    </div>
+
                     <div class="breadcrumb-inner text-center">
                         <h2 class="title">Pembelian Produk</h2>
                     </div>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategorySubtestController;
 use App\Http\Controllers\ClusterController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\Fortify\AuthenticatedSessionController;
 use App\Http\Controllers\Fortify\RegisteredUserController;
@@ -217,9 +218,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     Route::middleware(['profile.completed'])->group(function () {
-        Route::get('/dashboard', function() {
-            return view('web.sections.dashboard.dashboard');
-        })->name('dashboard');    
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');    
         
         Route::get('/tryout-saya',[MyTryOutController::class, 'index'])->name('my-tryout');
         

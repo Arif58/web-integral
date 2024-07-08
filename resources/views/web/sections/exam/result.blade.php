@@ -75,26 +75,25 @@
                     </h3> 
                 </div>
                 <div style="width: 100%">
+                    <div class="breadcrumb-inner text-center">
+                        <h2 class="title color-white mb-5" style="font-size: 26px">Hasil Try Out
+                        </h2>
+                    </div>
+                    
                     <div>
                         <div class="breadcrumb-inner text-center">
-                            <h2 class="title color-white mb-5" style="font-size: 26px">Hasil Try Out
-                            </h2>
+                            <h1 class="title color-white mb-5"{{$participant->tryOut->name}}
+                            </h1>
                         </div>
-                </div>
-                <div>
-                    <div class="breadcrumb-inner text-center">
-                        <h1 class="title color-white mb-5">{{$participant->tryOut->name}}
-                        </h1>
                     </div>
-                </div>
-                <div>
-                    <div class="breadcrumb-inner text-center">
-                        <p class="description mb-4 text-white">
-                            <i class="feather-calendar"></i> 
-                            {{$tryOutDate}}
-                        </p>
-                    </div>
-                </div> 
+                    <div>
+                        <div class="breadcrumb-inner text-center">
+                            <p class="description mb-4 text-white">
+                                <i class="feather-calendar"></i> 
+                                {{$tryOutDate}}
+                            </p>
+                        </div>
+                    </div> 
                 </div>
             </div>
         </div>

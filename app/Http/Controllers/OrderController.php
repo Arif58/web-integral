@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Participant;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -101,6 +102,10 @@ class OrderController extends Controller
 
     public function paymentQris($snapToken)
     {
+        $isExpired = Order::where('snap_token', $snapToken)->where('expired_at', '<', now())->exists();
+        if ($isExpired) {
+            return redirect()->route('order-history')->with('status', 'Order tidak ditemukan atau sudah kadaluarsa.');
+        }
         return view('web.sections.payment.payment-qris', compact('snapToken'));
     }
 
@@ -131,9 +136,12 @@ class OrderController extends Controller
     public function getOrderHistory()
     {
         $boundary = 10;
+        $dateTimeNow = Carbon::parse(now())->setTimezone('Asia/Jakarta');
+        // $dateTimeNow = now();
         $userId = auth()->id();
         $orders = Order::where('user_id', $userId)->with('product')->latest()->paginate($boundary);
+        // dd($dateTimeNow);
 
-        return view('web.sections.dashboard.student.order-history', compact('orders'));
+        return view('web.sections.dashboard.student.order-history', compact('orders', 'dateTimeNow'));
     }
 }

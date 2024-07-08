@@ -15,8 +15,8 @@
                                         Persiapkan dirimu dalam menghadapi UTBK-SNBT dengan mengikuti Try Out Integral Education!
                                     </p>
                                     <div class="rbt-button-group justify-content-start mt--30">
-                                        <a class="rbt-btn btn-gradient" href="#">
-                                            <span>Daftar Sekarang</span>
+                                        <a class="rbt-btn btn-gradient" href="/try-out-utbk#tryout">
+                                            <span>Daftar Try Out Sekarang</span>
                                         </a>
                                     </div>
                                 </div>

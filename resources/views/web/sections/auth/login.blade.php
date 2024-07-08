@@ -34,7 +34,7 @@
             <span class="focus-border"></span> --}}
         </div>
 
-        <div class="row mb--30">
+        {{-- <div class="row mb--30">
             <div class="col-lg-6">
                 <div class="rbt-checkbox">
                     <input type="checkbox" id="rememberme" name="rememberme">
@@ -46,7 +46,7 @@
                     <a class="rbt-btn-link" href="#">Lupa password?</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="form-submit-group">
             <button type="submit" class="rbt-btn btn-gradient btn-md icon-hover w-100 radius-6">

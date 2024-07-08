@@ -15,7 +15,7 @@
                                     Kuasai soal-soal HOTS denga mengikuti Try Out UTBK Integral Education. Dapatkan poin IE Gems setiap kali kamu mengerjakan soal.
                                 </p>
                                 <div class="rbt-button-group justify-content-start mt--30">
-                                    <a class="rbt-btn btn-gradient" href="#">
+                                    <a class="rbt-btn btn-gradient" href="#tryout">
                                         <span>Daftar Sekarang</span>
                                     </a>
                                 </div>
@@ -122,12 +122,12 @@
 
 
     <!-- Start Try Out Product Area -->
-    <div class="rbt-service-area bg-color-extra2 rbt-section-gap">
+    <div class="rbt-service-area bg-gradient-19-top-to-bottom rbt-section-gap" id="tryout">
         <div class="container">
             <div class="row mb--60">
                 <div class="col-lg-12">
                     <div class="section-title text-center">
-                        <h2 class="title">Pilih Try Out mu!</h2>
+                        <h2 class="title text-white">Pilih Try Out mu!</h2>
                     </div>
                 </div>
             </div>
