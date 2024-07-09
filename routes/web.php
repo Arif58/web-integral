@@ -67,6 +67,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
+    // riwayat pembelian student
     Route::controller(OrderController::class)->group(function () {
         Route::get('/payment/{productId}', 'index')->name('payment');
     
@@ -215,6 +216,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         });
 
         
+
+        
     });
 
     Route::middleware(['profile.completed'])->group(function () {
@@ -234,8 +237,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         //     return view('web.sections.dashboard.edit-major');
         // })->name('major-edit');
         
-        Route::get('/pengerjaan-tryout', function() {
-            return view('web.sections.exam.tryout-test');
-        })->name('tryout-test');
+        // Route::get('/pengerjaan-tryout', function() {
+        //     return view('web.sections.exam.tryout-test');
+        // })->name('tryout-test');
     });
 });

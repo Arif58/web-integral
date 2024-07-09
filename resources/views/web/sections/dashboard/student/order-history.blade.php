@@ -46,21 +46,30 @@
                                             <span>Tanggal Pembelian: </span>
                                             <span style="font-size: small">{{ date('d F Y H:i', strtotime($order->created_at)) }}</span>
                                         </div>
-                                        <span class="badge 
-                                        @if($order->status === 'success') bg-success 
-                                        @elseif($order->status === 'pending') 
+
+                                        @if ($order->status === 'success')
+                                        <span class="badge bg-success">
+                                            Berhasil
+                                        </span>
+                                        @elseif ($order->status === 'pending')
                                             @if ($isExpired)
-                                                bg-danger
+                                                <span class="badge bg-danger">
+                                                    Gagal
+                                                </span>
                                             @else
-                                                bg-warning
+                                                <span class="badge bg-warning">
+                                                    Menunggu Pembayaran
+                                                </span>
                                             @endif
-                                        @elseif($order->status === 'failed') bg-danger 
-                                        @endif align-content-center">@if($isExpired) Failed @else{{$order->status}} @endif</span>
+                                        @elseif ($order->status === 'failed')
+                                        <span class="badge bg-danger">
+                                            Gagal
+                                        </span>
+                                        @endif
+                                        
                                     </div>
-                                    {{-- <p class="description mb-4"><i class="feather-calendar"></i>{{$tryOutDate}}</p> --}}
                                     <h4 class="rbt-card-title mb--5">{{$order->product->tryOut->name}}</h4>
-                                    {{-- <div class="d-flex justify-content-end">
-                                    </div> --}}
+
                                     <p class="description mb-1 mt-2">Total Harga: </p>
                                     @if($order->payment_method === 'qris')
                                     <h5>Rp{{number_format($order->total_price, 0, ',', '.');}}</h5>

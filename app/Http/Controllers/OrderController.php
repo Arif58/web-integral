@@ -39,33 +39,50 @@ class OrderController extends Controller
 
         if ($request->payment_method === 'qris')
         {
-            // Set your Merchant Server Key
-            \Midtrans\Config::$serverKey = config('midtrans.server_key');
-            // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-            \Midtrans\Config::$isProduction = false;
-            // Set sanitization on (default)
-            \Midtrans\Config::$isSanitized = true;
-            // Set 3DS transaction for credit card to true
-            \Midtrans\Config::$is3ds = true;
+            if ($order->total_price != 0) {
+                // Set your Merchant Server Key
+                \Midtrans\Config::$serverKey = config('midtrans.server_key');
+                // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+                \Midtrans\Config::$isProduction = false;
+                // Set sanitization on (default)
+                \Midtrans\Config::$isSanitized = true;
+                // Set 3DS transaction for credit card to true
+                \Midtrans\Config::$is3ds = true;
 
-            $params = array(
-                'transaction_details' => array(
-                    'order_id' => $order->id,
-                    'gross_amount' => $order->total_price,
-                ),
-                'customer_details' => array(
-                    'name' => $request->fullname,
-                    'phone' => $request->phone,
-                ),
-            );
-            $snapToken = \Midtrans\Snap::getSnapToken($params);
+                $params = array(
+                    'transaction_details' => array(
+                        'order_id' => $order->id,
+                        'gross_amount' => $order->total_price,
+                    ),
+                    'customer_details' => array(
+                        'name' => $request->fullname,
+                        'phone' => $request->phone,
+                    ),
+                );
+                $snapToken = \Midtrans\Snap::getSnapToken($params);
 
-            $order->update([
-                'snap_token' => $snapToken,
-            ]);
+                $order->update([
+                    'snap_token' => $snapToken,
+                ]);
 
-            // return view('web.sections.payment.payment-qris', compact('snapToken'));
-            return redirect()->route('payment-qris', $snapToken);
+                // return view('web.sections.payment.payment-qris', compact('snapToken'));
+                return redirect()->route('payment-qris', $snapToken);
+            } else {
+                DB::transaction(function () use($request, $order) {
+                    $order->update([
+                        'status' => 'success',
+                    ]);
+
+                    $tryout_id = $order->product->tryout_id;
+
+                    Participant::create([
+                        'user_id' => $order->user_id,
+                        'tryout_id' => $tryout_id,
+                    ]);
+                });
+
+                return redirect()->route('my-tryout')->with('success', 'Pembelian berhasil dilakukan. Silahkan cek di menu Tryout Saya.');
+            }
 
         } else if ($request->payment_method === 'ie_gems')
         {
@@ -137,11 +154,9 @@ class OrderController extends Controller
     {
         $boundary = 10;
         $dateTimeNow = Carbon::parse(now())->setTimezone('Asia/Jakarta');
-        // $dateTimeNow = now();
         $userId = auth()->id();
         $orders = Order::where('user_id', $userId)->with('product')->latest()->paginate($boundary);
-        // dd($dateTimeNow);
-
+ 
         return view('web.sections.dashboard.student.order-history', compact('orders', 'dateTimeNow'));
     }
 }
