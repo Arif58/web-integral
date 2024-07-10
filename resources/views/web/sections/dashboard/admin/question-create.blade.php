@@ -54,6 +54,10 @@
             position: unset;
         }
 
+        p {
+            margin-bottom: 5px;
+        }
+
     </style>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
 @endpush
@@ -147,7 +151,7 @@
 
                 <div class="row mt-5">
                     <div class="col-4">
-                        <button type="button" class="rbt-btn btn-border btn-md bg-color-white radius-round-10" data-bs-dismiss="modal" style="width: 100%; color: black;">Batal</button> 
+                        <a type="button" class="rbt-btn btn-border btn-md bg-color-white radius-round-10 text-center" data-bs-dismiss="modal" style="width: 100%; color: black;" href="{{route('questions', $subTest->id)}}">Batal</a> 
                     </div>
                     <div class="col-8">
                         <button type="submit" class="rbt-btn btn-gradient btn-md text-center hover-icon-reverse" style="color: white; border-radius: 4px; width: 100%">

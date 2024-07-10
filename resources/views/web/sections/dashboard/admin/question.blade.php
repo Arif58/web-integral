@@ -46,6 +46,10 @@
         .page-link {
             color: #757575;
         }
+
+        p {
+            margin-bottom: 5px;
+        }
     </style>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
 

@@ -80,7 +80,7 @@
                             <div class="row">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Lengkap</label>
-                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}">
+                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" maxlength="30">
                                     @error('name')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -88,7 +88,7 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="position">Posisi</label>
-                                    <input type="text" id="position" name="position" placeholder="Posisi" class="form-control @error('position') is-invalid @enderror mb-0" value="{{ old('position') }}">
+                                    <input type="text" id="position" name="position" placeholder="Posisi" class="form-control @error('position') is-invalid @enderror mb-0" value="{{ old('position') }}" maxlength="30">
                                     @error('position')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -96,7 +96,7 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="education">Pendidikan</label>
-                                    <input type="text" id="education" name="education" placeholder="Pendidikan (ex: S1 Matematika - Universitas Indonesia)" class="form-control @error('education') is-invalid @enderror mb-0" value="{{ old('education') }}">
+                                    <input type="text" id="education" name="education" placeholder="Pendidikan (ex: S1 Matematika - Universitas Indonesia)" class="form-control @error('education') is-invalid @enderror mb-0" value="{{ old('education') }}" maxlength="80">
                                     @error('education')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -152,7 +152,7 @@
                             <div class="row">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Lengkap</label>
-                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0">
+                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0" maxlength="30">
                                     @error('name')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -160,7 +160,7 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="position">Posisi</label>
-                                    <input type="text" id="position" name="position" placeholder="Jurusan" class="form-control @error('position') is-invalid @enderror mb-0" value="{{ old('position') }}">
+                                    <input type="text" id="position" name="position" placeholder="Posisi" class="form-control @error('position') is-invalid @enderror mb-0" value="{{ old('position') }}" maxlength="30">
                                     @error('position')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -168,7 +168,7 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="education">Pendidikan</label>
-                                    <input type="text" id="education" name="education" placeholder="Pendidikan ex: S1 Matematika - Universitas Indonesia" class="form-control @error('education') is-invalid @enderror mb-0" value="{{ old('education') }}">
+                                    <input type="text" id="education" name="education" placeholder="Pendidikan ex: S1 Matematika - Universitas Indonesia" class="form-control @error('education') is-invalid @enderror mb-0" value="{{ old('education') }}" maxlength="80">
                                     @error('education')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror

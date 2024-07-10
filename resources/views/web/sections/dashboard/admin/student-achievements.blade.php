@@ -80,7 +80,7 @@
                             <div class="row">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Lengkap</label>
-                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}">
+                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" maxlength="20">
                                     @error('name')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -88,7 +88,7 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="achievement">Prestasi</label>
-                                    <input type="text" id="achievement" name="achievement" placeholder="Prestasi" class="form-control @error('achievement') is-invalid @enderror mb-0" value="{{ old('achievement') }}">
+                                    <input type="text" id="achievement" name="achievement" placeholder="Prestasi" class="form-control @error('achievement') is-invalid @enderror mb-0" value="{{ old('achievement') }}" maxlength="80">
                                     @error('achievement')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -96,7 +96,7 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="school">asal sekolah</label>
-                                    <input type="text" id="school" name="school" placeholder="Asal Sekolah" class="form-control @error('school') is-invalid @enderror mb-0" value="{{ old('school') }}">
+                                    <input type="text" id="school" name="school" placeholder="Asal Sekolah" class="form-control @error('school') is-invalid @enderror mb-0" value="{{ old('school') }}" maxlength="60">
                                     @error('school')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -152,7 +152,7 @@
                             <div class="row">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Lengkap</label>
-                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0">
+                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0" maxlength="20">
                                     @error('name')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -160,7 +160,7 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="achievement">Prestasi</label>
-                                    <input type="text" id="achievement" name="achievement" placeholder="Jurusan" class="form-control @error('achievement') is-invalid @enderror mb-0" value="{{ old('achievement') }}">
+                                    <input type="text" id="achievement" name="achievement" placeholder="Jurusan" class="form-control @error('achievement') is-invalid @enderror mb-0" value="{{ old('achievement') }}" maxlength="80">
                                     @error('achievement')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -168,7 +168,7 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="school">Asal Sekolah</label>
-                                    <input type="text" id="school" name="school" placeholder="Asal Sekolah" class="form-control @error('school') is-invalid @enderror mb-0" value="{{ old('school') }}">
+                                    <input type="text" id="school" name="school" placeholder="Asal Sekolah" class="form-control @error('school') is-invalid @enderror mb-0" value="{{ old('school') }}" maxlength="60">
                                     @error('school')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -328,7 +328,7 @@
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '10px'},
                 { data: 'name', name: 'name', width: '15%'},
                 { data: 'achievement', name: 'achievement', width: '15%'},
-                { data: 'school', name: 'school', width: '35%'},
+                { data: 'school', name: 'school', width: '15%'},
                 { data: 'photo', name: 'photo' },
                 { data: 'action', name: 'action' },
             ]

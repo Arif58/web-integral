@@ -216,7 +216,7 @@
                                         <div class="">
                                             <div class="rbt-team team-style-default style-three rbt-hover">
                                                 <div class="inner">
-                                                    <div class="thumbnail"><img src="{{ asset('storage/'.$item->photo)}}" alt="Corporate Template" style="height: 360px;" loading="lazy"></div>
+                                                    <div class="thumbnail"><img src="{{ asset('storage/'.$item->photo)}}" alt="Corporate Template" style="aspect-ratio: 1;" loading="lazy"></div>
                                                     <div class="content">
                                                         <h2 class="title" style="font-size: 24px;">{{$item->name}}</h2>
                                                         <h6 class="subtitle">{{$item->achievement}}</h6>
@@ -399,3 +399,38 @@
         
     </main>
 @endsection
+@push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    setEqualHeight();
+
+    // Recalculate heights on window resize
+    window.addEventListener('resize', setEqualHeight);
+
+    function setEqualHeight() {
+        let maxHeight = 0;
+        const cards = document.querySelectorAll('.team-style-default.style-three .inner .content');
+
+        // Reset heights to auto to get natural heights
+        cards.forEach(card => {
+            card.style.height = 'auto';
+        });
+
+        // Find the maximum height
+        cards.forEach(card => {
+            let cardHeight = card.offsetHeight;
+            if (cardHeight > maxHeight) {
+                maxHeight = cardHeight;
+            }
+        });
+        console.log(maxHeight);
+
+        // Set all cards to the maximum height
+        cards.forEach(card => {
+            card.style.height = maxHeight + 'px';
+        });
+    }
+    });
+
+</script>
+@endpush

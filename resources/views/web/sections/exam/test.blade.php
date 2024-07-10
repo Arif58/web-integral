@@ -54,6 +54,10 @@
             margin-bottom: 10px !important;
         }
 
+        p {
+            margin-bottom: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -318,6 +322,22 @@
 
         // Usage example
         document.addEventListener('DOMContentLoaded', (event) => {
+            // Prevent back navigation
+            history.pushState(null, null, location.href);
+            window.addEventListener('popstate', function (event) {
+                if (confirm("Jika Anda melakukan kembali, semua jawaban akan dikirim. Apakah Anda yakin ingin melanjutkan?")) {
+                    submitAnswers();
+                } else {
+                    history.pushState(null, null, location.href);
+                }
+            });
+
+            // // Prevent accidental reload or close
+            // window.addEventListener('beforeunload', function (event) {
+            //     event.preventDefault();
+            //     event.returnValue = '';
+            // });
+
             let subTest = @json($subTest);
             let start_time = JSON.parse(localStorage.getItem('start_test'));
             countdown(start_time, subTest.duration, 'time');
@@ -394,6 +414,12 @@
                         input.id = 'choice_' + choice.id;
                         
                         input.addEventListener('change', (event) => {
+                            const checkedCheckboxes = document.querySelectorAll('input[name="answer"]:checked');
+                            if (checkedCheckboxes.length > 2) {
+                                event.target.checked = false;
+                                alert('Anda hanya bisa memilih 2 jawaban');
+                                return;
+                            }
                             saveAnswer(questions[index].id, choice.id);
                             mark(currentQuestionIndex);
                         });

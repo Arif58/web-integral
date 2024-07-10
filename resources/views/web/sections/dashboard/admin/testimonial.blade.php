@@ -81,7 +81,7 @@
                             <div class="row">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Lengkap</label>
-                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}">
+                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" maxlength="25">
                                     @error('name')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -89,7 +89,7 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="major">Jurusan</label>
-                                    <input type="text" id="major" name="major" placeholder="Jurusan" class="form-control @error('major') is-invalid @enderror mb-0" value="{{ old('major') }}">
+                                    <input type="text" id="major" name="major" placeholder="Jurusan" class="form-control @error('major') is-invalid @enderror mb-0" value="{{ old('major') }}" maxlength="60">
                                     @error('major')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -153,12 +153,12 @@
                             <div class="row">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Lengkap</label>
-                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control mb-0">
+                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control mb-0" maxlength="25">
                                 </div>
 
                                 <div class="col-12 mb--30">
                                     <label for="major">Jurusan</label>
-                                    <input type="text" id="major" name="major" placeholder="Jurusan" class="form-control mb-0">
+                                    <input type="text" id="major" name="major" placeholder="Jurusan" class="form-control mb-0" maxlength="60">
                                 </div>
 
                                 <div class="col-12 mb--30">

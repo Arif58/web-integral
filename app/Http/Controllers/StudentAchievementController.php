@@ -79,10 +79,10 @@ class StudentAchievementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'achievement' => 'required|string|max:255',
-            'school' => 'required|string|max:255',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg|file|max:2048',
+            'name' => 'required|string|max:20',
+            'achievement' => 'required|string|max:80',
+            'school' => 'required|string|max:60',
+            'photo' => 'required|image|mimes:jpeg,png,jpg|file|max:2048',
         ]);
 
         // Menyimpan foto jika ada

@@ -72,10 +72,10 @@ class TestimoniController extends Controller
     {
          // Validasi input
          $request->validate([
-            'name' => 'required|string|max:255',
-            'major' => 'required|string|max:255',
+            'name' => 'required|string|max:25',
+            'major' => 'required|string|max:60',
             'testimonials' => 'required|string|max:255',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg|file|max:2048',
+            'photo' => 'required|image|mimes:jpeg,png,jpg|file|max:2048',
         ]);
 
         // Menyimpan foto jika ada
@@ -109,8 +109,8 @@ class TestimoniController extends Controller
         $testimonial = Testimoni::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'major' => 'required|string|max:255',
+            'name' => 'required|string|max:25',
+            'major' => 'required|string|max:60',
             'testimonials' => 'required|string',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|file|max:2048',
         ]);

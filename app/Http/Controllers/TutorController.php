@@ -72,10 +72,10 @@ class TutorController extends Controller
     {
         //Validasi input
         $request->validate([
-            'name' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
-            'education' => 'required|string|max:255',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg|file|max:2048',
+            'name' => 'required|string|max:30',
+            'position' => 'required|string|max:30',
+            'education' => 'required|string|max:80',
+            'photo' => 'required|image|mimes:jpeg,png,jpg|file|max:2048',
         ]);
 
         // Menyimpan foto jika ada
@@ -103,14 +103,15 @@ class TutorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $tutor = Tutor::findOrFail($id);
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
-            'education' => 'required|string|max:255',
+            'name' => 'required|string|max:30',
+            'position' => 'required|string|max:30',
+            'education' => 'required|string|max:80',
             'photo' => 'nullable|image|mimes:jpeg,png,jpg|file|max:2048',
         ]);
+
+        $tutor = Tutor::findOrFail($id);
 
         if ($request->hasFile('photo')) {
             $imageName = Storage::disk('public')->put('posts/images', request()->file('photo'));
