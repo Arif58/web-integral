@@ -21,7 +21,7 @@ trait GradingIrt {
         // dd($SubTest);
 
         // $totalQuestion = Question::whereIn('sub_test_id', $SubTest->pluck('id'))->count();
-        $partition = 2;
+        $partition = $totalParticipant > 10 ? 10 : $totalParticipant;
 
         $maxCorrectPerSubTest = [];
         $determine = [];

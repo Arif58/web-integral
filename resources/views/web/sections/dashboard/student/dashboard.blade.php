@@ -28,6 +28,8 @@
                 <h4 class="rbt-title-style-3 text-center">Dashboard</h4>
             </div>
             <div class="row g-5">
+                
+                @if(Auth::user()->role === 'student')
                 <div class="mb-3">
                     <canvas id="tryoutChart"></canvas>
                 </div>
@@ -85,6 +87,11 @@
                     </div>
                 </div>
                 <!-- End Single Card  -->
+                @elseif (Auth::user()->role === 'admin')
+                <div class="mb-3">
+                    <canvas id="participantTryoutChart"></canvas>
+                </div>
+                @endif
 
             </div>
         </div>
@@ -95,21 +102,54 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+        let tryOutAvg = @json($tryOutAvg);
+        let participantScore = @json($participantScore);
+
+        let tryOutName = [];
+        let tryOutAvgScore = [];
+        let participantScoreData = [];
+
+        participantScore.forEach(participant => {
+            tryOutName.push(participant.name);
+            participantScoreData.push(participant.average_score);
+
+            let averageScore = 0;
+            tryOutAvg.forEach(avg => {
+                if (participant.tryout_id === avg.tryout_id) {
+                    if (avg.avg_score === null) {
+                        averageScore += 0;
+                    } else {
+                        averageScore += avg.avg_score;
+                    }
+                } else {
+                    averageScore += 0;
+                }
+                console.log(averageScore);
+            });
+            //bulatkan average score ke 2 angka dibelakang koma
+            averageScore = Math.round((averageScore / tryOutAvg.length) * 100) / 100;
+            tryOutAvgScore.push(averageScore);
+        });
+        // console.log(tryOutAvgScore);
+
+
+
+
         const ctx = document.getElementById('tryoutChart');
     
         const data = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Tryout 1', 'Tryout 2', 'Tryout 3', 'Tryout 4', 'Tryout 5', 'Tryout 6', 'Tryout 7'],
+            labels: tryOutName,
             datasets: [{
             label: 'Nilai Kamu',
-            data: [523, 550, 542, 601, 700, 689, 655],
+            data: participantScoreData,
             borderColor: 'rgb(22, 91, 170)',
             borderWidth: 4,
             },
             {
-            label: 'Nilai Rata-rata',
-            data: [550, 560, 500, 580, 730, 582, 570],
+            label: 'Nilai Rata-rata Peserta',
+            data: tryOutAvgScore,
             borderColor: 'rgb(161, 85, 185)',
             borderWidth: 4,
             }]
@@ -139,6 +179,45 @@
             }
             }
         }
+        });
+
+        const participantTryoutChart = document.getElementById('participantTryoutChart');
+        const dataParticipant = new Chart(participantTryoutChart, {
+            type: 'bar',
+            data: {
+                labels: ['Tryout 1', 'Tryout 2', 'Tryout 3', 'Tryout 4', 'Tryout 5', 'Tryout 6', 'Tryout 7'],
+                datasets: [{
+                    label: 'Jumlah Peserta',
+                    data: [100, 120, 110, 130, 150, 140, 135],
+                    backgroundColor: 'rgb(22, 91, 170)',
+                    borderWidth: 4,
+                }]
+            },
+            options: {
+                plugins: {
+                    subtitle: {
+                        display: true,
+                        text: 'Jumlah Peserta Try Out',
+                        font: {
+                            size: 18
+                        },
+                        align: 'start',
+                        padding: {
+                            top: 10,
+                            bottom: 20,
+                        }
+                    
+                },
+                    tooltips: {
+
+                    }
+                },
+                scales: {
+                y: {
+                    beginAtZero: true
+                }
+                }
+            }
         });
     </script>
 @endpush

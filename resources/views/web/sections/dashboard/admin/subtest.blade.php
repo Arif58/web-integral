@@ -67,6 +67,7 @@
             </div>
             <!-- End Profile Row  -->
 
+            {{-- @dd($tryOutDetail->start_date) --}}
             <!-- Start Profile Row  -->
             <div class="rbt-profile-row row row--15 mt--15">
                 <div class="col-lg-4 col-md-4">
@@ -382,9 +383,12 @@
 <script>
     (function () {
         var dates = document.getElementsByClassName('local_date');
-        for(var i = 0; i < dates.length; i++) {
-            var date = moment.utc(dates[i].textContent);
-            dates[i].textContent = date.local().format('DD MMMM YYYY, HH:mm');
+        //ubah format tanggal dan jam menjadi format Indonesia serta diakhiri dengan WIB
+        console.log(dates, dates.length);
+        for (var i = 0; i < dates.length; i++) {
+            var date = new Date(dates[i].textContent);
+            var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
+            dates[i].textContent = date.toLocaleDateString('id-ID', options);
         }
     })();
 </script>    

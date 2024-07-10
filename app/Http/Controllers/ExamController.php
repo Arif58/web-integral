@@ -163,23 +163,6 @@ class ExamController extends Controller
         ->where('user_item_scores.participant_id', $participantId)
         ->groupBy('questions.sub_test_id')
         ->get();
-    
-        // $participantScore = UserItemScore::whereIn('question_id', function($query) use ($subTestIds) {
-        //     $query->select('id')
-        //         ->from('questions')
-        //         ->whereIn('sub_test_id', $subTestIds);
-        // })->where('participant_id', $participantId);
-
-        //rata rata skor peserta pada tryout
-        // $averageAllParticipantScore = UserItemScore::select('participant_id', DB::raw('sum(score) as total_score'))
-        //     ->whereIn('question_id', function($query) use ($subTestIds) {
-        //         $query->select('id')
-        //             ->from('questions')
-        //             ->whereIn('sub_test_id', $subTestIds);
-        //     })->whereIn('participant_id', $tryOutParticipantsIds)
-        //     ->groupBy('participant_id')
-        //     ->get();
-
 
         $totalQuestion = Question::whereIn('sub_test_id', $subTestIds)->count();
 
@@ -193,10 +176,6 @@ class ExamController extends Controller
 
     public function getLeaderboard($tryOutId)
     {
-        // $query = Participant::select('id', 'user_id', 'average_score')
-        //         ->where('tryout_id', $tryOutId)
-        //         ->with('user')
-        //         ->get();
 
         $query = Participant::select('id', 'user_id', 'average_score')
             ->selectRaw('

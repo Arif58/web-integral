@@ -195,10 +195,10 @@
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '10px'},
                 { data: 'name', name: 'name'},
-                { data: 'start_date', name: 'start_date'},
-                { data: 'end_date', name: 'end_date'},
+                { data: 'start_date', name: 'start_date', orderable: true},
+                { data: 'end_date', name: 'end_date', orderable: true},
                 { data: 'status', name: 'status'},
-                { data: 'action', name: 'action', width: '160px'},
+                { data: 'action', name: 'action', width: '160px', orderable: false, searchable: false},
             ]
         });
     });

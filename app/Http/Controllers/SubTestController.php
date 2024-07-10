@@ -17,6 +17,7 @@ class SubTestController extends Controller
     public function index($id)
     {
         $tryOutDetail = TryOut::findOrFail($id);
+        // dd($tryOutDetail);
         $categorySubtest = CategorySubtest::all();
         return view('web.sections.dashboard.admin.subtest', compact('tryOutDetail', 'categorySubtest'));
     }
