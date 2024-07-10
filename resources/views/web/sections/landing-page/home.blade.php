@@ -378,7 +378,7 @@
                         @foreach ($faqs as $key => $item)
                         <div class="accordion-item card">
                             <h2 class="accordion-header card-header" id="heading_{{$key}}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{$key}}" aria-expanded="false" aria-controls="collapse_{{$key}}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{$key}}" aria-expanded="false" aria-controls="collapse_{{$key}}">
                                     {{ $item->question }}
                                 </button>
                             </h2>
