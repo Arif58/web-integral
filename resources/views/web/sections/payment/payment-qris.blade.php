@@ -26,8 +26,8 @@
                 },
                 onPending: function (result) {
                 /* You may add your own implementation here */
-                alert("wating your payment!");
-                window.loaction.href = '/riwayat-pembelian';
+                // alert("wating your payment!");
+                window.location.href = '/riwayat-pembelian';
                 },
                 onError: function (result) {
                 /* You may add your own implementation here */
