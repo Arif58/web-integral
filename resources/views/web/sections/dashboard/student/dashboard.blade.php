@@ -29,7 +29,6 @@
             </div>
             <div class="row g-5">
                 
-                @if(Auth::user()->role === 'student')
                 <div class="mb-3">
                     <canvas id="tryoutChart"></canvas>
                 </div>
@@ -87,11 +86,6 @@
                     </div>
                 </div>
                 <!-- End Single Card  -->
-                @elseif (Auth::user()->role === 'admin')
-                <div class="mb-3">
-                    <canvas id="participantTryoutChart"></canvas>
-                </div>
-                @endif
 
             </div>
         </div>
@@ -179,45 +173,6 @@
             }
             }
         }
-        });
-
-        const participantTryoutChart = document.getElementById('participantTryoutChart');
-        const dataParticipant = new Chart(participantTryoutChart, {
-            type: 'bar',
-            data: {
-                labels: ['Tryout 1', 'Tryout 2', 'Tryout 3', 'Tryout 4', 'Tryout 5', 'Tryout 6', 'Tryout 7'],
-                datasets: [{
-                    label: 'Jumlah Peserta',
-                    data: [100, 120, 110, 130, 150, 140, 135],
-                    backgroundColor: 'rgb(22, 91, 170)',
-                    borderWidth: 4,
-                }]
-            },
-            options: {
-                plugins: {
-                    subtitle: {
-                        display: true,
-                        text: 'Jumlah Peserta Try Out',
-                        font: {
-                            size: 18
-                        },
-                        align: 'start',
-                        padding: {
-                            top: 10,
-                            bottom: 20,
-                        }
-                    
-                },
-                    tooltips: {
-
-                    }
-                },
-                scales: {
-                y: {
-                    beginAtZero: true
-                }
-                }
-            }
         });
     </script>
 @endpush
