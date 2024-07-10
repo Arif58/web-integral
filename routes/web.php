@@ -205,7 +205,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::get('/produk', 'index')->name('products');
             Route::get('/produk/get', 'getProducts')->name('products.get');
             Route::post('/produk', 'store')->name('products.store');
-            Route::post('/produk/delete/{id}', 'softDelete')->name('products.soft-delete');
+            Route::post('/produk/delete/{id}', 'destroy')->name('products.soft-delete');
             Route::put('/produk/update/{id}', 'update')->name('products.update');
             Route::post('/proses-nilai/{tryOutId}', 'generateScore')->name('products.generate-score');
         });

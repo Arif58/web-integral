@@ -127,6 +127,7 @@
         <!-- End Profile Row  -->
     </div>
 
+    @if(Auth::user()->role == 'student')
     <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
         <div class="section-title d-flex justify-content-between">
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0">
@@ -172,5 +173,6 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 @endsection

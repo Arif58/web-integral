@@ -1,3 +1,6 @@
+@php
+    $isTryOutPage = Route::currentRouteName() === 'tryout-utbk';
+@endphp
 @if ($paginator->hasPages())
     <nav>
         <ul class="rbt-pagination">
@@ -10,7 +13,7 @@
                 </li>
             @else
                 <li class="page-item">
-                    <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev">
+                    <a class="page-link" href="{{ $paginator->previousPageUrl() }} @if($isTryOutPage) #tryout @endif" rel="prev">
                         <i class="feather-chevron-left"></i>
                     </a>
                 </li>
@@ -30,7 +33,7 @@
                             @if ($page == $paginator->currentPage())
                                 <li class="active"><a>{{ $page }}</a></li>
                             @else
-                                <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                <li><a href="{{ $url }} @if($isTryOutPage) #tryout @endif">{{ $page }}</a></li>
                             @endif
                         @endif
                     @endforeach
@@ -40,7 +43,7 @@
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
                 <li>
-                    <a aria-label="Next" href="{{ $paginator->nextPageUrl() }}">
+                    <a aria-label="Next" href="{{ $paginator->nextPageUrl() }} @if($isTryOutPage) #tryout @endif">
                         <i class="feather-chevron-right"></i>
                     </a>
                 </li>

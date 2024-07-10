@@ -8,12 +8,14 @@ use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
     public function index($productId)
     {
+
         $product = Product::with('tryOut')->where('id', $productId)->first();
         $user = auth()->user();
         return view('web.sections.payment.payment', compact('product', 'user'));
@@ -27,6 +29,8 @@ class OrderController extends Controller
             'total_price' => 'required|numeric',
             'payment_method' => 'required|string',
         ]);
+
+        Order::where('user_id', Auth::id())->where('product_id', $request->product_id)->where('status', 'pending')->delete();
 
         $order = Order::create([
             'product_id' => $request->product_id,

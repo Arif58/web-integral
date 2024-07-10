@@ -12,11 +12,14 @@ class TryOutUtbkController extends Controller
     {
         $boundary = 6;
         // $products = Product::with('tryOut')->where('is_active', true)->paginate($boundary);
+        $dateNow = Carbon::parse(now())->setTimezone('Asia/Jakarta');
+
         $products = Product::join('try_outs', 'products.tryout_id', '=', 'try_outs.id')
             ->where('try_outs.is_active', true)
+            ->orderByRaw('try_outs.end_date >= ? desc', [$dateNow])
             ->orderBy('try_outs.start_date', 'asc')
             ->paginate($boundary, ['products.*']);
-        $dateNow = Carbon::parse(now())->setTimezone('Asia/Jakarta');
+
         return view('web.sections.landing-page.tryout', compact('products', 'dateNow'));
     }
 

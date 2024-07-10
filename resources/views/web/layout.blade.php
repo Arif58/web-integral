@@ -42,29 +42,35 @@
             </nav>
 
             <div class="mobile-menu-bottom">
-                <div class="rbt-btn-wrapper mb--20">
-                    <a class="rbt-btn btn-border-gradient radius-round btn-sm hover-transform-none w-100 justify-content-center text-center" style="box-shadow: none" href="/login">
+                <div class="rbt-btn-wrapper mb--10">
+                    <a class="rbt-btn btn-border-gradient btn-sm hover-transform-none w-100 justify-content-center text-center" style="box-shadow: none; border-radius: 6px;" href="/login">
                         <span>Login</span>
                     </a>
                 </div>
+                <div class="rbt-btn-wrapper mb--20">
+                    <a href="/register" class="rbt-btn btn-sm hover-transform-none w-100 justify-content-center text-center bg-gradient-19">
+                        <span>Register</span>
+                    </a>
+                </div>
 
-                <div class="social-share-wrapper">
-                    <span class="rbt-short-title d-block">Find With Us</span>
+                <div class="social-share-wrapper" style="bottom: 15px;
+                position: fixed;">
+                    <span class="rbt-short-title d-block text-white">Kontak Kami</span>
                     <ul class="social-icon social-default transparent-with-border justify-content-start mt--20">
-                        <li><a href="https://www.facebook.com/">
-                                <i class="feather-facebook"></i>
+                        <li><a href="https://wa.me/6289626575729">
+                                <i class="feather-phone text-white"></i>
                             </a>
                         </li>
-                        <li><a href="https://www.twitter.com">
-                                <i class="feather-twitter"></i>
+                        <li><a href="https://gmail.com" target="_blank">
+                                <i class="feather-mail text-white"></i>
                             </a>
                         </li>
-                        <li><a href="https://www.instagram.com/">
-                                <i class="feather-instagram"></i>
+                        <li><a href="https://www.instagram.com/integral.education" target="_blank">
+                                <i class="feather-instagram text-white"></i>
                             </a>
                         </li>
                         <li><a href="https://www.linkdin.com/">
-                                <i class="feather-linkedin"></i>
+                                <i class="feather-youtube text-white"></i>
                             </a>
                         </li>
                     </ul>

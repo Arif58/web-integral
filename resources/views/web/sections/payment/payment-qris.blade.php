@@ -26,7 +26,8 @@
                 },
                 onPending: function (result) {
                 /* You may add your own implementation here */
-                alert("wating your payment!"); console.log(result);
+                alert("wating your payment!");
+                window.loaction.href = '/riwayat-pembelian';
                 },
                 onError: function (result) {
                 /* You may add your own implementation here */
@@ -35,6 +36,7 @@
                 onClose: function () {
                 /* You may add your own implementation here */
                 alert('you closed the popup without finishing the payment');
+                window.loaction.href = '/riwayat-pembelian';
                 }
             });
         })

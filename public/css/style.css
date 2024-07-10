@@ -12916,7 +12916,7 @@ ul.rbt-dropdown-menu.currency-menu li .sub-menu {
   font-weight: 500;
 }
 .popup-mobile-menu .mainmenu li a.active {
-  color: var(--color-primary) !important;
+  color: #DC7E3F !important;
 }
 .popup-mobile-menu .mainmenu li a i {
   display: none;

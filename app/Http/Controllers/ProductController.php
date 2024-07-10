@@ -103,7 +103,7 @@ class ProductController extends Controller
         $request->validate([
             'tryout_id' => 'required',
             'price' => 'required',
-            'ie_gems' => 'required|numeric|min:1',
+            'ie_gems' => 'required|numeric|min:0',
             'supported' => 'required',
             'not_supported' => 'required',
             'answer_explanation_file' => 'required|file|mimes:pdf,doc,docx,zip|max:10240',

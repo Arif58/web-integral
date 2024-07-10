@@ -78,7 +78,7 @@
                             <li><span><i class="feather-phone"></i></span> <a href="https://wa.me/6289626575729" target="_blank">089626575729</a></li>
                             <li><span><i class="feather-mail"></i></span> <a href="https://gmail.com" target="_blank">integraleducation03@gmail.com</a></li>
                             <li><span><i class="feather-instagram"></i></span> <a href="https://www.instagram.com/integral.education" target="_blank">@integral.education</a></li>
-                            <li><span><i class="fa-brands fa-tiktok"></i></span> <a href="">@integral.education</a></li>
+                            <li><span><i><img src="{{asset('images/icons/tiktok.svg')}}"></img></i></span> <a href="">@integral.education</a></li>
                             <li><span><i class="feather-youtube"></i></span> <a href="">Integral Education</a></li>
 
 
