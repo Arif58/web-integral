@@ -208,7 +208,7 @@
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         }
 
-         function submitAnswers() {
+         function submitAnswers(redirectUrl = null) {
                 let answers = JSON.parse(localStorage.getItem('answers')) || {};
                 let participantId = @json($participantId);
                 let subTestCurrentIndex = JSON.parse(localStorage.getItem('subTestCurrentIndex'));
@@ -254,20 +254,28 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        if (subTestCurrentIndex < lengthSubTest - 1) {
-                            subTestCurrentIndex++;
-                            localStorage.setItem('subTestCurrentIndex', subTestCurrentIndex);
-                            //hapus answers pada local storage
-                            localStorage.removeItem('answers');
-                            window.location.href = `/exam/${participantId}`;
-                        } else {
-                            alert(data.message);
-                            //hapus answers,subtestId, subTestCurrentIndex, start test pada local storage
+                        if(redirectUrl){
                             localStorage.removeItem('answers');
                             localStorage.removeItem('subTestId');
                             localStorage.removeItem('subTestCurrentIndex');
                             localStorage.removeItem('start_test');
-                            window.location.href = `/exam/finish/${participantId}`;
+                            window.location.href = redirectUrl;
+                        } else {
+                            if (subTestCurrentIndex < lengthSubTest - 1) {
+                                subTestCurrentIndex++;
+                                localStorage.setItem('subTestCurrentIndex', subTestCurrentIndex);
+                                //hapus answers pada local storage
+                                localStorage.removeItem('answers');
+                                window.location.href = `/exam/${participantId}`;
+                            } else {
+                                alert(data.message);
+                                //hapus answers,subtestId, subTestCurrentIndex, start test pada local storage
+                                localStorage.removeItem('answers');
+                                localStorage.removeItem('subTestId');
+                                localStorage.removeItem('subTestCurrentIndex');
+                                localStorage.removeItem('start_test');
+                                window.location.href = `/exam/finish/${participantId}`;
+                            }
                         }
                     } else {
                         alert(data.message);
@@ -326,7 +334,7 @@
             history.pushState(null, null, location.href);
             window.addEventListener('popstate', function (event) {
                 if (confirm("Jika Anda melakukan kembali, semua jawaban akan dikirim. Apakah Anda yakin ingin melanjutkan?")) {
-                    submitAnswers();
+                    submitAnswers('/tryout-saya');
                 } else {
                     history.pushState(null, null, location.href);
                 }

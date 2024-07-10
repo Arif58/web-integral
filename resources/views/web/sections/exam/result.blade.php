@@ -169,8 +169,12 @@
                                                         Target Jurusan 1
                                                     </h5>
                                                     <div class="mx-4 justify-content-center" style="padding: 10px 10px; border-radius: 5px; border: 1px solid #3D76A6; margin-bottom: 15px;">
+                                                        @if ($firstMajor !== null)
                                                         <p class="text-center mb-2" style="font-weight: 400; color: #424242">{{$firstMajor->university->name}}</p>
                                                         <p class="text-center mb-0" style="font-weight: 300; color: #9F9F9F">{{$firstMajor->name}}</p>
+                                                        @else
+                                                        <p class="text-center">Belum Memilih Target Jurusan</p>
+                                                        @endif
                                                     </div>
                                                 </div>
 
@@ -179,8 +183,14 @@
                                                         Target Jurusan 2
                                                     </h5>
                                                     <div class="mx-4 justify-content-center" style="padding: 10px 10px; border-radius: 5px; border: 1px solid #3D76A6; margin-bottom: 15px;">
+                                                        @if ($secondMajor !== null)
+                                                            
                                                         <p class="text-center mb-2" style="font-weight: 400; color: #424242">{{$secondMajor->university->name}}</p>
                                                         <p class="text-center mb-0" style="font-weight: 300; color: #9F9F9F">{{$secondMajor->name}}</p>
+
+                                                        @else
+                                                        <p class="text-center">Belum Memilih Target Jurusan</p>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </nav>

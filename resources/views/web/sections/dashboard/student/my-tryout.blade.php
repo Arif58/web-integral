@@ -8,7 +8,7 @@
             </div>
             @php
                 $unfinishedTryOuts = $myTryOuts->where('start_test', null);
-                $finishedTryOuts = $myTryOuts->where('end_test', '!=', null);
+                $finishedTryOuts = $myTryOuts->where('start_test', '!=', null);
             @endphp
             <!-- Start Course Top  -->
                 <div class="container">
@@ -43,7 +43,7 @@
                                         $startMonth = date('F Y', strtotime($item->tryOut->start_date));
                                         $endDate = date('d F Y', strtotime($item->tryOut->end_date));
                                         $tryOutDate = $startDate . ' - ' . $endDate;
-                                        $isFinished = $item->end_test != null;
+                                        $isFinished = $item->start_test != null;
                                     @endphp
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
@@ -419,3 +419,11 @@
         @endforeach
     </div>
 @endsection
+@push('scripts')
+    <script>
+        localStorage.removeItem('answers');
+        localStorage.removeItem('subTestId');
+        localStorage.removeItem('subTestCurrentIndex');
+        localStorage.removeItem('start_test');
+    </script>
+@endpush
