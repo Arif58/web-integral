@@ -27,7 +27,7 @@ class MyTryOutController extends Controller
         ->orderBy('try_outs.start_date', 'asc') 
         ->paginate($boundary, ['products.*']); // Mengambil semua kolom dari tabel products
 
-        return view('web.sections.dashboard.student.my-tryout', compact('myTryOuts', 'otherTryOuts', 'boundary'));
+        return view('web.sections.dashboard.student.my-tryout', compact('myTryOuts', 'otherTryOuts', 'boundary', 'timeNow'));
 
     }
 }

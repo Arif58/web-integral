@@ -14,8 +14,9 @@ class DashboardController extends Controller
     public function index() {
         if (Auth::user()->role == 'student') {        
             $participant = Participant::where('user_id', auth()->id())->get();
+            // dd($participant);
             $registeredExams = $participant->count();
-            $finishedExams = $participant->where('start_test', '!=', null)->where('end_test', '!=', null)->count();
+            $finishedExams = $participant->where('start_test', '!=', null)->count();
             $unfinishedExams = $participant->where('start_test', null)->where('end_test', null)->count();
 
             $participantScore = Participant::select('tryout_id','try_outs.name', 'participants.average_score')
@@ -29,20 +30,28 @@ class DashboardController extends Controller
                 ->whereNotNull('participants.average_score')
                 ->groupBy('participants.tryout_id', 'try_outs.name')
                 ->get();
+            // dd($tryOutAvg);
             // dd($participantScore, $subtestAvg);
     
             return view('web.sections.dashboard.student.dashboard', compact('registeredExams', 'finishedExams', 'unfinishedExams', 'participantScore', 'tryOutAvg'));
         }
         elseif (Auth::user()->role == 'admin') {
-            // $countTryoutParticipant = Participant::select('try_outs.id','try_outs.name', 'count(*) as total')
-            //     ->join('try_outs', 'participants.tryout_id', '=', 'try_outs.id')
-            //     ->groupBy('try_outs.id')
-            //     ->get();
+            //peserta try out
             $tryoutParticipant = Participant::select('tryout_id', 'try_outs.name', DB::raw('count(participants.id) as total'))
                 ->join('try_outs', 'participants.tryout_id', '=', 'try_outs.id')
                 ->orderBy('try_outs.start_date', 'asc')
                 ->groupBy('tryout_id', 'try_outs.name')
                 ->get();
+
+            //peserta yang mengerjakan try out
+            $tryoutParticipantDone = Participant::select('tryout_id', 'try_outs.name', DB::raw('count(participants.id) as total'))
+                ->join('try_outs', 'participants.tryout_id', '=', 'try_outs.id')
+                ->whereNotNull('participants.start_test')
+                ->orderBy('try_outs.start_date', 'asc')
+                ->groupBy('tryout_id', 'try_outs.name')
+                ->get();
+            
+            
         
             $tryoutIncome = Order::select('products.tryout_id', 'try_outs.name', DB::raw('sum(orders.total_price) as total'))
                 ->join('products', 'orders.product_id', '=', 'products.id')
@@ -59,7 +68,7 @@ class DashboardController extends Controller
             ->orderBy('try_outs.start_date', 'asc')
             ->get();
                         
-            return view('web.sections.dashboard.admin.dashboard', compact('tryoutParticipant', 'tryoutIncome', 'products'));
+            return view('web.sections.dashboard.admin.dashboard', compact('tryoutParticipant', 'tryoutIncome', 'products', 'tryoutParticipantDone'));
         }
     }
 }

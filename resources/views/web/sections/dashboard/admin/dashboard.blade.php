@@ -48,21 +48,33 @@
         let products = @json($products);
 
         //grafik peserta
-        let tryout = @json($tryoutParticipant);
+        let participant = @json($tryoutParticipant);
+        let participantHasDone = @json($tryoutParticipantDone);
         let tryoutNameList = [];
         let tryoutTotalParticipant = [];
+        let tryoutTotalParticipantDone = [];
 
         products.forEach((product) => {
             tryoutNameList.push(product.name);
             let total = 0;
-            tryout.forEach((tryoutData) => {
+            participant.forEach((tryoutData) => {
                 if (tryoutData.tryout_id === product.tryout_id) {
                     total += tryoutData.total;
                 } else {
                     total += 0;
                 }
             });
+            let totalDone = 0;
+            participantHasDone.forEach((tryoutData) => {
+                // console.log(tryoutData, product.tryout_id);
+                if (tryoutData.tryout_id === product.tryout_id) {
+                    totalDone += tryoutData.total;
+                } else {
+                    totalDone += 0;
+                }
+            });
             tryoutTotalParticipant.push(total);
+            tryoutTotalParticipantDone.push(totalDone);
         });
 
 
@@ -76,7 +88,15 @@
                     data: tryoutTotalParticipant,
                     backgroundColor: 'rgb(220, 126, 63)',
                     borderWidth: 4,
-                }]
+                },
+                {
+                    label: 'Jumlah Peserta Mengerjakan Try Out',
+                    data: tryoutTotalParticipantDone,
+                    backgroundColor: 'rgb(249, 240, 166)',
+                    borderWidth: 4,
+                }
+            
+            ]
             },
             options: {
                 plugins: {
@@ -137,6 +157,7 @@
                 }]
             },
             options: {
+                indexAxis: 'y',
                 plugins: {
                     subtitle: {
                         display: true,

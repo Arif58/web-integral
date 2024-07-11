@@ -37,13 +37,15 @@
                             {{-- tab terdaftar --}}
                             <div class="tab-pane fade show active" id="registered" role="tabpanel" aria-labelledby="registered-tab">
                                 <div class="rbt-course-grid-column active-grid-view">
-                                    @foreach ($myTryOuts as $item)
+                                    @foreach ($myTryOuts as $index => $item)
                                     @php
                                         $startDate = date('d', strtotime($item->tryOut->start_date));
                                         $startMonth = date('F Y', strtotime($item->tryOut->start_date));
                                         $endDate = date('d F Y', strtotime($item->tryOut->end_date));
                                         $tryOutDate = $startDate . ' - ' . $endDate;
                                         $isFinished = $item->start_test != null;
+                                        $isTestPeriode = $item->tryOut->start_date <= $timeNow && $item->tryOut->end_date >= $timeNow;
+                                        $isGradingCompleted = $item->tryOut->is_grading_completed;
                                     @endphp
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
@@ -59,11 +61,19 @@
                                             <div class="rbt-card-body">
                                                 <h4 class="rbt-card-title mb--5">{{$item->tryOut->name}}</h4>
                                                 <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
-                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" href="" style="font-size: 14px; padding: 0px;">
-                                                    <span class="btn-text">@if($isFinished) Lihat Hasil @else Kerjakan Sekarang @endif</span>
+                                                @if($isFinished)
+                                                <a class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap @if(!$isGradingCompleted) disabled @endif" href="{{route('exam-result', $item->id)}}" style="font-size: 14px; padding: 0px;">
+                                                    <span class="btn-text">Lihat Hasil</span>
+                                                    <span class="btn-icon"><i class="feather-arrow-right"></i>
+                                                    </span>
+                                                </a>
+                                                @else
+                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#unfinishedModal_{{$item->tryOut->id}}" style="font-size: 14px; padding: 0px;" @if(!$isTestPeriode) disabled @endif>
+                                                    <span class="btn-text">Kerjakan Sekarang</span>
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i>
                                                     </span>
                                                 </button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -81,6 +91,7 @@
                                         $startMonth = date('F Y', strtotime($item->tryOut->start_date));
                                         $endDate = date('d F Y', strtotime($item->tryOut->end_date));
                                         $tryOutDate = $startDate . ' - ' . $endDate;
+                                        $isTestPeriode = $item->tryOut->start_date <= $timeNow && $item->tryOut->end_date >= $timeNow;
                                     @endphp
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
@@ -96,7 +107,7 @@
                                             <div class="rbt-card-body">
                                                 <h4 class="rbt-card-title mb--5">{{$item->tryOut->name}}</h4>
                                                 <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
-                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#unfinishedModal_{{$index}}" style="font-size: 14px; padding: 0px;" >
+                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#unfinishedModal_{{$item->tryOut->id}}" style="font-size: 14px; padding: 0px;" @if(!$isTestPeriode) disabled @endif>
                                                     <span class="btn-text">Kerjakan Sekarang</span>
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i>
                                                     </span>
@@ -186,7 +197,7 @@
                                         <li><p class="description">{{$item->ie_gems}} Poin</p></li>
                                     </ul>
                                     <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
-                                    <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$index}}" style="font-size: 14px; padding: 0px;" >
+                                    <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$item->id}}" style="font-size: 14px; padding: 0px;" >
                                         <span class="btn-text">Daftar Sekarang</span>
                                         <span class="btn-icon"><i class="feather-arrow-right"></i>
                                         </span>
@@ -215,7 +226,7 @@
             $price = number_format($item->price, 0, ',', '.');
             $subTestCategory = $item->tryOut->subTests->groupBy('category_subtest_id');
         @endphp
-        <div class="rbt-default-modal modal fade" id="exampleModal_{{$index}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background: transparent">
+        <div class="rbt-default-modal modal fade" id="exampleModal_{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background: transparent">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 800px;">
                 <div class="modal-content" style="padding: 30px">
                     <div class="modal-header pb--20" style="border-bottom: 1px solid">
@@ -318,7 +329,7 @@
                     </div>
                     <div class="modal-footer pt--30 justify-content-center">
                         <button type="button" class="rbt-btn btn-border btn-md radius-round-10" data-bs-dismiss="modal">Batal</button>
-                        <a href="{{route('payment', $item->id)}}"><button type="button" class="rbt-btn bg-primary btn-border btn-md radius-round-10" style="color: white">Daftar Sekarang</button></a>
+                        <a href="{{route('payment', $item->id)}}"><button type="button" class="rbt-btn btn-gradient btn-md radius-6" >Daftar Sekarang</button></a>
                         
                     </div>
                 </div>
@@ -332,7 +343,7 @@
         @php
             $subTestCategory = $item->tryOut->subTests->groupBy('category_subtest_id');
         @endphp
-        <div class="rbt-default-modal modal fade" id="unfinishedModal_{{$index}}" tabindex="-1" aria-labelledby="unfinishedModalLabel" aria-hidden="true" style="background: transparent">
+        <div class="rbt-default-modal modal fade" id="unfinishedModal_{{$item->tryOut->id}}" tabindex="-1" aria-labelledby="unfinishedModalLabel" aria-hidden="true" style="background: transparent">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 800px;">
                 <div class="modal-content" style="padding: 30px">
                     <div class="modal-header pb--5 justify-content-center">

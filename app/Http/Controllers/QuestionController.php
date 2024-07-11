@@ -70,6 +70,7 @@ class QuestionController extends Controller
      */
     public function store(StoreQuestionRequest $request, $id)
     {
+            
         try {
             DB::transaction(function () use($request, $id) {
                 $question = Question::create([

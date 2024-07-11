@@ -433,11 +433,21 @@
                 label.htmlFor = `correct_answer_${i}`;
 
                 const radio = document.createElement('input');
-                radio.type = 'radio';
+                radio.type = 'checkbox';
                 radio.name = `is_correct[${i}]`;
+                // radio.name = 'is_correct';
                 radio.id = `correct_answer_${i}`;
                 radio.value = 1;
                 radio.classList.add('form-check-input');
+
+                //menampilkan alert ketika lebih dari 2 checkbox yang dipilih
+                radio.addEventListener('change', function () {
+                    const checkedRadio = document.querySelectorAll('input[name^="is_correct"]:checked');
+                    if (checkedRadio.length > 1) {
+                        alert('Anda hanya dapat memilih maksimal 1 jawaban yang benar.');
+                                this.checked = false;
+                    }
+                });
 
                 divRadio.appendChild(hiddenInput);
                 divRadio.appendChild(radio);

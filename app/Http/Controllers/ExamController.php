@@ -33,7 +33,7 @@ class ExamController extends Controller
 
     public function getQuestion($participantId, $subTestId)
     {
-        $subTest = SubTest::where('id', $subTestId)->with('questions')->first();
+        $subTest = SubTest::where('id', $subTestId)->with('questions', 'categorySubtest')->first();
 
         $questions = Question::where('sub_test_id', $subTestId)->with('questionChoices')->get();
 
@@ -133,36 +133,38 @@ class ExamController extends Controller
         $participant = Participant::where('id', $participantId)->with('tryOut', 'user')->first();
 
         $subTests = SubTest::select('sub_tests.id', 'sub_tests.name', 'category_subtest_id', 'category_subtests.name as category_name')
-            ->join('category_subtests', 'sub_tests.category_subtest_id', '=', 'category_subtests.id')
-            ->where('try_out_id', $participant->tryout_id)->get();
+                        ->join('category_subtests', 'sub_tests.category_subtest_id', '=', 'category_subtests.id')
+                        ->where('try_out_id', $participant->tryout_id)->get();
 
         $categorySubtest = $subTests->pluck('category_name','category_subtest_id')->unique();
 
         $subTestIds = $subTests->pluck('id');
 
-        $averageAllParticipantScore = Participant::where('tryout_id', $participant->tryout_id)->avg('average_score');
+        $averageAllParticipantScore = Participant::where('tryout_id', $participant->tryout_id)
+                                        ->where('average_score', '!=', null)
+                                        ->avg('average_score');
         $averageAllParticipantScore = number_format($averageAllParticipantScore, 2);
 
         //mencari peringkat peserta
         $rankParticipant = Participant::where('tryout_id', $participant->tryout_id)
-            ->where('average_score', '>', $participant->average_score ?? 0)
-            ->count() + 1;
+                            ->where('average_score', '>', $participant->average_score ?? 0)
+                            ->count() + 1;
 
         //detail nilai rata-rata berdasarkan subtest
         $averageScoreSubtest = UserItemScore::select(
-            'questions.sub_test_id',
-            'sub_tests.name as subtest_name',
-            'category_subtests.name as category_name',
-            DB::raw('sum(user_item_scores.score) as total_score'),
-            DB::raw('count(distinct questions.id) as total_questions')
-        )
-        ->join('questions', 'user_item_scores.question_id', '=', 'questions.id')
-        ->join('sub_tests', 'questions.sub_test_id', '=', 'sub_tests.id')
-        ->join('category_subtests', 'sub_tests.category_subtest_id', '=', 'category_subtests.id')
-        ->whereIn('questions.sub_test_id', $subTestIds)
-        ->where('user_item_scores.participant_id', $participantId)
-        ->groupBy('questions.sub_test_id')
-        ->get();
+                                    'questions.sub_test_id',
+                                    'sub_tests.name as subtest_name',
+                                    'category_subtests.name as category_name',
+                                    DB::raw('sum(user_item_scores.score) as total_score'),
+                                    DB::raw('count(distinct questions.id) as total_questions')
+                                )
+                                ->join('questions', 'user_item_scores.question_id', '=', 'questions.id')
+                                ->join('sub_tests', 'questions.sub_test_id', '=', 'sub_tests.id')
+                                ->join('category_subtests', 'sub_tests.category_subtest_id', '=', 'category_subtests.id')
+                                ->whereIn('questions.sub_test_id', $subTestIds)
+                                ->where('user_item_scores.participant_id', $participantId)
+                                ->groupBy('questions.sub_test_id')
+                                ->get();
 
         $totalQuestion = Question::whereIn('sub_test_id', $subTestIds)->count();
 
@@ -178,17 +180,18 @@ class ExamController extends Controller
     {
 
         $query = Participant::select('id', 'user_id', 'average_score')
-            ->selectRaw('
-                (
-                    SELECT COUNT(*) + 1
-                    FROM participants AS p2
-                    WHERE p2.average_score > participants.average_score
-                    AND p2.tryout_id = ?
-                ) AS ranking', [$tryOutId])
-            ->where('tryout_id', $tryOutId)
-            ->with('user')
-            ->orderBy('ranking', 'asc')
-            ->get();
+                    ->selectRaw('
+                        (
+                            SELECT COUNT(*) + 1
+                            FROM participants AS p2
+                            WHERE p2.average_score > participants.average_score
+                            AND p2.tryout_id = ?
+                        ) AS ranking', [$tryOutId])
+                    ->where('tryout_id', $tryOutId)
+                    ->where('average_score', '!=', null)
+                    ->with('user')
+                    ->orderBy('ranking', 'asc')
+                    ->get();
 
         return DataTables::of($query)
             ->addColumn('ranking', function ($participant) {

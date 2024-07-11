@@ -383,11 +383,10 @@
 <script>
     (function () {
         var dates = document.getElementsByClassName('local_date');
-        //ubah format tanggal dan jam menjadi format Indonesia serta diakhiri dengan WIB
-        console.log(dates, dates.length);
+        //ubah format tanggal dan jam tanpa milisecond menjadi format Indonesia serta diakhiri dengan WIB
         for (var i = 0; i < dates.length; i++) {
             var date = new Date(dates[i].textContent);
-            var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZoneName: 'short' };
+            var options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short' };
             dates[i].textContent = date.toLocaleDateString('id-ID', options);
         }
     })();

@@ -78,8 +78,8 @@
 
                     <div class="rbt-main-navigation">
                         <nav class="mainmenu-nav text-center">
-                            <p class="color-white mb-0 mt-4" style="font-weight: 100">Test Potensi Skolastik</p>
-                            <h5 class="color-white">Kemampuan Penalaran Umum</h5>
+                            <p class="color-white mb-0 mt-4" style="font-weight: 100">{{$subTest->categorySubtest->name}}</p>
+                            <h5 class="color-white">{{$subTest->name}}</h5>
                         </nav>
                     </div>
 

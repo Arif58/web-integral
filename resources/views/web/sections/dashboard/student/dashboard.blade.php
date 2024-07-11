@@ -118,10 +118,9 @@
                 } else {
                     averageScore += 0;
                 }
-                console.log(averageScore);
             });
             //bulatkan average score ke 2 angka dibelakang koma
-            averageScore = Math.round((averageScore / tryOutAvg.length) * 100) / 100;
+            averageScore = Math.round((averageScore) * 100) / 100;
             tryOutAvgScore.push(averageScore);
         });
         // console.log(tryOutAvgScore);

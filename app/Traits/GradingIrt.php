@@ -16,9 +16,10 @@ trait GradingIrt {
 
     public function grading($tryOutId) {
         $SubTest = SubTest::where('try_out_id', $tryOutId)->with('questions')->get();
-        $participants = Participant::where('tryout_id', $tryOutId)->get();
+
+        $subTestIds = $SubTest->pluck('id');        
+        $participants = Participant::where('tryout_id', $tryOutId)->where('start_test', '!=', null)->get();
         $totalParticipant = $participants->count();
-        // dd($SubTest);
 
         // $totalQuestion = Question::whereIn('sub_test_id', $SubTest->pluck('id'))->count();
         $partition = $totalParticipant > 10 ? 10 : $totalParticipant;
@@ -72,6 +73,7 @@ trait GradingIrt {
     
                 //menentukan rata-rata skor peserta
                 foreach ($grading as $participantId => $question) {
+
                     $totalScore = array_sum($question) + 200;
                     if (isset($totalScoreParticipantAllSubtest[$participantId])) {
                         $totalScoreParticipantAllSubtest[$participantId] += $totalScore;
@@ -80,6 +82,7 @@ trait GradingIrt {
                     }
                 }
             }
+
             //ketika subtest tidak ada yg menjawab sama sekali, set nilai default per subtestnya adalah 200
             else {
                 if ($totalScoreParticipantAllSubtest !== []) {
@@ -94,6 +97,17 @@ trait GradingIrt {
             }
             
 
+        }
+
+        $participantIds = $participants->pluck('id');
+        //tambah skor 200 tiap subtest kepada peserta yg tidak mengerjakan suatu subtest
+        foreach ($skorAfterGrading as $subTestId => $participant) {
+            foreach ($participantIds as $participantId) {
+                if (!array_key_exists($participantId, $participant)) {
+                    // $skorAfterGrading[$subTestId][$participantId] = 200;
+                    $totalScoreParticipantAllSubtest[$participantId] += 200;
+                }
+            }
         }
 
         foreach ($totalScoreParticipantAllSubtest as $participantId => $totalScore) {
@@ -359,7 +373,6 @@ trait GradingIrt {
 
         $dataSkorParticipantAfterGrading = [];
 
-
         foreach ($participants as $participant) {
             // jawaban benar user per nomor pilihan ganda majemuk
             $totalCorrectAnswerUserPilganMajemuk = [];
@@ -376,45 +389,60 @@ trait GradingIrt {
             foreach ($questionIds as $question) {
                 $userAnswer = $answer->where('question_id', $question)->where('participant_id', $participant);
 
-                $typeQuestion = $userAnswer ? $userAnswer->first()->type : null;
-                $userAnswerText = $userAnswer ? $userAnswer->first()->answer_text : null;
-                $questionAnswer = $userAnswer ? $userAnswer->first()->answer : null;
-                
-                if ($typeQuestion === 'pilihan_ganda') {
-
-                    $dataItemSkorParticipant[$participant][$question] = $userAnswer->first()->is_correct ?? null;
-                } elseif ($typeQuestion === 'isian_singkat') {
-
-                    $dataItemSkorParticipant[$participant][$question] = intval($userAnswerText) == intval($questionAnswer) ? $userAnswer->first()->is_correct : 0;
-                } elseif ($typeQuestion === 'pilihan_ganda_majemuk') {
-
-                    $totalCorrect = $testAnswer->where('question_id', $question)->where('is_correct', 1)->count();
-
-                    $totalCorrectQuestionPilganMajemuk[$question] = $totalCorrect;
+                if ($userAnswer) {
+                    $typeQuestion = $userAnswer->first()->type ?? null;
+                    $userAnswerText =$userAnswer->first()->answer_text ?? null;
+                    $questionAnswer = $userAnswer->first()->answer ?? null;
                     
-                    foreach ($userAnswer as $item) {
-                        if (isset($totalCorrectAnswerUserPilganMajemuk[$question])) {
-                            $totalCorrectAnswerUserPilganMajemuk[$question] += $item->is_correct;
-                        } else {
-                            $totalCorrectAnswerUserPilganMajemuk[$question] = $item->is_correct;
-                        }
-                    }
-
-                } elseif ($typeQuestion === 'pernyataan') {
-                    $totalCorrect = $testAnswer->where('question_id', $question)->where('is_correct', 1)->count();
-
-                    $totalCorrectQuestionPernyataan[$question] = $totalCorrect;
-
-                    foreach ($userAnswer as $item) {
-                        if ($item->answer_text == $item->statement) {
-                            if (isset($totalCorrectAnswerUserPernyataan[$question])) {
-                                $totalCorrectAnswerUserPernyataan[$question] += $item->is_correct;
+                    if ($typeQuestion === 'pilihan_ganda') {
+    
+                        $dataItemSkorParticipant[$participant][$question] = $userAnswer->first()->is_correct ?? null;
+                    } elseif ($typeQuestion === 'isian_singkat') {
+    
+                        $dataItemSkorParticipant[$participant][$question] = intval($userAnswerText) == intval($questionAnswer) ? $userAnswer->first()->is_correct : 0;
+                    } elseif ($typeQuestion === 'pilihan_ganda_majemuk') {
+    
+                        $totalCorrect = $testAnswer->where('question_id', $question)->where('is_correct', 1)->count();
+    
+                        $totalCorrectQuestionPilganMajemuk[$question] = $totalCorrect;
+                        
+                        foreach ($userAnswer as $item) {
+                            if (isset($totalCorrectAnswerUserPilganMajemuk[$question])) {
+                                $totalCorrectAnswerUserPilganMajemuk[$question] += $item->is_correct;
                             } else {
-                                $totalCorrectAnswerUserPernyataan[$question] = $item->is_correct;
+                                $totalCorrectAnswerUserPilganMajemuk[$question] = $item->is_correct;
                             }
                         }
-                    }
-                }        
+    
+                    } elseif ($typeQuestion === 'pernyataan') {
+                        //mencari total jawaban benar yang seharusnya pada setiap nomor pernyataan
+                        $totalCorrect = TestAnswer::where('question_id', $question)->where('is_correct', 1)->count();
+
+                        //memasukan total jawaban benar seharusnya ke dalam array
+                        $totalCorrectQuestionPernyataan[$question] = $totalCorrect;
+    
+                        //mencari total jawaban benar user pada setiap nomor pernyataan
+                        foreach ($userAnswer as $item) {
+                            //ketika jawaban user sama dengan pernyataan
+                            if ($item->answer_text == $item->statement) {
+                                if (isset($totalCorrectAnswerUserPernyataan[$question])) {
+                                    $totalCorrectAnswerUserPernyataan[$question] += $item->is_correct;
+                                } else {
+                                    $totalCorrectAnswerUserPernyataan[$question] = $item->is_correct;
+                                }
+                            } 
+                            //ketika jawaban user tidak sama dengan pernyataan
+                            else {
+                                if (isset($totalCorrectAnswerUserPernyataan[$question])) {
+                                    $totalCorrectAnswerUserPernyataan[$question] += 0;
+                                } else {
+                                    $totalCorrectAnswerUserPernyataan[$question] = 0;
+                                }
+                            }
+                        }
+                        
+                    }        
+                }
                         
             }
             
