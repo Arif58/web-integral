@@ -97,6 +97,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/exam/finish/{participantId}', 'finishExam')->name('finish-exam');
         Route::get('/exam/result/{participantId}', 'getExamResult')->name('exam-result');
         Route::get('/exam/leaderboard/{tryOutId}', 'getLeaderboard')->name('leaderboard.get');
+        Route::get('/exam/rekomendasi-jurusan/{participantId}', 'getMajorRecommendation')->name('major-recommendation');
     });
 
     Route::middleware(['admin'])->group(function () {

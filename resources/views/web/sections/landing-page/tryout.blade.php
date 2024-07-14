@@ -52,46 +52,13 @@
                     <div class="service-card service-card-6 bg-color bg-card-color-1">
                         <div class="inner text-center">
                             <div class="icon">
-                                <img src="{{asset('images/shape/service-01.png')}}" alt="Shape Images">
-                                <img class="opacity_image" src="{{asset('images/shape/service-01.png')}}" alt="Shape Images">
-                            </div>
-                            <div class="content">
-                                <h6 class="title"><a href="#">Grow Confident</a></h6>
-                                <p class="description">English Learning looking for random paragraphs, you've come to the right place. When a random.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Service Grid  -->
-
-                <!-- Start Service Grid  -->
-                <div class="col-lg-4 col-xl-3 col-xxl-3 col-md-6 col-sm-6 col-12 mt--30">
-                    <div class="service-card service-card-6 bg-color bg-card-color-2">
-                        <div class="inner text-center">
-                            <div class="icon">
                                 <img src="{{asset('images/shape/service-04.png')}}" alt="Shape Images">
                                 <img class="opacity_image" src="{{asset('images/shape/service-04.png')}}" alt="Shape Images">
                             </div>
                             <div class="content">
-                                <h6 class="title"><a href="#">Accive Good Job</a></h6>
-                                <p class="description">Javascript Learning looking for random paragraphs, you've come to the right place. When a random.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Service Grid  -->
-
-                <!-- Start Service Grid  -->
-                <div class="col-lg-4 col-xl-3 col-xxl-3 col-md-6 col-sm-6 col-12 mt--30">
-                    <div class="service-card service-card-6 bg-color bg-card-color-1">
-                        <div class="inner text-center">
-                            <div class="icon">
-                                <img src="{{asset('images/shape/service-03.png')}}" alt="Shape Images">
-                                <img class="opacity_image" src="{{asset('images/shape/service-03.png')}}" alt="Shape Images">
-                            </div>
-                            <div class="content">
-                                <h6 class="title"><a href="#">Best Learning</a></h6>
-                                <p class="description">Angular Learning looking for random paragraphs, you've come to the right place. When a random.</p>
+                                <h6 class="title"><a href="#">Soal Variatif</a></h6>
+                                <p class="description">Soal soalnya variatif dan mirip dengan UTBK, karena diadaptasi dari soal tahun lalu. Kamu juga akan mendapat file pembahasan tiap paket Tryout!
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -107,8 +74,42 @@
                                 <img class="opacity_image" src="{{asset('images/shape/service-02.png')}}" alt="Shape Images">
                             </div>
                             <div class="content">
-                                <h6 class="title"><a href="#">Modern Skills</a></h6>
-                                <p class="description">Php Learning looking for random paragraphs, you've come to the right place. When a random.</p>
+                                <h6 class="title"><a href="#">Penilaian IRT</a></h6>
+                                <p class="description">Penilaian menggunakan sistem IRT (Item Response Theory) sama seperti penilaian UTBK</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Service Grid  -->
+
+                <!-- Start Service Grid  -->
+                <div class="col-lg-4 col-xl-3 col-xxl-3 col-md-6 col-sm-6 col-12 mt--30">
+                    <div class="service-card service-card-6 bg-color bg-card-color-1">
+                        <div class="inner text-center">
+                            <div class="icon">
+                                <img src="{{asset('images/shape/service-03.png')}}" alt="Shape Images">
+                                <img class="opacity_image" src="{{asset('images/shape/service-03.png')}}" alt="Shape Images">
+                            </div>
+                            <div class="content">
+                                <h6 class="title"><a href="#">Rekomendasi Jurusan</a></h6>
+                                <p class="description">Terdapat fitur rekomendasi jurusan sesuai dengan skor UTBK kamu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Service Grid  -->
+
+                <!-- Start Service Grid  -->
+                <div class="col-lg-4 col-xl-3 col-xxl-3 col-md-6 col-sm-6 col-12 mt--30">
+                    <div class="service-card service-card-6 bg-color bg-card-color-2">
+                        <div class="inner text-center">
+                            <div class="icon">
+                                <img src="{{asset('images/shape/service-01.png')}}" alt="Shape Images">
+                                <img class="opacity_image" src="{{asset('images/shape/service-01.png')}}" alt="Shape Images">
+                            </div>
+                            <div class="content">
+                                <h6 class="title"><a href="#">Perankingan</a></h6>
+                                <p class="description">Terdapat sistem perankingan yang dapat menjadi pembandingmu dengan peserta Tryout lain</p>
                             </div>
                         </div>
                     </div>

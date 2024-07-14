@@ -193,6 +193,14 @@
                                                         @endif
                                                     </div>
                                                 </div>
+
+                                                <div class="text-center" style="margin-top: 15px;">
+                                                    <img src="{{asset('images/banner/Search Illustration.svg')}}" alt="" class="mb-3">
+                                                    <p class="mb-3">Lihat rekomendasi jurusan serupa!</p>
+                                                    <a class="rbt-btn btn-gradient rbt-shadow-box" href="{{route('major-recommendation', $participant->id)}}">
+                                                        Lihat Rekomendasi
+                                                    </a>
+                                                </div>
                                             </nav>
 
                                     

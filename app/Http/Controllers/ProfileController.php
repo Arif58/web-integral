@@ -38,7 +38,7 @@ class ProfileController extends Controller
         $request->validate([
             'fullname' => 'required',
             'username' => 'required',
-            'email' => 'required|email',
+            // 'email' => 'required|email',
             'phone' => 'required',
             'level' => 'required',
             'institution' => 'required',
@@ -52,7 +52,7 @@ class ProfileController extends Controller
         $profile->update([
             'fullname' => $request->fullname,
             'username' => $request->username,
-            'email' => $request->email,
+            // 'email' => $request->email,
             'phone' => $request->phone,
             'level' => $request->level,
             'institution' => $request->institution,

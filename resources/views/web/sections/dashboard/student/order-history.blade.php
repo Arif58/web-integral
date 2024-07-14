@@ -1,5 +1,12 @@
 @extends('web.layout-dashboard')
 @section('title', 'Pencapaian')
+@push('css')
+    <style>
+        .badge {
+            height: fit-content;
+        }
+    </style>
+@endpush
 @section('content')
     <div class="content">
         <div class="rbt-dashboard-content bg-color-white rbt-shadow-box mb--60">
@@ -42,27 +49,27 @@
                                 </div>
                                 <div class="rbt-card-body">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <div style="font-size: small">
+                                        <div style="font-size: small; width: 50%">
                                             <span>Tanggal Pembelian: </span>
                                             <span style="font-size: small">{{ date('d F Y H:i', strtotime($order->created_at)) }}</span>
                                         </div>
 
                                         @if ($order->status === 'success')
-                                        <span class="badge bg-success">
+                                        <span class="badge bg-success align-content-center">
                                             Berhasil
                                         </span>
                                         @elseif ($order->status === 'pending')
                                             @if ($isExpired)
-                                                <span class="badge bg-danger">
+                                                <span class="badge bg-danger align-content-center">
                                                     Gagal
                                                 </span>
                                             @else
-                                                <span class="badge bg-warning">
+                                                <span class="badge bg-warning align-content-center">
                                                     Menunggu Pembayaran
                                                 </span>
                                             @endif
                                         @elseif ($order->status === 'failed')
-                                        <span class="badge bg-danger">
+                                        <span class="badge bg-danger align-content-center">
                                             Gagal
                                         </span>
                                         @endif

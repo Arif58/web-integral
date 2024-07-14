@@ -327,10 +327,10 @@
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, width: '10px'},
                 { data: 'name', name: 'name', width: '15%'},
-                { data: 'achievement', name: 'achievement', width: '15%'},
+                { data: 'achievement', name: 'achievement'},
                 { data: 'school', name: 'school', width: '15%'},
-                { data: 'photo', name: 'photo' },
-                { data: 'action', name: 'action' },
+                { data: 'photo', name: 'photo', width: '25%', class: 'text-center' },
+                { data: 'action', name: 'action' , width: '15%'},
             ]
         });
     });

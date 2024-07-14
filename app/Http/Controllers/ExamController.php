@@ -12,6 +12,7 @@ use App\Models\SubTest;
 use App\Models\User;
 use App\Models\UserAnswer;
 use App\Models\UserItemScore;
+use App\Traits\SimpleAdditiveWeighting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -19,6 +20,7 @@ use Yajra\DataTables\DataTables;
 
 class ExamController extends Controller
 {
+    use SimpleAdditiveWeighting;
     public function index($id)
     {
         $participant = Participant::where('id', $id)->with('tryOut')->first();
@@ -215,5 +217,15 @@ class ExamController extends Controller
             })
             ->rawColumns(['ranking'])
             ->make(true);
+    }
+
+    public function getMajorRecommendation($participantId)
+    {
+        if (Participant::where('id', $participantId)->first()->average_score == null) {
+            return redirect()->route('/tryout-saya')->with('error', 'Nilai peserta belum diproses.');
+        }
+        $majorRecommendation = $this->simpleAdditiveWeighting($participantId);
+
+        return view('web.sections.exam.major-recommendation', compact('majorRecommendation'));
     }
 }
