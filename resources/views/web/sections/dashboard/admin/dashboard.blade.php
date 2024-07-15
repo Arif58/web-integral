@@ -157,7 +157,6 @@
                 }]
             },
             options: {
-                indexAxis: 'y',
                 plugins: {
                     subtitle: {
                         display: true,

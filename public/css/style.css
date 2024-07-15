@@ -15194,9 +15194,9 @@ span.transparent-button:hover i {
   width: 40px;
   height: 40px;
 }
-.rbt-card.variation-03:hover .rbt-card-img .thumbnail-link::before {
+/* .rbt-card.variation-03:hover .rbt-card-img .thumbnail-link::before {
   opacity: 1;
-}
+} */
 .rbt-card.variation-03:hover .rbt-card-img .thumbnail-link .rbt-btn {
   margin-top: 0;
   opacity: 1;

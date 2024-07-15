@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BadgesController;
 use App\Http\Controllers\CategorySubtestController;
 use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\DashboardController;
@@ -226,20 +227,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         
         Route::get('/tryout-saya',[MyTryOutController::class, 'index'])->name('my-tryout');
         
-        Route::get('/pencapaian', function() {
-            return view('web.sections.dashboard.student.achievement');
-        })->name('achievement');
+        Route::get('/pencapaian', [BadgesController::class, 'index'])->name('achievement');
+
+
         
-        // Route::get('/ubah-profil', function() {
-        //     return view('web.sections.dashboard.edit-profile');
-        // })->name('profile-edit');
-        
-        // Route::get('/ubah-jurusan', function() {
-        //     return view('web.sections.dashboard.edit-major');
-        // })->name('major-edit');
-        
-        // Route::get('/pengerjaan-tryout', function() {
-        //     return view('web.sections.exam.tryout-test');
-        // })->name('tryout-test');
     });
 });
