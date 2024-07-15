@@ -38,10 +38,16 @@
                     <li class="position-static">
                         <a class="text-white" href="/try-out-utbk">Try Out UTBK</a>
                     </li>
+                    @if (Auth::check())
+                    <li class="position-static">
+                        <a class="text-white" href="/dashboard">Dashboard</a>
+                    </li> 
+                    @endif
                 </ul>
             </nav>
 
             <div class="mobile-menu-bottom">
+                @if (!Auth::check())
                 <div class="rbt-btn-wrapper mb--10">
                     <a class="rbt-btn btn-border-gradient btn-sm hover-transform-none w-100 justify-content-center text-center" style="box-shadow: none; border-radius: 6px;" href="/login">
                         <span>Login</span>
@@ -52,6 +58,7 @@
                         <span>Register</span>
                     </a>
                 </div>
+                @endif
 
                 <div class="social-share-wrapper" style="bottom: 15px;
                 position: fixed;">
