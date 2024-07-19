@@ -2,12 +2,12 @@
 @section('title', 'Login Integral Education')
 @section('content')
 <div class="rbt-contact-form contact-form-style-1 max-width-auto">
-    @if (session('status'))
+    {{-- @if (session('status'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <span>{{ session('status') }}</span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
-    @endif
+    @endif --}}
     <h3 class="title">Login</h3>
     <form action="/login" method="POST">
         @csrf
@@ -33,20 +33,13 @@
             {{-- <label>Password *</label>
             <span class="focus-border"></span> --}}
         </div>
-
-        {{-- <div class="row mb--30">
-            <div class="col-lg-6">
-                <div class="rbt-checkbox">
-                    <input type="checkbox" id="rememberme" name="rememberme">
-                    <label for="rememberme">Remember me</label>
+        <div class="row mb--30">
+            <div class="col-12 text-end">
+                <div class="rbt-lost-password">
+                    <a class="rbt-btn-link forget-password" href="{{route('password.request')}}">Lupa password?</a>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="rbt-lost-password text-end">
-                    <a class="rbt-btn-link" href="#">Lupa password?</a>
-                </div>
-            </div>
-        </div> --}}
+        </div>
 
         <div class="form-submit-group">
             <button type="submit" class="rbt-btn btn-gradient btn-md icon-hover w-100 radius-6">
@@ -62,3 +55,17 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+    //tampilkan sweetalert2 jika berhasil mengirim email reset password dan redirect ke halaman login
+    @if (session('status'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('status') }}',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    @endif
+</script>
+@endpush
