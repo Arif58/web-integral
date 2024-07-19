@@ -27,10 +27,16 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{-- <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <span>Keluar</span>
                                         </a>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                        </form> --}}
+                                        <a href="#" onclick="confirmLogout(event)">
+                                            <span>Keluar</span>
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             @csrf
                                         </form>
                                     </li>

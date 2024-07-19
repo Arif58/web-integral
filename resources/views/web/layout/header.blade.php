@@ -47,11 +47,18 @@
                                 <ul class="user-list-wrapper">
                                     <li>
                                         <a href="/logout">
-                                            <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            {{-- <a href="/logout" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                             <i class="feather-log-out"></i>
                                             <span>Keluar</span>
                                             </a>
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                                @csrf
+                                            </form> --}}
+                                            <a href="#" onclick="confirmLogout(event)">
+                                                <i class="feather-log-out"></i>
+                                                <span>Keluar</span>
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                 @csrf
                                             </form>
                                         </a>

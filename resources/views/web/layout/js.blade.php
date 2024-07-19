@@ -28,5 +28,31 @@
     <script src="{{ asset("js/vendor/plyr.js")}}"></script>
     <!-- Main JS -->
     <script src="{{ asset("js/main.js")}}"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault(); // Mencegah link default berfungsi
+
+            Swal.fire({
+                title: 'Anda yakin ingin keluar?',
+                text: "Anda akan keluar dari sesi saat ini.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#DC7E3F',
+                cancelButtonColor: 'transparent',
+                confirmButtonText: 'Ya, keluar',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                buttonsStyling: true,
+                width: '400px',
+                heiggthAuto: true,
+                
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit(); // Submit form logout
+                }
+            });
+        }
+    </script>
     @stack('scripts')
   

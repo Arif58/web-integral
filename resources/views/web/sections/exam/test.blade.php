@@ -192,6 +192,7 @@
         </div>
     </div>
     <!-- End Card Style -->
+    @include('web.layout.js')
     <script>
         function formattedDate(dateObject) {
             function padZero(num) {
@@ -300,8 +301,14 @@
                 if (distance < 0) {
                     clearInterval(x);
                     document.getElementById(elementId).innerHTML = "EXPIRED";
-                    alert('Waktu Anda telah habis');
-                    submitAnswers();
+                    Swal.fire({
+                        title: 'Waktu Anda telah habis',
+                        text: 'Waktu Anda untuk menjawab telah habis.',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        submitAnswers();
+                    });
                 }
             }, 1000);
         }
@@ -332,12 +339,27 @@
         document.addEventListener('DOMContentLoaded', (event) => {
             // Prevent back navigation
             history.pushState(null, null, location.href);
+            //tambahkan event listener sweetalert ketika user menekan tombol back
             window.addEventListener('popstate', function (event) {
-                if (confirm("Jika Anda melakukan kembali, semua jawaban akan dikirim. Apakah Anda yakin ingin melanjutkan?")) {
-                    submitAnswers('/tryout-saya');
-                } else {
-                    history.pushState(null, null, location.href);
-                }
+                Swal.fire({
+                    title: 'Anda yakin ingin keluar?',
+                    text: "Jika Anda keluar, semua jawaban akan dikirim dan Anda tidak bisa melanjutkan pengerjaan Try Out.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#DC7E3F',
+                    cancelButtonColor: 'transparent',
+                    confirmButtonText: 'Ya, keluar',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true,
+                    buttonsStyling: true,
+                    width: '500px',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        submitAnswers('/tryout-saya');
+                    } else {
+                        history.pushState(null, null, location.href);
+                    }
+                });
             });
 
             // // Prevent accidental reload or close
@@ -394,7 +416,8 @@
                         input.value = choice.id;
                         input.id = 'choice_' + choice.id;
                         input.addEventListener('change', (event) => {
-                            saveAnswer(questions[index].id, choice.id);
+                            // saveAnswer(questions[index].id, [choice.id]);
+                            saveCurrentAnswer();
                             mark(currentQuestionIndex);
                         });
                         if (answer == choice.id) {
@@ -428,7 +451,8 @@
                                 alert('Anda hanya bisa memilih 2 jawaban');
                                 return;
                             }
-                            saveAnswer(questions[index].id, choice.id);
+                            // saveAnswer(questions[index].id, [choice.id]);
+                            saveCurrentAnswer();
                             mark(currentQuestionIndex);
                         });
                         if (answer) {
@@ -461,9 +485,10 @@
                     }
                     // input.value = '';
                     input.style.border = '1px solid #E0E0E0';
-                    input.addEventListener('change', (event) => {
+                    input.addEventListener('input', (event) => {
                         let answer = [choice_id, event.target.value];
-                        saveAnswer(questions[index].id, answer);
+                        // saveAnswer(questions[index].id, [answer]);
+                        saveCurrentAnswer();
                         mark(currentQuestionIndex);
                     });
                     document.getElementById('answer').appendChild(input);
@@ -529,7 +554,8 @@
 
                             input.addEventListener('change', (event) => {
                                 let answer = [choice_id, input.value];
-                                saveAnswer(question_id, answer);
+                                // saveAnswer(question_id, answer); gajadi dipake diganti sama fungsi saveCurrentAnswer
+                                saveCurrentAnswer();
                                 mark(currentQuestionIndex);
                             });
 
@@ -558,7 +584,6 @@
             function buttonHandle($index) {
                 let prevButton = document.getElementById('prev_button');
                 let saveButton = document.getElementById('save_button');
-                saveButton.style.background = 'white';
 
                 if ($index == 0) {
                     prevButton.style.display = 'none';
@@ -567,11 +592,11 @@
                 }
 
                 if ($index == totalQuestions - 1) {
-                    saveButton.style.background = 'var(--gradient-10) !important';
+                    saveButton.setAttribute('style', 'background: var(--gradient-10) !important; color: white !important; border: 1px solid #E7A446 !important;');
                     saveButton.innerHTML = 'Selesai <i class="feather-arrow-right"></i>';
                 } else {
+                    saveButton.setAttribute('style', 'background: white !important; color: black !important; border: 1px solid #E7A446 !important;');
                     saveButton.innerHTML = 'Selanjutnya <i class="feather-arrow-right"></i>';
-                    saveButton.style.border = '1px solid #E7A446';
                 }
             }
 
@@ -622,8 +647,25 @@
                 if (currentQuestionIndex < totalQuestions - 1) {
                     showQuestion(currentQuestionIndex + 1);
                 } else if (currentQuestionIndex === totalQuestions - 1) {
-                    //send answer to server
-                    submitAnswers();
+                    Swal.fire({
+                        title: 'Anda yakin ingin menyimpan jawaban?',
+                        text: "Periksa kembali jawaban Anda sebelum menyimpan.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#DC7E3F',
+                        cancelButtonColor: 'transparent',
+                        confirmButtonText: 'Ya, saya yakin',
+                        cancelButtonText: 'Batal',
+                        reverseButtons: true,
+                        buttonsStyling: true,
+                        width: '600px',
+                        heightAuto: true,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            //send answer to server
+                            submitAnswers();
+                        }
+                    });
                 }
             });
 

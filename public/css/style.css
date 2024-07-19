@@ -1486,6 +1486,15 @@ ul.rbt-dropdown-menu li .sub-menu li a, ul.rbt-dropdown-menu li a .right-icon, u
 
 }
 
+.swal2-cancel {
+  color: black !important;
+  border: 1px solid #70A4C6 !important;
+}
+
+div:where(.swal2-container) div:where(.swal2-popup) {
+  font-size: small !important;
+}
+
 .theme-mainbg-gradient {
   background-color: var(--color-light);
   position: relative;
