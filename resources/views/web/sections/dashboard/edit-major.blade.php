@@ -22,9 +22,9 @@
             font-size: 14px;
         }
 
-        .message-info {
+        /* .message-info {
             position: relative;
-        }
+        } */
 /* 
         .rbt-form-group {
             margin-bottom: 20px;
@@ -64,6 +64,9 @@
                                 <option value="{{ $key }}" @if ($key == $firstMajor) selected @endif>{{$value}}</option>
                             @endforeach
                         </select>
+                        @error('first_university')
+                            <span class="message-info">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="rbt-form-group">
@@ -71,6 +74,9 @@
                     <div class="filter-select rbt-modern-select">
                         <select id="first_major" name="first_major" class="select-picker w-100 mb--20" data-id="{{$profile->first_major}}" data-live-search="true">
                         </select>
+                        @error('first_major')
+                            <span class="message-info">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
 
@@ -90,6 +96,9 @@
                                 <option value="{{ $key }}" @if ($key == $secondMajor) selected @endif>{{$value}}</option>
                             @endforeach
                         </select>
+                        @error('second_university')
+                            <span class="message-info">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
 
@@ -98,6 +107,9 @@
                     <div class="filter-select rbt-modern-select">
                         <select id="second_major" name="second_major" class="select-picker w-100 mb--20" data-id="{{$profile->second_major}}" data-live-search="true">
                         </select>
+                        @error('second_major')
+                            <span class="message-info">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -122,7 +134,7 @@
         // Fungsi untuk mengambil data jurusan berdasarkan universitas yang dipilih
         function populateMajor(universityId, majorSelect) {
             // var majorSelect = $('#city');
-            majorSelect.empty().append(new Option('Pilih Jurusan', ''));
+            majorSelect.empty().append(new Option('Pilih Program Studi', ''));
             var majorId = majorSelect.data('id');
 
             if (universityId) {

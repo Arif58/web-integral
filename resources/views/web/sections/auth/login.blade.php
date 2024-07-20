@@ -11,27 +11,22 @@
     <h3 class="title">Login</h3>
     <form action="/login" method="POST">
         @csrf
-        <div class="form-group">
-            {{-- <input name="email" type="text" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror" placeholder="email"/> --}}
+        <div class="form-group @if(old('email')) focused @endif">
             <input name="email" type="text" value="{{old('email')}}"/>
             <label>Email *</label>
             <span class="focus-border"></span>
             @error('email')
                 <span class="message-info">{{ $message }}</span>  
             @enderror
-            {{-- <label>Email *</label>
-            <span class="focus-border"></span> --}}
         </div>
         <div class="form-group">
-            {{-- <input name="password" type="password" value="{{ old('password') }}" class="form-control @error('password') is-invalid @enderror" placeholder="password"> --}}
-            <input name="password" type="password" value="{{ old('password') }}"/>
+            <input name="password" type="password" value="{{ old('password') }}" id="password"/>
             <label>Password *</label>
             <span class="focus-border"></span>
+            <i class="feather-eye toggle-password" id="togglePassword"></i>
             @error('password')
                 <span class="message-info">{{ $message }}</span>
             @enderror
-            {{-- <label>Password *</label>
-            <span class="focus-border"></span> --}}
         </div>
         <div class="row mb--30">
             <div class="col-12 text-end">
@@ -60,11 +55,11 @@
     //tampilkan sweetalert2 jika berhasil mengirim email reset password dan redirect ke halaman login
     @if (session('status'))
         Swal.fire({
-            icon: 'success',
-            title: 'Berhasil',
+            icon: 'info',
+            // title: 'Berhasil',
             text: '{{ session('status') }}',
-            showConfirmButton: false,
-            timer: 2000
+            showConfirmButton: true,
+            // timer: 3000
         });
     @endif
 </script>

@@ -17,10 +17,6 @@
         .rbt-form-group {
             margin-bottom: 30px;
         }
-
-        .message-info {
-            position: relative;
-        }
     </style>
 </head>
 <body class="rbt-elements-area bg-color-white rbt-section-gap d-flex">
@@ -40,7 +36,7 @@
                     <div class="rbt-form-group">
                         {{-- <label for="firstname">Nama Lengkap</label> --}}
                         <label for="fullname" class=" mb--0">Nama Lengkap</label>
-                        <input id="fullname" name="fullname" type="text" value="{{ $profile->fullname }}" placeholder="Nama Lengkap">
+                        <input id="fullname" name="fullname" type="text" value="{{old('fullname')}}" placeholder="Nama Lengkap">
                         @error('fullname')
                             <span class="message-info">{{ $message }}</span>
                         @enderror
@@ -48,7 +44,7 @@
     
                     <div class="rbt-form-group">
                         <label for="phone" class="mb--0">Nomor Handphone</label>
-                        <input id="phone" name="phone" type="text" value="{{ $profile->phone }}" placeholder="Nomor Handphone">
+                        <input id="phone" name="phone" type="text" value="{{old('phone')}}" placeholder="Nomor Handphone">
                         @error('phone')
                             <span class="message-info">{{ $message }}</span>
                         @enderror
@@ -59,7 +55,7 @@
                         <div class="filter-select rbt-modern-select">
                             <select id="level" name="level" class="w-100">
                                 @foreach ($level as $key => $value)
-                                    <option value="{{$key}}" @if ($key == $profile->level) selected @endif>
+                                    <option value="{{$key}}" @if (old('level') == $key) selected @endif>
                                         {{$value}}
                                     </option>
                                 @endforeach
@@ -73,7 +69,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                     <div class="rbt-form-group">
                         <label for="institution" class="mb--0">Asal Sekolah</label>
-                        <input id="institution" name="institution" type="text" value="{{$profile->institution}}" placeholder="Asal Sekolah">
+                        <input id="institution" name="institution" type="text" value="{{old('institution')}}" placeholder="Asal Sekolah">
                         @error('institution')
                             <span class="message-info">{{ $message }}</span>
                         @enderror
@@ -84,11 +80,11 @@
                             <label for="province" class="mb--0">Provinsi</label>
                             <select id="province" name="province" class="select-picker w-100 " data-live-search="true">
                                 <option selected disabled value="">Pilih Provinsi</option>
-                                @php
+                                {{-- @php
                                     $provinceId = $profile->city->province_id ?? '';
-                                @endphp
+                                @endphp --}}
                                 @foreach ($province as $key => $value)
-                                    <option value="{{ $key }}" @if($key == $provinceId) selected @endif>{{ $value }}</option>
+                                    <option value="{{ $key }}" @if(old('province') == $key) selected @endif>{{ $value }}</option>
                                 @endforeach
                             </select>
                             @error('province')
@@ -100,7 +96,7 @@
                     <div class="rbt-form-group">
                         <div class="filter-select rbt-modern-select">
                             <label for="city" class="mb--0">Kabupaten/Kota</label>
-                            <select id="city" name="city" class="select-picker w-100 " data-id="{{ $profile->city_id }}" data-live-search="true">
+                            <select id="city" name="city" class="select-picker w-100 " data-id="{{old('city')}}" data-live-search="true">
                                 <option value="" selected disabled>Pilih Kabupaten/Kota</option>
                             </select>
                             @error('city')
@@ -117,7 +113,7 @@
                             <select id="interest" name="interest" class="w-100 ">
                                 <option selected disabled>Minat dan Bakat</option>
                                 @foreach ($cluster as $key => $value)
-                                    <option value="{{ $key }}" @if($key == $profile->interest) selected @endif>{{ $value }}</option>
+                                    <option value="{{ $key }}" @if(old('interest') == $key) selected @endif>{{ $value }}</option>
                                 @endforeach
                             </select>
                             @error('interest')
@@ -137,11 +133,11 @@
                         <div class="filter-select rbt-modern-select">
                             <select id="first_university" name="first_university" class="select-picker w-100 " data-live-search="true">
                                 <option value="" selected disabled>Pilih Universitas</option>
-                                @php
+                                {{-- @php
                                     $firstMajor = $profile->firstMajor->university_id ?? '';
-                                @endphp
+                                @endphp --}}
                                 @foreach ($university as $key => $value)
-                                    <option value="{{ $key }}" @if ($key == $firstMajor) selected @endif>{{$value}}</option>
+                                    <option value="{{ $key }}" @if (old('first_university') == $key) selected @endif>{{$value}}</option>
                                 @endforeach
                             </select>
                             @error('first_university')
@@ -152,7 +148,7 @@
                     <div class="rbt-form-group">
                         <label for="first_major">Target Jurusan 1</label>
                         <div class="filter-select rbt-modern-select">
-                            <select id="first_major" name="first_major" class="select-picker w-100 " data-id="{{$profile->first_major}}" data-live-search="true">
+                            <select id="first_major" name="first_major" class="select-picker w-100 " data-id="{{old('first_major')}}" data-live-search="true">
                                 <option value="" selected disabled>Pilih Program Studi</option>
                             </select>
                             @error('first_major')
@@ -170,11 +166,11 @@
                         <div class="filter-select rbt-modern-select">
                             <select id="second_university" name="second_university" class="select-picker w-100 " data-live-search="true">
                                 <option value="" selected disabled>Pilih Universitas</option>
-                                @php
+                                {{-- @php
                                     $secondMajor = $profile->secondMajor->university_id ?? '';
-                                @endphp
+                                @endphp --}}
                                 @foreach ($university as $key => $value)
-                                    <option value="{{ $key }}" @if ($key == $secondMajor) selected @endif>{{$value}}</option>
+                                    <option value="{{ $key }}" @if (old('second_university') == $key) selected @endif>{{$value}}</option>
                                 @endforeach
                             </select>
                             @error('second_university')
@@ -186,7 +182,7 @@
                     <div class="rbt-form-group">
                         <label for="second_university">Target Perguruan Tinggi 2</label>
                         <div class="filter-select rbt-modern-select">
-                            <select id="second_major" name="second_major" class="select-picker w-100 " data-id="{{$profile->second_major}}" data-live-search="true">
+                            <select id="second_major" name="second_major" class="select-picker w-100 " data-id="{{old('second_major')}}" data-live-search="true">
                                 <option value="" selected disabled>Pilih Program Studi</option>
                             </select>
                             @error('second_major')
@@ -251,7 +247,7 @@
             // Fungsi untuk mengambil data jurusan berdasarkan universitas yang dipilih
             function populateMajor(universityId, majorSelect) {
                 // var majorSelect = $('#city');
-                majorSelect.empty().append(new Option('Pilih Jurusan', ''));
+                majorSelect.empty().append(new Option('Pilih Program Studi', ''));
                 var majorId = majorSelect.data('id');
     
                 if (universityId) {

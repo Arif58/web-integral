@@ -98,5 +98,24 @@
      <!-- JS
 ============================================ -->
     @include('web.layout.js')
+    <script>
+        @if (session('status') == 'success')
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('message') }}',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        @elseif (session('status') == 'error')
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session('message') }}',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        @endif
+    </script>
 </body>
 </html>

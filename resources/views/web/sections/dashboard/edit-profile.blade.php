@@ -24,9 +24,9 @@
             font-size: 14px;
         }
 
-        .message-info {
+        /* .message-info {
             position: relative;
-        }
+        } */
 
         .rbt-default-form input {
             margin-bottom: 0px;

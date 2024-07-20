@@ -35,32 +35,38 @@ class ProfileController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'fullname' => 'required',
-            'username' => 'required',
-            // 'email' => 'required|email',
-            'phone' => 'required',
-            'level' => 'required',
-            'institution' => 'required',
-            'province' => 'required',
-            'city' => 'required',
-            'interest' => 'required',
-        ]);
-
-        $profile = User::findOrFail($id);
-
-        $profile->update([
-            'fullname' => $request->fullname,
-            'username' => $request->username,
-            // 'email' => $request->email,
-            'phone' => $request->phone,
-            'level' => $request->level,
-            'institution' => $request->institution,
-            'city_id' => $request->city,
-            'interest' => $request->interest,
-        
-        ]);
-        return redirect('/profil-saya')->with('success', 'Profil berhasil diperbarui.');
+        try {
+            $request->validate([
+                'fullname' => 'required',
+                'username' => 'required',
+                // 'email' => 'required|email',
+                'phone' => 'required',
+                'level' => 'required',
+                'institution' => 'required',
+                'province' => 'required',
+                'city' => 'required',
+                'interest' => 'required',
+            ]);
+    
+            $profile = User::findOrFail($id);
+    
+            $profile->update([
+                'fullname' => $request->fullname,
+                'username' => $request->username,
+                // 'email' => $request->email,
+                'phone' => $request->phone,
+                'level' => $request->level,
+                'institution' => $request->institution,
+                'city_id' => $request->city,
+                'interest' => $request->interest,
+            
+            ]);
+            return redirect('/profil-saya')->with(['status'=>'success', 'message' => 'Profil berhasil diperbarui.']);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
+        }
     }
 
     public function editMajor($id)
@@ -78,19 +84,26 @@ class ProfileController extends Controller
 
     public function updateMajor(Request $request, $id)
     {
-        
-        $request->validate([
-            'first_major' => 'required',
-            'second_major' => 'required',
-        ]);
-        $profile = User::findOrFail($id);
-
-        $profile->update([
-            'first_major' => $request->first_major,
-            'second_major' => $request->second_major,
-        ]);
-
-        return redirect('/profil-saya')->with('success', 'Program Studi berhasil diperbarui.');
+        try {
+            $request->validate([
+                'first_university' => 'required',
+                'second_university' => 'required',
+                'first_major' => 'required',
+                'second_major' => 'required',
+            ]);
+            $profile = User::findOrFail($id);
+    
+            $profile->update([
+                'first_major' => $request->first_major,
+                'second_major' => $request->second_major,
+            ]);
+    
+            return redirect('/profil-saya')->with(['status' => 'success', 'message' => 'Program Studi berhasil diperbarui.']);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
+        }
     }
 
     public function getCompleteProfile()
@@ -105,35 +118,41 @@ class ProfileController extends Controller
 
     public function completeProfile(Request $request, $id)
     {
-        $request->validate([
-            'fullname' => 'required',
-            'phone' => 'required',
-            'level' => 'required',
-            'institution' => 'required',
-            'province' => 'required',
-            'city' => 'required',
-            'interest' => 'required',
-            'first_university' => 'required',
-            'first_major' => 'required',
-            'second_university' => 'required',
-            'second_major' => 'required',
-        ]);
-
-        $profile = User::findOrFail($id);
-
-        $profile->update([
-            'fullname' => $request->fullname,
-            'phone' => $request->phone,
-            'level' => $request->level,
-            'institution' => $request->institution,
-            'city_id' => $request->city,
-            'interest' => $request->interest,
-            'first_major' => $request->first_major,
-            'second_major' => $request->second_major,
-            'is_completed' => true,
-        ]);
-
-        return redirect('/dashboard')->with('success', 'Profil berhasil diperbarui.');
+        try {
+            $request->validate([
+                'fullname' => 'required',
+                'phone' => 'required|min:12',
+                'level' => 'required',
+                'institution' => 'required',
+                'province' => 'required',
+                'city' => 'required',
+                'interest' => 'required',
+                'first_university' => 'required',
+                'first_major' => 'required',
+                'second_university' => 'required',
+                'second_major' => 'required',
+            ]);
+    
+            $profile = User::findOrFail($id);
+    
+            $profile->update([
+                'fullname' => $request->fullname,
+                'phone' => $request->phone,
+                'level' => $request->level,
+                'institution' => $request->institution,
+                'city_id' => $request->city,
+                'interest' => $request->interest,
+                'first_major' => $request->first_major,
+                'second_major' => $request->second_major,
+                'is_completed' => true,
+            ]);
+    
+            return redirect('/dashboard')->with(['status' => 'success', 'message' => 'Profil berhasil diperbarui.']);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()])->withInput();
+        }
 
     }
 

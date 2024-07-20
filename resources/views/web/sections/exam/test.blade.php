@@ -209,7 +209,7 @@
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         }
 
-         function submitAnswers(redirectUrl = null) {
+        function submitAnswers(redirectUrl = null) {
                 let answers = JSON.parse(localStorage.getItem('answers')) || {};
                 let participantId = @json($participantId);
                 let subTestCurrentIndex = JSON.parse(localStorage.getItem('subTestCurrentIndex'));
@@ -262,6 +262,7 @@
                             localStorage.removeItem('start_test');
                             window.location.href = redirectUrl;
                         } else {
+                            //ketika masih ada subtest yang harus dikerjakan
                             if (subTestCurrentIndex < lengthSubTest - 1) {
                                 subTestCurrentIndex++;
                                 localStorage.setItem('subTestCurrentIndex', subTestCurrentIndex);
@@ -269,7 +270,6 @@
                                 localStorage.removeItem('answers');
                                 window.location.href = `/exam/${participantId}`;
                             } else {
-                                alert(data.message);
                                 //hapus answers,subtestId, subTestCurrentIndex, start test pada local storage
                                 localStorage.removeItem('answers');
                                 localStorage.removeItem('subTestId');
@@ -313,10 +313,37 @@
             }, 1000);
         }
 
-        function mark(index) {
-            let questionNumber = document.getElementById('question_number_' + index);
-            questionNumber.style.background = 'var(--gradient-10)';
-            questionNumber.style.color = 'white';
+        function mark(index, questionId) {
+            let answers = JSON.parse(localStorage.getItem('answers')) || {};
+            let answer = answers[questionId];
+            if (answer) {
+                if (answer.length > 0) {    //ketika jawaban tidak kosong
+                    answer.forEach((item, i) => {
+                        // cek apakah item adalah array atau bukan
+                        if(Array.isArray(item)) {   //ketika question type isian singkat dan pernyataan
+                            if (answer[0][1] == '') {   //ketika jawaban kosong
+                                let questionNumber = document.getElementById('question_number_' + index);
+                                questionNumber.style.background = 'white';
+                                questionNumber.style.color = 'black';
+                            } else {    //ketika jawaban tidak kosong
+                                let questionNumber = document.getElementById('question_number_' + index);
+                                questionNumber.style.background = 'var(--gradient-10)';
+                                questionNumber.style.color = 'white';
+                            }
+                        } else { //ketika question type pilihan ganda dan pilihan ganda majemuk
+                            let questionNumber = document.getElementById('question_number_' + index);
+                            questionNumber.style.background = 'var(--gradient-10)';
+                            questionNumber.style.color = 'white';
+                        }
+                        
+                    });
+                } else {    //ketika jawaban kosong
+                    let questionNumber = document.getElementById('question_number_' + index);
+                    questionNumber.style.background = 'white';
+                    questionNumber.style.color = 'black';
+                }
+            }
+
         }
 
         function markAllQuestion(){
@@ -324,21 +351,16 @@
             let questions = @json($questions);
             questions.forEach((question, index) => {
                 let keyAnswers = question.id;
-                let answer = answers[keyAnswers];
-                if (answer) {
-                    if (answer.length > 0) {
-                        let questionNumber = document.getElementById('question_number_' + index);
-                        questionNumber.style.background = 'var(--gradient-10)';
-                        questionNumber.style.color = 'white';
-                    }
-                }
+                mark(index, keyAnswers);
             });
         }
 
         // Usage example
         document.addEventListener('DOMContentLoaded', (event) => {
+
             // Prevent back navigation
             history.pushState(null, null, location.href);
+
             //tambahkan event listener sweetalert ketika user menekan tombol back
             window.addEventListener('popstate', function (event) {
                 Swal.fire({
@@ -361,12 +383,6 @@
                     }
                 });
             });
-
-            // // Prevent accidental reload or close
-            // window.addEventListener('beforeunload', function (event) {
-            //     event.preventDefault();
-            //     event.returnValue = '';
-            // });
 
             let subTest = @json($subTest);
             let start_time = JSON.parse(localStorage.getItem('start_test'));
@@ -418,7 +434,7 @@
                         input.addEventListener('change', (event) => {
                             // saveAnswer(questions[index].id, [choice.id]);
                             saveCurrentAnswer();
-                            mark(currentQuestionIndex);
+                            mark(currentQuestionIndex, questions[index].id);
                         });
                         if (answer == choice.id) {
                             input.checked = true;
@@ -448,12 +464,18 @@
                             const checkedCheckboxes = document.querySelectorAll('input[name="answer"]:checked');
                             if (checkedCheckboxes.length > 2) {
                                 event.target.checked = false;
-                                alert('Anda hanya bisa memilih 2 jawaban');
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'Perhatian',
+                                    text: 'Anda hanya bisa memilih maksimal 2 jawaban.',
+                                    showConfirmButton: true,
+                                    timer: 2000
+                                });
                                 return;
                             }
                             // saveAnswer(questions[index].id, [choice.id]);
                             saveCurrentAnswer();
-                            mark(currentQuestionIndex);
+                            mark(currentQuestionIndex, questions[index].id);
                         });
                         if (answer) {
                             for (let j = 0; j < answer.length; j++) {
@@ -489,7 +511,7 @@
                         let answer = [choice_id, event.target.value];
                         // saveAnswer(questions[index].id, [answer]);
                         saveCurrentAnswer();
-                        mark(currentQuestionIndex);
+                        mark(currentQuestionIndex, questions[index].id);
                     });
                     document.getElementById('answer').appendChild(input);
                 } else if (questions[index].type === 'pernyataan') {
@@ -556,7 +578,7 @@
                                 let answer = [choice_id, input.value];
                                 // saveAnswer(question_id, answer); gajadi dipake diganti sama fungsi saveCurrentAnswer
                                 saveCurrentAnswer();
-                                mark(currentQuestionIndex);
+                                mark(currentQuestionIndex, question_id);
                             });
 
                             if (answer) {
@@ -605,7 +627,6 @@
                 currentQuestionIndex = index;
                 loadQuestion(index);
                 loadTestAnswer(index);
-                // markQuestion(index);
                 buttonHandle(index);
             }
 

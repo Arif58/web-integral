@@ -29444,3 +29444,9 @@ Course Sidebar
   height: auto;
 }
 
+.toggle-password {
+  cursor: pointer;
+  position: absolute;
+  right: 15px;
+  top: 20px;
+}

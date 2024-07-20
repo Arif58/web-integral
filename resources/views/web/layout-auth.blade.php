@@ -17,4 +17,27 @@
        
  
     @include('web.layout.js')
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function (e) {
+            // toggle the type attribute
+            const password = document.getElementById('password');
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            
+            // toggle the icon
+            this.classList.toggle('feather-eye');
+            this.classList.toggle('feather-eye-off');
+        });
+
+        document.getElementById('toggleConfirmationPassword').addEventListener('click', function (e) {
+            // toggle the type attribute
+            const passwordConfirmation = document.getElementById('password_confirmation');
+            const type = passwordConfirmation.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordConfirmation.setAttribute('type', type);
+            
+            // toggle the icon
+            this.classList.toggle('feather-eye');
+            this.classList.toggle('feather-eye-off');
+        });
+    </script>
 </body>

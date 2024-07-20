@@ -30,7 +30,15 @@ class OrderController extends Controller
             'payment_method' => 'required|string',
         ]);
 
-        Order::where('user_id', Auth::id())->where('product_id', $request->product_id)->where('status', 'pending')->delete();
+        $orderExistPending = Order::where('user_id', Auth::id())->where('product_id', $request->product_id)->where('status', 'pending');
+        $orderExistPending->update([
+            'status' => 'failed',
+        ]);
+
+        $orderExistSuccess = Order::where('user_id', Auth::id())->where('product_id', $request->product_id)->where('status', 'success');
+        if ($orderExistSuccess->exists()) {
+            return redirect()->route('my-tryout')->with(['status' => 'error', 'message' => 'Anda sudah memiliki akses ke tryout ini.']);
+        }
 
         $order = Order::create([
             'product_id' => $request->product_id,
@@ -112,11 +120,11 @@ class OrderController extends Controller
                     ]);
                 });
 
-                return redirect()->route('my-tryout')->with('success', 'Pembelian berhasil dilakukan. Silahkan cek di menu Tryout Saya.');
+                return redirect()->route('my-tryout')->with(['status' => 'success', 'message' => 'Pembelian berhasil dilakukan. Silahkan cek di menu Tryout Saya.']);
             } else {
                 //rollback order
                 $order->delete();
-                return back()->with('error', 'IE Gems Anda tidak mencukupi untuk melakukan pembelian ini.');
+                return back()->with(['status' => 'error', 'message' => 'IE Gems Anda tidak mencukupi untuk melakukan pembelian ini.']);
             }
         }
     }

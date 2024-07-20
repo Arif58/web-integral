@@ -43,6 +43,30 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
+            // Prevent back navigation
+            history.pushState(null, null, location.href);
+            //tambahkan event listener sweetalert ketika user menekan tombol back
+            window.addEventListener('popstate', function (event) {
+                Swal.fire({
+                    title: 'Anda yakin ingin keluar?',
+                    text: "Jika Anda keluar maka Anda tidak bisa melanjutkan pengerjaan Try Out.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#DC7E3F',
+                    cancelButtonColor: 'transparent',
+                    confirmButtonText: 'Ya, keluar',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true,
+                    buttonsStyling: true,
+                    width: '500px',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/tryout-saya';
+                    } else {
+                        history.pushState(null, null, location.href);
+                    }
+                });
+            });
            
             let categorySubTestField = document.getElementById('category_subtest');
             let subTestField = document.getElementById('sub_test');
@@ -83,6 +107,8 @@
             }
             startTest = new Date().getTime();
             localStorage.setItem('start_test', startTest);
+
+           
         });
     </script>
 @endpush
