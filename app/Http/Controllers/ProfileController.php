@@ -109,11 +109,14 @@ class ProfileController extends Controller
     public function getCompleteProfile()
     {
         $profile = auth()->user();
+        if ($profile->is_completed) {
+            return redirect('/dashboard')->with(['status' => 'error', 'message' => 'Profil Anda sudah lengkap.']);
+        }
         $province = Province::pluck('name', 'id');
         $level = User::$level;
         $cluster = Cluster::pluck('name', 'id');
         $university = University::pluck('name', 'id');
-        return view('web.sections.dashboard.complete-profile', compact('province', 'level', 'cluster', 'university', 'profile'));
+        return view('web.sections.dashboard.complete-profile', compact('profile', 'province', 'level', 'cluster', 'university'));
     }
 
     public function completeProfile(Request $request, $id)

@@ -8,20 +8,20 @@
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
         <input type="hidden" name="email" value="{{ $request->email }}">
         <div class="form-group">
-            {{-- <input name="password" type="password" value="{{ old('password') }}" class="form-control @error('password') is-invalid @enderror" placeholder="password"> --}}
-            <input id="password" name="password" type="password"/>
+            <input name="password" type="password" id="password"/>
             <label>Password *</label>
             <span class="focus-border"></span>
+            <i class="feather-eye toggle-password" id="togglePassword"></i>
             @error('password')
                 <span class="message-info">{{ $message }}</span>
             @enderror
         </div>
 
         <div class="form-group">
-            {{-- <input name="password_confirmation" type="password" value="{{ old('password_confirmation') }}" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="confirm password"> --}}
-            <input id="password-confirm" name="password_confirmation" type="password"/>
+            <input name="password_confirmation" type="password" id="password_confirmation"/>
             <label>Password Confirmation *</label>
             <span class="focus-border"></span>
+            <i class="feather-eye toggle-password" id="toggleConfirmationPassword"></i>
             @error('password_confirmation')
                 <span class="message-info">{{ $message }}</span>
             @enderror
