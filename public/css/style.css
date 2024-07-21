@@ -29525,3 +29525,25 @@ Course Sidebar
 .fade-in-right {
   animation: fadeInFromRight 1s ease-in-out;
 }
+
+@media only screen and (max-width: 767px) {
+  .scroll-animation-wrapper {
+      height: 500px;
+  }
+
+  .rbt-testimonial-box .inner {
+      height: 500px;
+  }
+
+  .headline {
+      text-align: center !important;
+  }
+
+  .headline .description {
+      font-size: 18px !important;
+  }
+
+  .headline .rbt-button-group {
+      justify-content: center !important;
+  }
+}

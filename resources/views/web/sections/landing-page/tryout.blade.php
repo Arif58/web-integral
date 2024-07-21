@@ -9,9 +9,9 @@
                 <div class="row g-5 justify-content-between align-items-center">
                     <div class="col-lg-6 order-2 order-lg-1">
                         <div class="content">
-                            <div class="inner">
+                            <div class="inner headline">
                                 <h1 class="title text-white fade-in-left">Belajar Bersama Try Out UTBK Integral Education</h1>
-                                <p class="description text-white fade-in-left-2" style="font-size: 22px;">
+                                <p class="description text-white fade-in-left-2" style="font-size: 20px;">
                                     Kuasai soal-soal HOTS denga mengikuti Try Out UTBK Integral Education. Dapatkan poin IE Gems setiap kali kamu mengerjakan soal.
                                 </p>
                                 <div class="rbt-button-group justify-content-start mt--30">

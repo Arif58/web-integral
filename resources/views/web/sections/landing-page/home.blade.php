@@ -1,6 +1,5 @@
 @extends('web.layout')
 @section('title', 'Beranda')
-
 @section('content')
     <main class="rbt-main-wrapper">
         <!-- Start Banner Area -->
@@ -10,9 +9,9 @@
                     <div class="row g-5 justify-content-between align-items-center">
                         <div class="col-lg-6 order-2 order-lg-1">
                             <div class="content">
-                                <div class="inner">
+                                <div class="inner headline">
                                     <h1 class="title text-white fade-in-left">Sukses UTBK-SNBT Bersama Try Out Integral Education</h1>
-                                    <p class="description text-white fade-in-left-2" style="font-size: 22px;">
+                                    <p class="description text-white fade-in-left-2" style="font-size: 20px;">
                                         Persiapkan dirimu dalam menghadapi UTBK-SNBT dengan mengikuti Try Out Integral Education!
                                     </p>
                                     <div class="rbt-button-group justify-content-start mt--30">
@@ -253,7 +252,7 @@
                     </div>
                     <div class="col-lg-6" >
                         <div class="inner pl--50 pl_sm--5">
-                            <div class="section-title text-start">
+                            <div class="section-title text-start headline">
                                 <span class="subtitle bg-primary-opacity">About Integral Education</span>
                                 <h2 class="title text-white">Apa itu Integral Education?</h2>
                                 <p class="description mt--20" style="color: #E0E0E0">Bimbingan Belajar Integral Education adalah bimbel yang berdedikasi untuk memfasilitasi siswa dari tingkat SD, SMP, SMA, hingga mahasiswa dalam mempersiapkan kegiatan belajar menghadapi berbagai ujian seperti ujian sekolah, olimpiade, dan persiapan masuk Perguruan Tinggi Negeri (PTN) bagi siswa SMA kelas XII. Beberapa diantara mereka telah lolos di beberapa universitas diantaranya UI, UGM, IPB, Undip, 
