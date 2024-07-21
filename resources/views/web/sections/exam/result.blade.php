@@ -118,7 +118,9 @@
                                                     Nilai Kamu
                                                 </h5>
                                                 <div class=" bg-gradient-19-top-to-bottom mx-5 d-flex align-content-center justify-content-center" style="padding: 30px 10px; border-radius: 5px;">
-                                                    <h2 class="text-center mb-0 text-white">{{number_format($participant->average_score, 2)}}</h2>
+                                                    <h2 class="text-center mb-0 text-white">
+                                                        {{ number_format($participant->average_score, 2, '.', '') }}
+                                                    </h2>
                                                 </div>
                                                 <p class="text-center mb-3" style="margin-top: 20px">Nilai Rata-Rata Peserta :</p>
                                                 <h3 class="text-center mb-0" style="color: #DC7E3F">
@@ -301,7 +303,9 @@
                                                         @if (in_array($subTest->id, $participantSubtestHasScore->toArray()))
                                                         @foreach ($averageScoreSubtest as $averageScore)
                                                             @if ($averageScore->sub_test_id == $subTest->id)
-                                                                <div>{{number_format(($averageScore->total_score + 200), 2)}}</div>
+                                                                <div>
+                                                                    {{ number_format(($averageScore->total_score + 200), 2, '.', '') }}
+                                                                </div>
                                                             @endif
                                                         @endforeach
                                                         @else

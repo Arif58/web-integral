@@ -67,7 +67,7 @@ class MajorController extends Controller
             'passing_grade' => $request->passing_grade,
         ]);
 
-        return back()->with('success', 'Program Studi berhasil ditambahkan.');
+        return back()->with(['status' => 'success', 'message' => 'Program Studi berhasil ditambahkan.']);
     }
 
     /**
@@ -93,7 +93,7 @@ class MajorController extends Controller
             'passing_grade' => $request->passing_grade,
         ]);
 
-        return back()->with('success', 'Program Studi berhasil diubah.');
+        return back()->with(['status' => 'success', 'message' => 'Program Studi berhasil diperbarui.']);
     }
 
     /**
@@ -101,9 +101,13 @@ class MajorController extends Controller
      */
     public function destroy($id)
     {
-        $major = Major::findOrFail($id);
-        $major->delete();
+        try {
+            $major = Major::findOrFail($id);
+            $major->delete();
 
-        return back()->with('success', 'Program Studi berhasil dihapus.');
+            return response()->json(['status' => 'success', 'message' => 'Program Studi berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 }

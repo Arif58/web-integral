@@ -47,7 +47,7 @@ class CategorySubtestController extends Controller
             'name' => $request->name,
         ]);
 
-        return back()->with('success', 'Kategori subtest berhasil ditambahkan.');
+        return back()->with(['status' => 'success', 'message' => 'Kategori subtest berhasil ditambahkan.']);
     }
 
     /**
@@ -67,7 +67,7 @@ class CategorySubtestController extends Controller
             'name' => $request->name,
         ]);
 
-        return back()->with('success', 'Kategori subtest berhasil diubah.');
+        return back()->with(['status' => 'success', 'message' => 'Kategori subtest berhasil diperbarui.']);
     }
 
     /**
@@ -75,9 +75,14 @@ class CategorySubtestController extends Controller
      */
     public function destroy($id)
     {
-        $categorySubtest = CategorySubtest::findOrFail($id);
-        $categorySubtest->delete();
-
-        return back()->with('success', 'Kategori subtest berhasil dihapus.');
+        try {
+            $categorySubtest = CategorySubtest::findOrFail($id);
+            $categorySubtest->delete();
+    
+            return response()->json(['status' => 'success', 'message' => 'Kategori subtest berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+        
     }
 }

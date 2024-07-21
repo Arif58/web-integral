@@ -62,7 +62,7 @@ class TestimoniController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Testimoni yang ditampilkan berhasil diperbarui.');
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Testimoni yang ditampilkan berhasil diperbarui.']);
     }
 
     /**
@@ -98,7 +98,7 @@ class TestimoniController extends Controller
         ]);
 
         // Redirect kembali dengan pesan sukses
-        return back()->with('success', 'Testimoni berhasil disimpan.');
+        return back()->with(['status' => 'success', 'message' => 'Testimoni berhasil disimpan.']);
     }
 
     /**
@@ -126,7 +126,7 @@ class TestimoniController extends Controller
 
         $testimonial->save();
 
-        return redirect()->back();
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Testimoni berhasil diperbarui.']);
     }
 
     /**
@@ -134,8 +134,12 @@ class TestimoniController extends Controller
      */
     public function destroy($id)
     {
-        $testimoni = Testimoni::findOrFail($id);
-        $testimoni->delete();
-        return redirect()->back();
+        try {
+            $testimoni = Testimoni::findOrFail($id);
+            $testimoni->delete();
+            return response()->json(['status' => 'success', 'message' => 'Testimoni berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 }

@@ -105,7 +105,7 @@ class ProductController extends Controller
             'price' => 'required',
             'ie_gems' => 'required|numeric|min:0',
             'supported' => 'required',
-            'not_supported' => 'required',
+            'not_supported' => 'nullable',
             'answer_explanation_file' => 'required|file|mimes:pdf,doc,docx,zip|max:10240',
         ]);
 
@@ -129,7 +129,7 @@ class ProductController extends Controller
             'answer_explanation_file' => $fileName,
         ]);
 
-        return back()->with('success', 'Produk Berhasil ditambahkan');
+        return back()->with(['status' => 'success', 'message' => 'Produk berhasil ditambahkan.']);
     }
 
     /**
@@ -169,9 +169,14 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $product = Product::findOrFail($id);
-        $product->delete();
-        return back()->with('success', 'Produk berhasil dihapus');
+        try {
+            $product = Product::findOrFail($id);
+            $product->delete();
+            return response()->json(['status' => 'success', 'message' => 'Produk berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+        
     }
 
     public function generateScore($tryOutId)

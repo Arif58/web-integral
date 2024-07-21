@@ -29,16 +29,17 @@ class OrderController extends Controller
             'total_price' => 'required|numeric',
             'payment_method' => 'required|string',
         ]);
-
+        
+        $orderExistSuccess = Order::where('user_id', Auth::id())->where('product_id', $request->product_id)->where('status', 'success');
+        if ($orderExistSuccess->exists()) {
+            return redirect()->route('my-tryout')->with(['status' => 'error', 'message' => 'Anda sudah memiliki akses ke tryout ini.']);
+        }
+        
         $orderExistPending = Order::where('user_id', Auth::id())->where('product_id', $request->product_id)->where('status', 'pending');
         $orderExistPending->update([
             'status' => 'failed',
         ]);
 
-        $orderExistSuccess = Order::where('user_id', Auth::id())->where('product_id', $request->product_id)->where('status', 'success');
-        if ($orderExistSuccess->exists()) {
-            return redirect()->route('my-tryout')->with(['status' => 'error', 'message' => 'Anda sudah memiliki akses ke tryout ini.']);
-        }
 
         $order = Order::create([
             'product_id' => $request->product_id,

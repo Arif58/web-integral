@@ -473,8 +473,15 @@
                     radio.addEventListener('change', function () {
                         const checkedRadio = document.querySelectorAll('input[name^="is_correct"]:checked');
                         if (checkedRadio.length > 1) {
-                            alert('Anda hanya dapat memilih maksimal 1 jawaban yang benar.');
+                            // alert('Anda hanya dapat memilih maksimal 1 jawaban yang benar.');
                             this.checked = false;
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Perhatian',
+                                text: 'Anda hanya bisa memilih maksimal 1 jawaban benar.',
+                                showConfirmButton: true,
+                                timer: 2000
+                            });
                         }
                     });
 
@@ -526,8 +533,15 @@
                         radio.addEventListener('change', function () {
                         const checkedRadio = document.querySelectorAll('input[name^="is_correct"]:checked');
                             if (checkedRadio.length > 1) {
-                                alert('Anda hanya dapat memilih maksimal 1 jawaban yang benar.');
+                                // alert('Anda hanya dapat memilih maksimal 1 jawaban yang benar.');
                                 this.checked = false;
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'Perhatian',
+                                    text: 'Anda hanya bisa memilih maksimal 1 jawaban benar.',
+                                    showConfirmButton: true,
+                                    timer: 2000
+                                });
                             }
                         });
 
@@ -592,8 +606,15 @@
                     checkbox.addEventListener('change', function () {
                         const checkedCheckboxes = document.querySelectorAll('input[name^="is_correct"]:checked');
                         if (checkedCheckboxes.length > 2) {
-                            alert('Anda hanya dapat memilih maksimal 2 jawaban yang benar.');
+                            // alert('Anda hanya dapat memilih maksimal 2 jawaban yang benar.');
                             this.checked = false;
+                            Swal.fire({
+                                icon: 'info',
+                                title: 'Perhatian',
+                                text: 'Anda hanya bisa memilih maksimal 2 jawaban benar.',
+                                showConfirmButton: true,
+                                timer: 2000
+                            });
                         }
                     });
 
@@ -646,8 +667,15 @@
                         checkbox.addEventListener('change', function () {
                             const checkedCheckboxes = document.querySelectorAll('input[name^="is_correct"]:checked');
                             if (checkedCheckboxes.length > 2) {
-                                alert('Anda hanya dapat memilih maksimal 2 jawaban yang benar.');
+                                // alert('Anda hanya dapat memilih maksimal 2 jawaban yang benar.');
                                 this.checked = false;
+                                Swal.fire({
+                                    icon: 'info',
+                                    title: 'Perhatian',
+                                    text: 'Anda hanya bisa memilih maksimal 2 jawaban benar.',
+                                    showConfirmButton: true,
+                                    timer: 2000
+                                });
                             }
                         });
 

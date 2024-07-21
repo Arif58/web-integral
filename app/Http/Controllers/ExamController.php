@@ -212,7 +212,7 @@ class ExamController extends Controller
                 return $participant->user->username;
             })
             ->addColumn('average_score', function ($participant) {
-                $averageScore = number_format($participant->average_score, 2);
+                $averageScore = number_format($participant->average_score, 2, ',', '');
                 return $averageScore;
             })
             ->rawColumns(['ranking'])

@@ -29450,3 +29450,12 @@ Course Sidebar
   right: 15px;
   top: 20px;
 }
+
+.dot {
+  width: 7px; /* Ubah ukuran sesuai kebutuhan */
+  height: 7px; /* Ubah ukuran sesuai kebutuhan */
+  background-color: black; /* Warna titik */
+  border-radius: 50%; /* Membuatnya bulat */
+  /* display: inline-block; Membuatnya inline */
+  margin-right: 15px; /* Memberi jarak antara titik dengan teks */
+}

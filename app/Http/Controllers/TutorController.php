@@ -62,7 +62,7 @@ class TutorController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Tutor yang ditampilkan berhasil diperbarui.');
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Tutor yang ditampilkan berhasil diperbarui.']);
     }
 
     /**
@@ -95,7 +95,7 @@ class TutorController extends Controller
             'photo' => $imageName,
         ]);
 
-        return back()->with('success', 'Data tutor berhasil ditambahkan.');
+        return back()->with(['status' => 'success', 'message' => 'Data tutor berhasil ditambahkan.']);
     }
 
     /**
@@ -123,7 +123,7 @@ class TutorController extends Controller
         $tutor->education = $request->education;
         $tutor->save();
 
-        return back()->with('success', 'Data tutor berhasil diperbarui.');
+        return back()->with(['status' => 'success', 'message' => 'Data tutor berhasil diperbarui.']);
     }
 
     /**
@@ -131,8 +131,12 @@ class TutorController extends Controller
      */
     public function destroy($id)
     {
-        $tutor = Tutor::findOrFail($id);
-        $tutor->delete();
-        return redirect()->back();
+        try {
+            $tutor = Tutor::findOrFail($id);
+            $tutor->delete();
+            return response()->json(['status' => 'success', 'message' => 'Data tutor berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 }

@@ -23,15 +23,15 @@ class DashboardController extends Controller
                 ->join('try_outs', 'participants.tryout_id', '=', 'try_outs.id')
                 ->where('participants.user_id', auth()->id())
                 ->where('participants.average_score', '!=', null)
+                ->orderBy('try_outs.start_date', 'asc')
                 ->get();
             
             $tryOutAvg = Participant::select('participants.tryout_id', 'try_outs.name', DB::raw('AVG(participants.average_score) as avg_score'))
                 ->join('try_outs', 'participants.tryout_id', '=', 'try_outs.id')
                 ->whereNotNull('participants.average_score')
                 ->groupBy('participants.tryout_id', 'try_outs.name')
+                ->orderBy('try_outs.start_date', 'asc')
                 ->get();
-            // dd($tryOutAvg);
-            // dd($participantScore, $subtestAvg);
     
             return view('web.sections.dashboard.student.dashboard', compact('registeredExams', 'finishedExams', 'unfinishedExams', 'participantScore', 'tryOutAvg'));
         }

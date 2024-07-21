@@ -96,7 +96,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+        //rata-rata nilai peserta tryout
         let tryOutAvg = @json($tryOutAvg);
+
+        //rata-rata nilai user
         let participantScore = @json($participantScore);
 
         let tryOutName = [];
@@ -105,7 +108,8 @@
 
         participantScore.forEach(participant => {
             tryOutName.push(participant.name);
-            participantScoreData.push(participant.average_score);
+            //bulatkan nilai user ke 2 angka dibelakang koma
+            participantScoreData.push(Math.round(participant.average_score * 100) / 100);
 
             let averageScore = 0;
             tryOutAvg.forEach(avg => {
@@ -137,13 +141,13 @@
             datasets: [{
             label: 'Nilai Kamu',
             data: participantScoreData,
-            borderColor: 'rgb(22, 91, 170)',
+            borderColor: 'rgb(231, 164, 70)',
             borderWidth: 4,
             },
             {
             label: 'Nilai Rata-rata Peserta',
             data: tryOutAvgScore,
-            borderColor: 'rgb(161, 85, 185)',
+            borderColor: 'rgb(50, 101, 149)',
             borderWidth: 4,
             }]
         },

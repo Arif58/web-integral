@@ -48,7 +48,7 @@ class QnaController extends Controller
             'answer' => $request->answer,
         ]);
 
-        return back()->with('success', 'Pertanyaan dan jawaban berhasil ditambahkan.');
+        return back()->with(['status' => 'success', 'message' => 'Pertanyaan dan jawaban berhasil ditambahkan.']);
     }
 
     /**
@@ -69,7 +69,7 @@ class QnaController extends Controller
         $faq->answer = $request->answer;
         $faq->save();
 
-        return back()->with('success', 'Pertanyaan dan jawaban berhasil diperbarui.');
+        return back()->with(['status' => 'success', 'message' => 'Pertanyaan dan jawaban berhasil diperbarui.']);
     }
 
     /**
@@ -77,9 +77,14 @@ class QnaController extends Controller
      */
     public function destroy($id)
     {
-        $faq = Qna::findOrFail($id);
-        $faq->delete();
+        try {
+            $faq = Qna::findOrFail($id);
+            $faq->delete();
+    
+            return response()->json(['status' => 'success', 'message' => 'Pertanyaan dan jawaban berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
 
-        return redirect()->back();
     }
 }

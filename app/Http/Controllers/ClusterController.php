@@ -47,7 +47,7 @@ class ClusterController extends Controller
             'name' => $request->name,
         ]);
 
-        return back()->with('success', 'Cluster berhasil ditambahkan.');
+        return back()->with(['status' => 'success','message' => 'Rumpun berhasil ditambahkan.']);
     }
 
     /**
@@ -67,7 +67,7 @@ class ClusterController extends Controller
             'name' => $request->name,
         ]);
 
-        return back()->with('success', 'Cluster berhasil diperbarui.');
+        return back()->with(['status' => 'success','message' => 'Rumpun berhasil diperbarui.']);
     }
 
     /**
@@ -75,9 +75,14 @@ class ClusterController extends Controller
      */
     public function destroy($id)
     {
-        $cluster = Cluster::findOrFail($id);
-        $cluster->delete();
+        try {
+            $cluster = Cluster::findOrFail($id);
+            $cluster->delete();
 
-        return back()->with('success', 'Cluster berhasil dihapus.');
+            return response()->json(['status' => 'success','message' => 'Rumpun berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+        
     }
 }

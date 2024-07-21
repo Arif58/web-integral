@@ -70,7 +70,7 @@
                             <div class="row">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Try Out</label>
-                                    <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" placeholder="Nama Kategori">
+                                    <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" placeholder="Nama Try Out">
                                     @error('name')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -206,23 +206,56 @@
     // Handle delete button click
     $('#tryout-table').on('click', '.delete-tryout', function() {
         var tryOutId = $(this).data('id');
-        if (confirm('Are you sure you want to delete this tryout?')) {
-            $.ajax({
-                url: '/tryout/delete/' + tryOutId,
-                type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    alert('tryout deleted successfully.');
-                    location.reload();
-                },
-                error: function(xhr) {
-                    alert('Error deleting tryout.');
-                }
-            });
-        }
+        Swal.fire({
+            title: 'Anda yakin ingin menghapus tryout ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'red',
+            cancelButtonColor: 'transparent',
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal',
+            reverseButtons: true,
+            buttonsStyling: true,
+            width: '500px',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/tryout/delete/' + tryOutId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: response.message,
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Error deleting tryout.',
+                        });
+                    }
+                });
+            }
+        });
     });
+
 
    // Handle edit button click
    $('#tryout-table').on('click', '.edit-tryout', function(e) {

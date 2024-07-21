@@ -46,7 +46,7 @@ class UniversityController extends Controller
             'name' => $request->name,
         ]);
 
-        return back()->with('success', 'Universitas berhasil ditambahkan.');
+        return back()->with(['status' => 'success','message' => 'Universitas berhasil ditambahkan.']);
     }
 
     /**
@@ -66,7 +66,7 @@ class UniversityController extends Controller
             'name' => $request->name,
         ]);
 
-        return back()->with('success', 'Universitas berhasil diperbarui.');
+        return back()->with(['status' => 'success','message' => 'Universitas berhasil diperbarui.']);
     }
 
     /**
@@ -74,9 +74,13 @@ class UniversityController extends Controller
      */
     public function destroy($id)
     {
-        $university = University::findOrFail($id);
-        $university->delete();
+        try {
+            $university = University::findOrFail($id);
+            $university->delete();
 
-        return back()->with('success', 'Universitas berhasil dihapus.');
+            return response()->json(['status' => 'success', 'message' => 'Universitas berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 }

@@ -109,21 +109,41 @@
                             $statements = \App\Models\TestAnswer::select('statement')->where('question_id', $item->id)->distinct()->pluck('statement');
                         @endphp
                         @if($item->type !== 'pernyataan')
-                        <ul>
+                        {{-- <ul>
                             @foreach ($answers as $answer)
                             <li>
                                 @if($answer->is_correct)
-                                    @if ($item->type === 'pernyataan' || $item->type === 'isian_singkat')
+                                    @if ($item->type === 'isian_singkat')
                                         <p style="color: green;">{{ $answer->answer }}</p>
                                     @else
                                         {!! str_replace('<p>', '<p style="color: green;">', $answer->answer) !!}
+                                        <span><i class="feather feather-check"></i></span>
                                     @endif
                                 @else
                                 {!! $answer->answer !!}
                                 @endif
                             </li>
                             @endforeach
-                        </ul>
+                        </ul> --}}
+                        
+                        <div class="my-3">
+                            @foreach ($answers as $answer)
+                            @if ($item->type === 'isian_singkat')
+                                <p>Jawaban: {{ $answer->answer }}</p>
+                            @else                               
+                            <div class="d-flex mb-2">
+                                {{-- <div class="dot" style="top: 9px; position: relative;" ></div> --}}
+                                @if($answer->is_correct)
+                                    <i class="feather feather-check text-success font-weight-bold text-end me-3 align-content-center"></i>
+                                    {!! $answer->answer !!}
+                                @else
+                                    <i class="feather feather-x text-danger font-weight-bold text-end me-3 align-content-center"></i>
+                                    {!! $answer->answer !!}
+                                @endif
+                            </div>
+                            @endif
+                            @endforeach
+                        </div>
                         @else
                         <table class="table table-bordered">
                             <thead style="background-color: #F5F5F5">
@@ -151,12 +171,15 @@
                         </table>
                         @endif
                     </div>
-                    <div class="col-2 d-flex justify-content-center">
+                    <div class="col-lg-2 col-1 d-flex justify-content-center">
                         <a class="rbt-btn btn-sm bg-color-warning me-2" href="{{route('questions.edit', $item->id)}}"><i class="feather-edit pl--0"></i></a>
-                        <form action="{{route('questions.destroy', $item->id)}}" method="post">
+                        {{-- <form action="{{route('questions.destroy', $item->id)}}" method="post">
                             @csrf
                             <button class="rbt-btn btn-sm bg-color-danger" onclick="return confirm('Apakah anda yakin untuk menghapus pertanyaan?')"><i class="feather-trash pl--0"></i></button>
-                        </form>                        
+                        </form>                         --}}
+                        <a type="button" class="rbt-btn btn-sm bg-color-danger delete-button" data-id="{{$item->id}}">
+                            <i class="feather-trash pl--0"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -169,4 +192,62 @@
 </div>
 @endsection
 @push('scripts')
+<script>
+     // menambahkan event click pada class delete-button
+        $('.delete-button').on('click', function() {
+            event.preventDefault();
+            // mengambil id dari data-id pada button
+            let id = $(this).data('id');
+            // menampilkan alert konfirmasi dengan sweetalert
+            Swal.fire({
+                title: 'Anda yakin ingin menghapus soal ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'red',
+                cancelButtonColor: 'transparent',
+                confirmButtonText: 'Hapus',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+                buttonsStyling: true,
+                width: '500px',
+            }).then((result) => {
+                // jika tombol ya di klik maka akan menghapus data
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/soal/delete/' + id,
+                        type: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: response.message,
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: 'Error deleting Category Subtest.',
+                            });
+                        }
+                    });
+                }
+            });
+        });
+</script>
 @endpush

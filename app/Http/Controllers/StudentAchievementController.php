@@ -62,7 +62,7 @@ class StudentAchievementController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Urutan data siswa berprestasi berhasil diperbarui.']);
     }
 
     /**
@@ -103,23 +103,7 @@ class StudentAchievementController extends Controller
         ]);
 
         // Redirect kembali dengan pesan sukses
-        return back()->with('success', 'Prestasi siswa berhasil disimpan.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(StudentAchievement $studentAchievement)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(StudentAchievement $studentAchievement)
-    {
-        //
+        return back()->with(['status' => 'success', 'message' => 'Prestasi siswa berhasil disimpan.']);
     }
 
     /**
@@ -146,7 +130,7 @@ class StudentAchievementController extends Controller
         $achievement->school = $request->school;
         $achievement->save();
 
-        return redirect()->back();
+        return redirect()->back()->with(['status' => 'success', 'message' => 'Prestasi siswa berhasil diperbarui.']);
     }
 
     /**
@@ -154,9 +138,14 @@ class StudentAchievementController extends Controller
      */
     public function destroy($id)
     {
-        $achievement = StudentAchievement::findOrFail($id);
-        $achievement->delete();
+        try {
+            $achievement = StudentAchievement::findOrFail($id);
+            $achievement->delete();
 
-        return redirect()->back();
+            return response()->json(['status' => 'success', 'message' => 'Prestasi siswa berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
+        
     }
 }

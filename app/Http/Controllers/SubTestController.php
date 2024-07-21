@@ -71,23 +71,7 @@ class SubTestController extends Controller
             'duration' => $request->duration,
         ]);
 
-        return back()->with('success', 'Subtest berhasil ditambahkan.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(SubTest $subTest)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(SubTest $subTest)
-    {
-        //
+        return back()->with(['status' => 'success','message' => 'Subtest berhasil ditambahkan.']);
     }
 
     /**
@@ -113,7 +97,7 @@ class SubTestController extends Controller
             'duration' => $request->duration,
         ]);
 
-        return back()->with('success', 'Subtest berhasil diubah.');
+        return back()->with(['status' => 'success','message' => 'Subtest berhasil diperbarui.']);
     }
 
     /**
@@ -121,9 +105,13 @@ class SubTestController extends Controller
      */
     public function destroy($id)
     {
-        $subTest = SubTest::findOrFail($id);
-        $subTest->delete();
+        try {
+            $subTest = SubTest::findOrFail($id);
+            $subTest->delete();
 
-        return back()->with('success', 'Subtest berhasil dihapus.');
+            return response()->json(['status' => 'success','message' => 'Subtest berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 }
