@@ -95,7 +95,7 @@
             @endphp
             <span>Total : {{ $countQuestion }} soal</span> --}}
             @foreach($questions as $key => $item)
-            <div class="rbt-shadow-box overflow-visible mt-3">
+            <div class="overflow-visible mt-5" style="padding: 20px; border: 1px solid #E0E0E0; border-radius: 6px;">
                 <div class="row">
                     <div class="col-1">
                         {{ ++$no }}
