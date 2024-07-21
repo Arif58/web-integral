@@ -13631,7 +13631,8 @@ fieldset:disabled {
   line-height: 57px;
 }
 .rbt-btn.btn-border:hover {
-  background: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%);
+  /* background: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%); */
+  background: #ffff;
   border-color: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%);
   color: var(--color-white);
 }
@@ -17458,6 +17459,7 @@ input:checked + .slider:before {
   position: relative;
   z-index: 1;
   overflow: hidden;
+  height: 100%;
 }
 .rbt-counterup.border-bottom-gradient::before {
   /* background: linear-gradient(90deg, #CFA2E8, #637FEA); */
@@ -29458,4 +29460,68 @@ Course Sidebar
   border-radius: 50%; /* Membuatnya bulat */
   /* display: inline-block; Membuatnya inline */
   margin-right: 15px; /* Memberi jarak antara titik dengan teks */
+}
+
+@keyframes fadeInFromLeft {
+  from {
+      opacity: 0;
+      transform: translateX(-100%);
+  }
+  to {
+      opacity: 1;
+      transform: translateX(0);
+  }
+}
+
+@keyframes fadeInFromRight {
+  from {
+      opacity: 0;
+      transform: translateX(100%);
+  }
+  to {
+      opacity: 1;
+      transform: translateX(0);
+  }
+}
+
+@keyframes fadeInFromTop {
+  from {
+      opacity: 0;
+      transform: translateY(-100%);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes fadeInFromBottom {
+  from {
+      opacity: 0;
+      transform: translateY(200%);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.fade-in-left {
+  animation: fadeInFromLeft 1s ease-in-out;
+}
+
+.fade-in-left-2 {
+  animation: fadeInFromLeft 1.1s ease-in-out;
+}
+
+.fade-in-top {
+  animation: fadeInFromTop 1s ease-in-out;
+}
+
+.fade-in-bottom {
+  animation: fadeInFromBottom 1s ease-in-out;
+}
+
+.fade-in-right {
+  animation: fadeInFromRight 1s ease-in-out;
 }

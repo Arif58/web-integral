@@ -10,12 +10,12 @@
                     <div class="col-lg-6 order-2 order-lg-1">
                         <div class="content">
                             <div class="inner">
-                                <h1 class="title text-white">Belajar Bersama Try Out UTBK Integral Education</h1>
-                                <p class="description text-white">
+                                <h1 class="title text-white fade-in-left">Belajar Bersama Try Out UTBK Integral Education</h1>
+                                <p class="description text-white fade-in-left-2" style="font-size: 22px;">
                                     Kuasai soal-soal HOTS denga mengikuti Try Out UTBK Integral Education. Dapatkan poin IE Gems setiap kali kamu mengerjakan soal.
                                 </p>
                                 <div class="rbt-button-group justify-content-start mt--30">
-                                    <a class="rbt-btn btn-gradient" href="#tryout">
+                                    <a class="rbt-btn btn-gradient fade-in-bottom" href="#tryout">
                                         <span>Daftar Sekarang</span>
                                     </a>
                                 </div>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-lg-6 order-1 order-lg-2">
                         <div class="thumbnail-wrapper">
-                            <div class="thumbnail text-end">
+                            <div class="thumbnail text-end fade-in-right">
                                 <img src="{{asset('images/banner/pana.svg')}}" alt="Education Images">
                             </div>
                         </div>
@@ -190,7 +190,7 @@
             <div class="row mb--60">
                 <div class="col-lg-12">
                     <div class="section-title text-center">
-                        <h2 class="title">Cara Daftar Tryout</h2>
+                        <h2 class="title">Cara Mengikut Try Out</h2>
                     </div>
                 </div>
             </div>
@@ -205,7 +205,7 @@
                             </div>
                             <div class="content">
                                
-                                <span class="subtitle">Lorem ipsum dolor sit amet consectetur. Suscipit lacinia orci nisi sit potenti sem facilisi velit. Mi eget enim vehicula odio accumsan convallis molestie vivamus.</span>
+                                <span class="subtitle">Siswa melakukan registrasi akun bila belum mempunyai akun. Jika sudah mempunyai akun, siswa melakukan login.</span>
                             </div>
                         </div>
                     </div>
@@ -221,7 +221,7 @@
                             </div>
                             <div class="content">
                                
-                                <span class="subtitle">Lorem ipsum dolor sit amet consectetur. Suscipit lacinia orci nisi sit potenti sem facilisi velit. Mi eget enim vehicula odio accumsan convallis molestie vivamus.</span>
+                                <span class="subtitle">Pilih menu “Try Out UTBK”, lalu pilih Try Out yang ingin diikuti</span>
                             </div>
                         </div>
                     </div>
@@ -237,7 +237,7 @@
                             </div>
                             <div class="content">
                              
-                                <span class="subtitle">Lorem ipsum dolor sit amet consectetur. Suscipit lacinia orci nisi sit potenti sem facilisi velit. Mi eget enim vehicula odio accumsan convallis molestie vivamus.</span>
+                                <span class="subtitle">Siswa membayar biaya pendaftaran menggunakan QRIS atau IE Gems.</span>
                             </div>
                         </div>
                     </div>
@@ -253,7 +253,8 @@
                             </div>
                             <div class="content">
                                
-                                <span class="subtitle">Lorem ipsum dolor sit amet consectetur. Suscipit lacinia orci nisi sit potenti sem facilisi velit. Mi eget enim vehicula odio accumsan convallis molestie vivamus.</span>
+                                <span class="subtitle">Siswa mengerjakan Try Out di waktu yang sudah dijadwalkan
+                                </span>
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
     <div class="footer-top">
         <div class="container">
             <div class="row g-5">
-                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="footer-widget">
                         <div class="logo">
                             <a href="index.html">
@@ -30,7 +30,7 @@
                         </ul> --}}
 
                         <div class="contact-btn mt--30">
-                            <a class="rbt-btn hover-icon-reverse btn-border-gradient radius-round" href="#">
+                            <a class="rbt-btn hover-icon-reverse btn-border-gradient radius-round" href="https://wa.me/6289626575729" target="_blank">
                                 <div class="icon-reverse-wrapper">
                                     <span class="btn-text">Hubungi Kami</span>
                                     <span class="btn-icon"><i class="feather-arrow-right"></i></span>
@@ -43,8 +43,8 @@
 
                 <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                     <div class="footer-widget">
-                        <h5 class="ft-title">Kantor Administrasi</h5>
-                        <p>Lorem ipsum dolor sit amet consectetur. Justo scelerisque magna nibh diam elit tristique duis nisi. Et eget cursus commodo arcu.</p>
+                        <h5 class="ft-title">Pusat Administrasi</h5>
+                        <p>Parakancanggah, Banjarnegara, Jawa Tengah.</p>
                     </div>
                 </div>
 
@@ -53,33 +53,31 @@
                         <h5 class="ft-title">Perusahaan</h5>
                         <ul class="ft-link">
                             <li>
-                                <a href="contact.html">Tentang Kami</a>
+                                <a href="/#about">Tentang Kami</a>
                             </li>
                             <li>
-                                <a href="become-a-teacher.html">Testimoni</a>
+                                <a href="/#testimoni">Testimoni</a>
                             </li>
                             <li>
-                                <a href="blog.html">Prestasi Siswa</a>
+                                <a href="/#achievement">Prestasi Siswa</a>
                             </li>
                             <li>
-                                <a href="instructor.html">Tutor</a>
+                                <a href="/#tutor">Tutor</a>
                             </li>
-                            <li>
-                                <a href="event-list.html">Lowongan Tutor</a>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                     <div class="footer-widget">
                         <h5 class="ft-title">Kontak Kami</h5>
                         <ul class="ft-link">
                             <li><span><i class="feather-phone"></i></span> <a href="https://wa.me/6289626575729" target="_blank">089626575729</a></li>
                             <li><span><i class="feather-mail"></i></span> <a href="https://gmail.com" target="_blank">integraleducation03@gmail.com</a></li>
                             <li><span><i class="feather-instagram"></i></span> <a href="https://www.instagram.com/integral.education" target="_blank">@integral.education</a></li>
-                            <li><span><i><img src="{{asset('images/icons/tiktok.svg')}}"></img></i></span> <a href="">@integral.education</a></li>
-                            <li><span><i class="feather-youtube"></i></span> <a href="">Integral Education</a></li>
+                            <li><span><i><img src="{{asset('images/icons/tiktok.svg')}}"></img></i></span> <a href="https://www.tiktok.com/@integral.education?_t=8oD1locsOzx&_r=1" target="_blank">@integral.education</a></li>
+                            <li><span><i class="feather-youtube"></i></span> <a href="https://www.youtube.com/@integral.education" target="_blank">Integral Education</a></li>
 
 
                         </ul>

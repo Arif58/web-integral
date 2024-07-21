@@ -1,5 +1,6 @@
 @extends('web.layout')
 @section('title', 'Beranda')
+
 @section('content')
     <main class="rbt-main-wrapper">
         <!-- Start Banner Area -->
@@ -10,12 +11,12 @@
                         <div class="col-lg-6 order-2 order-lg-1">
                             <div class="content">
                                 <div class="inner">
-                                    <h1 class="title text-white">Sukses UTBK-SNBT Bersama Try Out Integral Education</h1>
-                                    <p class="description text-white">
+                                    <h1 class="title text-white fade-in-left">Sukses UTBK-SNBT Bersama Try Out Integral Education</h1>
+                                    <p class="description text-white fade-in-left-2" style="font-size: 22px;">
                                         Persiapkan dirimu dalam menghadapi UTBK-SNBT dengan mengikuti Try Out Integral Education!
                                     </p>
                                     <div class="rbt-button-group justify-content-start mt--30">
-                                        <a class="rbt-btn btn-gradient" href="/try-out-utbk#tryout">
+                                        <a class="rbt-btn btn-gradient fade-in-bottom" href="/try-out-utbk#tryout">
                                             <span>Daftar Try Out Sekarang</span>
                                         </a>
                                     </div>
@@ -24,7 +25,7 @@
                         </div>
                         <div class="col-lg-6 order-1 order-lg-2">
                             <div class="thumbnail-wrapper">
-                                <div class="thumbnail text-end">
+                                <div class="thumbnail text-end fade-in-right">
                                     <img src="{{asset('images/banner/pana.svg')}}" alt="Education Images">
                                 </div>
                             </div>
@@ -119,7 +120,7 @@
         <!-- End Category Area  -->
 
         <!-- Start Testimonial Area  -->
-        <div class="rbt-testimonial-area bg-color-white rbt-section-gap overflow-hidden">
+        <div class="rbt-testimonial-area bg-color-white rbt-section-gap overflow-hidden" id="testimoni">
             {{-- <div class="wrapper">
                 <div class="container">
                     <div class="row">
@@ -194,7 +195,7 @@
         <!-- End Testimonial Area  -->
 
         <!-- Start Prestasi Area  -->
-        <div class="rbt-team-area bg-color-white rbt-section-gap">
+        <div class="rbt-team-area bg-color-white rbt-section-gap" id="achievement">
             <div class="container">
                 <div class="row mb--60">
                     <div class="col-lg-12">
@@ -242,7 +243,7 @@
         <!-- End Prestasi Area  -->
 
         <!-- Start About Us Area  -->
-        <div class="rbt-about-area about-style-1 bg-gradient-18 rbt-section-gap">
+        <div class="rbt-about-area about-style-1 bg-gradient-18 rbt-section-gap" id="about">
             <div class="container">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">
@@ -255,14 +256,10 @@
                             <div class="section-title text-start">
                                 <span class="subtitle bg-primary-opacity">About Integral Education</span>
                                 <h2 class="title text-white">Apa itu Integral Education?</h2>
-                                <p class="description mt--20" style="color: #E0E0E0">Integral Education memfasilitasi siswa SD, SMP, SMA, dan Mahasiswa dalam mempersiapkan kegiatan belajar menghadapi ujian, olimpiade, dan persiapan masuk PTN bagi siswa SMA. Integral Education telah meluluskan puluhan siswa SMA ke perguruan tinggi diantaranya UI, UGM, IPB, UNDIP, UNPAD, dan lain-lain.</p>
-                                <div class="read-more-btn mt--40">
-                                    <a class="rbt-btn btn-gradient radius-round rbt-marquee-btn marquee-text-y" href="#">
-                                        <span data-text="More About Us">
-                                    More About Us
-                                </span>
-                                    </a>
-                                </div>
+                                <p class="description mt--20" style="color: #E0E0E0">Bimbingan Belajar Integral Education adalah bimbel yang berdedikasi untuk memfasilitasi siswa dari tingkat SD, SMP, SMA, hingga mahasiswa dalam mempersiapkan kegiatan belajar menghadapi berbagai ujian seperti ujian sekolah, olimpiade, dan persiapan masuk Perguruan Tinggi Negeri (PTN) bagi siswa SMA kelas XII. Beberapa diantara mereka telah lolos di beberapa universitas diantaranya UI, UGM, IPB, Undip, 
+                                    </p>
+                                    <p class="description mt--20" style="color: #E0E0E0">Dengan pendekatan pengajaran yang inovatif dan personal, Integral Education memastikan setiap siswa mendapatkan pembimbingan yang optimal. Melalui program dan metode pengajaran yang terbukti efektif, kami membantu siswa meraih prestasi akademik terbaik.</p>
+                                
                             </div>
                         </div>
                     </div>
@@ -272,7 +269,7 @@
         <!-- End About Us Area  -->
 
         <!-- Start Tutor Area  -->
-        <div class="rbt-team-area bg-color-extra2 rbt-section-gap">
+        <div class="rbt-team-area bg-color-extra2 rbt-section-gap" id="tutor">
             <div class="container">
                 <div class="row mb--60">
                     <div class="col-lg-12">
@@ -293,8 +290,8 @@
                             </div>
                             <div class="content">
                                 <h4 class="title">{{$item->name}}</h4>
-                                <p class="designation mb--0 mt-2">{{$item->position}}</p>
-                                <p class="designation" style="font-size: 11px;">{{$item->education}}</p>
+                                <p class="designation mb--0 mt-2" style="font-weight: bold;">{{$item->position}}</p>
+                                <p class="designation" style="font-size: 11px; margin-top: 5px;">{{$item->education}}</p>
                             </div>
                             {{-- <ul class="social-icon">
                                 <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
@@ -347,7 +344,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade advance-tab-content-1 active show" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="thumbnail">
-                                    <img src="{{ asset("images/tab/tabs-03.jpg")}}"alt="advance-tab-image" loading="lazy">
+                                    <img src="{{ asset("images/banner/alur-pendaftaran-bimbel.jpg")}}"alt="advance-tab-image" loading="lazy" style="width: 860px !important;">
                                 </div>
 
                             </div>
