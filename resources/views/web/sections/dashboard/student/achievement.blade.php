@@ -32,6 +32,9 @@
             text-align: center;
         }
         
+        .badge-active {
+            border: 1px solid #70A4C6;
+        }
     </style>    
 @endpush
 @section('content')
@@ -45,7 +48,7 @@
 
                     <!-- Start Single Card  -->
                     <div class="col-lg-4 col-md-6 col-sm-6 col-12 mt--30" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-                        <div class="rbt-card variation-03 rbt-hover">
+                        <div class="rbt-card variation-03 rbt-hover @if($isCompletedThreeTryOuts) badge-active @endif">
                             <button class="thumbnail-link border-0" type="button" data-bs-toggle="modal" data-bs-target="#completedThreeTryOuts" data-bs-dismiss="modal" style="background: transparent;">
                             <div class="rbt-card-img">
                                 <img @if($isCompletedThreeTryOuts) src="{{asset('images/badges/Badges 3x Challenger - ON.svg')}}" @else src="{{asset('images/badges/Badges 3x Challenger - OFF.svg')}}" @endif  alt="Card image">
@@ -63,7 +66,7 @@
 
                     <!-- Start Single Card  -->
                     <div class="col-lg-4 col-md-6 col-sm-6 col-12 mt--30" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-                        <div class="rbt-card variation-03 rbt-hover">
+                        <div class="rbt-card variation-03 rbt-hover @if($isCompletedFiveTryOuts) badge-active @endif">
                             <button class="thumbnail-link border-0" type="button" data-bs-toggle="modal" data-bs-target="#completedFiveTryOuts" data-bs-dismiss="modal" style="background: transparent;">
                             <div class="rbt-card-img">
                                     <img @if($isCompletedFiveTryOuts) src="{{asset('images/badges/Badges 5x Challenger - ON.svg')}}" @else src="{{asset('images/badges/Badges 5x Challenger - OFF.svg')}}" @endif alt="Card image">
@@ -81,7 +84,7 @@
 
                     <!-- Start Single Card  -->
                     <div class="col-lg-4 col-md-6 col-sm-6 col-12 mt--30" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-                        <div class="rbt-card variation-03 rbt-hover">
+                        <div class="rbt-card variation-03 rbt-hover @if($isScoreOneTryOutAboveSixHundredsFifty) badge-active @endif">
                             <button class="thumbnail-link border-0" type="button" data-bs-toggle="modal" data-bs-target="#sixHundredsFiftyStar" data-bs-dismiss="modal" style="background: transparent;">
                             <div class="rbt-card-img">
                                 <img @if($isScoreOneTryOutAboveSixHundredsFifty) src="{{asset('images/badges/Badges 650 Star - ON.svg')}}" @else src="{{asset('images/badges/Badges 650 Star - OFF.svg')}}" @endif alt="Card image">
@@ -99,7 +102,7 @@
 
                     <!-- Start Single Card  -->
                     <div class="col-lg-4 col-md-6 col-sm-6 col-12 mt--30" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-                        <div class="rbt-card variation-03 rbt-hover">
+                        <div class="rbt-card variation-03 rbt-hover @if($isScoreThreeTryOutsAboveSixHundredsFifty) badge-active @endif">
                             <button class="thumbnail-link border-0" type="button" data-bs-toggle="modal" data-bs-target="#sixHundredsFiftySpecialist" data-bs-dismiss="modal" style="background: transparent;">
                             <div class="rbt-card-img">
                                     <img @if($isScoreThreeTryOutsAboveSixHundredsFifty) src="{{asset('images/badges/Badges 650 Specialist - ON.svg')}}" @else src="{{asset('images/badges/Badges 650 Specialist - OFF.svg')}}" @endif alt="Card image">
@@ -117,7 +120,7 @@
 
                     <!-- Start Single Card  -->
                     <div class="col-lg-4 col-md-6 col-sm-6 col-12 mt--30" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-                        <div class="rbt-card variation-03 rbt-hover">
+                        <div class="rbt-card variation-03 rbt-hover @if($isTenRankingOneTryOut) badge-active @endif">
                             <button class="thumbnail-link border-0" type="button" data-bs-toggle="modal" data-bs-target="#topTenRookie" data-bs-dismiss="modal" style="background: transparent;">
                             <div class="rbt-card-img">
                                     <img @if($isTenRankingOneTryOut) src="{{asset('images/badges/Badges Top 10 Rookie - ON.svg')}}" @else src="{{asset('images/badges/Badges Top 10 Rookie - OFF.svg')}}" @endif alt="Card image">
@@ -134,7 +137,7 @@
 
                     <!-- Start Single Card  -->
                     <div class="col-lg-4 col-md-6 col-sm-6 col-12 mt--30" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-                        <div class="rbt-card variation-03 rbt-hover">
+                        <div class="rbt-card variation-03 rbt-hover @if($isTenRankingThreeTryOuts) badge-active @endif">
                             <button class="thumbnail-link border-0" type="button" data-bs-toggle="modal" data-bs-target="#topTenSpecialist" data-bs-dismiss="modal" style="background: transparent;">
                             <div class="rbt-card-img">
                                     <img @if($isTenRankingThreeTryOuts) src="{{asset('images/badges/Badges Top 10 Pro - ON.svg')}}" @else src="{{asset('images/badges/Badges Top 10 Pro - OFF.svg')}}" @endif alt="Card image">

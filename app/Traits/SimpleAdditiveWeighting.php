@@ -28,6 +28,11 @@ trait SimpleAdditiveWeighting {
         $firstMajor = $participant->user()->first()->first_major;
         $secondMajor = $participant->user()->first()->second_major;
 
+        $interestWeight = $this->weightCriteria(1, 3);
+        $universityWeight = $this->weightCriteria(2, 3);
+        $passingGradeWeight = $this->weightCriteria(3, 3);
+
+
         if ($interest !== null) {
 
             if ($firstMajor === null || $secondMajor === null) {
@@ -48,7 +53,7 @@ trait SimpleAdditiveWeighting {
         
                 $majorScore = [];
                 foreach ($matriksTernomalisasi as $majorId => $value) {
-                    $majorScore[$majorId] = ($value['interest']*0.4761904762) + ($value['university']*0.1904761905) + ($value['passing_grade']*0.3333333333);
+                    $majorScore[$majorId] = ($value['interest']*$interestWeight) + ($value['university']*$universityWeight) + ($value['passing_grade']*$passingGradeWeight);
                 }
         
                 $majorScore = collect($majorScore)->sortDesc();
@@ -67,10 +72,23 @@ trait SimpleAdditiveWeighting {
 
     }
 
+    public function weightCriteria($rankingPriority, $max)
+    {
+        $alternatif = 0;
+        for ($i=$rankingPriority; $i<$max+1; $i++) {
+            $criteria = 1/$i;
+            $alternatif += $criteria;
+        }
+
+
+        $weight = $alternatif / $max;
+        return $weight;
+    }
+
     public function interestCriteria($major, $interest)
     {
         if ($major->cluster_id == $interest) {
-            return 3;
+            return 2;
         } else {
             return 1;
         }

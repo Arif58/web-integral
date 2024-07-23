@@ -13631,8 +13631,8 @@ fieldset:disabled {
   line-height: 57px;
 }
 .rbt-btn.btn-border:hover {
-  /* background: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%); */
-  background: #ffff;
+  background: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%);
+  /* background: #ffff; */
   border-color: linear-gradient(rgb(231, 164, 70) 0%, rgb(220, 127, 63) 100%);
   color: var(--color-white);
 }
