@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tutor;
+use App\Traits\HighlightedOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class TutorController extends Controller
 {
+    use HighlightedOrder;
     /**
      * Display a listing of the resource.
      */
@@ -49,20 +51,27 @@ class TutorController extends Controller
         $highlightedOrder = $request->highlighted_order;
 
         // Proses data yang diterima dari formulir
-        foreach ($highlightedOrder as $order => $tutorId) {
-            if ($tutorId == null) {
-                Tutor::where('highlighted_order', $order + 1)->update([
-                    'highlighted_order' => null,
-                ]);
-            }
-            else {
-                Tutor::where('id', $tutorId)->update([
-                    'highlighted_order' => $order + 1,
-                ]);
-            }
-        }
+        // foreach ($highlightedOrder as $order => $tutorId) {
+        //     if ($tutorId == null) {
+        //         Tutor::where('highlighted_order', $order + 1)->update([
+        //             'highlighted_order' => null,
+        //         ]);
+        //     }
+        //     else {
+        //         Tutor::where('id', $tutorId)->update([
+        //             'highlighted_order' => $order + 1,
+        //         ]);
+        //     }
+        // }
 
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Tutor yang ditampilkan berhasil diperbarui.']);
+        // return redirect()->back()->with(['status' => 'success', 'message' => 'Tutor yang ditampilkan berhasil diperbarui.']);
+
+        try {
+            $this->updateHighlightedOrder($highlightedOrder, Tutor::class);
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Urutan tutor yang ditampilkan berhasil diperbarui.']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 
     /**

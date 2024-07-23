@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Testimoni;
+use App\Traits\HighlightedOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class TestimoniController extends Controller
 {
+    use HighlightedOrder;
     /**
      * Display a listing of the resource.
      */
@@ -48,21 +50,12 @@ class TestimoniController extends Controller
 
         $highlightedOrder = $request->highlighted_order;
 
-        // Proses data yang diterima dari formulir
-        foreach ($highlightedOrder as $order => $testimonialId) {
-            if ($testimonialId == null) {
-                Testimoni::where('highlighted_order', $order + 1)->update([
-                    'highlighted_order' => null,
-                ]);
-            }
-            else {
-                Testimoni::where('id', $testimonialId)->update([
-                    'highlighted_order' => $order + 1,
-                ]);
-            }
+        try {
+            $this->updateHighlightedOrder($highlightedOrder, Testimoni::class);
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Urutan testimoni yang ditampilkan berhasil diperbarui.']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
-
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Testimoni yang ditampilkan berhasil diperbarui.']);
     }
 
     /**

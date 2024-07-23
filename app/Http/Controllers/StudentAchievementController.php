@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\StudentAchievement;
+use App\Traits\HighlightedOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class StudentAchievementController extends Controller
 {
+    use HighlightedOrder;
     /**
      * Display a listing of the resource.
      */
@@ -48,21 +50,12 @@ class StudentAchievementController extends Controller
 
         $highlightedOrder = $request->highlighted_order;
 
-        // Proses data yang diterima dari formulir
-        foreach ($highlightedOrder as $order => $achievementId) {
-            if ($achievementId == null) {
-                StudentAchievement::where('highlighted_order', $order + 1)->update([
-                    'highlighted_order' => null,
-                ]);
-            }
-            else {
-                StudentAchievement::where('id', $achievementId)->update([
-                    'highlighted_order' => $order + 1,
-                ]);
-            }
+        try {
+            $this->updateHighlightedOrder($highlightedOrder, StudentAchievement::class);
+            return redirect()->back()->with(['status' => 'success', 'message' => 'Urutan data siswa berprestasi yang ditampilkan berhasil diperbarui.']);
+        } catch (\Exception $e) {
+            return redirect()->back()->with(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
-
-        return redirect()->back()->with(['status' => 'success', 'message' => 'Urutan data siswa berprestasi berhasil diperbarui.']);
     }
 
     /**
