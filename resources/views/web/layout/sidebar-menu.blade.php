@@ -44,7 +44,7 @@
         </a>
         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionThree">
             <ul>
-                <li class="mt-2 mb--0 ms-3"><a href="/kategori-subtest"><span>Subtest Kategori</span></a></li>
+                <li class="mt-2 mb--0 ms-3"><a href="/kategori-subtest"><span>Kategori Subtest</span></a></li>
                 <li class="border-top-0 my-0 ms-3"><a href="/tryout"><span>Try Out</span></a></li>
             </ul>
         </div>

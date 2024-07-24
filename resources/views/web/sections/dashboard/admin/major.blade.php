@@ -139,7 +139,7 @@
             <div class="modal-content" style="padding: 30px">
                 <div class="modal-header pb--5 justify-content-center">
                     <h4 class="title">
-                        Ubah Tutor
+                        Ubah Program Studi
                     </h4>
                 </div>
                 <div class="modal-body" style="border-top: 1px solid #dee2e6">

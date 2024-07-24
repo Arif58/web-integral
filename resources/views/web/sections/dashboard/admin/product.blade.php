@@ -49,6 +49,7 @@
                         <th>Price</th>
                         <th>Ie Gems</th>
                         <th>Peserta</th>
+                        <th>Nilai Diproses</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -195,6 +196,7 @@
                 { data: 'price', name: 'price'},
                 { data: 'ie_gems', name: 'ie_gems'},
                 { data: 'participants', name: 'participants'},
+                { data: 'is_grading_completed', name: 'is_grading_completed'},
                 { data: 'action', name: 'action'},
             ]
         });

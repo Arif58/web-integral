@@ -36,10 +36,13 @@ class UserManagementController extends Controller
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-
-        return response()->json(['message' => 'User berhasil dihapus.']);
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            return response()->json(['status' => 'success','message' => 'User berhasil dihapus.']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error','message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
 
     public function show($id)

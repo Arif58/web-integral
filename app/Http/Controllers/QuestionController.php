@@ -103,9 +103,9 @@ class QuestionController extends Controller
                 }
                 
             });
-            return redirect()->route('questions', $id)->with(['status' => 'success','message' => 'Pertanyaan berhasil ditambahkan.']);
+            return redirect()->route('questions', $id)->with(['status' => 'success','message' => 'Soal berhasil ditambahkan.']);
         } catch (QueryException $e) {
-            return back()->with(['status' => 'error', 'message' => 'Gagal menambahkan pertanyaan karena.'.$e->getMessage()]);
+            return back()->with(['status' => 'error', 'message' => 'Gagal menambahkan soal karena.'.$e->getMessage()]);
         }
         
 
@@ -210,9 +210,9 @@ class QuestionController extends Controller
                 }
                 
             });
-            return redirect()->route('questions', $request->sub_test_id)->with(['status' => 'success','message' => 'Pertanyaan berhasil diubah.']);
+            return redirect()->route('questions', $request->sub_test_id)->with(['status' => 'success','message' => 'Soal berhasil diubah.']);
         } catch (QueryException $e) {
-            return back()->with(['status' => 'error', 'message' => 'Gagal mengubah pertanyaan karena.'.$e->getMessage()]);
+            return back()->with(['status' => 'error', 'message' => 'Gagal mengubah soal karena.'.$e->getMessage()]);
         }
     }
 
@@ -226,7 +226,7 @@ class QuestionController extends Controller
             // $subtestId = $question->sub_test_id;
             $question->delete();
 
-            return response()->json(['status' => 'success','message' => 'Pertanyaan berhasil dihapus.']);
+            return response()->json(['status' => 'success','message' => 'Soal berhasil dihapus.']);
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }

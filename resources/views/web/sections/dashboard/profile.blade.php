@@ -29,7 +29,9 @@
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0">
                 Profil Saya
             </h4>
+            @if($profile->role == 'student')
             <a href="{{route('profile.edit', $profile->id)}}"><p class="font-weight-light edit">Ubah</p></a>
+            @endif
         </div>
         <!-- Start Profile Row  -->
         <div class="rbt-profile-row row row--15 pt--30">
@@ -64,6 +66,7 @@
         </div>
         <!-- End Profile Row  -->
 
+        @if($profile->role == 'student')
         <!-- Start Profile Row  -->
         <div class="rbt-profile-row row row--15 mt--15">
             <div class="col-lg-4 col-md-4">
@@ -127,7 +130,6 @@
         <!-- End Profile Row  -->
     </div>
 
-    @if(Auth::user()->role == 'student')
     <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">
         <div class="section-title d-flex justify-content-between">
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0">

@@ -54,10 +54,16 @@ class ProductController extends Controller
             ->addColumn('participants', function ($product) {
                 return $product->participants->count();
             })
+            ->addColumn('is_grading_completed', function ($product) {
+                if($product->tryOut == null) {
+                    return '-';
+                }
+                return $product->tryOut->is_grading_completed ? 'Sudah' : 'Belum';
+            })
             ->addColumn('action', function ($product) {
                 $dateNow = Carbon::parse(now())->setTimezone('Asia/Jakarta');
 
-                if($product->tryOut->end_date < $dateNow && $product->tryOut->is_grading_completed == false) {
+                if(($product->tryOut->end_date < $dateNow && $product->tryOut->is_grading_completed == false) && $product->participants->count() > 0) {
                     return '
                     <div class="row text-center">
                         <div class="col-12">
