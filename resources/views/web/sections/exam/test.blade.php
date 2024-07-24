@@ -58,9 +58,15 @@
             margin-bottom: 5px;
         }
 
+        .scrollable {
+            max-height: 500px;
+            overflow: scroll;
+        }
+        
+
     </style>
 </head>
-<body>
+<body class="rbt-header-sticky">
     <header class="rbt-header rbt-header-10">
         <div class="rbt-sticky-placeholder"></div>
         <div class="rbt-header-wrapper header-space-betwween header-sticky">
@@ -129,7 +135,7 @@
                     <div class="row g-5">
                         <div class="col-lg-4">
                             <!-- Start Dashboard Sidebar  -->
-                            <div class="rbt-default-sidebar sticky-top rbt-shadow-box" style="top: 10px;">
+                            <div class="rbt-default-sidebar sticky-top rbt-shadow-box" style="top: 90px;">
                                 <div class="inner">
                                     <div class="content-item-content">
 
@@ -163,7 +169,7 @@
                                     <h5 class="rbt-title-style-3" id="question_number">
 
                                     </h5>
-                                    <div id="question_text">
+                                    <div id="question_text"  class="scrollable">
 
                                     </div>
                                     {{-- {!! $item->question_text !!} --}}
@@ -443,6 +449,7 @@
                         let label = document.createElement('label');
                         label.htmlFor = 'choice_' + choice.id;
                         label.innerHTML = choice.answer;
+                        label.style.width = '100%';
 
                         divRadio.appendChild(input);
                         divRadio.appendChild(label);
@@ -488,6 +495,7 @@
                         let label = document.createElement('label');
                         label.htmlFor = 'choice_' + choice.id;
                         label.innerHTML = choice.answer;
+                        label.style.width = '100%';
 
                         divRadio.appendChild(input);
                         divRadio.appendChild(label);
