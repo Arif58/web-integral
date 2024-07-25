@@ -19,7 +19,7 @@ class EnsureProfileCompleted
         // Cek apakah pengguna telah menyelesaikan profil
         if ($request->user()->role !== 'admin' && !$request->user()->is_completed) {
             // Redirect pengguna ke halaman untuk menyelesaikan profil
-            return redirect()->route('complete-profile');
+            return redirect()->route('complete-profile')->with(['status' => 'error', 'message' => 'Silakan lengkapi profil Anda terlebih dahulu.']);
         }
         return $next($request);
     }

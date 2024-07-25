@@ -339,7 +339,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-lg-9 col-md-12 col-sm-12 col-12 order-1 order-lg-2" style="padding-right: 0px">
+                    <div class="col-lg-9 col-md-12 col-sm-12 col-12 order-1 order-lg-2">
                         <div class="tab-content">
                             <div class="tab-pane fade advance-tab-content-1 active show" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="thumbnail">
@@ -349,8 +349,7 @@
                             </div>
                             <div class="tab-pane fade advance-tab-content-1" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="thumbnail">
-                                    <img src="{{ asset("images/tab/tabs-02.jpg")}}"alt="advance-tab-image" loading="lazy">
-                                </div>
+                                    <img src="{{ asset("images/banner/alur-pendaftaran-try-out.jpg")}}"alt="advance-tab-image" loading="lazy" style="width: 860px !important;">                                </div>
                             </div>
                         </div>
                     </div>

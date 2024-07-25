@@ -56,7 +56,7 @@
                                 <img class="opacity_image" src="{{asset('images/shape/service-04.png')}}" alt="Shape Images">
                             </div>
                             <div class="content">
-                                <h6 class="title"><a href="#">Soal Variatif</a></h6>
+                                <h6 class="title"><a>Soal Variatif</a></h6>
                                 <p class="description">Soal soalnya variatif dan mirip dengan UTBK, karena diadaptasi dari soal tahun lalu. Kamu juga akan mendapat file pembahasan tiap paket Tryout!
                                 </p>
                             </div>
@@ -74,7 +74,7 @@
                                 <img class="opacity_image" src="{{asset('images/shape/service-02.png')}}" alt="Shape Images">
                             </div>
                             <div class="content">
-                                <h6 class="title"><a href="#">Penilaian IRT</a></h6>
+                                <h6 class="title"><a>Penilaian IRT</a></h6>
                                 <p class="description">Penilaian menggunakan sistem IRT (Item Response Theory) sama seperti penilaian UTBK</p>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                                 <img class="opacity_image" src="{{asset('images/shape/service-03.png')}}" alt="Shape Images">
                             </div>
                             <div class="content">
-                                <h6 class="title"><a href="#">Rekomendasi Jurusan</a></h6>
+                                <h6 class="title"><a>Rekomendasi Jurusan</a></h6>
                                 <p class="description">Terdapat fitur rekomendasi jurusan sesuai dengan skor UTBK kamu</p>
                             </div>
                         </div>
@@ -108,7 +108,7 @@
                                 <img class="opacity_image" src="{{asset('images/shape/service-01.png')}}" alt="Shape Images">
                             </div>
                             <div class="content">
-                                <h6 class="title"><a href="#">Perankingan</a></h6>
+                                <h6 class="title"><a>Perankingan</a></h6>
                                 <p class="description">Terdapat sistem perankingan yang dapat menjadi pembandingmu dengan peserta Tryout lain</p>
                             </div>
                         </div>
