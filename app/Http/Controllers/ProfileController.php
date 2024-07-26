@@ -38,8 +38,7 @@ class ProfileController extends Controller
         try {
             $request->validate([
                 'fullname' => 'required',
-                'username' => 'required',
-                // 'email' => 'required|email',
+                'username' => 'unique:users,username,' . $id,
                 'phone' => 'required',
                 'level' => 'required',
                 'institution' => 'required',

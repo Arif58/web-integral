@@ -165,7 +165,7 @@ class ExamController extends Controller
                                 ->join('category_subtests', 'sub_tests.category_subtest_id', '=', 'category_subtests.id')
                                 ->whereIn('questions.sub_test_id', $subTestIds)
                                 ->where('user_item_scores.participant_id', $participantId)
-                                ->groupBy('questions.sub_test_id')
+                                ->groupBy('questions.sub_test_id', 'subtest_name', 'category_name')
                                 ->get();
 
         $totalQuestion = Question::whereIn('sub_test_id', $subTestIds)->count();
