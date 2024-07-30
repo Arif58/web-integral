@@ -47,18 +47,9 @@
 
                 </ul>
 
-                <!-- Start Mobile-Menu-Bar -->
-                <div class="mobile-menu-bar d-block d-xl-none">
-                    <div class="hamberger">
-                        <button class="hamberger-button rbt-round-btn">
-                            <i class="feather-menu"></i>
-                        </button>
-                    </div>
-                </div>
-                <!-- Start Mobile-Menu-Bar -->
+                
 
             </div>
         </div>
     </div>
 </div>
-<a class="rbt-close_side_menu" href="javascript:void(0);"></a>

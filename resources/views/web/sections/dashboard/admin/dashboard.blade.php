@@ -131,17 +131,22 @@
         let incomeNameList = [];
         let incomeTotal = [];
 
-        products.forEach((product) => {
+        // products.forEach((product) => {
+        //     incomeNameList.push(product.name);
+        //     let total = 0;
+        //     income.forEach((incomeData) => {
+        //         if (incomeData.tryout_id === product.tryout_id) {
+        //             total = incomeData.total;
+        //         } else {
+        //             total = 0;
+        //         }
+        //     });
+        //     incomeTotal.push(total);
+        // });
+
+        income.forEach((product) => {
             incomeNameList.push(product.name);
-            let total = 0;
-            income.forEach((incomeData) => {
-                if (incomeData.tryout_id === product.tryout_id) {
-                    total = incomeData.total;
-                } else {
-                    total = 0;
-                }
-            });
-            incomeTotal.push(total);
+            incomeTotal.push(product.total);
         });
 
         const totalIncome = document.getElementById('totalIncome');

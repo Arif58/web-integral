@@ -60,7 +60,8 @@
 
         .scrollable {
             max-height: 500px;
-            overflow: scroll;
+            overflow-y: scroll;
+            overflow-x: hidden;
         }
         
 
@@ -169,24 +170,26 @@
                                     <h5 class="rbt-title-style-3" id="question_number">
 
                                     </h5>
-                                    <div id="question_text"  class="scrollable">
-
-                                    </div>
-                                    {{-- {!! $item->question_text !!} --}}
-                                    <div>
-                                        <div id="question_container" class="question-container">
-                                            <h5 id="question_number"></h5>
-                                            <div id="question_text"></div>
-                                            <div id="answer">
-
-                                            </div>
-                                            {{-- <input type="text" id="answer"> --}}
-                                            <div class="mt-5 button-group">
-
-                                                <button class="rbt-btn btn-sm me-4" id="prev_button" style=" border: 1px solid #70A4C6"><i class="feather-arrow-left"></i> Sebelumnya</button>
-                                                <button class="rbt-btn btn-sm" id="save_button"></button>
+                                    <div class="scrollable">
+                                        <div id="question_text">
+    
+                                        </div>
+                                        {{-- {!! $item->question_text !!} --}}
+                                        <div>
+                                            <div id="question_container" class="question-container">
+                                                <h5 id="question_number"></h5>
+                                                <div id="question_text"></div>
+                                                <div id="answer">
+    
+                                                </div>
+                                                {{-- <input type="text" id="answer"> --}}
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="mt-5 button-group">
+
+                                        <button class="rbt-btn btn-sm me-4" id="prev_button" style=" border: 1px solid #70A4C6"><i class="feather-arrow-left"></i> Sebelumnya</button>
+                                        <button class="rbt-btn btn-sm" id="save_button"></button>
                                     </div>
                                 </div>
                             </div>

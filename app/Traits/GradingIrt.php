@@ -198,6 +198,10 @@ trait GradingIrt {
 
     public function determineRangeAndScore($totalParticipant, $partition, $totalCorrectAnswer) {
         $jangkauanPartisi = $totalParticipant / $partition;
+        //menghindari pembagian dengan 0
+        if ($totalCorrectAnswer == 0) {
+            $totalCorrectAnswer = 1;
+        }
         $skorMaksimalSatuNomor = 800 / $totalCorrectAnswer;
 
         $batasBawahPartisi = [];
