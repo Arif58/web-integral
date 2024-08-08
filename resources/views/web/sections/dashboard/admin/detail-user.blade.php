@@ -10,7 +10,7 @@
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0 my-auto" style="font-size: 18px;">
                 <a href="/manajemen-user" class="me-4"><i class="feather feather-arrow-left"></i></a><b>Daftar User / </b><span style="color: #9f9f9f; font-weight: normal">{{ $user->fullname }}</span>       
             </h4>
-            <button class="rbt-btn btn-sm bg-color-danger" type="button" data-bs-toggle="modal" data-bs-target="#formModal" style="padding: 0 10px; height: 35px; line-height: 35px;">Hapus<i class="feather feather-trash"></i></button>
+            <a data-id="{{ $user->id }}" class="rbt-btn btn-sm bg-color-danger delete-button" type="button" data-bs-toggle="modal" data-bs-target="#formModal" style="padding: 0 10px; height: 35px; line-height: 35px;">Hapus<i class="feather feather-trash"></i></a>
         </div>
         <div class="container" style="border: 1px solid #757575">
             <!-- Start Profile Row  -->
@@ -143,5 +143,59 @@
             dates[i].textContent = date.local().format('DD MMMM YYYY HH:mm:ss');
         }
     })();
+
+     // Handle delete button click
+     $('.delete-button').on('click', function() {
+        var userId = $(this).data('id');
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Anda tidak akan dapat mengembalikan data user setelah di hapus!",
+            showCancelButton: true,
+            confirmButtonColor: 'red',
+            cancelButtonColor: 'transparent',
+            confirmButtonText: 'Hapus',
+            cancelButtonText: 'Batal',
+            reverseButtons: true,
+            buttonsStyling: true,
+            width: '500px',
+        }).then((result) => {
+            // jika tombol ya di klik maka akan menghapus data
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/manajemen-user/delete/' + userId,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil',
+                                text: response.message,
+                                showConfirmButton: false,
+                                timer: 2000
+                            }).then(() => {
+                                location.href = '/manajemen-user';
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: response.message,
+                            });
+                        }
+                    },
+                    error: function(xhr) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Error deleting user.',
+                        });
+                    }
+                });
+            }
+        });
+    });
 </script>    
 @endpush

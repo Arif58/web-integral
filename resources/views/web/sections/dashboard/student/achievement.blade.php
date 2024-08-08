@@ -293,7 +293,7 @@
                             </div>
                         </div>
                         @endif
-                        <span class="text-center" style="font-weight: 200;">@if($isScoreThreeTryOutsAboveSixHundredsFifty) Keren! Kamu telah mencapai nilai 650 di 1 Try Out! @else Capai nilai 650 atau lebih di 1 Try Out untuk membuka achievement ini. @endif</span>
+                        <span class="text-center" style="font-weight: 200;">@if($isScoreThreeTryOutsAboveSixHundredsFifty) Keren! Kamu telah mencapai nilai 650 di 3 Try Out! @else Capai nilai 650 atau lebih di 3 Try Out untuk membuka achievement ini. @endif</span>
                     </div>
                 </div>
             </div>
