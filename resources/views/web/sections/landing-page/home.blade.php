@@ -418,7 +418,6 @@
                 maxHeight = cardHeight;
             }
         });
-        console.log(maxHeight);
 
         // Set all cards to the maximum height
         cards.forEach(card => {

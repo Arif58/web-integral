@@ -13,7 +13,7 @@
  <link rel="stylesheet" href="{{ asset('css/plugins/swiper.css') }}">
  <link rel="stylesheet" href="{{ asset('css/plugins/magnify.css') }}">
  <link rel="stylesheet" href="{{ asset('css/plugins/odometer.css') }}">
- <link rel="stylesheet" href="{{ asset('css/plugins/animation.css') }}">
+ {{-- <link rel="stylesheet" href="{{ asset('css/plugins/animation.css') }}"> --}}
  <link rel="stylesheet" href="{{ asset('css/plugins/bootstrap-select.min.css') }}">
  <link rel="stylesheet" href="{{ asset('css/plugins/jquery-ui.css') }}">
  <link rel="stylesheet" href="{{ asset('css/plugins/magnigy-popup.min.css') }}">
