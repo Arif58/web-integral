@@ -19,23 +19,23 @@ class UserSeeder extends Seeder
             [ 
                 'id' => Str::uuid(),
                 'fullname' => 'Admin',
-                'email' => 'admin@gmail.com',
+                'email' => 'integraleducation03@gmail.com',
                 'username' => 'admin',
-                'password' => bcrypt('password'),
+                'password' => bcrypt('integralJaya2024'),
                 'role' => 'admin',
                 'email_verified_at' => now(),
                 'is_completed' => true,
-            ],
-            [
-                'id' => Str::uuid(),
-                'fullname' => 'Rivaldy Arief',
-                'email' => 'rivaldyarif32@gmail.com',
-                'username' => 'rivaldyarif32',
-                'password' => bcrypt('password'),
-                'role' => 'student',
-                'email_verified_at' => now(),
-                'is_completed' => true,
-            ],
+            ]
+            // [
+            //     'id' => Str::uuid(),
+            //     'fullname' => 'Rivaldy Arief',
+            //     'email' => 'rivaldyarif32@gmail.com',
+            //     'username' => 'rivaldyarif32',
+            //     'password' => bcrypt('password'),
+            //     'role' => 'student',
+            //     'email_verified_at' => now(),
+            //     'is_completed' => true,
+            // ],
         ];
 
         // Masukkan data ke dalam tabel
