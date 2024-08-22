@@ -134,7 +134,7 @@
                 </div>
             </div> --}}
             <div class="scroll-animation-wrapper mt--50">
-                <div class="scroll-animation scroll-right-left">
+                <div class="scroll-animation no-overlay scroll-right-left">
     
                     <!-- Start Single Testimonial  -->
                     @foreach ($testimonialHighlightRowOne as $item)
@@ -163,7 +163,7 @@
             </div>
     
             <div class="scroll-animation-wrapper mt--30">
-                <div class="scroll-animation scroll-left-right">
+                <div class="scroll-animation no-overlay scroll-left-right">
                     
                     <!-- Start Single Testimonial  -->
                     @foreach ($testimonialHighlightRowOne as $item)
