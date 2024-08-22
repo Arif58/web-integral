@@ -44,7 +44,7 @@ class AuthenticatedSessionController extends FortifyAuthenticatedUserController
         $credentials = $request->only(Fortify::email(), 'password');
         $user = User::where(Fortify::email(), $credentials[Fortify::email()])->first();
         if ($user && ! $user->hasVerifiedEmail()) {
-            return redirect()->intended('/login')->with('status', 'Silakan verifikasi alamat email Anda dengan mengklik tautan yang telah kami kirimkan ke email Anda.');
+            return redirect()->intended('/login')->with('status', 'Silakan verifikasi alamat email Anda dengan mengklik tautan yang telah kami kirimkan ke email Anda. Tunggu 2-3 menit jika email belum masuk.');
         }
 
         return $this->loginPipeline($request)->then(function ($request) {
