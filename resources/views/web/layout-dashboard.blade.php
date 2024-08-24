@@ -5,6 +5,12 @@
     <link href="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/datatable.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <style>
+        div.dt-container div.dt-layout-row.dt-layout-table {
+            overflow: scroll;
+        }
+    </style>
 </head>
 @php
     $currentPath = Route::currentRouteName();
