@@ -5,7 +5,7 @@
     <h3 class="title">Lupa Password</h3>
     <form id="forgot-password-form" method="POST" action="{{ route('password.email') }}">
         @csrf
-        <div class="form-group">
+        <div class="form-group @if(old('email')) focused @endif">
             <input name="email" type="text" value="{{ old('email') }}"/>
             <label>Email *</label>
             <span class="focus-border"></span>
