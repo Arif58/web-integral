@@ -80,12 +80,13 @@ class SubTestController extends Controller
     public function update(Request $request, $id)
     {
         $subTest = SubTest::findOrFail($id);
+        $countQuestion = Question::where('sub_test_id', $id)->count();
 
         //validasi input
         $request->validate([
             'category_subtest_id' => 'required',
             'name' => 'required',
-            'total_question' => 'required|numeric|min:1',
+            'total_question' => 'required|numeric|min:'.$countQuestion,
             'duration' => 'required|numeric|min:1',
         ]);
 

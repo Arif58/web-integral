@@ -86,7 +86,9 @@
             <h4 class="rbt-title-style-3 pb--0 border-bottom-0" style="font-size: 18px;">
                 Soal
             </h4>
-            <a class="rbt-btn btn-sm bg-color-success" type="button" href="{{ route('questions.create', $subTest->id) }}">Tambah Soal<i class="feather feather-plus"></i></a>
+            @if ($countQuestions < $subTest->total_question)
+                <a class="rbt-btn btn-sm bg-color-success" type="button" href="{{ route('questions.create', $subTest->id) }}">Tambah Soal<i class="feather feather-plus"></i></a>
+            @endif
         </div>
        
         <div style="margin-bottom: 24px;">

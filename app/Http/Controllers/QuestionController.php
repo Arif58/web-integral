@@ -23,13 +23,14 @@ class QuestionController extends Controller
         $boundary = 10;
         $subTest = SubTest::findOrFail($subTestId);
         $questions = Question::where('sub_test_id', $subTestId)->paginate($boundary);
+        $countQuestions = Question::where('sub_test_id', $subTestId)->count();
         $no = $boundary * ($questions->currentPage() - 1);
-        return view('web.sections.dashboard.admin.question', compact('subTest','questions', 'no'));
+        return view('web.sections.dashboard.admin.question', compact('subTest','questions', 'no', 'countQuestions'));
     }
 
     public function upload(Request $request)
     {
-        Log::info('Upload request received:', $request->all());
+        // Log::info('Upload request received:', $request->all());
         // if($request->hasFile('file')) {
         //     $file = $request->file('file');
         //     $path = $file->store('public/questions');
