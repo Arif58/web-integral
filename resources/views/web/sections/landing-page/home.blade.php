@@ -255,7 +255,7 @@
                             <div class="section-title text-start headline">
                                 <span class="subtitle bg-primary-opacity">About Integral Education</span>
                                 <h2 class="title text-white">Apa itu Integral Education?</h2>
-                                <p class="description mt--20" style="color: #E0E0E0">Bimbingan Belajar Integral Education adalah bimbel yang berdedikasi untuk memfasilitasi siswa dari tingkat SD, SMP, SMA, hingga mahasiswa dalam mempersiapkan kegiatan belajar menghadapi berbagai ujian seperti ujian sekolah, olimpiade, dan persiapan masuk Perguruan Tinggi Negeri (PTN) bagi siswa SMA kelas XII. Beberapa diantara mereka telah lolos di beberapa universitas diantaranya UI, UGM, IPB, Undip, 
+                                <p class="description mt--20" style="color: #E0E0E0">Bimbingan Belajar Integral Education adalah bimbel yang berdedikasi untuk memfasilitasi siswa dari tingkat SD, SMP, SMA, hingga mahasiswa dalam mempersiapkan kegiatan belajar menghadapi berbagai ujian seperti ujian sekolah, olimpiade, dan persiapan masuk Perguruan Tinggi Negeri (PTN) bagi siswa SMA kelas XII. Beberapa diantara mereka telah lolos di beberapa universitas diantaranya UI, UGM, IPB, Undip, dan masih banyak lagi. 
                                     </p>
                                     <p class="description mt--20" style="color: #E0E0E0">Dengan pendekatan pengajaran yang inovatif dan personal, Integral Education memastikan setiap siswa mendapatkan pembimbingan yang optimal. Melalui program dan metode pengajaran yang terbukti efektif, kami membantu siswa meraih prestasi akademik terbaik.</p>
                                 
