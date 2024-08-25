@@ -75,9 +75,9 @@
                                     <label for="tryout_id">Try Out</label>
                                     <div class="filter-select rbt-modern-select">
                                         <select id="tryout_id" name="tryout_id" class="mb-0" data-live-search="true">
-                                            <option value="" disabled>Pilih Tryout</option>
+                                            <option value="" selected disabled>Pilih Tryout</option>
                                             @foreach ($tryouts as $tryout)
-                                                <option value="{{ $tryout->id }}">{{ $tryout->name }}</option>
+                                                <option value="{{ $tryout->id }}" @if(old('tryout_id') == $tryout->id) selected @endif>{{ $tryout->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('tryout_id')

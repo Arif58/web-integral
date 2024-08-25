@@ -78,6 +78,7 @@
                         <form action="{{ route('student-achievements.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+                                <input type="hidden" name="form_type" value="tambah">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Lengkap</label>
                                     <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" maxlength="20">
@@ -148,6 +149,7 @@
                         <form action="" id="editTestimonialForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="form_type" value="edit">
                             <input type="hidden" id="studentAchievementId" name="studentAchievementId">
                             <div class="row">
                                 <div class="col-12 mb--30">
@@ -302,7 +304,22 @@
     // JavaScript untuk menampilkan kembali modal jika ada error validasi
     document.addEventListener('DOMContentLoaded', function() {
         @if($errors->has('name') || $errors->has('achievement') || $errors->has('school') || $errors->has('photo'))
-            var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @if(old('form_type') == 'tambah')
+                var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @elseif(old('form_type') == 'edit')
+                var formModal = new bootstrap.Modal(document.getElementById('editModal'));
+
+                var studentAchievementId = '{{ old('studentAchievementId') }}';
+                var route = '{{ route("student-achievements.update", ":id") }}';
+                route = route.replace(':id', studentAchievementId);
+
+                // Fill the modal form with the current data
+                $('#editModal #studentAchievementId').val(studentAchievementId);
+                $('#editModal #name').val('{{ old('name') }}');
+                $('#editModal #achievement').val('{{ old('achievement') }}');
+                $('#editModal #school').val('{{ old('school') }}');
+                $('#editModal #editTestimonialForm').attr('action', route);
+            @endif
             formModal.show();
             
         @elseif($errors->has('highlighted_order') || $errors->has('highlighted_order.*'))

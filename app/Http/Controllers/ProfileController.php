@@ -39,7 +39,7 @@ class ProfileController extends Controller
             $request->validate([
                 'fullname' => 'required',
                 'username' => 'unique:users,username,' . $id,
-                'phone' => 'required',
+                'phone' => 'required|min:12|max:16',
                 'level' => 'required',
                 'institution' => 'required',
                 'province' => 'required',
@@ -123,7 +123,7 @@ class ProfileController extends Controller
         try {
             $request->validate([
                 'fullname' => 'required',
-                'phone' => 'required|min:12',
+                'phone' => 'required|min:12|max:16',
                 'level' => 'required',
                 'institution' => 'required',
                 'province' => 'required',

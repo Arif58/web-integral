@@ -68,6 +68,7 @@
                         <form action="{{ route('tryouts.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+                                <input type="hidden" name="form_type" value="tambah">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Try Out</label>
                                     <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" placeholder="Nama Try Out">
@@ -123,6 +124,7 @@
                         <form action="" id="editTryOut" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="form_type" value="edit">
                             <input type="hidden" id="tryOutId" name="tryOutId">
                             <div class="row">
                                 <div class="col-12 mb--30">
@@ -176,7 +178,23 @@
     // JavaScript untuk menampilkan kembali modal jika ada error validasi
     document.addEventListener('DOMContentLoaded', function() {
         @if($errors->has('name') || $errors->has('start_date') || $errors->has('end_date'))
-            var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @if(old('form_type') == 'tambah')
+                var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @elseif(old('form_type') == 'edit')
+                var formModal = new bootstrap.Modal(document.getElementById('editModal'));
+
+                var tryOutId = '{{ old('tryOutId') }}';
+                var route = '{{ route("tryouts.update", ":id") }}';
+                route = route.replace(':id', tryOutId);
+
+
+                // Fill the modal form with the current data
+                $('#editModal #tryOutId').val(tryOutId);
+                $('#editModal #name').val('{{ old('name') }}');
+                $('#editModal #start_date').val('{{ old('start_date') }}'); // Fill start_date input
+                $('#editModal #end_date').val('{{ old('end_date') }}'); // Fill end_date input
+                $('#editModal #editTryOut').attr('action', route);
+            @endif
             formModal.show();
         @endif
     });
@@ -273,6 +291,7 @@
 
         var endDateObject = moment(endDate, 'DD MMM YYYY, HH:mm');
         var formattedEndDate = endDateObject.format('YYYY-MM-DD HH:mm:ss');
+        console.log(formattedStartDate, formattedEndDate);
 
         // Fill the modal form with the current data
         $('#editModal #tryOutId').val(tryOutId);

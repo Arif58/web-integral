@@ -58,6 +58,7 @@
                         <form action="{{ route('universities.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+                                <input type="hidden" name="form_type" value="tambah">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Universitas</label>
                                     <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" placeholder="Nama Universitas">
@@ -103,6 +104,7 @@
                         <form action="" id="editUniversityForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="form_type" value="edit">
                             <input type="hidden" id="universityId" name="universityId">
                             <div class="row">
                                 <div class="col-12 mb--30">
@@ -145,7 +147,20 @@
     // JavaScript untuk menampilkan kembali modal jika ada error validasi
     document.addEventListener('DOMContentLoaded', function() {
         @if($errors->has('name'))
-            var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @if(old('form_type') == 'tambah')
+                var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @elseif(old('form_type') == 'edit')
+                var formModal = new bootstrap.Modal(document.getElementById('editModal'));
+
+                var universityId = '{{ old('universityId') }}';
+                var route = '{{ route("universities.update", ":id") }}';
+                route = route.replace(':id', universityId);
+
+                // Fill the modal form with the current data
+                $('#editModal #universityId').val(universityId);
+                $('#editModal #name').val('{{ old('name') }}');
+                $('#editModal #editUniversityForm').attr('action', route);
+            @endif
             formModal.show();
         @endif
     });

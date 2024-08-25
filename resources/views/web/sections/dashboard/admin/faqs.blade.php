@@ -59,6 +59,7 @@
                         <form action="{{ route('faqs.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+                                <input type="hidden" name="form_type" value="tambah">
                                 <div class="col-12 mb--30">
                                     <label for="question">Pertanyaan</label>
                                     <textarea id="question" rows="5" name="question" class="form-control @error('question') is-invalid @enderror mb-0">{{ old('question') }}</textarea>
@@ -112,6 +113,7 @@
                         <form action="" id="editTutorForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="form_type" value="edit">
                             <input type="hidden" id="faqId" name="faqId">
                             <div class="row">
                                 <div class="col-12 mb--30">
@@ -162,7 +164,21 @@
     // JavaScript untuk menampilkan kembali modal jika ada error validasi
     document.addEventListener('DOMContentLoaded', function() {
         @if($errors->has('question') || $errors->has('answer'))
-            var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @if(old('form_type') == 'tambah')
+                var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @elseif(old('form_type') == 'edit')
+                var formModal = new bootstrap.Modal(document.getElementById('editModal'));
+
+                var faqId = '{{ old('faqId') }}';
+                var route = '{{ route("faqs.update", ":id") }}';
+                route = route.replace(':id', faqId);
+
+                // Fill the modal form with the current data
+                $('#editModal #faqId').val(faqId);
+                $('#editModal #question').val('{{ old('question') }}');
+                $('#editModal #answer').val('{{ old('answer') }}');
+                $('#editModal #editTutorForm').attr('action', route);
+            @endif
             formModal.show();
         @endif
     });

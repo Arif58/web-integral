@@ -127,13 +127,14 @@
                         <form action="{{ route('subtests.store', $tryOutDetail->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+                                <input type="hidden" name="form_type" value="tambah">
                                 <div class="rbt-form-group col-12 mb--30">
                                     <label for="category">Kategori Subtes</label>
                                     <div class="filter-select rbt-modern-select">
                                         <select id="category_subtest_id" name="category_subtest_id" class=" mb-0">
                                             <option value="" selected disabled>Pilih Kategori</option>
                                             @foreach ($categorySubtest as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                <option value= "{{ $category->id }}" @if(old('category_subtest_id') == $category->id) selected @endif>{{ $category->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('category_subtest_id')
@@ -203,6 +204,7 @@
                         <form action="" id="editSubtest" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="form_type" value="edit">
                             <input type="hidden" id="subtestId" name="subtestId">
                             <div class="row">
                                 <div class="rbt-form-group col-12 mb--30">
@@ -274,7 +276,43 @@
     // JavaScript untuk menampilkan kembali modal jika ada error validasi
     document.addEventListener('DOMContentLoaded', function() {
         @if($errors->has('name') || $errors->has('category_subtest_id') || $errors->has('duration') || $errors->has('total_question'))
-            var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @if(old('form_type') == 'tambah')
+                var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @elseif(old('form_type') == 'edit')
+                var formModal = new bootstrap.Modal(document.getElementById('editModal'));
+
+                var subtestId = {{ old('subtestId') }};
+                //mendapatkan nilai category_subtest_id yg diparsing dari button edit
+                var categorySubtestId = {{ old('category_subtest_id') }};
+
+                var categorySubtest = @json($categorySubtest);
+
+                var categorySubtestSelect = $('#edit_category_subtest_id');
+
+                categorySubtestSelect.empty();
+
+                categorySubtest.forEach(function(category) {
+                    console.log(categorySubtestId)
+                    var option = new Option(category.name, category.id);
+                    if (category.id == categorySubtestId) {
+                        option.selected = true;
+                    }
+                    categorySubtestSelect.append(option);
+                });
+
+                categorySubtestSelect.selectpicker('refresh');
+
+                var route = '{{ route("subtests.update", ":id") }}';
+                route = route.replace(':id', subtestId);
+
+                // Fill the modal form with the current data
+                $('#editModal #subtestId').val(subtestId);
+                // $('#editModal #edit_category_subtest_id').val(categorySubtestId);
+                $('#editModal #edit_name').val('{{ old('name') }}');
+                $('#editModal #edit_duration').val('{{ old('duration') }}');
+                $('#editModal #edit_total_question').val('{{ old('total_question') }}');
+                $('#editModal #editSubtest').attr('action', route);
+            @endif
             formModal.show();
         @endif
     });

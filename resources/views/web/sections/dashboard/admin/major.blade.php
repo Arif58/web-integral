@@ -66,13 +66,14 @@
                         <form action="{{ route('majors.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+                                <input type="hidden" name="form_type" value="tambah">
                                 <div class="rbt-form-group col-12 mb--30">
                                     <label for="university">Universitas</label>
                                     <div class="filter-select rbt-modern-select">
                                         <select id="university_id" name="university_id" class="mb-0" data-live-search="true">
                                             <option value="" selected disabled>Pilih Universitas</option>
                                             @foreach ($universities as $university)
-                                                <option value="{{ $university->id }}">{{ $university->name }}</option>
+                                                <option value="{{ $university->id }}" @if(old('university_id') == $university->id) selected @endif>{{ $university->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('university_id')
@@ -86,7 +87,7 @@
                                         <select id="cluster_id" name="cluster_id" class="mb-0">
                                             <option value="" selected disabled>Pilih Rumpun</option>
                                             @foreach ($clusters as $cluster)
-                                                <option value="{{ $cluster->id }}">{{ $cluster->name }}</option>
+                                                <option value="{{ $cluster->id }}" @if(old('cluster_id') == $cluster->id) selected @endif>{{ $cluster->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('cluster_id')
@@ -147,6 +148,7 @@
                         <form action="" id="editMajorForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="form_type" value="edit">
                             <input type="hidden" id="majorId" name="majorId">
                             <div class="row">
                                 <div class="rbt-form-group col-12 mb--30">
@@ -225,7 +227,56 @@
     // JavaScript untuk menampilkan kembali modal jika ada error validasi
     document.addEventListener('DOMContentLoaded', function() {
         @if($errors->has('name') || $errors->has('cluster_id') || $errors->has('university_id') || $errors->has('passing_grade'))
-            var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @if(old('form_type') == 'tambah')
+                var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @elseif(old('form_type') == 'edit')
+                var formModal = new bootstrap.Modal(document.getElementById('editModal'));
+
+                var majorId = '{{ old('majorId') }}';
+                var universityId = '{{ old('university_id') }}';
+                var clusterId = '{{ old('cluster_id') }}';
+                var clusters = @json($clusters);
+                var universities = @json($universities);
+        
+                // Set the values for the select elements
+                var universitySelect = $('#edit_university_id');
+                var clusterSelect = $('#edit_cluster_id');
+
+                clusterSelect.empty();
+                universitySelect.empty();
+
+                universities.forEach(function (university) {
+                    var option = new Option(university.name, university.id);
+                    if (university.id == universityId) {
+                        $(option).prop('selected', true);
+                    }
+                    universitySelect.append(option);
+                })
+
+                universitySelect.selectpicker('refresh');
+
+                clusters.forEach(function (cluster) {
+                    var option = new Option(cluster.name, cluster.id);
+                    if (cluster.id == clusterId) {
+                        $(option).prop('selected', true);
+                    }
+                    clusterSelect.append(option);
+                })
+
+                clusterSelect.selectpicker('refresh');
+
+
+                var route = '{{ route("majors.update", ":id") }}';
+                route = route.replace(':id', majorId);
+
+                var rowData = $(this).closest('tr').find('td');
+                
+                // Fill the modal form with the current data
+                $('#editModal #majorId').val(majorId);
+                $('#editModal #edit_name').val('{{ old('name') }}');
+                $('#editModal #edit_passing_grade').val('{{ old('passing_grade') }}');
+                $('#editModal #editMajorForm').attr('action', route);
+            @endif
             formModal.show();
         @endif
     });

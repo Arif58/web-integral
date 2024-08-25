@@ -79,6 +79,7 @@
                         <form action="{{ route('testimonials.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
+                                <input type="hidden" name="form_type" value="tambah">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Lengkap</label>
                                     <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" maxlength="25">
@@ -149,27 +150,40 @@
                         <form action="" id="editTestimonialForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="form_type" value="edit">
                             <input type="hidden" id="testimonialId" name="testimonialId">
                             <div class="row">
                                 <div class="col-12 mb--30">
                                     <label for="name">Nama Lengkap</label>
-                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control mb-0" maxlength="25">
+                                    <input type="text" id="name" name="name" placeholder="Nama Lengkap" class="form-control @error('name') is-invalid @enderror mb-0" value="{{ old('name') }}" maxlength="25">
+                                    @error('name')
+                                        <span class="message-info">{{ $message }}</span>  
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 mb--30">
                                     <label for="major">Jurusan</label>
-                                    <input type="text" id="major" name="major" placeholder="Jurusan" class="form-control mb-0" maxlength="60">
+                                    <input type="text" id="major" name="major" placeholder="Jurusan" class="form-control @error('major') is-invalid @enderror mb-0" value="{{ old('major') }}" maxlength="60">
+                                    @error('major')
+                                        <span class="message-info">{{ $message }}</span>  
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 mb--30">
                                     <label for="testimonials">Testimoni</label>
-                                    <textarea id="testimonials" rows="5" name="testimonials" class="form-control mb-0"></textarea>
+                                    <textarea id="testimonials" rows="5" name="testimonials" class="form-control @error('testimonials') is-invalid @enderror mb-0">{{ old('testimonials') }}</textarea>
+                                    @error('testimonials')
+                                        <span class="message-info">{{ $message }}</span>  
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 mb--30">
                                     <label for="photo">Foto</label>
                                     <div id="editPreviewContainer"></div>
                                     <input type="file" id="edit_photo" name="photo" accept="image/*" style="border: none; margin-bottom: 0px;">
+                                    @error('photo')
+                                        <span class="message-info" style="position: relative;">{{ $message }}</span>  
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row">
@@ -293,7 +307,20 @@
     // JavaScript untuk menampilkan kembali modal jika ada error validasi
     document.addEventListener('DOMContentLoaded', function() {
         @if($errors->has('name') || $errors->has('major') || $errors->has('testimonials') || $errors->has('photo'))
-            var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @if(old('form_type') == 'tambah')
+                var formModal = new bootstrap.Modal(document.getElementById('formModal'));
+            @elseif(old('form_type') == 'edit')
+                var formModal = new bootstrap.Modal(document.getElementById('editModal'));
+
+                var testimonialId = '{{ old('testimonialId') }}';
+                var route = '{{ route("testimonials.update", ":id") }}';
+                route = route.replace(':id', testimonialId);
+                // Fill the modal form with the current data
+                $('#editModal #name').val('{{ old('name') }}');
+                $('#editModal #major').val('{{ old('major') }}');
+                $('#editModal #testimonials').val('{{ old('testimonials') }}');
+                $('#editModal #editTestimonialForm').attr('action', route);
+            @endif
             formModal.show();
             
         @elseif($errors->has('highlighted_order') || $errors->has('highlighted_order.*'))
