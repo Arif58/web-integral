@@ -33,10 +33,9 @@
         Swal.fire({
             icon: 'success',
             title: 'Berhasil',
-            text: '{{ session('
-            status ') }}',
-            showConfirmButton: false,
-            timer: 2000
+            text: 'Permintaan reset password berhasil dikirim. Silahkan cek email Anda.',
+            showConfirmButton: true,
+            // timer: 2000
         }).then(function() {
             window.location.href = '/login';
         });

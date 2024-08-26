@@ -196,8 +196,8 @@
                 { data: 'price', name: 'price'},
                 { data: 'ie_gems', name: 'ie_gems'},
                 { data: 'participants', name: 'participants'},
-                { data: 'is_grading_completed', name: 'is_grading_completed'},
-                { data: 'action', name: 'action'},
+                { data: 'is_grading_completed', name: 'is_grading_completed', width: '10px'},
+                { data: 'action', name: 'action', width: '100px'},
             ]
         });
     });

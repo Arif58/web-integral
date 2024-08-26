@@ -79,12 +79,18 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="start_date">Tanggal Mulai</label>
-                                    <input type="datetime-local" name="start_date">
+                                    <input type="datetime-local" name="start_date" value="{{ old('start_date') }}">
+                                    @error('start_date')
+                                        <span class="message-info">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 mb--30">
                                     <label for="start_date">Tanggal Selesai</label>
-                                    <input type="datetime-local" name="end_date">
+                                    <input type="datetime-local" name="end_date" value="{{ old('end_date') }}">
+                                    @error('end_date')
+                                        <span class="message-info">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="row">
@@ -116,7 +122,7 @@
             <div class="modal-content" style="padding: 30px">
                 <div class="modal-header pb--5 justify-content-center">
                     <h4 class="title">
-                        Ubah Subtest Kategori
+                        Ubah Try Out
                     </h4>
                 </div>
                 <div class="modal-body" style="border-top: 1px solid #dee2e6">
@@ -137,7 +143,10 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="start_date">Tanggal Mulai</label>
-                                    <input type="datetime-local" id="start_date" name="start_date" value="">
+                                    <input type="datetime-local" id="start_date" name="start_date" value="{{ old('start_date') }}">
+                                    @error('start_date')
+                                        <span class="message-info">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 
                                 <div class="col-12 mb--30">

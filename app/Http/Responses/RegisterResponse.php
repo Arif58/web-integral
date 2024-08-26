@@ -15,7 +15,7 @@ class RegisterResponse implements RegisterResponseContract
      */
     public function toResponse($request)
     {
-        return redirect()->intended('/login')->with('status', 'Silakan verifikasi alamat email Anda dengan mengklik tautan yang telah kami kirimkan ke email Anda.');
+        return redirect()->intended('/login')->with('status', 'Silakan verifikasi alamat email Anda dengan mengklik tautan yang telah kami kirimkan ke email Anda. Tunggu 2-3 menit hingga email masuk ke kotak masuk Anda atau cek folder spam jika tidak ada di kotak masuk.');
 
     }
 }
