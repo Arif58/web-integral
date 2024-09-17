@@ -108,13 +108,13 @@ trait SimpleAdditiveWeighting {
     public function passingGradeCriteria($major, $participantScore)
     {
         $scoreDifference = $participantScore - $major->passing_grade;
-        if ($scoreDifference >= 0 && $scoreDifference <= 100) {
+        if ($scoreDifference >= 0 && $scoreDifference <= 49.99) {
             return 5;
-        } else if ($scoreDifference > 100 && $scoreDifference <= 200) {
+        } else if ($scoreDifference >= 50 && $scoreDifference <= 99.99) {
             return 4;
-        } else if ($scoreDifference > 200 && $scoreDifference <= 300) {
+        } else if ($scoreDifference >= 100 && $scoreDifference <= 149.99) {
             return 3;
-        } else if ($scoreDifference > 300 && $scoreDifference <= 400) {
+        } else if ($scoreDifference >= 150 && $scoreDifference <= 199.99) {
             return 2;
         } else {
             return 1;

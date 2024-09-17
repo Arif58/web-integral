@@ -71,7 +71,10 @@ class SubTestController extends Controller
             'duration' => $request->duration,
         ]);
 
-        return back()->with(['status' => 'success','message' => 'Subtest berhasil ditambahkan.']);
+        return back()->with([
+            'status' => 'success',
+            'message' => 'Subtest berhasil ditambahkan.'
+        ]);
     }
 
     /**
@@ -98,7 +101,10 @@ class SubTestController extends Controller
             'duration' => $request->duration,
         ]);
 
-        return back()->with(['status' => 'success','message' => 'Subtest berhasil diperbarui.']);
+        return back()->with([
+            'status' => 'success',
+            'message' => 'Subtest berhasil diperbarui.'
+        ]);
     }
 
     /**
@@ -110,9 +116,15 @@ class SubTestController extends Controller
             $subTest = SubTest::findOrFail($id);
             $subTest->delete();
 
-            return response()->json(['status' => 'success','message' => 'Subtest berhasil dihapus.']);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Subtest berhasil dihapus.'
+            ]);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return response()->json([
+                'status' => 'error', 
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ]);
         }
     }
 }

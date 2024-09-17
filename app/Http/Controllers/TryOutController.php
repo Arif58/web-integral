@@ -70,9 +70,10 @@ class TryOutController extends Controller
             'end_date' => $request->end_date,
         ]);
 
-        return back()->with(['status' => 'success', 'message' => 'Try Out berhasil ditambahkan.']);
-
-
+        return back()->with([
+            'status' => 'success', 
+            'message' => 'Try Out berhasil ditambahkan.'
+        ]);
     }
 
     /**
@@ -96,7 +97,10 @@ class TryOutController extends Controller
             'end_date' => $request->end_date,
         ]);
 
-        return back()->with(['status' => 'success', 'message' => 'Try Out berhasil diperbarui.']);
+        return back()->with([
+            'status' => 'success', 
+            'message' => 'Try Out berhasil diperbarui.'
+        ]);
     }
 
     /**
@@ -107,10 +111,14 @@ class TryOutController extends Controller
         try {
             $tryOut = TryOut::findOrFail($id);
             $tryOut->delete();
-
-            return response()->json(['status' => 'success', 'message' => 'Try Out berhasil dihapus.']);
+            return response()->json([
+                'status' => 'success', 
+                'message' => 'Try Out berhasil dihapus.'
+            ]);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return response()->json([
+                'status' => 'error', 
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
         }
     }
 }

@@ -129,7 +129,7 @@
         <a class="rbt-close_side_menu" href="javascript:void(0);"></a>
     </header>
     <!-- Start Card Style -->
-    <div class="rbt-dashboard-area rbt-section-gapBottom mt--50">
+    <div class="rbt-dashboard-area mt--50">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -180,9 +180,7 @@
                                                 <h5 id="question_number"></h5>
                                                 <div id="question_text"></div>
                                                 <div id="answer">
-    
                                                 </div>
-                                                {{-- <input type="text" id="answer"> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -295,7 +293,6 @@
 
         function countdown(start_time, duration, elementId) {
             var countDownDate = start_time + duration * 60 * 1000;
-            // var countDownDate = start_time + 500 * 60 * 1000;
             
             var x = setInterval(function() {
                 var now = new Date().getTime();

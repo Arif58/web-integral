@@ -91,7 +91,7 @@ class QuestionController extends Controller
                         TestAnswer::create([
                             'question_id' => $questionId,
                             'answer' => $answer,
-                            'is_correct' => $isCorrects[$index], // Pastikan ini mencocokkan index yang benar
+                            'is_correct' => $isCorrects[$index],
                             'statement' => $statements[$index] ?? null,
                         ]);
                     }
@@ -104,13 +104,16 @@ class QuestionController extends Controller
                 }
                 
             });
-            return redirect()->route('questions', $id)->with(['status' => 'success','message' => 'Soal berhasil ditambahkan.']);
+            return redirect()->route('questions', $id)->with([
+                'status' => 'success',
+                'message' => 'Soal berhasil ditambahkan.'
+            ]);
         } catch (QueryException $e) {
-            return back()->with(['status' => 'error', 'message' => 'Gagal menambahkan soal karena.'.$e->getMessage()]);
+            return back()->with([
+                'status' => 'error', 
+                'message' => 'Gagal menambahkan soal karena.'.$e->getMessage()
+            ]);
         }
-        
-
-
     }
 
     /**
@@ -138,7 +141,6 @@ class QuestionController extends Controller
      */
     public function update(UpdateQuestionRequest $request, $id)
     {
-        // dd($request->all());
         try {
             DB::transaction(function () use($request, $id) {
                 $question = Question::find($id);
@@ -151,9 +153,7 @@ class QuestionController extends Controller
                 $isCorrects = $request->is_correct;
                 $statements = $request->statements ?? null;
                 $initialIdAnswers = $request->id_answers;
-                // dd($id_answers);
                 $oldIdAnswers = TestAnswer::where('question_id', $id)->pluck('id')->toArray();
-                // dd($initialIdAnswers, $oldIdAnswers);
                 // check apakah ada id yang dihapus
                 foreach($oldIdAnswers as $index => $id_answer) {
                     if (!in_array($id_answer, $initialIdAnswers)) {
@@ -173,7 +173,7 @@ class QuestionController extends Controller
                             TestAnswer::create([
                                 'question_id' => $id,
                                 'answer' => $answer,
-                                'is_correct' => $isCorrects[$index], // Pastikan ini mencocokkan index yang benar
+                                'is_correct' => $isCorrects[$index],
                                 'statement' => $statements[$index] ?? null,
                             ]);
                         }
@@ -190,7 +190,7 @@ class QuestionController extends Controller
                             TestAnswer::create([
                                 'question_id' => $id,
                                 'answer' => $answer,
-                                'is_correct' => $isCorrects[$index], // Pastikan ini mencocokkan index yang benar
+                                'is_correct' => $isCorrects[$index],
                                 'statement' => $statements[$index] ?? null,
                             ]);
                         }
@@ -211,9 +211,15 @@ class QuestionController extends Controller
                 }
                 
             });
-            return redirect()->route('questions', $request->sub_test_id)->with(['status' => 'success','message' => 'Soal berhasil diubah.']);
+            return redirect()->route('questions', $request->sub_test_id)->with([
+                'status' => 'success',
+                'message' => 'Soal berhasil diubah.'
+            ]);
         } catch (QueryException $e) {
-            return back()->with(['status' => 'error', 'message' => 'Gagal mengubah soal karena.'.$e->getMessage()]);
+            return back()->with([
+                'status' => 'error', 
+                'message' => 'Gagal mengubah soal karena.'.$e->getMessage()
+            ]);
         }
     }
 
@@ -224,12 +230,17 @@ class QuestionController extends Controller
     {
         try {
             $question = Question::findOrFail($id);
-            // $subtestId = $question->sub_test_id;
             $question->delete();
 
-            return response()->json(['status' => 'success','message' => 'Soal berhasil dihapus.']);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Soal berhasil dihapus.'
+            ]);
         } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+            return response()->json([
+                'status' => 'error', 'message' => 
+                'Terjadi kesalahan: ' . $e->getMessage()
+            ]);
         }
     }
 }

@@ -30,12 +30,20 @@ class OrderController extends Controller
             'payment_method' => 'required|string',
         ]);
         
-        $orderExistSuccess = Order::where('user_id', Auth::id())->where('product_id', $request->product_id)->where('status', 'success');
+        $orderExistSuccess = Order::where('user_id', Auth::id())
+            ->where('product_id', $request->product_id)
+            ->where('status', 'success');
         if ($orderExistSuccess->exists()) {
-            return redirect()->route('my-tryout')->with(['status' => 'error', 'message' => 'Anda sudah memiliki akses ke tryout ini.']);
+            return redirect()->route('my-tryout')
+                ->with([
+                    'status' => 'error', 
+                    'message' => 'Anda sudah memiliki akses ke tryout ini.'
+                ]);
         }
         
-        $orderExistPending = Order::where('user_id', Auth::id())->where('product_id', $request->product_id)->where('status', 'pending');
+        $orderExistPending = Order::where('user_id', Auth::id())
+            ->where('product_id', $request->product_id)
+            ->where('status', 'pending');
         $orderExistPending->update([
             'status' => 'failed',
         ]);
@@ -55,8 +63,9 @@ class OrderController extends Controller
             if ($order->total_price != 0) {
                 // Set your Merchant Server Key
                 \Midtrans\Config::$serverKey = config('midtrans.server_key');
-                // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-                \Midtrans\Config::$isProduction = false;
+                // Set to Development/Sandbox Environment (default). 
+                // Set to true for Production Environment (accept real transaction).
+                \Midtrans\Config::$isProduction = config('midtrans.is_production');
                 // Set sanitization on (default)
                 \Midtrans\Config::$isSanitized = true;
                 // Set 3DS transaction for credit card to true
@@ -78,9 +87,9 @@ class OrderController extends Controller
                     'snap_token' => $snapToken,
                 ]);
 
-                // return view('web.sections.payment.payment-qris', compact('snapToken'));
                 return redirect()->route('payment-qris', $snapToken);
-            } else {
+            } 
+            else {
                 DB::transaction(function () use($request, $order) {
                     $order->update([
                         'status' => 'success',
@@ -94,10 +103,14 @@ class OrderController extends Controller
                     ]);
                 });
 
-                return redirect()->route('my-tryout')->with('success', 'Pembelian berhasil dilakukan. Silahkan cek di menu Tryout Saya.');
+                return redirect()->route('my-tryout')
+                ->with([
+                    'status' => 'success', 
+                    'message' => 'Pembelian berhasil dilakukan. Silahkan cek di menu Tryout Saya.'
+                ]);
             }
-
-        } else if ($request->payment_method === 'ie_gems')
+        } 
+        else if ($request->payment_method === 'ie_gems')
         {
             $userIeGems = User::select('ie_gems')->where('id', $request->user_id)->first();
 
@@ -121,11 +134,17 @@ class OrderController extends Controller
                     ]);
                 });
 
-                return redirect()->route('my-tryout')->with(['status' => 'success', 'message' => 'Pembelian berhasil dilakukan. Silahkan cek di menu Tryout Saya.']);
+                return redirect()->route('my-tryout')->with([
+                    'status' => 'success', 
+                    'message' => 'Pembelian berhasil dilakukan. Silahkan cek di menu Tryout Saya.'
+                ]);
             } else {
                 //rollback order
                 $order->delete();
-                return back()->with(['status' => 'error', 'message' => 'IE Gems Anda tidak mencukupi untuk melakukan pembelian ini.']);
+                return back()->with([
+                    'status' => 'error', 
+                    'message' => 'IE Gems Anda tidak mencukupi untuk melakukan pembelian ini.'
+                ]);
             }
         }
     }
