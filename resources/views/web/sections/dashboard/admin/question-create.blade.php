@@ -520,7 +520,7 @@
                 div.appendChild(textarea);
                 answerFieldsContainer.appendChild(div);
 
-                createCKEditor(textarea, ckeditorAnswerConfig);
+                createCKEditor(textarea, ckEditorQuestionConfig);
             }
         }
 
