@@ -197,7 +197,8 @@ trait GradingIrt {
     }
 
     public function determineRangeAndScore($totalParticipant, $partition, $totalCorrectAnswer) {
-        $jangkauanPartisi = $totalParticipant / $partition;
+        //bulatkan jangkauan partisi
+        $jangkauanPartisi = round($totalParticipant / $partition);
         //menghindari pembagian dengan 0
         if ($totalCorrectAnswer == 0) {
             $totalCorrectAnswer = 1;
