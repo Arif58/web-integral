@@ -128,6 +128,15 @@
             </div>
         </div>
         <!-- End Profile Row  -->
+
+        <div class="rbt-profile-row row row--15 mt--15">
+            <div class="col-lg-4 col-md-4">
+                <div class="rbt-profile-content b2">Minat Dan Bakat</div>
+            </div>
+            <div class="col-lg-8 col-md-8">
+                <div class="rbt-profile-content b2">{{ $profile->talentInterest?->name }}</div>
+            </div>
+        </div>
     </div>
 
     <div class="rbt-dashboard-content bg-color-white rbt-shadow-box">

@@ -82,6 +82,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(Major::class, 'second_major');
     }
 
+    public function talentInterest()
+    {
+        return $this->belongsTo(Cluster::class, 'interest');
+    }
+
     public function Orders()
     {
         return $this->hasMany(Order::class);
