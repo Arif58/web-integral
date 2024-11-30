@@ -50,6 +50,12 @@
         p {
             margin-bottom: 5px;
         }
+
+        .title-question {
+            font-size: 16px;
+            font-weight: bold;
+            color: #616161;
+        }
     </style>
     <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/super-build/ckeditor.js"></script>
 
@@ -92,6 +98,9 @@
         </div>
        
         <div style="margin-bottom: 24px;">
+            <div style="display: flex; justify-content: end;">
+                {{$questions->links('vendor.pagination.custom')}}
+            </div>
             {{-- @php
                 $countQuestion = $questions->count();
             @endphp
@@ -103,75 +112,74 @@
                         {{ ++$no }}
                     </div>
                     <div class="col-9">
-                        <div class="row mb-2 pb-3" style="border-bottom: 1px solid var(--color-border-2)">
+                        <label for="question_text" class="title-question">
+                            Soal
+                        </label>
+                        <div class="row mb-2 pb-3">
                             {!! $item->question_text !!}
                         </div>
+                        <label for="question_text" class="title-question">
+                            Jawaban
+                        </label>
                         @php
                             $answers = $item->questionChoices;
                             $statements = \App\Models\TestAnswer::select('statement')->where('question_id', $item->id)->distinct()->pluck('statement');
                         @endphp
-                        @if($item->type !== 'pernyataan')
-                        {{-- <ul>
-                            @foreach ($answers as $answer)
-                            <li>
-                                @if($answer->is_correct)
-                                    @if ($item->type === 'isian_singkat')
-                                        <p style="color: green;">{{ $answer->answer }}</p>
-                                    @else
-                                        {!! str_replace('<p>', '<p style="color: green;">', $answer->answer) !!}
-                                        <span><i class="feather feather-check"></i></span>
-                                    @endif
-                                @else
-                                {!! $answer->answer !!}
-                                @endif
-                            </li>
-                            @endforeach
-                        </ul> --}}
-                        
-                        <div class="my-3">
-                            @foreach ($answers as $answer)
-                            @if ($item->type === 'isian_singkat')
-                                <p>Jawaban: {{ $answer->answer }}</p>
-                            @else                               
-                            <div class="d-flex mb-2">
-                                {{-- <div class="dot" style="top: 9px; position: relative;" ></div> --}}
-                                @if($answer->is_correct)
-                                    <i class="feather feather-check text-success font-weight-bold text-end me-3 align-content-center"></i>
-                                    {!! $answer->answer !!}
-                                @else
-                                    <i class="feather feather-x text-danger font-weight-bold text-end me-3 align-content-center"></i>
-                                    {!! $answer->answer !!}
-                                @endif
-                            </div>
-                            @endif
-                            @endforeach
-                        </div>
-                        @else
-                        <table class="table table-bordered">
-                            <thead style="background-color: #F5F5F5">
-                                <tr class="text-center">
-                                    <th>Pernyataan</th>
-                                    @foreach ($statements as $statement)
-                                    <th class="statement-header">{{ $statement }}</th>
-                                    @endforeach
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div style="border-bottom: 1px solid var(--color-border-2)">
+                            @if($item->type !== 'pernyataan')
+                            <div class="my-3">
                                 @foreach ($answers as $answer)
-                                <tr>
-                                    <td>{{ $answer->answer }}</td>
-                                    @foreach ($statements as $statement)
-                                    <td class="text-center">
-                                        @if($answer->statement == $statement)
-                                            <i class="feather feather-check"></i>
-                                        @endif
-                                    </td>
-                                    @endforeach
-                                </tr>
+                                @if ($item->type === 'isian_singkat')
+                                    <p>{{ $answer->answer }}</p>
+                                @else                               
+                                <div class="d-flex mb-2">
+                                    {{-- <div class="dot" style="top: 9px; position: relative;" ></div> --}}
+                                    @if($answer->is_correct)
+                                        <i class="feather feather-check text-success font-weight-bold text-end me-3 align-content-center"></i>
+                                        {!! $answer->answer !!}
+                                    @else
+                                        <i class="feather feather-x text-danger font-weight-bold text-end me-3 align-content-center"></i>
+                                        {!! $answer->answer !!}
+                                    @endif
+                                </div>
+                                @endif
                                 @endforeach
-                            </tbody>
-                        </table>
-                        @endif
+                            </div>
+                            @else
+                            <table class="table table-bordered">
+                                <thead style="background-color: #F5F5F5">
+                                    <tr class="text-center">
+                                        <th>Pernyataan</th>
+                                        @foreach ($statements as $statement)
+                                        <th class="statement-header">{!! $statement !!}</th>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($answers as $answer)
+                                    <tr>
+                                        <td>{!! $answer->answer !!}</td>
+                                        @foreach ($statements as $statement)
+                                        <td class="text-center">
+                                            @if($answer->statement == $statement)
+                                                <i class="feather feather-check"></i>
+                                            @endif
+                                        </td>
+                                        @endforeach
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            @endif
+                        </div>
+                        <div class="mt-4">
+                            <label for="question_text" class="title-question">
+                                Pembahasan
+                            </label>
+                            <div class="row mb-2 pb-3">
+                                {!! $item->answer_explanation !!}
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-2 col-1 d-flex justify-content-center">
                         <a class="rbt-btn btn-sm bg-color-warning me-2" href="{{route('questions.edit', $item->id)}}"><i class="feather-edit pl--0"></i></a>
@@ -187,13 +195,19 @@
             </div>
             @endforeach
         </div>
-        <div>
-            {{$questions->links('vendor.pagination.bootstrap-5')}}
-        </div>
+        
     </div>
+    
+</div>
+<!-- End Page Wrapper Area -->
+<div class="rbt-progress-parent">
+    <svg class="rbt-back-circle svg-inner" width="100%" height="100%" viewBox="-1 -1 102 102">
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+    </svg>
 </div>
 @endsection
 @push('scripts')
+<script src="{{ asset("js/vendor/backtotop.js")}}"></script>
 <script>
      // menambahkan event click pada class delete-button
         $('.delete-button').on('click', function() {

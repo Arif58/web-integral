@@ -83,8 +83,12 @@
             <div class="col-lg-4 col-md-4">
                 <div class="rbt-profile-content b2">Jenjang Sekolah</div>
             </div>
+            @php
+                $level = $profile->level;
+                $level = $level == 'kuliah' ? 'Kuliah' : strtoupper($level)
+            @endphp
             <div class="col-lg-8 col-md-8">
-                <div class="rbt-profile-content b2">{{ $profile->level }}</div>
+                <div class="rbt-profile-content b2">{{ $level}}</div>
             </div>
         </div>
         <!-- End Profile Row  -->

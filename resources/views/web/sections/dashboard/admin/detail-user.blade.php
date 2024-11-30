@@ -74,7 +74,7 @@
                     <div class="rbt-profile-content b2">Jenjang Sekolah</div>
                 </div>
                 <div class="col-lg-8 col-md-8">
-                    <div class="rbt-profile-content b2">{{ $user->level }}</div>
+                    <div class="rbt-profile-content b2">{{ $user->level == 'kuliah' ? 'Kuliah' : strtoupper($user->level) }}</div>
                 </div>
             </div>
             <!-- End Profile Row  -->
@@ -115,6 +115,45 @@
                     @if($cityId != '')
                     <div class="rbt-profile-content b2">{{ $user->city->name }}</div>
                     @endif
+                </div>
+            </div>
+            <!-- End Profile Row  -->
+
+            <!-- Start Profile Row  -->
+            <div class="rbt-profile-row row row--15 mt--15">
+                <div class="col-lg-4 col-md-4">
+                    <div class="rbt-profile-content b2">Target Jurusan 1</div>
+                </div>
+                <div class="col-lg-8 col-md-8">
+                    
+                    <div class="rbt-profile-content b2">{{ $user->firstMajor?->university?->name }} - {{ $user->firstMajor?->name }}</div>
+                    
+                </div>
+            </div>
+            <!-- End Profile Row  -->
+
+            <!-- Start Profile Row  -->
+            <div class="rbt-profile-row row row--15 mt--15">
+                <div class="col-lg-4 col-md-4">
+                    <div class="rbt-profile-content b2">Target Jurusan 2</div>
+                </div>
+                <div class="col-lg-8 col-md-8">
+                    
+                    <div class="rbt-profile-content b2">{{ $user->secondMajor?->university?->name }} - {{ $user->secondMajor?->name }}</div>
+                    
+                </div>
+            </div>
+            <!-- End Profile Row  -->
+
+            <!-- Start Profile Row  -->
+            <div class="rbt-profile-row row row--15 mt--15">
+                <div class="col-lg-4 col-md-4">
+                    <div class="rbt-profile-content b2">Minat dan Bakat</div>
+                </div>
+                <div class="col-lg-8 col-md-8">
+                    
+                    <div class="rbt-profile-content b2">{{ $user->talentInterest?->name }}</div>
+                    
                 </div>
             </div>
             <!-- End Profile Row  -->

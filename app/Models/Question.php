@@ -17,6 +17,7 @@ class Question extends Model
         'question_text',
         'difficulty_parameter',
         'question_image',
+        'answer_explanation',
     ];
 
     public static $types = [

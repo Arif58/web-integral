@@ -28,6 +28,14 @@
             }
         }
 
+        /* Media query untuk layar sangat kecil */
+        @media (max-width: 480px) {
+            .rbt-btn {
+                font-size: 1.1rem !important;
+                /* padding: 6px 12px !important; */
+            }
+        }
+
         .single-method p{
             display: contents;
         }
@@ -62,6 +70,10 @@
             max-height: 500px;
             overflow-y: scroll;
             overflow-x: hidden;
+        }
+
+        label {
+            display: inline !important;
         }
         
 
@@ -179,14 +191,13 @@
                                             <div id="question_container" class="question-container">
                                                 <h5 id="question_number"></h5>
                                                 <div id="question_text"></div>
-                                                <div id="answer">
-                                                </div>
+                                                <div id="answer"></div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mt-5 button-group">
 
-                                        <button class="rbt-btn btn-sm me-4" id="prev_button" style=" border: 1px solid #70A4C6"><i class="feather-arrow-left"></i> Sebelumnya</button>
+                                        <button class="rbt-btn btn-sm me-4" id="prev_button" style=" border: 1px solid #70A4C6"><label for=""><i class="feather-arrow-left"></i> Sebelumnya</label></button>
                                         <button class="rbt-btn btn-sm" id="save_button"></button>
                                     </div>
                                 </div>
@@ -560,7 +571,7 @@
                         tr.classList.add('single-method');
 
                         let tdAnswer = document.createElement('td');
-                        tdAnswer.textContent = choice.answer;
+                        tdAnswer.innerHTML = choice.answer;
                         tr.appendChild(tdAnswer);
 
                         let question_id = choice.question_id;
@@ -580,7 +591,7 @@
 
                             let label = document.createElement('label');
                             label.htmlFor = `answer_${choice_id}_${index}`;
-                            label.style.position = 'absolute';
+                            // label.style.position = 'absolute';
 
                             input.addEventListener('change', (event) => {
                                 let answer = [choice_id, input.value];

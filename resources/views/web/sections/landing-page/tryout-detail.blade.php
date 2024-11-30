@@ -161,7 +161,7 @@
                                     <ul class="rbt-meta">
                                         <li><h4 class="rbt-title-style-2">Rp{{$price}}</h4></li>
                                         <span>|</span>
-                                        <li><h4 class="rbt-title-style-2">{{$product->ie_gems}} Poin</h4></li>
+                                        <li><h4 class="rbt-title-style-2">{{$product->ie_gems}} IE Gems</h4></li>
                                     </ul>
                                 </div>
 

@@ -78,6 +78,7 @@ class QuestionController extends Controller
                     'sub_test_id' => $id,
                     'type' => $request->type,
                     'question_text' => $request->question_text,
+                    'answer_explanation' => $request->answer_explanation,
                 ]);
 
                 // Dapatkan ID dari pertanyaan yang baru saja dimasukkan
@@ -147,6 +148,7 @@ class QuestionController extends Controller
                 $question->update([
                     'type' => $request->type,
                     'question_text' => $request->question_text,
+                    'answer_explanation' => $request->answer_explanation,
                 ]);
 
                 $answers = $request->answers;

@@ -158,7 +158,7 @@
                             <ul class="rbt-meta mb-0">
                                 <li><p class="description">Rp. {{$price}}</p></li>
                                 <span>|</span>
-                                <li><p class="description">{{$product->ie_gems}} Poin</p></li>
+                                <li><p class="description">{{$product->ie_gems}} IE Gems</p></li>
                             </ul>
                             <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
                             <div class="read-more-btn">

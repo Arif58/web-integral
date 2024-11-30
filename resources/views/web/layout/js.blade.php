@@ -10,7 +10,6 @@
     <script src="{{ asset("js/vendor/magnify.min.js")}}"></script>
     <script src="{{ asset("js/vendor/jquery-appear.js")}}"></script>
     <script src="{{ asset("js/vendor/odometer.js")}}"></script>
-    {{-- <script src="{{ asset("js/vendor/backtotop.js")}}"></script> --}}
     <script src="{{ asset("js/vendor/isotop.js")}}"></script>
     <script src="{{ asset("js/vendor/imageloaded.js")}}"></script>
 
