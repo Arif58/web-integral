@@ -72,7 +72,11 @@
             overflow-x: hidden;
         }
 
-        label {
+        /* label {
+            display: inline !important;
+        } */
+
+        .btn-choices {
             display: inline !important;
         }
         
@@ -590,6 +594,7 @@
                             input.id = `answer_${choice_id}_${index}`;
 
                             let label = document.createElement('label');
+                            label.classList.add('btn-choices');
                             label.htmlFor = `answer_${choice_id}_${index}`;
                             // label.style.position = 'absolute';
 

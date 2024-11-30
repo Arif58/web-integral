@@ -228,4 +228,30 @@ class ExamController extends Controller
 
         return view('web.sections.exam.major-recommendation', compact('majorRecommendation'));
     }
+
+    public function getAnswerExplanation($participantId, $subTestId)
+    {
+        $subTest = SubTest::where('id', $subTestId)->with('questions', 'categorySubtest')->first();
+
+        $questions = Question::where('sub_test_id', $subTestId)->with('questionChoices')->get();
+
+        $userAnswers = UserAnswer::where('participant_id', $participantId)->whereIn('question_id', $questions->pluck('id'))->get();
+
+        // Transformasi data userAnswers sesuai format yang diinginkan
+        $userAnswers = $userAnswers->groupBy('question_id')->map(function ($item) {
+            $transformed = [];
+            foreach ($item as $answer) {
+                if ($answer->answer_text) {
+                    $transformed[] = [$answer->test_answer_id, $answer->answer_text];
+                } else {
+                    $transformed[] = (string) $answer->test_answer_id;
+                }
+            }
+            return $transformed;
+        });
+        // dd($userAnswers);
+        
+
+        return view('web.sections.exam.answer-explanation', compact('questions', 'subTest', 'userAnswers'));
+    }
 }

@@ -314,7 +314,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Error!',
-                            text: 'Terjadi kesalahan saat memproses nilai.',
+                            text: xhr.responseJSON.message,
                         });
                     }
                 });

@@ -14,8 +14,8 @@
 </head>
 @php
     $currentPath = Route::currentRouteName();
-    $pageWithoutSidebar = ['profile.edit', 'profile.edit-major'];
-    $pageWithoutHeader = ['profile.edit', 'profile.edit-major'];
+    $pageWithoutSidebar = ['profile.edit', 'profile.edit-major', 'answer-explanation'];
+    $pageWithoutHeader = ['profile.edit', 'profile.edit-major', 'answer-explanation'];
     $pageWithoutNavbar = ['profile.edit', 'profile.edit-major']
 @endphp
 <body>

@@ -99,6 +99,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/exam/result/{participantId}', 'getExamResult')->name('exam-result');
         Route::get('/exam/leaderboard/{tryOutId}', 'getLeaderboard')->name('leaderboard.get');
         Route::get('/exam/rekomendasi-jurusan/{participantId}', 'getMajorRecommendation')->name('major-recommendation');
+        Route::get('/exam/pembahasan/{participantId}/subtest/{subTestId}', 'getAnswerExplanation')->name('answer-explanation');
     });
 
     Route::middleware(['admin'])->group(function () {
