@@ -58,6 +58,11 @@
 @endpush
 @section('content')
 <!-- Start Card Style -->
+<div class="section-title mb-4">
+    <h4 class="rbt-title-style-3">
+        <a href="/tryout" class="me-4"><i class="feather feather-arrow-left"></i></a><b>{{$subTest->categorySubtest->name}} / </b><span style="color: #9f9f9f; font-weight: normal">{{ $subTest->name }}</span>       
+    </h4>
+</div>
 <div class="rbt-dashboard-area mt--50">
     <div class="container">
         <div class="row">
@@ -108,8 +113,11 @@
                                         <div id="question_container" class="question-container">
                                             <h5 id="question_number"></h5>
                                             <div id="question_text"></div>
-                                            <div id="answer"></div>
+                                            <div id="answer" class="pb-3"></div>
                                         </div>
+                                    </div>
+                                    <div class="mt-3" id="answer_explanation">
+
                                     </div>
                                 </div>
                                 <div class="mt-5 button-group">
@@ -284,18 +292,21 @@
                     answer.forEach((item) => {
                         if (item[1] == choices[0].answer) {
                             input.style.setProperty('background-color', '#E6F5E8', 'important');
-    input.style.border = '1px solid #4CAF50';
+                            input.style.border = '1px solid #4CAF50';
                         }
                         else {
                             input.style.setProperty('background-color', '#F8E9ED', 'important');
-    input.style.border = '1px solid #C0333B';
+                            input.style.border = '1px solid #C0333B';
                         }
                         input.value = item[1];
                     });
                 }
                 
-                
-                
+                let div = document.createElement('p');
+                div.innerHTML = "Jawaban Kamu";
+                div.style.fontWeight = 'bold';
+                div.style.marginBottom = '5px';
+                document.getElementById('answer').appendChild(div);
                 document.getElementById('answer').appendChild(input);
             } else if (questions[index].type === 'pernyataan') {
                 let table = document.createElement('table');
@@ -311,80 +322,159 @@
                 thPernyataan.textContent = 'Pernyataan';
                 tr.appendChild(thPernyataan);
 
-                let statement = [];
-                choices.forEach((choice) => {
-                    if (!statement.includes(choice.statement)) {
-                        statement.push(choice.statement);
-                    }
-                });
-
-                statement.forEach((item) => {
-                    let th = document.createElement('th');
-                    th.classList.add('statement-header');
-                    th.textContent = item;
-                    tr.appendChild(th);
-                });
+                let thJawaban = document.createElement('th');
+                thJawaban.textContent = 'Jawaban';
+                tr.appendChild(thJawaban);
 
                 thead.appendChild(tr);
                 table.appendChild(thead);
 
                 let tbody = document.createElement('tbody');
 
-                choices.forEach((choice, i) => {
-                    let tr = document.createElement('tr');
-                    tr.classList.add('single-method');
-
-                    let tdAnswer = document.createElement('td');
-                    tdAnswer.innerHTML = choice.answer;
-                    tr.appendChild(tdAnswer);
-
-                    let question_id = choice.question_id;
-
-                    statement.forEach((item, index) => {
-                        let choice_id = choice.id;
-
-                        let td = document.createElement('td');
-                        td.classList.add('text-center');
-
-                        let input = document.createElement('input');
-                        input.type = 'radio';
-                        input.name = `answer_${i}`;
-                        input.value = item;
-                        //membuat id yang unik
-                        input.id = `answer_${choice_id}_${index}`;
-
-                        let label = document.createElement('label');
-                        label.classList.add('btn-choices');
-                        label.htmlFor = `answer_${choice_id}_${index}`;
-                        // label.style.position = 'absolute';
-
-                        input.addEventListener('change', (event) => {
-                            let answer = [choice_id, input.value];
-                            // saveAnswer(question_id, answer); gajadi dipake diganti sama fungsi saveCurrentAnswer
-                            // saveCurrentAnswer();
-                            mark(currentQuestionIndex, question_id);
-                        });
-
-                        if (answer) {
-                            answer.forEach((answer) => {
-                                if (answer[0] == choice_id && answer[1] == item) {
-                                    input.checked = true;
+                if (answer) {
+                    choices.forEach((item) => {
+                        console.log(item);
+                        let trBody = document.createElement('tr');
+                        
+                        // Kolom Pernyataan
+                        let tdPernyataan = document.createElement('td');
+                        tdPernyataan.innerHTML = item.answer; // Pastikan objek item memiliki properti 'pernyataan'
+                        tdPernyataan.style.textAlign = 'left';
+                        trBody.appendChild(tdPernyataan);
+    
+                        // Kolom Jawaban
+                        let tdJawaban = document.createElement('td');
+                        answer.forEach((itemAnswer) => {
+                            if (item.id == itemAnswer[0]) {
+                                console.log("jawaban "+itemAnswer[1]);
+                                tdJawaban.textContent = itemAnswer[1];
+                                if (item.statement == itemAnswer[1]) {
+                                    tdJawaban.style.backgroundColor = '#E6F5E8';
+                                    // tdJawaban.style.border = '1px solid #4CAF50';
+                                } else {
+                                    tdJawaban.style.backgroundColor = '#F8E9ED';
+                                    // tdJawaban.style.border = '1px solid #C0333B';
                                 }
-                            });
-                        }
-
-                        td.appendChild(input);
-                        td.appendChild(label);
-
-                        tr.appendChild(td);
+                            }
+                        });
+                        tdJawaban.style.textAlign = 'center';
+    
+                        trBody.appendChild(tdJawaban);
+                        tbody.appendChild(trBody);
                     });
-
-                    tbody.appendChild(tr);
-                });
+                } else {
+                    choices.forEach((item) => {
+                        console.log(item);
+                        let trBody = document.createElement('tr');
+                        
+                        // Kolom Pernyataan
+                        let tdPernyataan = document.createElement('td');
+                        tdPernyataan.innerHTML = item.answer; // Pastikan objek item memiliki properti 'pernyataan'
+                        tdPernyataan.style.textAlign = 'left';
+                        trBody.appendChild(tdPernyataan);
+    
+                        // Kolom Jawaban
+                        let tdJawaban = document.createElement('td');
+                        tdJawaban.textContent = '';
+                        tdJawaban.style.textAlign = 'center';
+                        tdJawaban.style.backgroundColor = '#F8E9ED';
+    
+                        trBody.appendChild(tdJawaban);
+                        tbody.appendChild(trBody);
+                    });
+                }
 
                 table.appendChild(tbody);
                 document.getElementById('answer').appendChild(table);
             }
+
+            document.getElementById('answer').style.borderBottom = '2px solid var(--color-border-2)';
+        }
+
+        function loadAnswerExplanation(index) {
+            let div = document.createElement('div');
+            let pembahasan = document.createElement('p');
+            pembahasan.innerHTML = "Pembahasan";
+            pembahasan.style.fontWeight = 'bold';
+            pembahasan.style.marginBottom = '10px';
+
+            let choices = questions[index].question_choices;
+
+            let answerExplanation = questions[index].answer_explanation;
+            if (questions[index].type === 'pilihan_ganda' || questions[index].type === 'pilihan_ganda_majemuk') {
+                let correctAnswer = choices.filter(choice => choice.is_correct == 1);
+                //buat correct answer menjadi point point
+                let correctAnswerText = correctAnswer.map(choice => choice.answer);
+                console.log(correctAnswerText);
+                answerExplanation += `<p class="mt-4">Jawaban: </p>`;
+                // answerExplanation += `<p>${correctAnswerText.join(', ')}</p>`;
+                let ul = document.createElement('ul');
+                correctAnswerText.forEach((item) => {
+                    let li = document.createElement('li');
+                    li.innerHTML = item;
+                    ul.appendChild(li);
+                });
+                answerExplanation += ul.outerHTML;
+
+            } else if (questions[index].type === 'isian_singkat') {
+                let correctAnswer = choices[0].answer;
+                answerExplanation += `<p class="mt-4">Jawaban: </p>`;
+                answerExplanation += `<p>${correctAnswer}</p>`;
+            } else if (questions[index].type === 'pernyataan') {
+                let table = document.createElement('table');
+                table.classList.add('table', 'table-bordered');
+
+                let thead = document.createElement('thead');
+                thead.style.backgroundColor = '#F5F5F5';
+
+                let tr = document.createElement('tr');
+                tr.classList.add('text-center');
+
+                let thPernyataan = document.createElement('th');
+                thPernyataan.textContent = 'Pernyataan';
+                tr.appendChild(thPernyataan);
+
+                let thJawaban = document.createElement('th');
+                thJawaban.textContent = 'Jawaban';
+                tr.appendChild(thJawaban);
+
+                thead.appendChild(tr);
+                table.appendChild(thead);
+
+                let tbody = document.createElement('tbody');
+
+                choices.forEach((item) => {
+                    console.log(item);
+                    let trBody = document.createElement('tr');
+                    
+                    // Kolom Pernyataan
+                    let tdPernyataan = document.createElement('td');
+                    tdPernyataan.innerHTML = item.answer; // Pastikan objek item memiliki properti 'pernyataan'
+                    tdPernyataan.style.textAlign = 'left';
+                    trBody.appendChild(tdPernyataan);
+
+                    // Kolom Jawaban
+                    let tdJawaban = document.createElement('td');
+                    tdJawaban.textContent = item.statement;
+                    tdJawaban.style.textAlign = 'center';
+                    trBody.appendChild(tdJawaban);
+                    
+                    tbody.appendChild(trBody);
+                });
+
+                table.appendChild(tbody);
+                // document.getElementById('answer').appendChild(table);
+                answerExplanation += `<p class="mt-4">Jawaban: <p>`;
+                answerExplanation += table.outerHTML;
+
+            }
+            div.innerHTML = answerExplanation;
+
+
+            document.getElementById('answer_explanation').innerHTML = '';
+            document.getElementById('answer_explanation').appendChild(pembahasan);
+            document.getElementById('answer_explanation').appendChild(div);
+            
         }
 
         function buttonHandle($index) {
@@ -411,6 +501,7 @@
             currentQuestionIndex = index;
             loadQuestion(index);
             loadTestAnswer(index);
+            loadAnswerExplanation(index);
             buttonHandle(index);
         }
 
