@@ -217,71 +217,12 @@
                             <div class="content">
                                 {{-- start tryout info --}}
                                 <div class="rbt-dashboard-content bg-color-white rbt-shadow-box mb--30">
-                                    <h5 class="rbt-title-style-3 text-center">
-                                        Detail Try Out
-                                    </h5>
-                                    <div class="row g-5">
-
-                                        {{-- <!-- Start Single Card  -->
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                                            <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed" style="background: #EFFFF6;">
-                                                <div class="inner d-flex">
-                                                    <div class="rbt-round-icon" style="background:#DFF9EA;">
-                                                        <i class=" feather-check-square" style="color: #226666"></i>
-                                                    </div>
-                                                    <div class="content align-content-center tryout-info">
-                                                        <h3 class="counter without-icon" style="color: #226666"><span>67</span>
-                                                        </h3>
-                                                        <span class="rbt-title-style-2 d-block">Jumlah Soal Benar</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-    
-                                        </div>
-                                        <!-- End Single Card  -->
-    
-                                        <!-- Start Single Card  -->
-                                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                                            <div class="rbt-counterup variation-01 rbt-hover-03 rbt-border-dashed" style="background: #F9F0A6;">
-                                                <div class="inner d-flex">
-                                                    <div class="rbt-round-icon" style="background: #F7EA86;">
-                                                        <i class="feather-book-open" style="color: #DC7E3F"></i>
-                                                    </div>
-                                                    <div class="content align-content-center tryout-info">
-                                                        <h3 class="counter without-icon">
-                                                            <span style="color: #DC7E3F">
-                                                                {{$totalAnswered}}
-                                                            </span>
-                                                            <span style="color: #E7A446">
-                                                                / {{$totalQuestion}}
-                                                            </span>
-                                                            
-                                                        </h3>
-                                                        <span class="rbt-title-style-2 d-block">Jumlah Soal Dikerjakan</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Single Card  --> --}}
+                                    <div class="text-center pb--20" style="border-bottom: 2px solid var(--color-border-2)">
+                                        <h5 class="rbt-title-style-3 text-center pb-0 border-0 mb-3">
+                                            Detail dan Pembahasan Try Out
+                                        </h5>
+                                        <span>Klik judul subtes untuk melihat pembahasan soal</span>
                                     </div>
-
-                                    {{-- start pembahasan soal --}}
-                                    <div class="mt-5 py-4" style="border: 1px solid var(--color-border-2); border-radius: 5px;">
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <h5 class="text-center">
-                                                    Pembahasan Soal
-                                                </h5>
-                                            </div>
-                                            <div class="col-12 text-center">
-                                                <a class="rbt-btn btn-gradient rbt-shadow-box" href="{{asset('storage/'.$product->answer_explanation_file)}}" target="_blank">
-                                                    Lihat Pembahasan Soal <i class="feather-download"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    {{-- end pembahasan soal --}}
 
                                     {{-- start detail skor --}}
                                     <div class="mt-5">
@@ -298,19 +239,24 @@
                                                 <div class="d-flex align-items-center mb-3">
                                                     <div class="dot"></div>
                                                     <div class="d-flex justify-content-between" style="width: 100%">
-                                                        <div>{{$subTest->name}}</div>
-                                                        {{-- check apakah subtest tersebut mempunyai skor --}}
-                                                        @if (in_array($subTest->id, $participantSubtestHasScore->toArray()))
-                                                        @foreach ($averageScoreSubtest as $averageScore)
-                                                            @if ($averageScore->sub_test_id == $subTest->id)
-                                                                <div>
-                                                                    {{ number_format(($averageScore->total_score + 200), 2, '.', '') }}
-                                                                </div>
+                                                        <div><a href="{{route('answer-explanation', ['participantId' => $participant->id, 'subTestId' => $subTest->id])}}" style="text-decoration: underline !important">{{$subTest->name}}</a></div>
+                                                        <div class="row">
+                                                            {{-- check apakah subtest tersebut mempunyai skor --}}
+                                                            @if (in_array($subTest->id, $participantSubtestHasScore->toArray()))
+                                                            @foreach ($averageScoreSubtest as $averageScore)
+                                                                @if ($averageScore->sub_test_id == $subTest->id)
+                                                                    <div class="col-6" style="margin-right: auto;color: #DC7E3F">
+                                                                        {{ number_format(($averageScore->total_score + 200), 2, '.', '') }}
+                                                                    </div>
+                                                                @endif
+                                                            @endforeach
+                                                            @else
+                                                                <div class="col-6" style="margin-right: auto; color: #DC7E3F">{{number_format(200)}}</div>
                                                             @endif
-                                                        @endforeach
-                                                        @else
-                                                            <div>{{number_format(200)}}</div>
-                                                        @endif
+                                                            <div class="col-3">
+                                                                <a href="{{route('answer-explanation', ['participantId' => $participant->id, 'subTestId' => $subTest->id])}}">></a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 

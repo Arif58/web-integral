@@ -1,5 +1,5 @@
 @extends('web.layout-dashboard')
-@section('title', 'Ubah Target Jurusan')
+@section('title', 'Pembahasan Soal')
 @push('css')
     <style>
        /* Media query untuk layar sangat kecil */
@@ -58,19 +58,18 @@
 @endpush
 @section('content')
 <!-- Start Card Style -->
-<div class="section-title mb-4">
-    <h4 class="rbt-title-style-3">
-        <a href="/tryout" class="me-4"><i class="feather feather-arrow-left"></i></a><b>{{$subTest->categorySubtest->name}} / </b><span style="color: #9f9f9f; font-weight: normal">{{ $subTest->name }}</span>       
-    </h4>
-</div>
-<div class="rbt-dashboard-area mt--50">
-    <div class="container">
+
+<div class="rbt-dashboard-area">
+    <div class="container mb-4">
+        <a href="javascript:history.back()" class="me-4"><i class="feather feather-arrow-left"></i></a>{{$subTest->categorySubtest->name}} / <span style="font-weight: bold">{{ $subTest->name }}</span>      
+    </div>
+    <div class="container mt--20">
         <div class="row">
             <div class="col-lg-12">
                 <div class="row g-5">
                     <div class="col-lg-4">
                         <!-- Start Dashboard Sidebar  -->
-                        <div class="rbt-default-sidebar sticky-top rbt-shadow-box" style="top: 90px;">
+                        <div class="rbt-default-sidebar sticky-top rbt-shadow-box" style="top: 20px;">
                             <div class="inner">
                                 <div class="content-item-content">
 
@@ -122,7 +121,7 @@
                                 </div>
                                 <div class="mt-5 button-group">
 
-                                    <button class="rbt-btn btn-sm me-4" id="prev_button" style=" border: 1px solid #70A4C6"><label for=""><i class="feather-arrow-left"></i> Sebelumnya</label></button>
+                                    <button class="rbt-btn btn-sm me-4" id="prev_button" style="border: 1px solid #70A4C6; color: black !important"><label for=""><i class="feather-arrow-left"></i> Sebelumnya</label></button>
                                     <button class="rbt-btn btn-sm" id="save_button"></button>
                                 </div>
                             </div>
@@ -139,30 +138,41 @@
 @push('scripts')
 <script>
 
-    function mark(index, questionId) {
+    function mark(index, questionId, questionType, questionChoices) {
         let answers = @json($userAnswers);
         let answer = answers[questionId];
         if (answer) {
             if (answer.length > 0) {    //ketika jawaban tidak kosong
-                answer.forEach((item, i) => {
-                    // cek apakah item adalah array atau bukan
-                    if(Array.isArray(item)) {   //ketika question type isian singkat dan pernyataan
-                        if (answer[0][1] == '') {   //ketika jawaban kosong
-                            let questionNumber = document.getElementById('question_number_' + index);
-                            questionNumber.style.background = 'white';
-                            questionNumber.style.color = 'black';
-                        } else {    //ketika jawaban tidak kosong
-                            let questionNumber = document.getElementById('question_number_' + index);
-                            questionNumber.style.background = 'var(--gradient-10)';
-                            questionNumber.style.color = 'white';
+                let questionNumber = document.getElementById('question_number_' + index);
+                for (let i = 0; i < answer.length; i++) {
+                    let item = answer[i];
+                    if (questionType === 'pilihan_ganda' || questionType === 'pilihan_ganda_majemuk') {
+                        let choice = questionChoices.find(choice => choice.id == item);
+                        console.log(item);
+                        if (choice.is_correct == 1) {
+                            setQuestionStyle(questionNumber, '#29A039', '#E6F5E8');
+                        } else {
+                            setQuestionStyle(questionNumber, '#C0333B', '#E6F5E8');
+                            break; // Break ketika jawaban salah
                         }
-                    } else { //ketika question type pilihan ganda dan pilihan ganda majemuk
-                        let questionNumber = document.getElementById('question_number_' + index);
-                        questionNumber.style.background = 'var(--gradient-10)';
-                        questionNumber.style.color = 'white';
+                    } else if (questionType === 'isian_singkat') {
+                        let choice = questionChoices[0];
+                        if (item[1] == choice.answer) {
+                            setQuestionStyle(questionNumber, '#29A039', '#E6F5E8');
+                        } else {
+                            setQuestionStyle(questionNumber, '#C0333B', '#E6F5E8');
+                            break; // Break ketika jawaban salah
+                        }
+                    } else if (questionType === 'pernyataan') {
+                        let choice = questionChoices.find(choice => choice.id == item[0]);
+                        if (item[1] == choice.statement) {
+                            setQuestionStyle(questionNumber, '#29A039', '#E6F5E8');
+                        } else {
+                            setQuestionStyle(questionNumber, '#C0333B', '#E6F5E8');
+                            break; // Break ketika jawaban salah
+                        }
                     }
-                    
-                });
+                }
             } else {    //ketika jawaban kosong
                 let questionNumber = document.getElementById('question_number_' + index);
                 questionNumber.style.background = 'white';
@@ -173,13 +183,20 @@
     }
 
     function markAllQuestion(){
-        let answers = @json($userAnswers);
         let questions = @json($questions);
         questions.forEach((question, index) => {
             let keyAnswers = question.id;
-            mark(index, keyAnswers);
+            let questionType = question.type;
+            let questionChoices = question.question_choices;
+            mark(index, keyAnswers, questionType, questionChoices);
         });
     }
+
+    function setQuestionStyle(questionNumber, bgColor, textColor) {
+        questionNumber.style.background = bgColor;
+        questionNumber.style.color = textColor;
+    }
+
 
     // Usage example
     document.addEventListener('DOMContentLoaded', (event) => {
@@ -189,11 +206,9 @@
 
         let currentQuestionIndex = 0;
         let questions = @json($questions);
-        console.log(questions);
 
         let totalQuestions = questions.length;
         let answers = @json($userAnswers);
-        console.log(answers);
 
         // Ambil semua tombol dengan id yang dimulai dengan 'btn_question_'
         const questionButtons = document.querySelectorAll('[id^="question_number_"]');
@@ -333,7 +348,6 @@
 
                 if (answer) {
                     choices.forEach((item) => {
-                        console.log(item);
                         let trBody = document.createElement('tr');
                         
                         // Kolom Pernyataan
@@ -346,8 +360,7 @@
                         let tdJawaban = document.createElement('td');
                         answer.forEach((itemAnswer) => {
                             if (item.id == itemAnswer[0]) {
-                                console.log("jawaban "+itemAnswer[1]);
-                                tdJawaban.textContent = itemAnswer[1];
+                                 tdJawaban.textContent = itemAnswer[1];
                                 if (item.statement == itemAnswer[1]) {
                                     tdJawaban.style.backgroundColor = '#E6F5E8';
                                     // tdJawaban.style.border = '1px solid #4CAF50';
@@ -364,7 +377,6 @@
                     });
                 } else {
                     choices.forEach((item) => {
-                        console.log(item);
                         let trBody = document.createElement('tr');
                         
                         // Kolom Pernyataan
@@ -405,7 +417,6 @@
                 let correctAnswer = choices.filter(choice => choice.is_correct == 1);
                 //buat correct answer menjadi point point
                 let correctAnswerText = correctAnswer.map(choice => choice.answer);
-                console.log(correctAnswerText);
                 answerExplanation += `<p class="mt-4">Jawaban: </p>`;
                 // answerExplanation += `<p>${correctAnswerText.join(', ')}</p>`;
                 let ul = document.createElement('ul');
@@ -444,7 +455,6 @@
                 let tbody = document.createElement('tbody');
 
                 choices.forEach((item) => {
-                    console.log(item);
                     let trBody = document.createElement('tr');
                     
                     // Kolom Pernyataan
@@ -488,9 +498,10 @@
             }
 
             if ($index == totalQuestions - 1) {
-                saveButton.setAttribute('style', 'background: var(--gradient-10) !important; color: white !important; border: 1px solid #E7A446 !important;');
-                saveButton.innerHTML = 'Selesai <i class="feather-arrow-right"></i>';
+                //menghilangkan button
+                saveButton.style.display = 'none';
             } else {
+                saveButton.style.display = 'block';
                 saveButton.setAttribute('style', 'background: white !important; color: black !important; border: 1px solid #E7A446 !important;');
                 saveButton.innerHTML = 'Selanjutnya <i class="feather-arrow-right"></i>';
             }
@@ -516,26 +527,6 @@
             // saveCurrentAnswer();
             if (currentQuestionIndex < totalQuestions - 1) {
                 showQuestion(currentQuestionIndex + 1);
-            } else if (currentQuestionIndex === totalQuestions - 1) {
-                Swal.fire({
-                    title: 'Anda yakin ingin menyimpan jawaban?',
-                    text: "Periksa kembali jawaban Anda sebelum menyimpan.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#DC7E3F',
-                    cancelButtonColor: 'transparent',
-                    confirmButtonText: 'Ya, saya yakin',
-                    cancelButtonText: 'Batal',
-                    reverseButtons: true,
-                    buttonsStyling: true,
-                    width: '600px',
-                    heightAuto: true,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        //send answer to server
-                        submitAnswers();
-                    }
-                });
             }
         });
 
