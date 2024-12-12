@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CategorySubtest;
+use App\Models\CompletedSubtest;
 use App\Models\IeGemsHistory;
 use App\Models\Major;
 use App\Models\Participant;
@@ -13,6 +14,7 @@ use App\Models\User;
 use App\Models\UserAnswer;
 use App\Models\UserItemScore;
 use App\Traits\SimpleAdditiveWeighting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -25,12 +27,33 @@ class ExamController extends Controller
     {
         $participant = Participant::where('id', $id)->with('tryOut')->first();
 
-        $subTest = $participant->tryOut->subTests()->with('questions', 'categorySubtest')->get();
+        $countTest = CompletedSubtest::where('participant_id', $id)->count();
+
+        //get subtest completed by participant
+        $completedSubtestId = CompletedSubtest::where('participant_id', $id)->where('status', '=', 'completed')->pluck('sub_test_id');
+
+        //get subtest not completed by participant
+        $subTest = $participant->tryOut->subTests()->whereNotIn('id', $completedSubtestId)->with('questions', 'categorySubtest')->orderBy('id', 'asc')->get();
+
+        //sisa subtest yang belum dikerjakan
+        $countSubTestLeft = $subTest->count();
+
+        //subtest yang akan dikerjakan
+        $currentSubTest = $subTest->first();
 
         //pass the data as JSON
         $subTestIds = $subTest->pluck('id');
+        // dd($subTest);
 
-        return view('web.sections.exam.confirm-test', compact('participant', 'subTest', 'subTestIds'));
+        if ($countTest == 0) {
+            // $startTest = Carbon::now('Asia/Jakarta')->setTimezone('UTC')->format('Y-m-d H:i:s');
+            $startTest = Carbon::now()->format('Y-m-d H:i:s');
+            $participant->update([
+                'start_test' => $startTest,
+            ]);
+        }
+
+        return view('web.sections.exam.confirm-test', compact('participant', 'subTest', 'subTestIds', 'countSubTestLeft', 'currentSubTest'));
     }
 
     public function getQuestion($participantId, $subTestId)
@@ -39,7 +62,39 @@ class ExamController extends Controller
 
         $questions = Question::where('sub_test_id', $subTestId)->with('questionChoices')->get();
 
-        return view('web.sections.exam.test', compact('questions', 'subTest', 'participantId'));
+        //check apakah participant sudah mengerjakan subtest atau belum
+        $completedSubtest = CompletedSubtest::where('participant_id', $participantId)
+                            ->where('sub_test_id', $subTestId)
+                            ->first();
+        if ($completedSubtest?->status == 'completed') {
+            return redirect()->route('my-tryout')->with('error', 'Anda sudah mengerjakan subtest ini.');
+        } else if ($completedSubtest?->status == 'in-progress') {
+            $startTest = $completedSubtest->started_at;
+        } else {
+            //jam mulai ujian sesuai waktu GMT+7
+            $startTest = Carbon::now('Asia/Jakarta')->format('Y-m-d H:i:s');
+
+            //create new data pada table completed_subtests
+            CompletedSubtest::create([
+                'participant_id' => $participantId,
+                'sub_test_id' => $subTestId,
+                'started_at' => $startTest,
+            ]);
+        }
+
+        $participant = Participant::where('id', $participantId)->with('tryOut')->first();
+        //get subtest completed by participant
+        $completedSubtestId = CompletedSubtest::where('participant_id', $participantId)->where('status', '=', 'completed')->pluck('sub_test_id');
+
+        //get subtest not completed by participant
+        $subTestNotCompleted = $participant->tryOut->subTests()->whereNotIn('id', $completedSubtestId)->with('questions', 'categorySubtest')->get();
+ 
+        //sisa subtest yang belum dikerjakan
+        $lengthSubTest = $subTestNotCompleted->count();
+        // dd($lengthSubTest);
+
+
+        return view('web.sections.exam.test', compact('questions', 'subTest', 'participantId', 'startTest', 'lengthSubTest'));
     }
 
     public function submitAnswer(Request $request)
@@ -48,10 +103,11 @@ class ExamController extends Controller
             DB::transaction(function() use ($request) {
                 $participantId = $request->participant_id;
                 $answers = $request->answers;
-                $startTest = $request->startTest ?? null;
+                // $startTest = $request->startTest ?? null;
                 $endTest = $request->endTest ?? null;
                 $ieGems = $request->ieGems ?? null;
-            
+                $subTestId = $request->subTestId;
+
                 foreach ($answers as $questionId => $answer) {
                     if (is_array($answer)) {
                         foreach ($answer as $subAnswer) {
@@ -93,11 +149,11 @@ class ExamController extends Controller
                     }
                 }
     
-                if ($startTest) {
-                    Participant::where('id', $participantId)->update(
-                        ['start_test' => $startTest]
-                    );
-                }
+                // if ($startTest) {
+                //     Participant::where('id', $participantId)->update(
+                //         ['start_test' => $startTest]
+                //     );
+                // }
     
                 if ($endTest) {
                     Participant::where('id', $participantId)->update(
@@ -115,6 +171,14 @@ class ExamController extends Controller
     
                     User::where('id', $userid)->increment('ie_gems', $ieGems);
                 }
+
+                $completedSubtest = CompletedSubtest::where('participant_id', $participantId)
+                                    ->where('sub_test_id', $subTestId)
+                                    ->first();
+                $completedSubtest->update([
+                    'status' => 'completed',
+                    'completed_at' => Carbon::now('Asia/Jakarta')->format('Y-m-d H:i:s'),
+                ]);
             });
     
             return response()->json(['success' => true, 'message' => 'Answer submitted successfully']);

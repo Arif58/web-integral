@@ -216,53 +216,49 @@
     <!-- End Card Style -->
     @include('web.layout.js')
     <script>
-        function formattedDate(dateObject) {
+        function formattedDate(dateObject, useUTC = false) {
             function padZero(num) {
                 return num.toString().padStart(2, '0');
             }
 
-            let year = dateObject.getFullYear();
-            let month = padZero(dateObject.getMonth() + 1);
-            let day = padZero(dateObject.getDate());
-            let hours = padZero(dateObject.getHours());
-            let minutes = padZero(dateObject.getMinutes());
-            let seconds = padZero(dateObject.getSeconds());
+            let year = useUTC ? dateObject.getUTCFullYear() : dateObject.getFullYear();
+            let month = padZero(useUTC ? dateObject.getUTCMonth() + 1 : dateObject.getMonth() + 1);
+            let day = padZero(useUTC ? dateObject.getUTCDate() : dateObject.getDate());
+            let hours = padZero(useUTC ? dateObject.getUTCHours() : dateObject.getHours());
+            let minutes = padZero(useUTC ? dateObject.getUTCMinutes() : dateObject.getMinutes());
+            let seconds = padZero(useUTC ? dateObject.getUTCSeconds() : dateObject.getSeconds());
 
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         }
 
+
         function submitAnswers(redirectUrl = null) {
                 let answers = JSON.parse(localStorage.getItem('answers')) || {};
                 let participantId = @json($participantId);
-                let subTestCurrentIndex = JSON.parse(localStorage.getItem('subTestCurrentIndex'));
-                let lengthSubTest = JSON.parse(localStorage.getItem('subTestId')).length;
-                
-                let startTest = JSON.parse(localStorage.getItem('start_test'));
-                //convert startTest to date
-                startTest = new Date(startTest);
-                startTestFormatted = formattedDate(startTest);
+                let subTest = @json($subTest);
+                let subTestId = subTest.id;
+                let lengthSubTest = @json($lengthSubTest);
 
-                endTest = new Date();
-                endTestFormatted = formattedDate(endTest);
+                // endTest = new Date();
+                let endTest = new Date();
+                let endTestUTC = new Date(endTest.toISOString())
+                let endTestFormatted = formattedDate(endTestUTC, true);
                 
                 let requestBody;
-                if (subTestCurrentIndex == 0) {
-                    requestBody = JSON.stringify({
-                        participant_id: participantId,
-                        answers: answers,
-                        startTest: startTestFormatted,
-                    });
-                } else if (subTestCurrentIndex == lengthSubTest - 1) {
+                //ketika sisa subtest yang harus dikerjakan hanya 1
+                if (lengthSubTest == 1) {
                     requestBody = JSON.stringify({
                         participant_id: participantId,
                         answers: answers,
                         endTest: endTestFormatted,
                         ieGems: 3,
+                        subTestId: subTestId,
                     });
                 } else {
                     requestBody = JSON.stringify({
                         participant_id: participantId,
                         answers: answers,
+                        subTestId: subTestId,
                     });
                 }
                 
@@ -279,24 +275,15 @@
                     if (data.success) {
                         if(redirectUrl){
                             localStorage.removeItem('answers');
-                            localStorage.removeItem('subTestId');
-                            localStorage.removeItem('subTestCurrentIndex');
-                            localStorage.removeItem('start_test');
                             window.location.href = redirectUrl;
                         } else {
                             //ketika masih ada subtest yang harus dikerjakan
-                            if (subTestCurrentIndex < lengthSubTest - 1) {
-                                subTestCurrentIndex++;
-                                localStorage.setItem('subTestCurrentIndex', subTestCurrentIndex);
+                            if (lengthSubTest > 1) {
                                 //hapus answers pada local storage
                                 localStorage.removeItem('answers');
                                 window.location.href = `/exam/${participantId}`;
                             } else {
-                                //hapus answers,subtestId, subTestCurrentIndex, start test pada local storage
                                 localStorage.removeItem('answers');
-                                localStorage.removeItem('subTestId');
-                                localStorage.removeItem('subTestCurrentIndex');
-                                localStorage.removeItem('start_test');
                                 window.location.href = `/exam/finish/${participantId}`;
                             }
                         }
@@ -305,6 +292,7 @@
                     }
                 });
         }
+        
 
         function countdown(start_time, duration, elementId) {
             var countDownDate = start_time + duration * 60 * 1000;
@@ -404,9 +392,25 @@
                     }
                 });
             });
+            // let endTest = new Date();
+            // let endTestUTC = new Date(endTest.toISOString())
+            // let endTestFormatted = formattedDate(endTest);
+            // let endTestFormattedUTC = formattedDate(endTestUTC, true);
+            
+            // console.log("end test utc: "+endTestUTC);
+            // console.log("end test: "+endTest)
+            // console.log("end test formatted: "+endTestFormatted);
+            // console.log("end test formatted utc: "+endTestFormattedUTC);
 
             let subTest = @json($subTest);
-            let start_time = JSON.parse(localStorage.getItem('start_test'));
+            // let start_time = JSON.parse(localStorage.getItem('start_test'));
+            // console.log(start_time);
+            let startTest = @json($startTest);
+            // Mengonversi string ke objek Date
+            const dateObject = new Date(startTest.replace(" ", "T"));
+
+            // Mendapatkan timestamp dalam milidetik
+            let start_time = dateObject.getTime();
             countdown(start_time, subTest.duration, 'time');
             // countdown(start_time, 900, 'time');
 

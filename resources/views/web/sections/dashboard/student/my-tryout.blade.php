@@ -6,10 +6,6 @@
             <div class="section-title">
                 <h4 class="rbt-title-style-3 text-center">Try Out Saya</h4>
             </div>
-            @php
-                $unfinishedTryOuts = $myTryOuts->where('start_test', null);
-                $finishedTryOuts = $myTryOuts->where('start_test', '!=', null);
-            @endphp
             <!-- Start Course Top  -->
                 <div class="container">
                     <div class="rbt-sorting-list d-flex flex-wrap align-items-center justify-content-center">
@@ -43,9 +39,10 @@
                                         $startMonth = date('F Y', strtotime($item->tryOut->start_date));
                                         $endDate = date('d F Y', strtotime($item->tryOut->end_date));
                                         $tryOutDate = $startDate . ' - ' . $endDate;
-                                        $isFinished = $item->start_test != null;
+                                        $isFinished = $item->start_test != null && $item->end_test != null;
                                         $isTestPeriode = $item->tryOut->start_date <= $timeNow && $item->tryOut->end_date >= $timeNow;
                                         $isGradingCompleted = $item->tryOut->is_grading_completed;
+                                        $isTestOnGoing = $item->start_test != null && $item->end_test == null;
                                     @endphp
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
@@ -69,7 +66,11 @@
                                                 </a>
                                                 @else
                                                 <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#unfinishedModal_{{$item->tryOut->id}}" style="font-size: 14px; padding: 0px;" @if(!$isTestPeriode) disabled @endif>
-                                                    <span class="btn-text">Kerjakan Sekarang</span>
+                                                    @if ($isTestOnGoing)
+                                                        <span class="btn-text">Lanjut Mengerjakan</span>
+                                                    @else
+                                                        <span class="btn-text">Kerjakan Sekarang</span>
+                                                    @endif
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i>
                                                     </span>
                                                 </button>
@@ -92,6 +93,7 @@
                                         $endDate = date('d F Y', strtotime($item->tryOut->end_date));
                                         $tryOutDate = $startDate . ' - ' . $endDate;
                                         $isTestPeriode = $item->tryOut->start_date <= $timeNow && $item->tryOut->end_date >= $timeNow;
+                                        $isTestOnGoing = $item->start_test != null && $item->end_test == null;
                                     @endphp
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
@@ -108,7 +110,11 @@
                                                 <h4 class="rbt-card-title mb--5">{{$item->tryOut->name}}</h4>
                                                 <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
                                                 <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#unfinishedModal_{{$item->tryOut->id}}" style="font-size: 14px; padding: 0px;" @if(!$isTestPeriode) disabled @endif>
-                                                    <span class="btn-text">Kerjakan Sekarang</span>
+                                                    @if ($isTestOnGoing)
+                                                        <span class="btn-text">Lanjut Mengerjakan</span>
+                                                    @else
+                                                        <span class="btn-text">Kerjakan Sekarang</span>
+                                                    @endif
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i>
                                                     </span>
                                                 </button>

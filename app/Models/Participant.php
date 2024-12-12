@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,4 +34,12 @@ class Participant extends Model
         'start_test' => 'datetime',
         'end_test' => 'datetime',
     ];
+
+    public function getStartTestAttribute($value)
+    {
+        if (is_null($value)) {
+            return null;
+        }
+        return Carbon::parse($value)->setTimezone('Asia/Jakarta');
+    }
 }

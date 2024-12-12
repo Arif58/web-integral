@@ -67,46 +67,53 @@
                     }
                 });
             });
-           
             let categorySubTestField = document.getElementById('category_subtest');
             let subTestField = document.getElementById('sub_test');
             let totalQuestionField = document.getElementById('total_question');
             let durationField = document.getElementById('duration');
             let startExamButton = document.getElementById('start_exam_button');
 
-            let subTestId = JSON.parse(localStorage.getItem('subTestId'));
-            let subTestCurrentIndex = JSON.parse(localStorage.getItem('subTestCurrentIndex'));
+            // let subTestId = JSON.parse(localStorage.getItem('subTestId'));
+            // let subTestCurrentIndex = JSON.parse(localStorage.getItem('subTestCurrentIndex'));
 
             let participant = @json($participant);
+            let subTest = @json($currentSubTest);
+            categorySubTestField.innerHTML = subTest.category_subtest.name;
+            subTestField.innerHTML = subTest.name;
+            totalQuestionField.innerHTML = `<i class="feather-book"></i> ${subTest.total_question} Soal`;
+            durationField.innerHTML = `<i class="feather-clock"></i> ${subTest.duration} Menit`;
+            startExamButton.href = `/exam/${participant.id}/sub-test/${subTest.id}`; 
 
-            
-            if (subTestId === null) {
-                let subTestIds = @json($subTestIds);
-                localStorage.setItem('subTestId', JSON.stringify(subTestIds));
-                localStorage.setItem('subTestCurrentIndex', 0);
-                let subTest = @json($subTest[0]);
+
  
-                categorySubTestField.innerHTML = subTest.category_subtest.name;
-                subTestField.innerHTML = subTest.name;
-                totalQuestionField.innerHTML = `<i class="feather-book"></i> ${subTest.total_question} Soal`;
-                durationField.innerHTML = `<i class="feather-clock"></i> ${subTest.duration} Menit`;
-                startExamButton.href = `/exam/${participant.id}/sub-test/${subTest.id}`;
+            // if (subTestId === null) {
+                // let subTestIds = @json($subTestIds);
+            //     localStorage.setItem('subTestId', JSON.stringify(subTestIds));
+            //     localStorage.setItem('subTestCurrentIndex', 0);
+            //     let subTest = @json($subTest[0]);
+            //     console.log(subTest);
+            //     categorySubTestField.innerHTML = subTest.category_subtest.name;
+            //     subTestField.innerHTML = subTest.name;
+            //     totalQuestionField.innerHTML = `<i class="feather-book"></i> ${subTest.total_question} Soal`;
+            //     durationField.innerHTML = `<i class="feather-clock"></i> ${subTest.duration} Menit`;
+            //     startExamButton.href = `/exam/${participant.id}/sub-test/${subTest.id}`;
 
-            } else {
-                let subTestIdLength = subTestId.length;
-                if (subTestCurrentIndex < subTestIdLength) {
-                    subTestCurrentIndex = parseInt(subTestCurrentIndex, 10);
-                    let subTest = @json($subTest)[subTestCurrentIndex];
-                    categorySubTestField.innerHTML = subTest.category_subtest.name;
-                    subTestField.innerHTML = subTest.name;
-                    totalQuestionField.innerHTML = `<i class="feather-book"></i> ${subTest.total_question} Soal`;
-                    durationField.innerHTML = `<i class="feather-clock"></i> ${subTest.duration} Menit`;
-                    startExamButton.href = `/exam/${participant.id}/sub-test/${subTest.id}`;
+            // } else {
+            //     let subTestIdLength = subTestId.length;
+            //     if (subTestCurrentIndex < subTestIdLength) {
+            //         subTestCurrentIndex = parseInt(subTestCurrentIndex, 10);
+            //         let subTest = @json($subTest)[subTestCurrentIndex];
+            //         console.log(subTest);
+            //         categorySubTestField.innerHTML = subTest.category_subtest.name;
+            //         subTestField.innerHTML = subTest.name;
+            //         totalQuestionField.innerHTML = `<i class="feather-book"></i> ${subTest.total_question} Soal`;
+            //         durationField.innerHTML = `<i class="feather-clock"></i> ${subTest.duration} Menit`;
+            //         startExamButton.href = `/exam/${participant.id}/sub-test/${subTest.id}`;
 
-                }       
-            }
-            startTest = new Date().getTime();
-            localStorage.setItem('start_test', startTest);
+            //     }       
+            // }
+            // startTest = new Date().getTime();
+            // localStorage.setItem('start_test', startTest);
 
            
         });

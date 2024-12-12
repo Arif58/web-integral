@@ -112,7 +112,7 @@ class ProductController extends Controller
             'ie_gems' => 'required|numeric|min:0',
             'supported' => 'required',
             'not_supported' => 'nullable',
-            'answer_explanation_file' => 'required|file|mimes:pdf,doc,docx,zip|max:10240',
+            // 'answer_explanation_file' => 'required|file|mimes:pdf,doc,docx,zip|max:10240',
         ]);
 
         $features = [
