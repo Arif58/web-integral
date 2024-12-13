@@ -103,14 +103,14 @@
                                 </div>
 
                                 <div class="col-12 mb--30">
-                                    <label for="supported">Layanan yang didapatkan</label>
+                                    <label for="supported">Fasilitas</label>
                                     <textarea id="supported" rows="5" name="supported" class="form-control @error('supported') is-invalid @enderror mb-0" placeholder="pisahkan item dengan enter">{{ old('supported') }}</textarea>
                                     @error('supported')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
                                 </div>
 
-                                <div class="col-12 mb--30">
+                                {{-- <div class="col-12 mb--30">
                                     <label for="not_supported">Layanan yang tidak didapatkan</label>
                                     <textarea id="not_supported" rows="5" name="not_supported" class="form-control @error('not_supported') is-invalid @enderror mb-0" placeholder="pisahkan item dengan enter">{{ old('not_supported') }}</textarea>
                                     @error('not_supported')
@@ -125,7 +125,7 @@
                                     @error('answer_explanation_file')
                                         <span class="message-info" style="position: relative;">{{ $message }}</span>  
                                     @enderror
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="row">
                                 <div class="col-4">
@@ -159,7 +159,7 @@
 <script>
     // JavaScript untuk menampilkan kembali modal jika ada error validasi
     document.addEventListener('DOMContentLoaded', function() {
-        @if($errors->has('tryout_id') || $errors->has('price') || $errors->has('ie_gems')  || $errors->has('supported') || $errors->has('not_supported') || $errors->has('answer_explanation_file'))
+        @if($errors->has('tryout_id') || $errors->has('price') || $errors->has('ie_gems')  || $errors->has('supported'))
             var formModal = new bootstrap.Modal(document.getElementById('formModal'));
             formModal.show();
         @endif

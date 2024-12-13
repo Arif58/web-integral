@@ -40,14 +40,20 @@
                                         $endDate = date('d F Y', strtotime($item->tryOut->end_date));
                                         $tryOutDate = $startDate . ' - ' . $endDate;
                                         $isFinished = $item->start_test != null && $item->end_test != null;
-                                        $isTestPeriode = $item->tryOut->start_date <= $timeNow && $item->tryOut->end_date >= $timeNow;
+                                        $isTestPeriode = $timeNow->between($item->tryOut->start_date, $item->tryOut->end_date);
+
+                                        $isPeriodeTryOutHasDone = $timeNow->gt($item->tryOut->end_date);
                                         $isGradingCompleted = $item->tryOut->is_grading_completed;
                                         $isTestOnGoing = $item->start_test != null && $item->end_test == null;
+
+                                        $startTest = $item->start_test;
+                                        $endTestWindow = $startTest ? $startTest->copy()->addHours(4) : null;
+                                        $isEligibleContinueTest = $startTest != null ? $timeNow->between($startTest, $endTestWindow) : true;
                                     @endphp
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
                                         <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                                            <div class="rbt-card-img text-center d-flex align-content-center flex-wrap justify-content-center radius-6 @if($isFinished) bg-gradient-21 @else bg-gradient-20 @endif">
+                                            <div class="rbt-card-img text-center d-flex align-content-center flex-wrap justify-content-center radius-6 @if($isPeriodeTryOutHasDone) bg-gradient-21 @else bg-gradient-20 @endif">
                                                 <div class="container text-center my-4">
                                                     <h1 class="color-white mb-0">
                                                         {{ $startDate }}
@@ -58,16 +64,22 @@
                                             <div class="rbt-card-body">
                                                 <h4 class="rbt-card-title mb--5">{{$item->tryOut->name}}</h4>
                                                 <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
-                                                @if($isFinished)
+                                                @if($isPeriodeTryOutHasDone)
                                                 <a class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap @if(!$isGradingCompleted) disabled @endif" href="{{route('exam-result', $item->id)}}" style="font-size: 14px; padding: 0px;">
                                                     <span class="btn-text">Lihat Hasil</span>
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i>
                                                     </span>
                                                 </a>
                                                 @else
-                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#unfinishedModal_{{$item->tryOut->id}}" style="font-size: 14px; padding: 0px;" @if(!$isTestPeriode) disabled @endif>
-                                                    @if ($isTestOnGoing)
+                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal"
+                                                data-bs-target="#unfinishedModal_{{$item->tryOut->id}}"
+                                                style="font-size: 14px; padding: 0px;" @if((!$isTestPeriode || !$isEligibleContinueTest) && !$isGradingCompleted) disabled @endif>
+                                                    @if ($isTestOnGoing && $isEligibleContinueTest)
                                                         <span class="btn-text">Lanjut Mengerjakan</span>
+                                                    @elseif ($isTestOnGoing && !$isEligibleContinueTest)
+                                                        <span class="btn-text">Lihat Hasil</span>
+                                                    @elseif ($isFinished)
+                                                        <span class="btn-text">Lihat Hasil</span>
                                                     @else
                                                         <span class="btn-text">Kerjakan Sekarang</span>
                                                     @endif
@@ -94,11 +106,19 @@
                                         $tryOutDate = $startDate . ' - ' . $endDate;
                                         $isTestPeriode = $item->tryOut->start_date <= $timeNow && $item->tryOut->end_date >= $timeNow;
                                         $isTestOnGoing = $item->start_test != null && $item->end_test == null;
+                                        $isPeriodeTryOutHasDone = $timeNow->gt($item->tryOut->end_date);
+                                        
+                                
+                                        $isGradingCompleted = $item->tryOut->is_grading_completed;
+
+                                        $startTest = $item->start_test;
+                                        $endTestWindow = $startTest ? $startTest->copy()->addHours(4) : null;
+                                        $isEligibleContinueTest = $startTest != null ? $timeNow->between($startTest, $endTestWindow) : true;
                                     @endphp
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
                                         <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                                            <div class="rbt-card-img text-center bg-gradient-20 d-flex align-content-center flex-wrap justify-content-center radius-6">
+                                            <div class="rbt-card-img text-center d-flex align-content-center flex-wrap justify-content-center radius-6 @if($isPeriodeTryOutHasDone) bg-gradient-21 @else bg-gradient-20 @endif">
                                                 <div class="container text-center my-4">
                                                     <h1 class="color-white mb-0">
                                                         {{ $startDate }}
@@ -109,15 +129,29 @@
                                             <div class="rbt-card-body">
                                                 <h4 class="rbt-card-title mb--5">{{$item->tryOut->name}}</h4>
                                                 <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
-                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#unfinishedModal_{{$item->tryOut->id}}" style="font-size: 14px; padding: 0px;" @if(!$isTestPeriode) disabled @endif>
-                                                    @if ($isTestOnGoing)
+                                                @if($isPeriodeTryOutHasDone)
+                                                <a class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap @if(!$isGradingCompleted) disabled @endif" href="{{route('exam-result', $item->id)}}" style="font-size: 14px; padding: 0px;">
+                                                    <span class="btn-text">Lihat Hasil</span>
+                                                    <span class="btn-icon"><i class="feather-arrow-right"></i>
+                                                    </span>
+                                                </a>
+                                                @else
+                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal"
+                                                data-bs-target="#unfinishedModal_{{$item->tryOut->id}}"
+                                                style="font-size: 14px; padding: 0px;" @if((!$isTestPeriode || !$isEligibleContinueTest) && !$isGradingCompleted) disabled @endif>
+                                                    @if ($isTestOnGoing && $isEligibleContinueTest)
                                                         <span class="btn-text">Lanjut Mengerjakan</span>
+                                                    @elseif ($isTestOnGoing && !$isEligibleContinueTest)
+                                                        <span class="btn-text">Lihat Hasil</span>
+                                                    @elseif ($isFinished)
+                                                        <span class="btn-text">Lihat Hasil</span>
                                                     @else
                                                         <span class="btn-text">Kerjakan Sekarang</span>
                                                     @endif
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i>
                                                     </span>
                                                 </button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -135,15 +169,24 @@
                                         $startMonth = date('F Y', strtotime($item->tryOut->start_date));
                                         $endDate = date('d F Y', strtotime($item->tryOut->end_date));
                                         $tryOutDate = $startDate . ' - ' . $endDate;
+                                        $isFinished = $item->start_test != null && $item->end_test != null;
+                                        $isTestPeriode = $timeNow->between($item->tryOut->start_date, $item->tryOut->end_date);
+
+                                        $isPeriodeTryOutHasDone = $timeNow->gt($item->tryOut->end_date);
                                         $isGradingCompleted = $item->tryOut->is_grading_completed;
+                                        $isTestOnGoing = $item->start_test != null && $item->end_test == null;
+
+                                        $startTest = $item->start_test;
+                                        $endTestWindow = $startTest ? $startTest->copy()->addHours(4) : null;
+                                        $isEligibleContinueTest = $startTest != null ? $timeNow->between($startTest, $endTestWindow) : true;
                                     @endphp
                                     <!-- Start Single Event  -->
                                     <div class="course-grid-2">
                                         <div class="rbt-card card-list-2 event-list-card variation-01 rbt-hover">
-                                            <div class="rbt-card-img text-center bg-gradient-21 d-flex align-content-center flex-wrap justify-content-center radius-6">
+                                            <div class="rbt-card-img text-center d-flex align-content-center flex-wrap justify-content-center radius-6 @if($isPeriodeTryOutHasDone) bg-gradient-21 @else bg-gradient-20 @endif">
                                                 <div class="container text-center my-4">
                                                     <h1 class="color-white mb-0">
-                                                        {{$startDate}}
+                                                        {{ $startDate }}
                                                         <p>{{$startMonth}}</p>
                                                     </h1>
                                                 </div>
@@ -151,11 +194,29 @@
                                             <div class="rbt-card-body">
                                                 <h4 class="rbt-card-title mb--5">{{$item->tryOut->name}}</h4>
                                                 <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
+                                                @if($isPeriodeTryOutHasDone)
                                                 <a class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap @if(!$isGradingCompleted) disabled @endif" href="{{route('exam-result', $item->id)}}" style="font-size: 14px; padding: 0px;">
                                                     <span class="btn-text">Lihat Hasil</span>
                                                     <span class="btn-icon"><i class="feather-arrow-right"></i>
                                                     </span>
                                                 </a>
+                                                @else
+                                                <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal"
+                                                data-bs-target="#unfinishedModal_{{$item->tryOut->id}}"
+                                                style="font-size: 14px; padding: 0px;" @if((!$isTestPeriode || !$isEligibleContinueTest) && !$isGradingCompleted) disabled @endif>
+                                                    @if ($isTestOnGoing && $isEligibleContinueTest)
+                                                        <span class="btn-text">Lanjut Mengerjakan</span>
+                                                    @elseif ($isTestOnGoing && !$isEligibleContinueTest)
+                                                        <span class="btn-text">Lihat Hasil</span>
+                                                    @elseif ($isFinished)
+                                                        <span class="btn-text">Lihat Hasil</span>
+                                                    @else
+                                                        <span class="btn-text">Kerjakan Sekarang</span>
+                                                    @endif
+                                                    <span class="btn-icon"><i class="feather-arrow-right"></i>
+                                                    </span>
+                                                </button>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -282,12 +343,12 @@
                                                             @endforeach
                                                         @endif
 
-                                                        @if ($features->not_supported)
+                                                        {{-- @if ($features->not_supported)
                                                             @foreach($features->not_supported as $data)
                                                             <li class="off"><i class="feather-x"></i>{{trim($data)}}</li>
                                                             @endforeach
                                                             
-                                                        @endif
+                                                        @endif --}}
                                                         
                                                     </ul>
                                                     @endif

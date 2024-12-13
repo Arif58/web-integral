@@ -111,13 +111,13 @@ class ProductController extends Controller
             'price' => 'required',
             'ie_gems' => 'required|numeric|min:0',
             'supported' => 'required',
-            'not_supported' => 'nullable',
+            // 'not_supported' => 'nullable',
             // 'answer_explanation_file' => 'required|file|mimes:pdf,doc,docx,zip|max:10240',
         ]);
 
         $features = [
-            'supported' => explode("\r\n", $request->supported),
-            'not_supported' => explode("\r\n", $request->not_supported),
+            'supported' => explode("\r\n", $request->supported)
+            // 'not_supported' => explode("\r\n", $request->not_supported),
         ];
 
         if($request->hasFile('answer_explanation_file')) {

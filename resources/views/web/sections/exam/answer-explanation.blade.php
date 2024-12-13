@@ -140,7 +140,7 @@
 
     function mark(index, questionId, questionType, questionChoices) {
         let answers = @json($userAnswers);
-        let answer = answers[questionId];
+        let answer = answers[questionId] ?? null;
         if (answer) {
             if (answer.length > 0) {    //ketika jawaban tidak kosong
                 let questionNumber = document.getElementById('question_number_' + index);
@@ -175,9 +175,11 @@
                 }
             } else {    //ketika jawaban kosong
                 let questionNumber = document.getElementById('question_number_' + index);
-                questionNumber.style.background = 'white';
-                questionNumber.style.color = 'black';
+                setQuestionStyle(questionNumber, '#C0333B', '#E6F5E8');
             }
+        } else {
+            let questionNumber = document.getElementById('question_number_' + index);
+            setQuestionStyle(questionNumber, '#C0333B', '#E6F5E8');
         }
 
     }
@@ -267,7 +269,7 @@
                     // let answerPerItem = answer[i];
                     let choice = choices[i];
                     // looping jawaban user answer
-                    answer.forEach((item) => {
+                    answer?.forEach((item) => {
                         if (item == choice.id) {
                             if (choice.is_correct == 1) {
                                 divRadio.style.background = '#E6F5E8';

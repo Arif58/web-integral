@@ -201,7 +201,10 @@
                                     </div>
                                     <div class="mt-5 button-group">
 
-                                        <button class="rbt-btn btn-sm me-4" id="prev_button" style=" border: 1px solid #70A4C6"><label for=""><i class="feather-arrow-left"></i> Sebelumnya</label></button>
+                                        <button class="rbt-btn btn-sm me-4" id="prev_button" style=" border: 1px solid #70A4C6; cursor:pointer;"><label for=""><i class="feather-arrow-left"></i> Sebelumnya</label></button>
+                                        <div class="doubt-btn rbt-btn btn-sm me-4" id="doubt_button" style="border: 1px solid rgb(112, 164, 198)">
+                                            
+                                        </div>
                                         <button class="rbt-btn btn-sm" id="save_button"></button>
                                     </div>
                                 </div>
@@ -281,9 +284,11 @@
                             if (lengthSubTest > 1) {
                                 //hapus answers pada local storage
                                 localStorage.removeItem('answers');
+                                localStorage.removeItem('doubtQuestions');
                                 window.location.href = `/exam/${participantId}`;
                             } else {
                                 localStorage.removeItem('answers');
+                                localStorage.removeItem('doubtQuestions');
                                 window.location.href = `/exam/finish/${participantId}`;
                             }
                         }
@@ -324,44 +329,61 @@
 
         function mark(index, questionId) {
             let answers = JSON.parse(localStorage.getItem('answers')) || {};
+            let doubtQuestions = JSON.parse(localStorage.getItem('doubtQuestions')) || [];
             let answer = answers[questionId];
-            if (answer) {
-                if (answer.length > 0) {    //ketika jawaban tidak kosong
-                    answer.forEach((item, i) => {
-                        // cek apakah item adalah array atau bukan
-                        if(Array.isArray(item)) {   //ketika question type isian singkat dan pernyataan
-                            if (answer[0][1] == '') {   //ketika jawaban kosong
-                                let questionNumber = document.getElementById('question_number_' + index);
-                                questionNumber.style.background = 'white';
-                                questionNumber.style.color = 'black';
-                            } else {    //ketika jawaban tidak kosong
+            if (doubtQuestions.includes(questionId)) {
+                    markDoubt(index); // Gunakan fungsi markDoubt untuk menandai pertanyaan
+            } else {
+                if (answer) {
+                    if (answer.length > 0) {    //ketika jawaban tidak kosong
+                        answer.forEach((item, i) => {
+                            // cek apakah item adalah array atau bukan
+                            if(Array.isArray(item)) {   //ketika question type isian singkat dan pernyataan
+                                if (answer[0][1] == '') {   //ketika jawaban kosong
+                                    let questionNumber = document.getElementById('question_number_' + index);
+                                    questionNumber.style.background = 'white';
+                                    questionNumber.style.color = 'black';
+                                } else {    //ketika jawaban tidak kosong
+                                    let questionNumber = document.getElementById('question_number_' + index);
+                                    questionNumber.style.background = 'var(--gradient-10)';
+                                    questionNumber.style.color = 'white';
+                                }
+                            } else { //ketika question type pilihan ganda dan pilihan ganda majemuk
                                 let questionNumber = document.getElementById('question_number_' + index);
                                 questionNumber.style.background = 'var(--gradient-10)';
                                 questionNumber.style.color = 'white';
                             }
-                        } else { //ketika question type pilihan ganda dan pilihan ganda majemuk
-                            let questionNumber = document.getElementById('question_number_' + index);
-                            questionNumber.style.background = 'var(--gradient-10)';
-                            questionNumber.style.color = 'white';
-                        }
-                        
-                    });
-                } else {    //ketika jawaban kosong
-                    let questionNumber = document.getElementById('question_number_' + index);
-                    questionNumber.style.background = 'white';
-                    questionNumber.style.color = 'black';
+                            
+                        });
+                    } else {    //ketika jawaban kosong
+                        let questionNumber = document.getElementById('question_number_' + index);
+                        questionNumber.style.background = 'white';
+                        questionNumber.style.color = 'black';
+                    }
                 }
             }
 
         }
 
+        function markDoubt(index) {
+            let questionNumber = document.getElementById('question_number_' + index);
+            questionNumber.style.background = '#9F9F9F';
+            questionNumber.style.color = 'white';
+        }
+
         function markAllQuestion(){
             let answers = JSON.parse(localStorage.getItem('answers')) || {};
+            // Ambil daftar pertanyaan yang diragukan dari localStorage
+            // let doubtQuestions = JSON.parse(localStorage.getItem('doubtQuestions')) || [];
             let questions = @json($questions);
             questions.forEach((question, index) => {
                 let keyAnswers = question.id;
                 mark(index, keyAnswers);
+                // if (doubtQuestions.includes(keyAnswers)) {
+                //     markDoubt(index); // Gunakan fungsi markDoubt untuk menandai pertanyaan
+                // }
             });
+            
         }
 
         // Usage example
@@ -656,6 +678,7 @@
                 loadQuestion(index);
                 loadTestAnswer(index);
                 buttonHandle(index);
+                doubtQuestion(index);
             }
 
             function saveCurrentAnswer() {
@@ -690,6 +713,55 @@
                     showQuestion(currentQuestionIndex - 1);
                 }
             });
+          
+            //membuat fungsi untuk menandai soal yang diragukan
+            function doubtQuestion(index) {
+                let questionId = questions[index].id;
+                document.getElementById('doubt_button').innerHTML = '';
+                //membuat tombol ragu-ragu pada setiap nomor soal menggunakan checkbox
+                let doubtButton = document.createElement('input');
+                doubtButton.type = 'checkbox';
+                doubtButton.id = 'doubt_' + index;
+                doubtButton.name = 'doubt';
+                doubtButton.value = index;
+                doubtButton.style.display = 'none';
+
+                let doubtQuestions = JSON.parse(localStorage.getItem('doubtQuestions')) || [];
+                // Periksa apakah questionId ada di dalam doubtQuestions
+                if (doubtQuestions.includes(questionId)) {
+                    doubtButton.checked = true; // Tandai checkbox sebagai aktif
+                }
+
+                let doubtLabel = document.createElement('label');
+                doubtLabel.htmlFor = 'doubt_' + index;
+                doubtLabel.innerHTML = 'Ragu-Ragu';
+
+                let doubtButtonContainer = document.getElementById('doubt_button');
+                doubtButtonContainer.appendChild(doubtButton);
+                doubtButtonContainer.appendChild(doubtLabel);
+
+
+                doubtButton.addEventListener('change', (event) => {
+                    let questionNumber = document.getElementById('question_number_' + index);
+                    // Ambil daftar soal ragu-ragu dari localStorage
+                    let doubtQuestions = JSON.parse(localStorage.getItem('doubtQuestions')) || [];
+
+                    if (event.target.checked) {
+                        // Tambahkan ID soal ke daftar jika belum ada
+                        if (!doubtQuestions.includes(questionId)) {
+                            doubtQuestions.push(questionId);
+                        }
+                        localStorage.setItem('doubtQuestions', JSON.stringify(doubtQuestions));
+                        mark(index, questionId)
+                    } else {
+                        // Hapus ID soal dari daftar
+                        doubtQuestions = doubtQuestions.filter(id => id !== questionId);
+                        localStorage.setItem('doubtQuestions', JSON.stringify(doubtQuestions));
+                        mark(index, questionId)
+                    }
+                });
+
+            }
 
             document.getElementById('save_button').addEventListener('click', () => {
                 saveCurrentAnswer();

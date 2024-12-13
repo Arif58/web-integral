@@ -39,7 +39,7 @@
 <li class="accordion" id="accordionThree">
     <div class="accordion-item border-0">
         <a href="#" class="accordion-toggle collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" role="button">
-            <i class="feather-clipboard"></i><span>Manajemen Tryout</span>
+            <i class="feather-clipboard"></i><span>Manajemen Try Out</span>
             <i class="feather-chevron-down arrow-icon"></i>
         </a>
         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionThree">

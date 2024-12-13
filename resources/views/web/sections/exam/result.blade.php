@@ -147,7 +147,11 @@
                                                     Peringkat Kamu
                                                 </h5>
                                                 <div class=" bg-gradient-23 mx-5 d-flex align-content-center justify-content-center" style="padding: 30px 10px; border-radius: 5px;">
+                                                    @if ($participant->average_score == null)
+                                                    <h2 class="text-center mb-0 text-white">-</h2>
+                                                    @else
                                                     <h2 class="text-center mb-0 text-white">{{$rankParticipant}}</h2>
+                                                    @endif
                                                 </div>
                                             </nav>
 
@@ -251,7 +255,11 @@
                                                                 @endif
                                                             @endforeach
                                                             @else
-                                                                <div class="col-6" style="margin-right: auto; color: #DC7E3F">{{number_format(200)}}</div>
+                                                                @if ($participant->start_test == null && $participant->end_test == null)
+                                                                    <div class="col-6" style="margin-right: auto; color: #DC7E3F">{{number_format(0)}}</div>
+                                                                @else
+                                                                    <div class="col-6" style="margin-right: auto; color: #DC7E3F">{{number_format(200)}}</div>
+                                                                @endif
                                                             @endif
                                                             <div class="col-3">
                                                                 <a href="{{route('answer-explanation', ['participantId' => $participant->id, 'subTestId' => $subTest->id])}}">></a>

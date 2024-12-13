@@ -80,7 +80,7 @@
                                     <div>
                                         @if($features)
                                         <ul class="plan-offer-list">
-                                            @if($features->supported)
+                                            @if($features->supported != null)
                                                 @foreach($features->supported as $item)
                                                 <li>
                                                     <i class="feather-check"></i>
@@ -89,12 +89,12 @@
                                                 @endforeach
                                             @endif
 
-                                            @if ($features->not_supported)
+                                            {{-- @if ($features->not_supported != null)
                                                 @foreach($features->not_supported as $item)
                                                 <li class="off"><i class="feather-x"></i>{{trim($item)}}</li>
                                                 @endforeach
                                                 
-                                            @endif
+                                            @endif --}}
                                             
                                         </ul>
                                         @endif

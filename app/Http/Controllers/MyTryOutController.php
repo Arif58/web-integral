@@ -35,7 +35,23 @@ class MyTryOutController extends Controller
     
 
         //query untuk mendapatkan produk tryout yang sudah dikerjakan dan sudah selesai
-        $finishedTryOuts = $myTryOuts->where('end_test', '!=', null);
+        $finishedTryOuts = $myTryOuts->filter(function ($tryOut) use ($timeNow) {
+            $startTest = $tryOut->start_test;
+            $endTest = $tryOut->end_test;
+        
+            // Kondisi 1: end_test tidak null (tes selesai)
+            if (!is_null($endTest)) {
+                return true;
+            }
+        
+            // Kondisi 2: start_test tidak null dan lebih dari 4 jam sejak start_test
+            if (!is_null($startTest)) {
+                $endTestWindow = $startTest->copy()->addHours(4);
+                return $timeNow->greaterThan($endTestWindow);
+            }
+        
+            return false;
+        });
         
         // Query untuk mendapatkan produk tryout yang belum diikuti oleh pengguna saat ini dan belum berakhir
         $otherTryOuts = Product::whereNotIn('tryout_id', function($query) {
