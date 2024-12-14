@@ -247,7 +247,7 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">
                         <div class="content">
-                            <img src="{{ asset("images/banner/about.svg") }}" alt="About Images" loading="lazy">
+                            <img src="{{ asset("images/banner/new_about.svg") }}" alt="About Images" loading="lazy">
                         </div>
                     </div>
                     <div class="col-lg-6" >
@@ -255,9 +255,9 @@
                             <div class="section-title text-start headline">
                                 <span class="subtitle bg-primary-opacity">About Integral Education</span>
                                 <h2 class="title text-white">Apa itu Integral Education?</h2>
-                                <p class="description mt--20" style="color: #E0E0E0">Bimbingan Belajar Integral Education adalah bimbel yang berdedikasi untuk memfasilitasi siswa dari tingkat SD, SMP, SMA, hingga mahasiswa dalam mempersiapkan kegiatan belajar menghadapi berbagai ujian seperti ujian sekolah, olimpiade, dan persiapan masuk Perguruan Tinggi Negeri (PTN) bagi siswa SMA kelas XII. Beberapa diantara mereka telah lolos di beberapa universitas diantaranya UI, UGM, IPB, Undip, dan masih banyak lagi. 
+                                <p class="description mt--20" style="color: #E0E0E0">Bimbingan Belajar Integral Education adalah bimbel yang berdedikasi untuk memfasilitasi siswa dari tingkat SD, SMP, SMA, hingga mahasiswa dalam mempersiapkan kegiatan belajar menghadapi berbagai ujian seperti ujian sekolah, olimpiade, dan persiapan masuk Perguruan Tinggi Negeri (PTN) bagi siswa SMA kelas XII. 
                                     </p>
-                                    <p class="description mt--20" style="color: #E0E0E0">Dengan pendekatan pengajaran yang inovatif dan personal, Integral Education memastikan setiap siswa mendapatkan pembimbingan yang optimal. Melalui program dan metode pengajaran yang terbukti efektif, kami membantu siswa meraih prestasi akademik terbaik.</p>
+                                    <p class="description mt--20" style="color: #E0E0E0">Integral Education menyediakan program Try Out UTBK SNBT berkualitas yang dapat membantu siswa SMA/SMK/MA/sederajat dalam mempersiapkan diri menghadapi ujian masuk Perguruan Tinggi Negeri (PTN). Soal-soal Try Out UTBK yang disusun adalah soal yang mendekati tipe, model soal, dan waktu UTBK sesungguhnya, sehingga siswa dapat mengukur kemampuan mereka, memahami kelemahan, serta meningkatkan strategi pengerjaan soal. Melalui program Try Out UTBK ini, kami berkomitmen mendukung siswa mencapai hasil terbaik dalam UTBK dan meraih impian masuk PTN favorit.</p>
                                 
                             </div>
                         </div>

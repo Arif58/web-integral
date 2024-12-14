@@ -41,10 +41,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public static $level = [
         null => 'Jenjang Sekolah',
-        'sd' => 'SD',
-        'smp' => 'SMP',
-        'sma' => 'SMA/SMK',
-        'kuliah' => 'Kuliah',
+        'sma' => 'SMA',
+        'smk' => 'SMK',
+        'ma' => 'MA',
+        'sederajat lainnya' => 'Sederajat Lainnya',
     ];
 
     /**
