@@ -245,15 +245,15 @@ trait GradingIrt {
 
             $skor = 0;
             // menentukan type soal
-            if ($answerPerQuestion->first()->type === 'pilihan_ganda') {
+            if ($answerPerQuestion->first()?->type === 'pilihan_ganda') {
 
                 $skor = $this->addWeightMultipleChoiceQuestion($answerPerQuestion, $determineRangeAndScore);
-            } else if ($answerPerQuestion->first()->type === 'pilihan_ganda_majemuk') {
+            } else if ($answerPerQuestion->first()?->type === 'pilihan_ganda_majemuk') {
                 $skor = $this->addWeightCompundMultipleChoiceQuestion($answerPerQuestion, $determineRangeAndScore);
-            } else if ($answerPerQuestion->first()->type === 'isian_singkat') {
+            } else if ($answerPerQuestion->first()?->type === 'isian_singkat') {
                 $skor = $this->addWeightEssayQuestion($answerPerQuestion, $determineRangeAndScore);
 
-            } else if ($answerPerQuestion->first()->type === 'pernyataan') {
+            } else if ($answerPerQuestion->first()?->type === 'pernyataan') {
                 $skor = $this->addWeightStatementQuestion($answerPerQuestion, $determineRangeAndScore);
             } 
 

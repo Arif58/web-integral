@@ -88,15 +88,15 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="price">Harga</label>
-                                    <input type="text" id="price" name="price" class="form-control @error('price') is-invalid @enderror mb-0" value="{{ old('price') }}" placeholder="Harga">
+                                    <input type="text" id="price" name="price" class="form-control @error('price') is-invalid @enderror mb-0" value="{{ old('price') }}" placeholder="Isi dengan angka saja">
                                     @error('price')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
                                 </div>
 
                                 <div class="col-12 mb--30">
-                                    <label for="price">Ie Gems</label>
-                                    <input type="number" id="ie_gems" name="ie_gems" class="form-control @error('ie_gems') is-invalid @enderror mb-0" value="{{ old('ie_gems') }}" placeholder="Ie Gems">
+                                    <label for="price">IE Gems</label>
+                                    <input type="number" id="ie_gems" name="ie_gems" class="form-control @error('ie_gems') is-invalid @enderror mb-0" value="{{ old('ie_gems') }}" placeholder="Isi dengan angka saja">
                                     @error('ie_gems')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror
@@ -104,7 +104,7 @@
 
                                 <div class="col-12 mb--30">
                                     <label for="supported">Fasilitas</label>
-                                    <textarea id="supported" rows="5" name="supported" class="form-control @error('supported') is-invalid @enderror mb-0" placeholder="pisahkan item dengan enter">{{ old('supported') }}</textarea>
+                                    <textarea id="supported" rows="5" name="supported" class="form-control @error('supported') is-invalid @enderror mb-0" placeholder="Pisahkan item dengan enter">{{ old('supported') }}</textarea>
                                     @error('supported')
                                         <span class="message-info">{{ $message }}</span>  
                                     @enderror

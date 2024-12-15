@@ -247,7 +247,7 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">
                         <div class="content">
-                            <img src="{{ asset("images/banner/new_about.svg") }}" alt="About Images" loading="lazy">
+                            <img src="{{ asset("images/banner/Foto_About_Integral.png") }}" alt="About Images" loading="lazy">
                         </div>
                     </div>
                     <div class="col-lg-6" >

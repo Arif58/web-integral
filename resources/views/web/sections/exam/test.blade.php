@@ -201,8 +201,8 @@
                                     </div>
                                     <div class="mt-5 button-group">
 
-                                        <button class="rbt-btn btn-sm me-4" id="prev_button" style=" border: 1px solid #70A4C6; cursor:pointer;"><label for=""><i class="feather-arrow-left"></i> Sebelumnya</label></button>
-                                        <div class="doubt-btn rbt-btn btn-sm me-4" id="doubt_button" style="border: 1px solid rgb(112, 164, 198)">
+                                        <button class="rbt-btn btn-sm me-4" id="prev_button" style=" border: 1px solid #70A4C6;"><label style="cursor: inherit;"><i class="feather-arrow-left"></i> Sebelumnya</label></button>
+                                        <div class="doubt-btn rbt-btn btn-sm me-4" id="doubt_button" style="border: 1px solid #9F9F9F">
                                             
                                         </div>
                                         <button class="rbt-btn btn-sm" id="save_button"></button>
@@ -667,7 +667,7 @@
                     saveButton.setAttribute('style', 'background: var(--gradient-10) !important; color: white !important; border: 1px solid #E7A446 !important;');
                     saveButton.innerHTML = 'Selesai <i class="feather-arrow-right"></i>';
                 } else {
-                    saveButton.setAttribute('style', 'background: white !important; color: black !important; border: 1px solid #E7A446 !important;');
+                    saveButton.setAttribute('style', 'background: white !important; border: 1px solid #E7A446 !important;');
                     saveButton.innerHTML = 'Selanjutnya <i class="feather-arrow-right"></i>';
                 }
             }

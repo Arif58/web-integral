@@ -43,7 +43,7 @@
                                         $isTestPeriode = $timeNow->between($item->tryOut->start_date, $item->tryOut->end_date);
 
                                         $isPeriodeTryOutHasDone = $timeNow->gt($item->tryOut->end_date);
-                                        $isGradingCompleted = $item->tryOut->is_grading_completed;
+                                        $isGradingCompleted = $item->tryOut->is_grading_completed == true;
                                         $isTestOnGoing = $item->start_test != null && $item->end_test == null;
 
                                         $startTest = $item->start_test;
@@ -73,7 +73,7 @@
                                                 @else
                                                 <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#unfinishedModal_{{$item->tryOut->id}}"
-                                                style="font-size: 14px; padding: 0px;" @if((!$isTestPeriode || !$isEligibleContinueTest) && !$isGradingCompleted) disabled @endif>
+                                                style="font-size: 14px; padding: 0px;" @if(!$isEligibleContinueTest || (!$isGradingCompleted && $isFinished)) disabled @endif>
                                                     @if ($isTestOnGoing && $isEligibleContinueTest)
                                                         <span class="btn-text">Lanjut Mengerjakan</span>
                                                     @elseif ($isTestOnGoing && !$isEligibleContinueTest)
@@ -138,7 +138,7 @@
                                                 @else
                                                 <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#unfinishedModal_{{$item->tryOut->id}}"
-                                                style="font-size: 14px; padding: 0px;" @if((!$isTestPeriode || !$isEligibleContinueTest) && !$isGradingCompleted) disabled @endif>
+                                                style="font-size: 14px; padding: 0px;" @if(!$isEligibleContinueTest || (!$isGradingCompleted && $isFinished)) disabled @endif>
                                                     @if ($isTestOnGoing && $isEligibleContinueTest)
                                                         <span class="btn-text">Lanjut Mengerjakan</span>
                                                     @elseif ($isTestOnGoing && !$isEligibleContinueTest)
@@ -203,13 +203,15 @@
                                                 @else
                                                 <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#unfinishedModal_{{$item->tryOut->id}}"
-                                                style="font-size: 14px; padding: 0px;" @if((!$isTestPeriode || !$isEligibleContinueTest) && !$isGradingCompleted) disabled @endif>
+                                                style="font-size: 14px; padding: 0px;" @if(!$isEligibleContinueTest || (!$isGradingCompleted && $isFinished)) disabled @endif>
+
                                                     @if ($isTestOnGoing && $isEligibleContinueTest)
                                                         <span class="btn-text">Lanjut Mengerjakan</span>
                                                     @elseif ($isTestOnGoing && !$isEligibleContinueTest)
                                                         <span class="btn-text">Lihat Hasil</span>
                                                     @elseif ($isFinished)
                                                         <span class="btn-text">Lihat Hasil</span>
+                                                        
                                                     @else
                                                         <span class="btn-text">Kerjakan Sekarang</span>
                                                     @endif
@@ -261,7 +263,7 @@
                                     <ul class="rbt-meta mb-0">
                                         <li><p class="description">Rp{{$price}}</p></li>
                                         <span>|</span>
-                                        <li><p class="description">{{$item->ie_gems}} Poin</p></li>
+                                        <li><p class="description">{{$item->ie_gems}} IE Gems</p></li>
                                     </ul>
                                     <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
                                     <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal_{{$item->id}}" style="font-size: 14px; padding: 0px;" >
@@ -292,12 +294,14 @@
             $tryOutDate = $startDate . ' - ' . $endDate;
             $price = number_format($item->price, 0, ',', '.');
             $subTestCategory = $item->tryOut->subTests->groupBy('category_subtest_id');
+
+            $isPeriodeTryOutHasDone = $timeNow->gt($item->tryOut->end_date);
         @endphp
         <div class="rbt-default-modal modal fade" id="exampleModal_{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background: transparent">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="max-width: 800px;">
                 <div class="modal-content" style="padding: 30px">
                     <div class="modal-header pb--20" style="border-bottom: 1px solid">
-                        <div class="rbt-card-img text-center py-4 radius-6" style="background-color: #616161; width: 50%">
+                        <div class="rbt-card-img text-center py-4 radius-6 @if($isPeriodeTryOutHasDone) bg-gradient-21 @else bg-gradient-20 @endif" style="width: 50%">
                             <div class="container text-center my-4">
                                 <h1 class="color-white">
                                     {{$startDate}}
@@ -310,7 +314,7 @@
                             <ul class="rbt-meta mb-0">
                                 <li><p class="description">Rp{{$price}}</p></li>
                                 <span>|</span>
-                                <li><p class="description">{{$item->ie_gems}} Poin</p></li>
+                                <li><p class="description">{{$item->ie_gems}} IE Gems</p></li>
                             </ul>
                             <p class="description mb-4"><i class="feather-calendar"></i> {{$tryOutDate}}</p>
                         </div>
@@ -483,8 +487,8 @@
                            Anda yakin ingin mengerjakan Try Out sekarang?
                        </h4>
                    </div>
-                   <div class="modal-body">
-                       <p class="text-center px-4">Saat mengerjakan Try Out kamu tidak bisa berpindah ke halaman lain.</p>
+                   <div class="modal-body" style="background: #F9F0A6">
+                       <p class="text-center px-4"><i class=" feather-alecirclert- me-2" style="color: #C0333B"></i> Anda diberi waktu <b>4 jam</b> untuk mengerjakan Try Out.</p>
                    </div>
                    <div class="modal-footer pt--30 justify-content-center" style="border-top: none">
                        <button type="button" class="rbt-btn btn-border btn-md radius-round-10" data-bs-dismiss="modal">Batal</button>

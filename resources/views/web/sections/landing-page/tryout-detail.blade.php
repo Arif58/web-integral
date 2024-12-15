@@ -159,9 +159,9 @@
                             <div class="content-item-content">
                                 <div class="rbt-price-wrapper mt-4 mb-2">
                                     <ul class="rbt-meta">
-                                        <li><h4 class="rbt-title-style-2">Rp{{$price}}</h4></li>
+                                        <li><h4 class="rbt-title-style-2" style="text-transform: none;">Rp{{$price}}</h4></li>
                                         <span>|</span>
-                                        <li><h4 class="rbt-title-style-2">{{$product->ie_gems}} IE Gems</h4></li>
+                                        <li><h4 class="rbt-title-style-2" style="text-transform: none;">{{$product->ie_gems}} IE Gems</h4></li>
                                     </ul>
                                 </div>
 
@@ -212,7 +212,7 @@
                                         <ul class="rbt-meta" style="margin-bottom: 1px">
                                             <li><p>Rp{{number_format($item->price, 0, ',', '.')}}</p></li>
                                             <span>|</span>
-                                            <li><p>{{$item->ie_gems}} Poin</p></li>
+                                            <li><p>{{$item->ie_gems}} IE Gems</p></li>
                                         </ul>
                                         <div class="mb-4">
                                             @php

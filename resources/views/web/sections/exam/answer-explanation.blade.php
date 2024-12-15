@@ -121,7 +121,7 @@
                                 </div>
                                 <div class="mt-5 button-group">
 
-                                    <button class="rbt-btn btn-sm me-4" id="prev_button" style="border: 1px solid #70A4C6; color: black !important"><label for=""><i class="feather-arrow-left"></i> Sebelumnya</label></button>
+                                    <button class="rbt-btn btn-sm me-4" id="prev_button" style="border: 1px solid #70A4C6; color: black !important;"><label style="cursor: inherit;"><i class="feather-arrow-left"></i> Sebelumnya</label></button>
                                     <button class="rbt-btn btn-sm" id="save_button"></button>
                                 </div>
                             </div>
@@ -148,7 +148,7 @@
                     let item = answer[i];
                     if (questionType === 'pilihan_ganda' || questionType === 'pilihan_ganda_majemuk') {
                         let choice = questionChoices.find(choice => choice.id == item);
-                        console.log(item);
+                        // console.log(item);
                         if (choice.is_correct == 1) {
                             setQuestionStyle(questionNumber, '#29A039', '#E6F5E8');
                         } else {
@@ -164,6 +164,14 @@
                             break; // Break ketika jawaban salah
                         }
                     } else if (questionType === 'pernyataan') {
+                        // console.log("length: "+questionChoices.length);
+                        // console.log("len "+answer.length)
+                        let questionChoicesLength = questionChoices.length;
+                        let answerLength = answer.length;
+                        if (questionChoicesLength != answerLength) {
+                            setQuestionStyle(questionNumber, '#C0333B', '#E6F5E8');
+                            break;
+                        }
                         let choice = questionChoices.find(choice => choice.id == item[0]);
                         if (item[1] == choice.statement) {
                             setQuestionStyle(questionNumber, '#29A039', '#E6F5E8');
@@ -230,6 +238,25 @@
             let keyAnswers = questions[index].id
 
             let answer = answers[keyAnswers];
+            let isAnswerEmpty = answer == null;
+
+            let jawabanKamu = document.createElement('p');
+            jawabanKamu.innerHTML = "Jawaban Kamu";
+            jawabanKamu.style.fontWeight = 'bold';
+            jawabanKamu.style.marginBottom = '5px';
+            document.getElementById('answer').appendChild(jawabanKamu);
+            let divAlert = document.createElement('div');
+            //tambahkan background pada div
+            divAlert.style.background = '#F9F0A6';
+            divAlert.style.marginBottom = '10px';
+            divAlert.classList.add('py-2')
+            let alert = document.createElement('p');
+            alert.classList.add( 'px-4');
+            alert.innerHTML = `<i class="feather-alecirclert- me-2" style="color: #C0333B"></i> Yah, kamu tidak menjawab soal ini :(`;
+            divAlert.appendChild(alert);
+            if (isAnswerEmpty) {
+                document.getElementById('answer').appendChild(divAlert);
+            }
 
             if (questions[index].type === 'pilihan_ganda') {
                 for (let i = 0; i < choices.length; i++) {
@@ -246,10 +273,10 @@
                             divRadio.style.border = '1px solid #C0333B';
                         }
                     }
-                    if (choice.is_correct == 1) {
-                        divRadio.style.background = '#E6F5E8';
-                        divRadio.style.border = '1px solid #4CAF50';
-                    }
+                    // if (choice.is_correct == 1) {
+                    //     divRadio.style.background = '#E6F5E8';
+                    //     divRadio.style.border = '1px solid #4CAF50';
+                    // }
 
 
                     let label = document.createElement('label');
@@ -281,10 +308,10 @@
                         }
                     });
 
-                    if (choice.is_correct == 1) {
-                        divRadio.style.background = '#E6F5E8';
-                        divRadio.style.border = '1px solid #4CAF50';
-                    }
+                    // if (choice.is_correct == 1) {
+                    //     divRadio.style.background = '#E6F5E8';
+                    //     divRadio.style.border = '1px solid #4CAF50';
+                    // }
 
                     let label = document.createElement('label');
                     label.htmlFor = 'choice_' + choice.id;
@@ -319,11 +346,11 @@
                     });
                 }
                 
-                let div = document.createElement('p');
-                div.innerHTML = "Jawaban Kamu";
-                div.style.fontWeight = 'bold';
-                div.style.marginBottom = '5px';
-                document.getElementById('answer').appendChild(div);
+                // let div = document.createElement('p');
+                // div.innerHTML = "Jawaban Kamu";
+                // div.style.fontWeight = 'bold';
+                // div.style.marginBottom = '5px';
+                // document.getElementById('answer').appendChild(div);
                 document.getElementById('answer').appendChild(input);
             } else if (questions[index].type === 'pernyataan') {
                 let table = document.createElement('table');
@@ -349,6 +376,7 @@
                 let tbody = document.createElement('tbody');
 
                 if (answer) {
+                    // console.log(choices);
                     choices.forEach((item) => {
                         let trBody = document.createElement('tr');
                         
@@ -360,6 +388,7 @@
     
                         // Kolom Jawaban
                         let tdJawaban = document.createElement('td');
+                        // console.log(answer);
                         answer.forEach((itemAnswer) => {
                             if (item.id == itemAnswer[0]) {
                                  tdJawaban.textContent = itemAnswer[1];
@@ -370,6 +399,9 @@
                                     tdJawaban.style.backgroundColor = '#F8E9ED';
                                     // tdJawaban.style.border = '1px solid #C0333B';
                                 }
+                            } else {
+                                tdJawaban.textContent = '';
+                                tdJawaban.style.backgroundColor = '#F8E9ED';
                             }
                         });
                         tdJawaban.style.textAlign = 'center';
@@ -420,14 +452,18 @@
                 //buat correct answer menjadi point point
                 let correctAnswerText = correctAnswer.map(choice => choice.answer);
                 answerExplanation += `<p class="mt-4">Jawaban: </p>`;
-                // answerExplanation += `<p>${correctAnswerText.join(', ')}</p>`;
-                let ul = document.createElement('ul');
-                correctAnswerText.forEach((item) => {
-                    let li = document.createElement('li');
-                    li.innerHTML = item;
-                    ul.appendChild(li);
-                });
-                answerExplanation += ul.outerHTML;
+
+                if(questions[index].type === 'pilihan_ganda_majemuk') {
+                    let ul = document.createElement('ul');
+                    correctAnswerText.forEach((item) => {
+                        let li = document.createElement('li');
+                        li.innerHTML = item;
+                        ul.appendChild(li);
+                    });
+                    answerExplanation += ul.outerHTML;
+                } else {
+                    answerExplanation += `<p>${correctAnswerText.join(', ')}</p>`;
+                }
 
             } else if (questions[index].type === 'isian_singkat') {
                 let correctAnswer = choices[0].answer;
