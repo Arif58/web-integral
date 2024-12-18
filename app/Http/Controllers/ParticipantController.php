@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UserAnswerGradingExport;
 use App\Models\Participant;
 use App\Models\Product;
+use App\Models\TryOut;
 use App\Traits\GradingIrt;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\DataTables;
 
 class ParticipantController extends Controller
@@ -41,5 +44,14 @@ class ParticipantController extends Controller
                 return $avg;
             })
             ->make(true);
+    }
+
+    public function downloadExcel($tryOutId)
+    {
+        $tryOutName = TryOut::where('id', $tryOutId)->first()->name;
+        $data = $this->grading($tryOutId, true);
+        // $correctAnswerParticipant = $data['correctAnswerParticipant'];
+        
+        return Excel::download(new UserAnswerGradingExport($data), 'nilai-peserta-tryout-' . $tryOutName . '.xlsx');
     }
 }

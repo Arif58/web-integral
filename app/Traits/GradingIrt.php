@@ -14,11 +14,22 @@ use Termwind\Components\Raw;
 
 trait GradingIrt {
 
-    public function grading($tryOutId) {
+    public function grading($tryOutId, $export = false) {
         $SubTest = SubTest::where('try_out_id', $tryOutId)->with('questions')->get();
 
-        $subTestIds = $SubTest->pluck('id');        
-        $participants = Participant::where('tryout_id', $tryOutId)->where('start_test', '!=', null)->get();
+        $subTestIds = $SubTest->pluck('id');
+        
+        $participantHasAnswer = UserAnswer::whereIn('question_id', function ($query) use ($subTestIds) {
+            $query->select('id')
+                ->from('questions')
+                ->whereIn('sub_test_id', $subTestIds);
+        })->pluck('participant_id')->unique();
+
+        // $participants = Participant::where('tryout_id', $tryOutId)->where('start_test', '!=', null)->get();
+
+        // kode diatas diganti dengan kode dibawah ini
+        $participants = Participant::whereIn('id', $participantHasAnswer)->get();
+        
         $totalParticipant = $participants->count();
 
         // $totalQuestion = Question::whereIn('sub_test_id', $SubTest->pluck('id'))->count();
@@ -30,6 +41,8 @@ trait GradingIrt {
         $weight = [];
 
         $skorAfterGrading = [];
+
+        $correctAnswerParticipant = [];
 
         $totalScoreParticipantAllSubtest = [];
 
@@ -69,10 +82,13 @@ trait GradingIrt {
     
                 //nilai akhir tiap user answer
                 $grading = $this->gradingAnswer($userAnswer, $weightQuestion, $questions);
-                $skorAfterGrading[$value->id] = $grading;
-    
+                $gradingSkor = $grading['dataSkorParticipantAfterGrading'];
+                $skorAfterGrading[$value->id] = $gradingSkor;
+                
+                $correctAnswerParticipant[$value->id] = $grading['dataItemSkorParticipant'];
+
                 //menentukan rata-rata skor peserta
-                foreach ($grading as $participantId => $question) {
+                foreach ($gradingSkor as $participantId => $question) {
 
                     $totalScore = array_sum($question) + 200;
                     if (isset($totalScoreParticipantAllSubtest[$participantId])) {
@@ -115,7 +131,16 @@ trait GradingIrt {
         }
 
         try {
-            $this->storeGrading($skorAfterGrading, $weight, $tryOutId, $averageScoreParticipant);
+            if($export) {
+                return [
+                    'skorAfterGrading' => $skorAfterGrading,
+                    'correctAnswerParticipant' => $correctAnswerParticipant,
+                    'averageScoreParticipant' => $averageScoreParticipant
+                    
+                ];
+            } else{
+                $this->storeGrading($skorAfterGrading, $weight, $tryOutId, $averageScoreParticipant);
+            }
         } catch (\Exception $e) {
             return response()->json([
                 'message' => $e->getMessage()
@@ -470,7 +495,10 @@ trait GradingIrt {
             }
         }
 
-        return $dataSkorParticipantAfterGrading;
+        return [
+            'dataSkorParticipantAfterGrading' => $dataSkorParticipantAfterGrading,
+            'dataItemSkorParticipant' => $dataItemSkorParticipant
+        ];
 
     }
 

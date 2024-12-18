@@ -50,7 +50,12 @@
                 <a href="/produk" class="me-4"><i class="feather feather-arrow-left"></i></a><b>Daftar Produk / </b><span style="color: #9f9f9f; font-weight: normal">{{ $product->tryOut->name }}</span>       
             </h4>
         </div>
-    
+        <div class="section-title d-flex justify-content-end mb-4">
+            <a href="{{ route('export.skor', ['tryOutId' => $product->tryout_id]) }}">
+                {{-- @dd($product->tryout_id) --}}
+                <button class="rbt-btn btn-sm bg-color-warning" type="button">Lihat Lebih Lengkap<i class="feather feather-download"></i></button>
+            </a>
+        </div>
         <div style="border-bottom: 2px solid var(--color-border-2); margin-bottom: 24px;">
             <table class="table" id="subtest-table">
                 <thead class="bg-gradient-18">

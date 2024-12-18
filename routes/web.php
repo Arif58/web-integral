@@ -216,6 +216,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::controller(ParticipantController::class)->group(function () {
             Route::get('/peserta/{productId}', 'index')->name('participants');
             Route::get('/peserta/get/{productId}', 'getParticipant')->name('participants.get');
+            Route::get('/export-skor/{tryOutId}', 'downloadExcel')->name('export.skor');
         });
 
         

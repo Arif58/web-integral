@@ -22,7 +22,7 @@ class QuestionController extends Controller
     {
         $boundary = 10;
         $subTest = SubTest::findOrFail($subTestId);
-        $questions = Question::where('sub_test_id', $subTestId)->paginate($boundary);
+        $questions = Question::where('sub_test_id', $subTestId)->orderBy('id', 'asc')->paginate($boundary);
         $countQuestions = Question::where('sub_test_id', $subTestId)->count();
         $no = $boundary * ($questions->currentPage() - 1);
         return view('web.sections.dashboard.admin.question', compact('subTest','questions', 'no', 'countQuestions'));
