@@ -202,7 +202,7 @@ class ExamController extends Controller
                         ->join('category_subtests', 'sub_tests.category_subtest_id', '=', 'category_subtests.id')
                         ->where('try_out_id', $participant->tryout_id)->get();
 
-        $categorySubtest = $subTests->pluck('category_name','category_subtest_id')->unique();
+        $categorySubtest = $subTests->pluck('category_name','category_subtest_id')->unique()->sortKeys();
 
         $subTestIds = $subTests->pluck('id');
 
