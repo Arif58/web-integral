@@ -12,7 +12,7 @@
                             <div class="inner headline">
                                 <h1 class="title text-white fade-in-left">Belajar Bersama Try Out UTBK Integral Education</h1>
                                 <p class="description text-white fade-in-left-2" style="font-size: 20px;">
-                                    Kuasai soal-soal HOTS denga mengikuti Try Out UTBK Integral Education. Dapatkan poin IE Gems setiap kali kamu mengerjakan soal.
+                                    Kuasai soal-soal HOTS dengan mengikuti Try Out UTBK Integral Education. Dapatkan poin IE Gems setiap kali kamu mengerjakan Try Out.
                                 </p>
                                 <div class="rbt-button-group justify-content-start mt--30">
                                     <a class="rbt-btn btn-gradient fade-in-bottom" href="#tryout">
