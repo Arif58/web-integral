@@ -507,5 +507,7 @@
         localStorage.removeItem('subTestId');
         localStorage.removeItem('subTestCurrentIndex');
         localStorage.removeItem('start_test');
+        localStorage.removeItem('end_test');
+        localStorage.removeItem('doubtQuestions');
     </script>
 @endpush

@@ -16,6 +16,7 @@ use App\Models\UserItemScore;
 use App\Traits\SimpleAdditiveWeighting;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Yajra\DataTables\DataTables;
@@ -26,6 +27,30 @@ class ExamController extends Controller
     public function index($id)
     {
         $participant = Participant::where('id', $id)->with('tryOut')->first();
+
+        if($participant == null) {
+            return redirect()->route('my-tryout')->with([
+                'status' => 'error', 
+                'message' => 'Anda tidak memiliki akses ke halaman ini.'
+            ]);
+        }
+
+        if($participant?->user_id != Auth::id()) {
+            return redirect()->route('my-tryout')->with([
+                'status' => 'error', 
+                'message' => 'Anda tidak memiliki akses ke halaman ini.'
+            ]);
+        }
+
+        //check apakah masuk waktu try out atau belum
+        $isTryOutPeriod = Carbon::now('Asia/Jakarta')->between($participant->tryOut?->start_date, $participant->tryOut?->end_date);
+
+        if (!$isTryOutPeriod) {
+            return redirect()->route('my-tryout')->with([
+                'status' => 'error', 
+                'message' => 'Tidak dalam periode Try Out.'
+            ]);
+        }
 
         $countTest = CompletedSubtest::where('participant_id', $id)->count();
 
@@ -58,6 +83,42 @@ class ExamController extends Controller
 
     public function getQuestion($participantId, $subTestId)
     {
+        //check apakah participant adalah user yang sedang login
+        $participant = Participant::where('id', $participantId)->with('tryOut')->first();
+
+        if($participant == null) {
+            return redirect()->route('my-tryout')->with([
+                'status' => 'error', 
+                'message' => 'Anda tidak memiliki akses ke halaman ini.'
+            ]);
+        }
+
+        if ($participant?->user_id != Auth::id()) {
+            return redirect()->route('my-tryout')->with([
+                'status' => 'error', 
+                'message' => 'Anda tidak memiliki akses ke halaman ini.'
+            ]);
+        }
+
+        $isSubTestExist = SubTest::where('id', $subTestId)->where('try_out_id', $participant->tryOut->id)->exists();
+        if (!$isSubTestExist) {
+            return redirect()->route('my-tryout')->with([
+                'status' => 'error', 
+                'message' => 'Subtest tidak ditemukan pada Try Out ini.'
+            ]);
+        }
+
+        //check apakah subtest sudah dikerjakan atau belum
+        $isSubTestCompleted = CompletedSubtest::where('participant_id', $participantId)
+                                ->where('sub_test_id', $subTestId)
+                                ->where('status', 'completed')
+                                ->exists();
+
+        if ($isSubTestCompleted) {
+            //jika sudah dikerjakan, maka lanjutkan ke subtest selanjutnya
+            return redirect()->route('exam', ['id' => $participantId]);
+        }
+
         $subTest = SubTest::where('id', $subTestId)->with('questions', 'categorySubtest')->first();
 
         $questions = Question::where('sub_test_id', $subTestId)->with('questionChoices')->get();
@@ -197,6 +258,25 @@ class ExamController extends Controller
     public function getExamResult($participantId)
     {
         $participant = Participant::where('id', $participantId)->with('tryOut', 'user')->first();
+
+        if ($participant->user_id != Auth::id()) {
+            return redirect()->route('my-tryout')->with([
+                'status' => 'error', 
+                'message' => 'Anda tidak memiliki akses ke halaman ini.'
+            ]);
+        }
+
+        //apakah tryout sudah selesai atau belum dan apakah nilai sudah dihitung atau belum
+        $isTryOutPeriod = Carbon::now('Asia/Jakarta')->between($participant->tryOut->start_date, $participant->tryOut->end_date);
+
+        $isScoreCalculated = $participant->tryOut->is_grading_completed;
+
+        if($isTryOutPeriod || !$isScoreCalculated) {
+            return redirect()->route('my-tryout')->with([
+                'status' => 'error', 
+                'message' => 'Try Out belum selesai atau nilai belum dihitung.'
+            ]);
+        }
 
         $subTests = SubTest::select('sub_tests.id', 'sub_tests.name', 'category_subtest_id', 'category_subtests.name as category_name')
                         ->join('category_subtests', 'sub_tests.category_subtest_id', '=', 'category_subtests.id')
