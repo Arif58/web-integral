@@ -142,14 +142,12 @@
                         <!-- End Subtes Detail Box  -->
                     </div>
 
-                </div>
-
-             
+                </div> 
 
                 <div class="col-lg-4">
                     <div class="course-sidebar sticky-top rbt-shadow-box course-sidebar-top rbt-gradient-border" style="box-shadow: none">
                         <div class="inner">
-                            <div class="rbt-card-img text-center py-4 height-200 bg-gradient-20 d-flex align-content-center flex-wrap justify-content-center radius-6">
+                            <div class="rbt-card-img text-center py-4 height-200 @if($isExpired) bg-gradient-21 @else bg-gradient-20 @endif d-flex align-content-center flex-wrap justify-content-center radius-6">
                                 <h1 class="color-white mb-0">
                                     {{$startDate}}
                                     <p style="font-size: 30px; font-weight: normal;">{{$startMonth}}</p>
@@ -198,10 +196,13 @@
                     </div>
                     <div class="row g-5">
                         @foreach ($otherTryOuts as $item)
+                        @php
+                            $isExpired = $dateNow > $item->tryOut->end_date;
+                        @endphp
                         <!-- Start Single Event  -->
                         <div class="col-lg-4 col-md-6 col-12">
                             <div class="rbt-card event-grid-card variation-01 rbt-hover ">
-                                    <div class="rbt-card-img text-center height-200 bg-gradient-20 d-flex align-content-center flex-wrap justify-content-center radius-6" style="height: 150px">
+                                    <div class="rbt-card-img text-center height-200 @if($isExpired) bg-gradient-21 @else bg-gradient-20 @endif  d-flex align-content-center flex-wrap justify-content-center radius-6" style="height: 150px">
                                         <h1 class="color-white mb-0">
                                             {{date('d', strtotime($item->tryOut->start_date))}}
                                             <p style="font-size: 20px; font-weight: normal;">{{date('F Y', strtotime($item->tryOut->start_date))}}</p>
