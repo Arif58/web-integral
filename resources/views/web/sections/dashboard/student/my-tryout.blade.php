@@ -73,7 +73,7 @@
                                                 @else
                                                 <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#unfinishedModal_{{$item->tryOut->id}}"
-                                                style="font-size: 14px; padding: 0px;" @if(!$isEligibleContinueTest || (!$isGradingCompleted && $isFinished)) disabled @endif>
+                                                style="font-size: 14px; padding: 0px;" @if(!$isEligibleContinueTest || (!$isGradingCompleted && $isFinished) || !$isTestPeriode) disabled @endif>
                                                     @if ($isTestOnGoing && $isEligibleContinueTest)
                                                         <span class="btn-text">Lanjut Mengerjakan</span>
                                                     @elseif ($isTestOnGoing && !$isEligibleContinueTest)
@@ -104,12 +104,12 @@
                                         $startMonth = date('F Y', strtotime($item->tryOut->start_date));
                                         $endDate = date('d F Y', strtotime($item->tryOut->end_date));
                                         $tryOutDate = $startDate . ' - ' . $endDate;
-                                        $isTestPeriode = $item->tryOut->start_date <= $timeNow && $item->tryOut->end_date >= $timeNow;
-                                        $isTestOnGoing = $item->start_test != null && $item->end_test == null;
+                                        $isFinished = $item->start_test != null && $item->end_test != null;
+                                        $isTestPeriode = $timeNow->between($item->tryOut->start_date, $item->tryOut->end_date);
+
                                         $isPeriodeTryOutHasDone = $timeNow->gt($item->tryOut->end_date);
-                                        
-                                
-                                        $isGradingCompleted = $item->tryOut->is_grading_completed;
+                                        $isGradingCompleted = $item->tryOut->is_grading_completed == true;
+                                        $isTestOnGoing = $item->start_test != null && $item->end_test == null;
 
                                         $startTest = $item->start_test;
                                         $endTestWindow = $startTest ? $startTest->copy()->addHours(4) : null;
@@ -138,7 +138,7 @@
                                                 @else
                                                 <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#unfinishedModal_{{$item->tryOut->id}}"
-                                                style="font-size: 14px; padding: 0px;" @if(!$isEligibleContinueTest || (!$isGradingCompleted && $isFinished)) disabled @endif>
+                                                style="font-size: 14px; padding: 0px;" @if(!$isEligibleContinueTest || (!$isGradingCompleted && $isFinished) || !$isTestPeriode) disabled @endif>
                                                     @if ($isTestOnGoing && $isEligibleContinueTest)
                                                         <span class="btn-text">Lanjut Mengerjakan</span>
                                                     @elseif ($isTestOnGoing && !$isEligibleContinueTest)
@@ -203,7 +203,7 @@
                                                 @else
                                                 <button class="rbt-btn btn-border btn-sm icon-hover radius-round text-center flex-wrap" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#unfinishedModal_{{$item->tryOut->id}}"
-                                                style="font-size: 14px; padding: 0px;" @if(!$isEligibleContinueTest || (!$isGradingCompleted && $isFinished)) disabled @endif>
+                                                style="font-size: 14px; padding: 0px;" @if(!$isEligibleContinueTest || (!$isGradingCompleted && $isFinished) || !$isTestPeriode) disabled @endif>
 
                                                     @if ($isTestOnGoing && $isEligibleContinueTest)
                                                         <span class="btn-text">Lanjut Mengerjakan</span>
